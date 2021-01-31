@@ -25,16 +25,16 @@
 <meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200805172733850.png">
 <meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200806145948705.png">
 <meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200806150757137.png">
-<meta property="og:image" content="http://www.psbazx.com/image-20200811223215032.png">
-<meta property="og:image" content="http://www.psbazx.com/image-20200811223349565.png">
-<meta property="og:image" content="http://www.psbazx.com/image-20200813234919654.png">
-<meta property="og:image" content="http://www.psbazx.com/image-20200813234945624.png">
-<meta property="og:image" content="http://www.psbazx.com/image-20200814181939008.png">
-<meta property="og:image" content="http://www.psbazx.com/image-20200814182017671.png">
-<meta property="og:image" content="http://www.psbazx.com/image-20200814182152731.png">
-<meta property="og:image" content="http://www.psbazx.com/image-20200814183539461.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200811223215032.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200811223349565.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200813234919654.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200813234945624.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200814181939008.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200814182017671.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200814182152731.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200814183539461.png">
 <meta property="article:published_time" content="2020-08-10T17:51:56.000Z">
-<meta property="article:modified_time" content="2021-01-31T10:32:36.682Z">
+<meta property="article:modified_time" content="2021-01-31T19:45:51.538Z">
 <meta property="article:author" content="皮三宝">
 <meta property="article:tag" content="re">
 <meta property="article:tag" content="ctf">
@@ -400,27 +400,27 @@
 <p>引导扇区主要是给windows提供有关该硬盘上卷的结构和格式方面的信息，并从根目录中读取windows的加载程序即ntldr，然后将控制权转交给ntldr入口函数。当然为了做到这些，单个扇区512B无法完成这些功能，为此windows让引导扇区中的代码读入其他扇区中的代码然后跳转到下一个扇区的代码区。</p>
 <p>3.进入ntldr后就是实模式了，实模式处理器的寄存器都是16为直接访问物理内存，ntldr文件主要有俩部分组成，第一个部分是实模式代码，第二个部分是pe文件，这部分被称作os loader，先说说实模式部分，实模式主要负责完成需在16位的环境下执行的初始化工作如清除键盘缓冲区，然后为切换到保护模式做好准备，然后切换到保护模式后将控制权转交给os loader</p>
 <p>os loader获取控制权时虽然已经是保护模式，但还运行在实模式下，虚拟地址转译机制尚未开启，os loader首先把物理内存管理起来，用内存描述符记录并构造页目录和页表，始得16MB一下可以通过页映射来访问，打开页面映射机制后os loader继续执行其他的初始化工作，接着从系统分区读入boot.ini文件并解析，根据引导选项来设置参数，最后加载我们熟悉的内核模块映像文件ntoskrnl.exe，以及HAL映像文件，加载注册表等一些工作做完后把控制权交给ntoskrnl.exe入口</p>
-<p><img src="/image-20200811223215032.png" alt="image-20200811223215032"></p>
-<h3 id="内核初始化"><a href="#内核初始化" class="headerlink" title="内核初始化"></a>内核初始化</h3><p><img src="/image-20200811223349565.png" alt="image-20200811223349565"></p>
+<p><img src="image-20200811223215032.png" alt="image-20200811223215032"></p>
+<h3 id="内核初始化"><a href="#内核初始化" class="headerlink" title="内核初始化"></a>内核初始化</h3><p><img src="image-20200811223349565.png" alt="image-20200811223349565"></p>
 <p>。。。有点多，书上主要介绍线程进程初始化还有多核情况处理</p>
 <p>具体如上图</p>
 <h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><p>之前写过进程线程的相关东西，其实看起来挺快，书上讲的也不错，这边只记录一些我漏学的小知识，前面作者只是单纯的介绍下进程与线程概念，根据windows调度算法介绍线程是如何被选择的//这些前面的文章都写过，x86就是在32个就绪链表里做选择，这边提到个用户级线程的概念，应该是模拟线程切换把，根据自己的需要自己选择线程的调度算法。后面就是介绍进程与线程结构体中的每一项的成员的意义，这个在之前文章里也写过就不重复了</p>
 <h3 id="windows进程的句柄表"><a href="#windows进程的句柄表" class="headerlink" title="windows进程的句柄表"></a>windows进程的句柄表</h3><p>每当进程利用名称来打开或者创建一个对象的时候都会获取一个句柄，通过句柄可以找到该对象的位置，所以句柄只是个引用，句柄表也分私有和公有，公有的是全局句柄表，每个进程都有一个句柄表，俩个应用程序以共享的方式打开了同一个文件，他们获取的句柄值可能不同，但都能通过该句柄找到文件对象的位置，主要还是因为用的不是一个句柄表。</p>
 <p>那就来康康句柄表在哪</p>
-<p><img src="/image-20200813234919654.png" alt="image-20200813234919654"></p>
+<p><img src="image-20200813234919654.png" alt="image-20200813234919654"></p>
 <p>首先查看eprocess + 0xc4的地址</p>
-<p><img src="/image-20200813234945624.png" alt="image-20200813234945624"></p>
+<p><img src="image-20200813234945624.png" alt="image-20200813234945624"></p>
 <p>这个tablecode指向了句柄表//记得低3为清0，表示属性</p>
 <p>假如句柄为0xa 对应值位于tablecode+0xa*2处，因为句柄表中每个成员占8字节</p>
 <p>成员低四字节低三位清零后指向了我们的对象_OBJECT_HEADER</p>
-<p><img src="/image-20200814181939008.png" alt="image-20200814181939008"></p>
-<p><img src="/image-20200814182017671.png" alt="image-20200814182017671"></p>
+<p><img src="image-20200814181939008.png" alt="image-20200814181939008"></p>
+<p><img src="image-20200814182017671.png" alt="image-20200814182017671"></p>
 <p>_HANDLE_TABLE结构体每项成员如上图</p>
 <p>其中第一项为tablecode是一个指针，第二位表示句柄表层数</p>
-<p><img src="/image-20200814182152731.png" alt="image-20200814182152731"></p>
+<p><img src="image-20200814182152731.png" alt="image-20200814182152731"></p>
 <p>句柄表结构如上</p>
 <p>再看看句柄表项内容</p>
-<p><img src="/image-20200814183539461.png" alt="image-20200814183539461"></p>
+<p><img src="image-20200814183539461.png" alt="image-20200814183539461"></p>
 
       
     </div>
@@ -432,7 +432,7 @@
         <p><span>本文标题:</span><a href="/2020/08/11/Windows%E5%86%85%E6%A0%B8/">Windows内核</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
         <p><span>发布时间:</span>2020-08-10, 17:51:56</p>
-        <p><span>最后更新:</span>2021-01-31, 18:32:36</p>
+        <p><span>最后更新:</span>2021-02-01, 03:45:51</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2020/08/11/Windows%E5%86%85%E6%A0%B8/" title="Windows内核">http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/</a>
             <span class="copy-path" data-clipboard-text="原文: http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>

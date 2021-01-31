@@ -22,12 +22,12 @@
 <meta property="og:site_name" content="皮三宝のBlog">
 <meta property="og:description" content="最近小有产出，只不过厂商都不太友好不鸟人的，希望以后能挖点高质量的，这边顺带总结一波学习到的技术。">
 <meta property="og:locale">
-<meta property="og:image" content="http://www.psbazx.com/image-20201210170022069.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/12/16/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E4%B9%8B%E6%97%85/image-20201210170022069.png">
 <meta property="article:published_time" content="2020-12-16T15:19:15.000Z">
-<meta property="article:modified_time" content="2021-01-31T10:32:34.217Z">
+<meta property="article:modified_time" content="2021-01-31T19:44:11.342Z">
 <meta property="article:author" content="皮三宝">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://www.psbazx.com/image-20201210170022069.png">
+<meta name="twitter:image" content="http://www.psbazx.com/2020/12/16/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E4%B9%8B%E6%97%85/image-20201210170022069.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -336,7 +336,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">C:\Program.exe</span><br><span class="line">C:\Program Files\Some.exe</span><br><span class="line">C:\Program Files\Some Folder\Service.exe</span><br></pre></td></tr></table></figure>
 <p>具体查询方法可以用下面语句</p>
 <figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wmic service get name,displayname,pathname,startmode |findstr <span class="string">/i</span> <span class="string">&quot;Auto&quot;</span> |findstr <span class="string">/i</span> <span class="string">/v</span> <span class="string">&quot;C:\Windows\\&quot;</span> |findstr <span class="string">/i</span> <span class="string">/v</span> <span class="string">&quot;&quot;</span><span class="string">&quot;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/image-20201210170022069.png" alt="image-20201210170022069"></p>
+<p><img src="image-20201210170022069.png" alt="image-20201210170022069"></p>
 <p>可以看到vmware一个验证程序没有引号，安装目录是我们自定义的，可以把安装目录装在一个带空格的文件夹下这样你就会发现vmware自动加上了引号233333</p>
 <p>但是现在这种很少被认作是洞了</p>
 <h2 id="Dll-Hijacking"><a href="#Dll-Hijacking" class="headerlink" title="Dll Hijacking"></a>Dll Hijacking</h2><p>CVE-2020-12302</p>
@@ -366,7 +366,7 @@
         <p><span>本文标题:</span><a href="/2020/12/16/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E4%B9%8B%E6%97%85/">漏洞挖掘之旅</a></p>
         <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
         <p><span>发布时间:</span>2020-12-16, 15:19:15</p>
-        <p><span>最后更新:</span>2021-01-31, 18:32:34</p>
+        <p><span>最后更新:</span>2021-02-01, 03:44:11</p>
         <p>
             <span>原始链接:</span><a class="post-url" href="/2020/12/16/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E4%B9%8B%E6%97%85/" title="漏洞挖掘之旅">http://www.psbazx.com/2020/12/16/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E4%B9%8B%E6%97%85/</a>
             <span class="copy-path" data-clipboard-text="原文: http://www.psbazx.com/2020/12/16/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E4%B9%8B%E6%97%85/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
