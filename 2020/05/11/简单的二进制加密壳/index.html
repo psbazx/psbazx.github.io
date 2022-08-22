@@ -1,21 +1,22 @@
+
+
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
 <head>
-
-    <!--[if lt IE 9]>
-        <style>body {display: none; background: none !important} </style>
-        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
-    <![endif]-->
-
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="format-detection" content="telephone=no" />
-<meta name="author" content="皮三宝" />
-
-
-
-<meta name="description" content="说是说加密壳，但主要用到的技术是Process Hollowing 代码已发布在github上">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="说是说加密壳，但主要用到的技术是Process Hollowing 代码已发布在github上">
 <meta property="og:type" content="article">
 <meta property="og:title" content="简单的二进制加密壳">
 <meta property="og:url" content="http://www.psbazx.com/2020/05/11/%E7%AE%80%E5%8D%95%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8A%A0%E5%AF%86%E5%A3%B3/index.html">
@@ -35,314 +36,259 @@
 <meta property="article:author" content="皮三宝">
 <meta property="article:tag" content="re">
 <meta property="article:tag" content="ctf">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://www.psbazx.com/2020/05/11/%E7%AE%80%E5%8D%95%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8A%A0%E5%AF%86%E5%A3%B3/image-20200730142534271.png">
+  
+  
+  
+  <title>简单的二进制加密壳 - 皮三宝のBlog</title>
 
-<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
-
-
-    <link rel="alternate" href="/atom.xml" title="皮三宝のBlog" type="application/atom+xml">
-
-
-
-    <link rel="shortcut icon" href="/32.ico">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
 
-    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
-    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
-    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
-    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
 
 
 
-<link rel="stylesheet" href="/css/style.css">
 
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
-
-
-<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-
-
-<title>简单的二进制加密壳 | 皮三宝のBlog</title>
-
-<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
-
-<script>
-    var yiliaConfig = {
-        fancybox: true,
-        animate: true,
-        isHome: false,
-        isPost: true,
-        isArchive: false,
-        isTag: false,
-        isCategory: false,
-        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
-        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
-        search: true
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
-</script>
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
 
 
-    <script>
-        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
-    </script>
-
-
-
-    <script> yiliaConfig.rootUrl = "\/";</script>
-
-
-
-
-
-
+  
 <meta name="generator" content="Hexo 5.3.0"></head>
+
+
 <body>
-  <div id="container">
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-    <header id="header" class="inner">
-        <a href="/" class="profilepic">
-            <img src="/img/pisanbao.jpg" class="animated zoomIn">
-        </a>
-        <hgroup>
-          <h1 class="header-author"><a href="/"></a></h1>
-        </hgroup>
-
-        
-
-        
-            <form id="search-form">
-            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
-            <i class="fa fa-times" onclick="resetSearch()"></i>
-            </form>
-            <div id="local-search-result"></div>
-            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
-        
-
-
-        
-            <div id="switch-btn" class="switch-btn">
-                <div class="icon">
-                    <div class="icon-ctn">
-                        <div class="icon-wrap icon-house" data-idx="0">
-                            <div class="birdhouse"></div>
-                            <div class="birdhouse_holes"></div>
-                        </div>
-                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
-                            <div class="ribbon"></div>
-                        </div>
-                        
-                        <div class="icon-wrap icon-link hide" data-idx="2">
-                            <div class="loopback_l"></div>
-                            <div class="loopback_r"></div>
-                        </div>
-                        
-                        
-                        <div class="icon-wrap icon-me hide" data-idx="3">
-                            <div class="user"></div>
-                            <div class="shoulder"></div>
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-                <div class="tips-box hide">
-                    <div class="tips-arrow"></div>
-                    <ul class="tips-inner">
-                        <li>Menu</li>
-                        <li>Some tags</li>
-                        
-                        <li>通向dalaosのlinks</li>
-                        
-                        
-                        <li>皮三宝</li>
-                        
-                    </ul>
-                </div>
-            </div>
-        
-
-        <div id="switch-area" class="switch-area">
-            <div class="switch-wrap">
-                <section class="switch-part switch-part1">
-                    <nav class="header-menu">
-                        <ul>
-                        
-                            <li><a href="/">PiSanbao&#39;s_Home</a></li>
-                        
-                            <li><a href="/archives/">My_articles</a></li>
-                        
-                            <li><a href="/about/">Who is PiSanbao</a></li>
-                        
-                            <li><a href="/">Can_you_find_my_secrets?</a></li>
-                        
-                            <li><a href="/">/secrets/</a></li>
-                        
-                        </ul>
-                    </nav>
-                    <nav class="header-nav">
-                        <ul class="social">
-                            
-                                <a class="fa Email" href="mailto:1403517540@qq.com" title="Email"></a>
-                            
-                                <a class="fa CSDN" target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43487707?t=1" title="CSDN"></a>
-                            
-                                <a class="fa bilibili" target="_blank" rel="noopener" href="https://space.bilibili.com/20677447" title="bilibili"></a>
-                            
-                                <a class="fa QQ" target="_blank" rel="noopener" href="http://qm.qq.com/cgi-bin/qm/qr?k=qMplqFBOWwPeyGRCczyES8giBIhWAxeu" title="QQ"></a>
-                            
-                                <a class="fa 微信" target="_blank" rel="noopener" href="https://u.wechat.com/ENFVbHA49PGks_bjNpDQqD0" title="微信"></a>
-                            
-                        </ul>
-                    </nav>
-                </section>
-                
-                
-                <section class="switch-part switch-part2">
-                    <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/X1cT34m/" rel="tag">X1cT34m</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angr/" rel="tag">angr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/" rel="tag">ctf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/daily/" rel="tag">daily</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fuzz/" rel="tag">fuzz</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iot/" rel="tag">iot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kernel/" rel="tag">kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lpe/" rel="tag">lpe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pwn/" rel="tag">pwn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/re/" rel="tag">re</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reading/" rel="tag">reading</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rootkit/" rel="tag">rootkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/v8/" rel="tag">v8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/" rel="tag">windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%A5%E5%B8%B8/" rel="tag">日常</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%9D%E7%96%97/" rel="tag">话疗</a></li></ul>
-                    </div>
-                </section>
-                
-                
-                
-                <section class="switch-part switch-part3">
-                    <div id="js-friends">
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://www.brethland.com">brethland</a>
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://yulige.top/">郁离歌</a>
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://120.79.211.91/#qixi2018">人人人</a>
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://blog.wangxiyu.me/#wangxiyu191.github.com">wxy191</a>
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://atum.li/">Atum</a>
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://blog.csdn.net/whklhhhh">奈沙夜影</a>
-                    
-                    </div>
-                </section>
-                
-
-                
-                
-                <section class="switch-part switch-part4">
-                
-                    <div id="js-aboutme">凤凰涅槃，浴火重生。</div>
-                </section>
-                
-            </div>
-        </div>
-    </header>                
-</div>
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-      <div class="overlay">
-          <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
-      </div>
-    <div class="intrude-less">
-        <header id="header" class="inner">
-            <a href="/" class="profilepic">
-                <img src="/img/pisanbao.jpg" class="animated zoomIn">
-            </a>
-            <hgroup>
-              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
-            </hgroup>
-            
-            <nav class="header-menu">
-                <ul>
-                
-                    <li><a href="/">PiSanbao&#39;s_Home</a></li>
-                
-                    <li><a href="/archives/">My_articles</a></li>
-                
-                    <li><a href="/about/">Who is PiSanbao</a></li>
-                
-                    <li><a href="/">Can_you_find_my_secrets?</a></li>
-                
-                    <li><a href="/">/secrets/</a></li>
-                
-                <div class="clearfix"></div>
-                </ul>
-            </nav>
-            <nav class="header-nav">
-                        <ul class="social">
-                            
-                                <a class="fa Email" target="_blank" href="mailto:1403517540@qq.com" title="Email"></a>
-                            
-                                <a class="fa CSDN" target="_blank" href="https://blog.csdn.net/qq_43487707?t=1" title="CSDN"></a>
-                            
-                                <a class="fa bilibili" target="_blank" href="https://space.bilibili.com/20677447" title="bilibili"></a>
-                            
-                                <a class="fa QQ" target="_blank" href="http://qm.qq.com/cgi-bin/qm/qr?k=qMplqFBOWwPeyGRCczyES8giBIhWAxeu" title="QQ"></a>
-                            
-                                <a class="fa 微信" target="_blank" href="https://u.wechat.com/ENFVbHA49PGks_bjNpDQqD0" title="微信"></a>
-                            
-                        </ul>
-            </nav>
-        </header>                
-    </div>
-    <link class="menu-list" tags="Some tags" friends="通向dalaosのlinks" about="皮三宝"/>
-</nav>
-      <div class="body-wrap"><article id="post-简单的二进制加密壳" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2020/05/11/%E7%AE%80%E5%8D%95%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8A%A0%E5%AF%86%E5%A3%B3/" class="article-date">
-      <time datetime="2020-05-10T17:09:29.000Z" itemprop="datePublished">2020-05-10</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      简单的二进制加密壳
-    </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-
-        
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctf/" rel="tag">ctf</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/re/" rel="tag">re</a></li></ul>
-    </div>
-
-        <div class="clearfix"></div>
-      </div>
-      
+  <header>
     
-    <div class="article-entry" itemprop="articleBody">
-      
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
           
-        <p>说是说加密壳，但主要用到的技术是Process Hollowing</p>
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="简单的二进制加密壳"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-05-10 17:09" pubdate>
+          May 10, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          18k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          149 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">简单的二进制加密壳</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>说是说加密壳，但主要用到的技术是Process Hollowing</p>
 <p>代码已发布在github上</p>
 <a id="more"></a>
 
-<h1 id="decode-shell"><a href="#decode-shell" class="headerlink" title="decode-shell"></a>decode-shell</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">UnloadShell</span><span class="params">(HANDLE ProcHnd, <span class="keyword">unsigned</span> <span class="keyword">long</span> BaseAddr)</span></span>;</span><br><span class="line"><span class="function">LPVOID <span class="title">GetLastSecData</span><span class="params">(LPSTR lpszFile, DWORD&amp; fileSize)</span></span>;</span><br><span class="line"><span class="function">LPVOID <span class="title">AllocShellSize</span><span class="params">(LPSTR shellDirectory, HANDLE shellProcess, LPVOID encryptFileBuffer)</span></span>;</span><br><span class="line"><span class="function">VOID <span class="title">GetNtHeaderInfo</span><span class="params">(LPVOID pFileBuffer, DWORD&amp; ImageBase, DWORD&amp; ImageSize)</span></span>;</span><br><span class="line"><span class="function">VOID <span class="title">GetEncryptFileContext</span><span class="params">(LPVOID pFileBuffer, DWORD&amp; OEP, DWORD&amp; ImageBase)</span></span>;</span><br><span class="line"><span class="function">LPVOID <span class="title">FileBufferToImageBuffer</span><span class="params">(BYTE* decodebuffer, DWORD&amp; size)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DoRelocation</span><span class="params">(LPVOID pFileBuffer, <span class="keyword">void</span>* OldBase, <span class="keyword">void</span>* NewBase)</span></span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	WCHAR shellDirectory[<span class="number">100</span>]; <span class="comment">//encode后程序这边有个坑，win32api通常是宽字符然而自己写的函数不需要</span></span><br><span class="line">	DWORD encryptSize = <span class="number">0</span>;</span><br><span class="line">	mbstowcs(shellDirectory, argv[<span class="number">0</span>], <span class="number">100</span>);<span class="comment">//宽字符转换</span></span><br><span class="line">	LPVOID encryptFileBuffer = <span class="literal">NULL</span>;</span><br><span class="line">	encryptFileBuffer = GetLastSecData(argv[<span class="number">0</span>], encryptSize);</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	这边可以写解密函数</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	srand(<span class="number">233</span>);</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">char</span> key;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; encryptSize; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		key = rand();</span><br><span class="line">		*((BYTE*)encryptFileBuffer + i) ^= key;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//解密完成</span></span><br><span class="line">	STARTUPINFO si = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	PROCESS_INFORMATION pi;</span><br><span class="line">	si.cb = <span class="keyword">sizeof</span>(si);</span><br><span class="line">	::CreateProcess(shellDirectory, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, FALSE, CREATE_SUSPENDED, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;si, &amp;pi);</span><br><span class="line">	<span class="comment">//int x = GetLastError();</span></span><br><span class="line">	<span class="comment">//printf(&quot;%d\n&quot;, x);</span></span><br><span class="line">	<span class="keyword">char</span> szTempStr[<span class="number">256</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	<span class="comment">//sprintf(szTempStr, &quot;process_information %x , %x \n&quot;, pi.hProcess, pi.hThread);仅用于验证是否成功创建进程</span></span><br><span class="line">	CONTEXT contx;</span><br><span class="line">	contx.ContextFlags = CONTEXT_FULL;</span><br><span class="line">	GetThreadContext(pi.hThread, &amp;contx);</span><br><span class="line">	<span class="comment">//int x = GetLastError();</span></span><br><span class="line">	<span class="comment">//printf(&quot;%d\n&quot;, x);</span></span><br><span class="line">	DWORD dwEntryPoint = contx.Eax;</span><br><span class="line">	DWORD baseAddress;</span><br><span class="line">	TCHAR szBuffer[<span class="number">4</span>] = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">	ReadProcessMemory(pi.hProcess, (LPCVOID)(contx.Ebx + <span class="number">8</span>), (LPVOID)&amp;baseAddress, <span class="number">4</span>, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="comment">//printf(&quot;挂起进程的线程Context.Eax:%p - Context.Ebx + 8:%p\n&quot;, contx.Eax, baseAddress);</span></span><br><span class="line">	<span class="keyword">int</span>* fileImageBase;</span><br><span class="line">	fileImageBase = (<span class="keyword">int</span>*)szBuffer;</span><br><span class="line">	DWORD shellImageBase = *fileImageBase;</span><br><span class="line">	UnloadShell(pi.hProcess, shellImageBase);</span><br><span class="line">	LPVOID p = AllocShellSize(argv[<span class="number">0</span>], pi.hProcess, encryptFileBuffer);</span><br><span class="line">	DWORD pEncryptImageSize = <span class="number">0</span>;</span><br><span class="line">	LPVOID pEncryptImageBuffer = FileBufferToImageBuffer((BYTE*)encryptFileBuffer, pEncryptImageSize);</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> old;</span><br><span class="line">	WriteProcessMemory(pi.hProcess, (<span class="keyword">void</span>*)(contx.Ebx + <span class="number">8</span>), &amp;p, <span class="keyword">sizeof</span>(DWORD), &amp;old);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (WriteProcessMemory(pi.hProcess, p, pEncryptImageBuffer, pEncryptImageSize, &amp;old))</span><br><span class="line">	&#123;</span><br><span class="line"></span><br><span class="line">		DWORD encryptFileOEP = <span class="number">0</span>;</span><br><span class="line">		DWORD encryptFileImageBase = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">		GetEncryptFileContext(encryptFileBuffer, encryptFileOEP, encryptFileImageBase);</span><br><span class="line"></span><br><span class="line">		contx.ContextFlags = CONTEXT_FULL;</span><br><span class="line"></span><br><span class="line">		contx.Eax = encryptFileOEP + (DWORD)p;</span><br><span class="line">		<span class="comment">//contx.Eip</span></span><br><span class="line">		SetThreadContext(pi.hThread, &amp;contx);</span><br><span class="line"></span><br><span class="line">		LPVOID szBufferTemp = <span class="built_in">malloc</span>(pEncryptImageSize);</span><br><span class="line">		<span class="built_in">memset</span>(szBufferTemp, <span class="number">0</span>, pEncryptImageSize);</span><br><span class="line">		ReadProcessMemory(pi.hProcess, p, szBufferTemp, pEncryptImageSize, <span class="literal">NULL</span>);</span><br><span class="line">		ResumeThread(pi.hThread);</span><br><span class="line">		CloseHandle(pi.hThread);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">UnloadShell</span><span class="params">(HANDLE ProcHnd, <span class="keyword">unsigned</span> <span class="keyword">long</span> BaseAddr)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">typedef</span> <span class="keyword">unsigned</span> <span class="title">long</span><span class="params">(__stdcall* pfZwUnmapViewOfSection)</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span>, <span class="keyword">unsigned</span> <span class="keyword">long</span>)</span></span>;</span><br><span class="line">	pfZwUnmapViewOfSection ZwUnmapViewOfSection = <span class="literal">NULL</span>;</span><br><span class="line">	BOOL res = FALSE;</span><br><span class="line">	HMODULE m = LoadLibraryA(<span class="string">&quot;ntdll.dll&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span> (m) &#123;</span><br><span class="line">		ZwUnmapViewOfSection = (pfZwUnmapViewOfSection)GetProcAddress(m, <span class="string">&quot;ZwUnmapViewOfSection&quot;</span>);</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> (ZwUnmapViewOfSection)</span><br><span class="line">			res = (ZwUnmapViewOfSection((<span class="keyword">unsigned</span> <span class="keyword">long</span>)ProcHnd, BaseAddr) == <span class="number">0</span>);</span><br><span class="line">		FreeLibrary(m);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;load library failed!!!\n&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">LPVOID <span class="title">FileBufferToImageBuffer</span><span class="params">(BYTE* decodebuffer, DWORD&amp; size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	PIMAGE_DOS_HEADER pDosHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_NT_HEADERS pNTHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_FILE_HEADER pPEHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_OPTIONAL_HEADER32 pOptionHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_SECTION_HEADER pSectionHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_SECTION_HEADER pSectionHeader_LAST = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	pDosHeader = (PIMAGE_DOS_HEADER)decodebuffer;</span><br><span class="line">	pNTHeader = (PIMAGE_NT_HEADERS)((DWORD)decodebuffer + pDosHeader-&gt;e_lfanew);</span><br><span class="line">	pPEHeader = (PIMAGE_FILE_HEADER)(((DWORD)pNTHeader) + <span class="number">4</span>);</span><br><span class="line">	pOptionHeader = (PIMAGE_OPTIONAL_HEADER32)((DWORD)pPEHeader + IMAGE_SIZEOF_FILE_HEADER);</span><br><span class="line">	pSectionHeader = (PIMAGE_SECTION_HEADER)((DWORD)pOptionHeader + pPEHeader-&gt;SizeOfOptionalHeader);</span><br><span class="line">	pSectionHeader_LAST = (PIMAGE_SECTION_HEADER)((DWORD)pSectionHeader + (pPEHeader-&gt;NumberOfSections - <span class="number">1</span>) * <span class="number">40</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> fileLength = pSectionHeader_LAST-&gt;PointerToRawData + pSectionHeader_LAST-&gt;SizeOfRawData;</span><br><span class="line">	size = pNTHeader-&gt;OptionalHeader.SizeOfImage;</span><br><span class="line">	BYTE* pEncryptBuffer = (BYTE*)<span class="built_in">malloc</span>(size);</span><br><span class="line">	<span class="built_in">memset</span>(pEncryptBuffer, <span class="number">0</span>, size);</span><br><span class="line">	<span class="built_in">memcpy</span>(pEncryptBuffer, decodebuffer, pNTHeader-&gt;OptionalHeader.SizeOfHeaders);</span><br><span class="line">	<span class="keyword">int</span> i;</span><br><span class="line">	<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; pNTHeader-&gt;FileHeader.NumberOfSections; i++)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">memcpy</span>(pEncryptBuffer + pSectionHeader-&gt;VirtualAddress, decodebuffer + pSectionHeader-&gt;VirtualAddress, pSectionHeader-&gt;SizeOfRawData);</span><br><span class="line">		pSectionHeader++;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> pEncryptBuffer;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">LPVOID <span class="title">GetLastSecData</span><span class="params">(LPSTR lpszFile, DWORD&amp; fileSize)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	FILE* a = fopen(lpszFile, <span class="string">&quot;rb&quot;</span>);</span><br><span class="line">	fseek(a, <span class="number">0</span>, SEEK_END);</span><br><span class="line">	fileSize = ftell(a);</span><br><span class="line">	fseek(a, <span class="number">0</span>, SEEK_SET);</span><br><span class="line">	LPVOID pFileBuffer = <span class="built_in">calloc</span>(<span class="number">1</span>, fileSize);</span><br><span class="line">	fread(pFileBuffer, fileSize, <span class="number">1</span>, a);</span><br><span class="line">	fclose(a);</span><br><span class="line">	<span class="keyword">if</span> (!pFileBuffer)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;文件读取失败\n&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	PIMAGE_DOS_HEADER pDosHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_NT_HEADERS pNTHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_FILE_HEADER pPEHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_OPTIONAL_HEADER32 pOptionHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_SECTION_HEADER pSectionHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_SECTION_HEADER pSectionHeader_LAST = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	pDosHeader = (PIMAGE_DOS_HEADER)pFileBuffer;</span><br><span class="line">	pNTHeader = (PIMAGE_NT_HEADERS)((DWORD)pFileBuffer + pDosHeader-&gt;e_lfanew);</span><br><span class="line">	pPEHeader = (PIMAGE_FILE_HEADER)(((DWORD)pNTHeader) + <span class="number">4</span>);</span><br><span class="line">	pOptionHeader = (PIMAGE_OPTIONAL_HEADER32)((DWORD)pPEHeader + IMAGE_SIZEOF_FILE_HEADER);</span><br><span class="line">	pSectionHeader = (PIMAGE_SECTION_HEADER)((DWORD)pOptionHeader + pPEHeader-&gt;SizeOfOptionalHeader);</span><br><span class="line">	pSectionHeader_LAST = (PIMAGE_SECTION_HEADER)((DWORD)pSectionHeader + (pPEHeader-&gt;NumberOfSections - <span class="number">1</span>) * <span class="number">40</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> fileLength = pSectionHeader_LAST-&gt;PointerToRawData + pSectionHeader_LAST-&gt;SizeOfRawData;</span><br><span class="line">	fileSize = pSectionHeader_LAST-&gt;SizeOfRawData;</span><br><span class="line">	LPVOID pEncryptBuffer = <span class="built_in">malloc</span>(fileSize);</span><br><span class="line">	<span class="built_in">memset</span>(pEncryptBuffer, <span class="number">0</span>, fileSize);</span><br><span class="line">	CHAR* pNew = (CHAR*)pEncryptBuffer;</span><br><span class="line"></span><br><span class="line">	CHAR* pOld = (CHAR*)((DWORD)pFileBuffer + pSectionHeader_LAST-&gt;PointerToRawData);</span><br><span class="line"></span><br><span class="line">	pEncryptBuffer = pOld;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> pEncryptBuffer;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">LPVOID <span class="title">AllocShellSize</span><span class="params">(LPSTR shellDirectory, HANDLE shellProcess, LPVOID encryptFileBuffer)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">void</span>* (__stdcall* pfVirtualAllocEx)(<span class="keyword">unsigned</span> <span class="keyword">long</span>, <span class="keyword">void</span>*, <span class="keyword">unsigned</span> <span class="keyword">long</span>, <span class="keyword">unsigned</span> <span class="keyword">long</span>, <span class="keyword">unsigned</span> <span class="keyword">long</span>);</span><br><span class="line">	pfVirtualAllocEx MyVirtualAllocEx = <span class="literal">NULL</span>;</span><br><span class="line">	MyVirtualAllocEx = (pfVirtualAllocEx)GetProcAddress(GetModuleHandle((LPCWSTR)<span class="string">&quot;Kernel32.dll&quot;</span>), <span class="string">&quot;VirtualAllocEx&quot;</span>); <span class="comment">//获取VirtualAllocEx 函数地址</span></span><br><span class="line">	FILE* a = fopen(shellDirectory, <span class="string">&quot;rb&quot;</span>);</span><br><span class="line">	fseek(a, <span class="number">0</span>, SEEK_END);</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> fileSize = ftell(a);</span><br><span class="line">	fseek(a, <span class="number">0</span>, SEEK_SET);</span><br><span class="line">	LPVOID pShellBuffer = <span class="built_in">calloc</span>(<span class="number">1</span>, fileSize);</span><br><span class="line">	fread(pShellBuffer, fileSize, <span class="number">1</span>, a);</span><br><span class="line">	fclose(a);</span><br><span class="line"></span><br><span class="line">	DWORD shellImageBase = <span class="number">0</span>;</span><br><span class="line">	DWORD shellImageSize = <span class="number">0</span>;</span><br><span class="line">	DWORD encryptImageBase = <span class="number">0</span>;</span><br><span class="line">	DWORD encryptImageSize = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	GetNtHeaderInfo(pShellBuffer, shellImageBase, shellImageSize);</span><br><span class="line">	GetNtHeaderInfo(encryptFileBuffer, encryptImageBase, encryptImageSize);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (shellImageBase == <span class="number">0</span> || shellImageSize == <span class="number">0</span> || encryptImageBase == <span class="number">0</span> || encryptImageSize == <span class="number">0</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;分配空间失败\n&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">void</span>* p = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (shellImageBase == encryptImageBase)</span><br><span class="line">	&#123;</span><br><span class="line">		shellImageSize = (shellImageSize &gt;= encryptImageSize) ? shellImageSize : encryptImageSize;</span><br><span class="line"></span><br><span class="line">		p = VirtualAllocEx(shellProcess, (<span class="keyword">void</span>*)shellImageBase, shellImageSize, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);</span><br><span class="line">		<span class="comment">//int x = GetLastError();</span></span><br><span class="line">		<span class="comment">//printf(&quot;%d\n&quot;, x);</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (p == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		p = VirtualAllocEx(shellProcess, <span class="literal">NULL</span>, encryptImageSize, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);</span><br><span class="line">		<span class="keyword">if</span> (p) </span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">return</span> p;</span><br><span class="line">			<span class="comment">//DoRelocation(encryptFileBuffer, (void*)encryptImageBase, p);</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">else</span> </span><br><span class="line">		&#123;</span><br><span class="line">			<span class="built_in">printf</span>(<span class="string">&quot;分配空间失败\n&quot;</span>);</span><br><span class="line">			<span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> p;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">DoRelocation</span><span class="params">(LPVOID pFileBuffer, <span class="keyword">void</span>* OldBase, <span class="keyword">void</span>* NewBase)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	PIMAGE_DOS_HEADER pDosHeader = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">int</span> i,j=<span class="number">0</span>;</span><br><span class="line">	<span class="keyword">unsigned</span> <span class="keyword">long</span>* t;</span><br><span class="line">	pDosHeader = (PIMAGE_DOS_HEADER)pFileBuffer;</span><br><span class="line">	PIMAGE_NT_HEADERS peH = (PIMAGE_NT_HEADERS)((DWORD)pFileBuffer + pDosHeader-&gt;e_lfanew);</span><br><span class="line">	<span class="keyword">signed</span> <span class="keyword">long</span> Delta = (<span class="keyword">signed</span> <span class="keyword">long</span>)NewBase - peH-&gt;OptionalHeader.ImageBase;</span><br><span class="line">	IMAGE_DATA_DIRECTORY relocations = (peH-&gt;OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_BASERELOC]);</span><br><span class="line">	PIMAGE_BASE_RELOCATION p = (PIMAGE_BASE_RELOCATION)((DWORD)pFileBuffer + relocations.VirtualAddress);</span><br><span class="line">	<span class="keyword">while</span> (p-&gt;VirtualAddress + p-&gt;SizeOfBlock)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">unsigned</span> <span class="keyword">short</span>* pw = (<span class="keyword">unsigned</span> <span class="keyword">short</span>*)((<span class="keyword">int</span>)p + <span class="keyword">sizeof</span>(*p));</span><br><span class="line">		<span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; (p-&gt;SizeOfBlock - <span class="keyword">sizeof</span>(*p)) / <span class="keyword">sizeof</span>(WORD); ++i)</span><br><span class="line">		&#123;</span><br><span class="line">			<span class="keyword">if</span> (((*pw) &amp; <span class="number">0xF000</span>) == <span class="number">0x3000</span>) &#123;</span><br><span class="line">				t = (<span class="keyword">unsigned</span> <span class="keyword">long</span>*)((DWORD)(pFileBuffer)+p-&gt;VirtualAddress + ((*pw) &amp; <span class="number">0x0FFF</span>));</span><br><span class="line">				*t += Delta;</span><br><span class="line">			&#125;</span><br><span class="line">			++pw;</span><br><span class="line">		&#125;</span><br><span class="line">		p = (PIMAGE_BASE_RELOCATION)pw;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">VOID <span class="title">GetNtHeaderInfo</span><span class="params">(LPVOID pFileBuffer, DWORD&amp; ImageBase, DWORD&amp; ImageSize)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	PIMAGE_DOS_HEADER pDosHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_NT_HEADERS pNTHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_FILE_HEADER pPEHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_OPTIONAL_HEADER32 pOptionHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_SECTION_HEADER pSectionHeader = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!pFileBuffer)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;文件读取失败\n&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (*((PWORD)pFileBuffer) != IMAGE_DOS_SIGNATURE)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;不是有效的MZ标志\n&quot;</span>);</span><br><span class="line">		<span class="built_in">free</span>(pFileBuffer);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	pDosHeader = (PIMAGE_DOS_HEADER)pFileBuffer;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (*((PDWORD)((DWORD)pFileBuffer + pDosHeader-&gt;e_lfanew)) != IMAGE_NT_SIGNATURE)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;不是有效的PE标志\n&quot;</span>);</span><br><span class="line">		<span class="built_in">free</span>(pFileBuffer);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	pNTHeader = (PIMAGE_NT_HEADERS)((DWORD)pFileBuffer + pDosHeader-&gt;e_lfanew);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	pPEHeader = (PIMAGE_FILE_HEADER)(((DWORD)pNTHeader) + <span class="number">4</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	pOptionHeader = (PIMAGE_OPTIONAL_HEADER32)((DWORD)pPEHeader + IMAGE_SIZEOF_FILE_HEADER);</span><br><span class="line"></span><br><span class="line">	ImageBase = pOptionHeader-&gt;ImageBase;</span><br><span class="line">	ImageSize = pOptionHeader-&gt;SizeOfImage;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">VOID <span class="title">GetEncryptFileContext</span><span class="params">(LPVOID pFileBuffer, DWORD&amp; OEP, DWORD&amp; ImageBase)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	PIMAGE_DOS_HEADER pDosHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_NT_HEADERS pNTHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_FILE_HEADER pPEHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_OPTIONAL_HEADER32 pOptionHeader = <span class="literal">NULL</span>;</span><br><span class="line">	PIMAGE_SECTION_HEADER pSectionHeader = <span class="literal">NULL</span>;</span><br><span class="line">	<span class="comment">//pFileBuffer= ReadPEFile(lpszFile);</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (!pFileBuffer)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;文件读取失败\n&quot;</span>);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (*((PWORD)pFileBuffer) != IMAGE_DOS_SIGNATURE)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;不是有效的MZ标志\n&quot;</span>);</span><br><span class="line">		<span class="built_in">free</span>(pFileBuffer);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	pDosHeader = (PIMAGE_DOS_HEADER)pFileBuffer;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> (*((PDWORD)((DWORD)pFileBuffer + pDosHeader-&gt;e_lfanew)) != IMAGE_NT_SIGNATURE)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">&quot;不是有效的PE标志\n&quot;</span>);</span><br><span class="line">		<span class="built_in">free</span>(pFileBuffer);</span><br><span class="line">		<span class="keyword">return</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	pNTHeader = (PIMAGE_NT_HEADERS)((DWORD)pFileBuffer + pDosHeader-&gt;e_lfanew);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	pPEHeader = (PIMAGE_FILE_HEADER)(((DWORD)pNTHeader) + <span class="number">4</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	pOptionHeader = (PIMAGE_OPTIONAL_HEADER32)((DWORD)pPEHeader + IMAGE_SIZEOF_FILE_HEADER);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">	OEP = pOptionHeader-&gt;AddressOfEntryPoint;</span><br><span class="line">	ImageBase = pOptionHeader-&gt;ImageBase;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h1 id="encode-shell"><a href="#encode-shell" class="headerlink" title="encode-shell"></a>encode-shell</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line">﻿<span class="meta">#<span class="meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Windows.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function">LPVOID <span class="title">FileBufferToImageBuffer</span><span class="params">(BYTE* decodebuffer, DWORD&amp; size)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    FILE* a;</span><br><span class="line">    FILE* b;</span><br><span class="line">    FILE* c;</span><br><span class="line">    <span class="keyword">int</span> i,j;</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> shelladdr[] = <span class="string">&quot;C:\\Users\\pisanbao\\Desktop\\decode_shell.exe&quot;</span>;<span class="comment">//shell路径</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span> srcaddr[] = <span class="string">&quot;C:\\Users\\pisanbao\\Desktop\\thread_func.exe&quot;</span>;<span class="comment">//src路径</span></span><br><span class="line">    a = fopen(srcaddr, <span class="string">&quot;rb&quot;</span>);</span><br><span class="line">    fseek(a, <span class="number">0</span>, SEEK_END);</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> filesize = ftell(a);</span><br><span class="line">    fseek(a, <span class="number">0</span>, SEEK_SET);</span><br><span class="line">    DWORD* filebuffer = (DWORD *)<span class="built_in">calloc</span>(<span class="number">1</span>, filesize);</span><br><span class="line">    fread(filebuffer, filesize, <span class="number">1</span>, a);</span><br><span class="line">    fclose(a);</span><br><span class="line">    <span class="comment">// file buffer get</span></span><br><span class="line">    IMAGE_DOS_HEADER* filedosheader = (IMAGE_DOS_HEADER*)filebuffer;</span><br><span class="line">    IMAGE_NT_HEADERS* filentheader = (IMAGE_NT_HEADERS*)((BYTE*)filebuffer + filedosheader-&gt;e_lfanew);</span><br><span class="line">    IMAGE_SECTION_HEADER* filesection = (IMAGE_SECTION_HEADER*)((BYTE*)filebuffer + filedosheader-&gt;e_lfanew + <span class="number">4</span> + <span class="keyword">sizeof</span>(IMAGE_FILE_HEADER) + filentheader-&gt;FileHeader.SizeOfOptionalHeader+<span class="number">40</span>*(filentheader-&gt;FileHeader.NumberOfSections<span class="number">-1</span>));</span><br><span class="line">    filesize = filesection-&gt;PointerToRawData + filesection-&gt;SizeOfRawData;</span><br><span class="line">    b = fopen(shelladdr, <span class="string">&quot;rb&quot;</span>);</span><br><span class="line">    fseek(b, <span class="number">0</span>, SEEK_END);</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> shellsize = ftell(b);</span><br><span class="line">    fseek(b, <span class="number">0</span>, SEEK_SET);</span><br><span class="line">    DWORD* shellbuffer = (DWORD*)<span class="built_in">calloc</span>(<span class="number">1</span>, shellsize);</span><br><span class="line">    fread(shellbuffer, shellsize, <span class="number">1</span>, b);</span><br><span class="line">    fclose(b);</span><br><span class="line">    <span class="comment">//shell buffer get</span></span><br><span class="line">    c = fopen(<span class="string">&quot;C:\\Users\\pisanbao\\Desktop\\shell.exe&quot;</span>, <span class="string">&quot;ab+&quot;</span>);</span><br><span class="line">    IMAGE_DOS_HEADER * shelldosheader = (IMAGE_DOS_HEADER *)shellbuffer;</span><br><span class="line">    IMAGE_NT_HEADERS* shellntheader = (IMAGE_NT_HEADERS*)((BYTE *)shellbuffer + shelldosheader-&gt;e_lfanew);</span><br><span class="line">    IMAGE_SECTION_HEADER * shellsection = (IMAGE_SECTION_HEADER *)((BYTE*)shellbuffer + shelldosheader-&gt;e_lfanew + <span class="number">4</span> + <span class="keyword">sizeof</span>(IMAGE_FILE_HEADER) + shellntheader-&gt;FileHeader.SizeOfOptionalHeader);</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; shellntheader-&gt;FileHeader.NumberOfSections; i++)</span><br><span class="line">        shellsection++;</span><br><span class="line">    WORD temp = shelldosheader-&gt;e_lfanew;</span><br><span class="line">    DWORD tempsize = shellntheader-&gt;OptionalHeader.SizeOfHeaders;</span><br><span class="line">    shelldosheader-&gt;e_lfanew = <span class="keyword">sizeof</span>(IMAGE_DOS_HEADER);    </span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> realimage = filesize;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (filesize % <span class="number">0x1000</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        realimage = ((filesize / <span class="number">0x1000</span>) + <span class="number">1</span>) * <span class="number">0x1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        realimage = filesize;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//unsigned long long tempimage = shellntheader-&gt;OptionalHeader.SizeOfImage;</span></span><br><span class="line">    <span class="built_in">strcpy</span>((<span class="keyword">char</span> *)shellsection-&gt;Name,<span class="string">&quot;.psb&quot;</span>);<span class="comment">//特征名</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> count1;</span><br><span class="line">    <span class="keyword">if</span> (filesize % <span class="number">0x200</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        count1 = ((filesize / <span class="number">0x200</span>) + <span class="number">1</span>) * <span class="number">0x200</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        count1 = filesize;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//新增节主要注意的是要把新增的pe当作一段数据来看</span></span><br><span class="line">    IMAGE_SECTION_HEADER* tempsection = shellsection;</span><br><span class="line">    tempsection--;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> temptemp;</span><br><span class="line">    DWORD imgsize = filentheader-&gt;OptionalHeader.SizeOfImage;</span><br><span class="line">    <span class="keyword">if</span> (tempsection-&gt;Misc.VirtualSize % <span class="number">0x1000</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        temptemp = ((tempsection-&gt;Misc.VirtualSize / <span class="number">0x1000</span>) + <span class="number">1</span>) * <span class="number">0x1000</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        temptemp = tempsection-&gt;Misc.VirtualSize;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> realsize = tempsection-&gt;SizeOfRawData + tempsection-&gt;PointerToRawData;</span><br><span class="line">    shellsection-&gt;Misc.VirtualSize = imgsize;</span><br><span class="line">    shellsection-&gt;VirtualAddress = tempsection-&gt;VirtualAddress + temptemp;</span><br><span class="line">    shellsection-&gt;SizeOfRawData = imgsize;</span><br><span class="line">    shellsection-&gt;PointerToRawData = realsize;<span class="comment">//这边踩坑了，有些编译器会在最后节后面加东西导致文件不对齐</span></span><br><span class="line">    shellsection-&gt;Characteristics = <span class="number">0xe0500060</span>;</span><br><span class="line">    shellntheader-&gt;FileHeader.NumberOfSections += <span class="number">1</span>;        <span class="comment">//节数+1  </span></span><br><span class="line">    shellntheader-&gt;OptionalHeader.SizeOfImage = shellsection-&gt;VirtualAddress + imgsize;</span><br><span class="line">    <span class="keyword">for</span> (i = temp,j=<span class="number">0</span>; i &lt; tempsize; i++,j++)</span><br><span class="line">    &#123;</span><br><span class="line">        *((BYTE*)shellbuffer + <span class="keyword">sizeof</span>(IMAGE_DOS_HEADER)+j) = *((BYTE*)shellbuffer + i);</span><br><span class="line">        *((BYTE*)shellbuffer + i) = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    fwrite((BYTE*)shellbuffer, realsize, <span class="number">1</span>, c);</span><br><span class="line">    <span class="comment">//新增节完成</span></span><br><span class="line">    <span class="comment">//加密pe最后填充</span></span><br><span class="line">    srand(<span class="number">233</span>);</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> key;</span><br><span class="line">    LPVOID encryptFileBuffer = <span class="literal">NULL</span>;</span><br><span class="line">    encryptFileBuffer = FileBufferToImageBuffer((BYTE*)filebuffer, imgsize);</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; imgsize; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        key = rand();</span><br><span class="line">        *((BYTE*)encryptFileBuffer + i) ^= key;</span><br><span class="line">    &#125;</span><br><span class="line">    fwrite(encryptFileBuffer, imgsize, <span class="number">1</span>, c);</span><br><span class="line">    <span class="built_in">free</span>(filebuffer);</span><br><span class="line">    <span class="built_in">free</span>(encryptFileBuffer);</span><br><span class="line">    <span class="built_in">free</span>(shellbuffer);</span><br><span class="line">    fclose(c);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;done!\n&quot;</span>);</span><br><span class="line">    getchar();</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">LPVOID <span class="title">FileBufferToImageBuffer</span><span class="params">(BYTE* decodebuffer, DWORD&amp; size)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    PIMAGE_DOS_HEADER pDosHeader = <span class="literal">NULL</span>;</span><br><span class="line">    PIMAGE_NT_HEADERS pNTHeader = <span class="literal">NULL</span>;</span><br><span class="line">    PIMAGE_FILE_HEADER pPEHeader = <span class="literal">NULL</span>;</span><br><span class="line">    PIMAGE_OPTIONAL_HEADER32 pOptionHeader = <span class="literal">NULL</span>;</span><br><span class="line">    PIMAGE_SECTION_HEADER pSectionHeader = <span class="literal">NULL</span>;</span><br><span class="line">    PIMAGE_SECTION_HEADER pSectionHeader_LAST = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    pDosHeader = (PIMAGE_DOS_HEADER)decodebuffer;</span><br><span class="line">    pNTHeader = (PIMAGE_NT_HEADERS)((DWORD)decodebuffer + pDosHeader-&gt;e_lfanew);</span><br><span class="line">    pPEHeader = (PIMAGE_FILE_HEADER)(((DWORD)pNTHeader) + <span class="number">4</span>);</span><br><span class="line">    pOptionHeader = (PIMAGE_OPTIONAL_HEADER32)((DWORD)pPEHeader + IMAGE_SIZEOF_FILE_HEADER);</span><br><span class="line">    pSectionHeader = (PIMAGE_SECTION_HEADER)((DWORD)pOptionHeader + pPEHeader-&gt;SizeOfOptionalHeader);</span><br><span class="line">    pSectionHeader_LAST = (PIMAGE_SECTION_HEADER)((DWORD)pSectionHeader + (pPEHeader-&gt;NumberOfSections - <span class="number">1</span>) * <span class="number">40</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> fileLength = pSectionHeader_LAST-&gt;PointerToRawData + pSectionHeader_LAST-&gt;SizeOfRawData;</span><br><span class="line">    size = pNTHeader-&gt;OptionalHeader.SizeOfImage;</span><br><span class="line">    BYTE* pEncryptBuffer = (BYTE*)<span class="built_in">malloc</span>(size);</span><br><span class="line">    <span class="built_in">memset</span>(pEncryptBuffer, <span class="number">0</span>, size);</span><br><span class="line">    <span class="built_in">memcpy</span>(pEncryptBuffer, decodebuffer, pNTHeader-&gt;OptionalHeader.SizeOfHeaders);</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; pNTHeader-&gt;FileHeader.NumberOfSections; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">memcpy</span>(pEncryptBuffer + pSectionHeader-&gt;VirtualAddress, decodebuffer + pSectionHeader-&gt;PointerToRawData, pSectionHeader-&gt;SizeOfRawData);</span><br><span class="line">        pSectionHeader++;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> pEncryptBuffer;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="decode-shell"><a href="#decode-shell" class="headerlink" title="decode-shell"></a>decode-shell</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;Windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">UnloadShell</span><span class="hljs-params">(HANDLE ProcHnd, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> BaseAddr)</span></span>;<br><span class="hljs-function">LPVOID <span class="hljs-title">GetLastSecData</span><span class="hljs-params">(LPSTR lpszFile, DWORD&amp; fileSize)</span></span>;<br><span class="hljs-function">LPVOID <span class="hljs-title">AllocShellSize</span><span class="hljs-params">(LPSTR shellDirectory, HANDLE shellProcess, LPVOID encryptFileBuffer)</span></span>;<br><span class="hljs-function">VOID <span class="hljs-title">GetNtHeaderInfo</span><span class="hljs-params">(LPVOID pFileBuffer, DWORD&amp; ImageBase, DWORD&amp; ImageSize)</span></span>;<br><span class="hljs-function">VOID <span class="hljs-title">GetEncryptFileContext</span><span class="hljs-params">(LPVOID pFileBuffer, DWORD&amp; OEP, DWORD&amp; ImageBase)</span></span>;<br><span class="hljs-function">LPVOID <span class="hljs-title">FileBufferToImageBuffer</span><span class="hljs-params">(BYTE* decodebuffer, DWORD&amp; size)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">DoRelocation</span><span class="hljs-params">(LPVOID pFileBuffer, <span class="hljs-keyword">void</span>* OldBase, <span class="hljs-keyword">void</span>* NewBase)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>	WCHAR shellDirectory[<span class="hljs-number">100</span>]; <span class="hljs-comment">//encode后程序这边有个坑，win32api通常是宽字符然而自己写的函数不需要</span><br>	DWORD encryptSize = <span class="hljs-number">0</span>;<br>	mbstowcs(shellDirectory, argv[<span class="hljs-number">0</span>], <span class="hljs-number">100</span>);<span class="hljs-comment">//宽字符转换</span><br>	LPVOID encryptFileBuffer = <span class="hljs-literal">NULL</span>;<br>	encryptFileBuffer = GetLastSecData(argv[<span class="hljs-number">0</span>], encryptSize);<br>	<span class="hljs-comment">/*</span><br><span class="hljs-comment">	这边可以写解密函数</span><br><span class="hljs-comment">	*/</span><br>	srand(<span class="hljs-number">233</span>);<br>	<span class="hljs-keyword">int</span> i;<br>	<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> key;<br>	<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; encryptSize; i++)<br>	&#123;<br>		key = rand();<br>		*((BYTE*)encryptFileBuffer + i) ^= key;<br>	&#125;<br>	<span class="hljs-comment">//解密完成</span><br>	STARTUPINFO si = &#123; <span class="hljs-number">0</span> &#125;;<br>	PROCESS_INFORMATION pi;<br>	si.cb = <span class="hljs-keyword">sizeof</span>(si);<br>	::CreateProcess(shellDirectory, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, FALSE, CREATE_SUSPENDED, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, &amp;si, &amp;pi);<br>	<span class="hljs-comment">//int x = GetLastError();</span><br>	<span class="hljs-comment">//printf(&quot;%d\n&quot;, x);</span><br>	<span class="hljs-keyword">char</span> szTempStr[<span class="hljs-number">256</span>] = &#123; <span class="hljs-number">0</span> &#125;;<br>	<span class="hljs-comment">//sprintf(szTempStr, &quot;process_information %x , %x \n&quot;, pi.hProcess, pi.hThread);仅用于验证是否成功创建进程</span><br>	CONTEXT contx;<br>	contx.ContextFlags = CONTEXT_FULL;<br>	GetThreadContext(pi.hThread, &amp;contx);<br>	<span class="hljs-comment">//int x = GetLastError();</span><br>	<span class="hljs-comment">//printf(&quot;%d\n&quot;, x);</span><br>	DWORD dwEntryPoint = contx.Eax;<br>	DWORD baseAddress;<br>	TCHAR szBuffer[<span class="hljs-number">4</span>] = &#123; <span class="hljs-number">0</span> &#125;;<br>	ReadProcessMemory(pi.hProcess, (LPCVOID)(contx.Ebx + <span class="hljs-number">8</span>), (LPVOID)&amp;baseAddress, <span class="hljs-number">4</span>, <span class="hljs-literal">NULL</span>);<br>	<span class="hljs-comment">//printf(&quot;挂起进程的线程Context.Eax:%p - Context.Ebx + 8:%p\n&quot;, contx.Eax, baseAddress);</span><br>	<span class="hljs-keyword">int</span>* fileImageBase;<br>	fileImageBase = (<span class="hljs-keyword">int</span>*)szBuffer;<br>	DWORD shellImageBase = *fileImageBase;<br>	UnloadShell(pi.hProcess, shellImageBase);<br>	LPVOID p = AllocShellSize(argv[<span class="hljs-number">0</span>], pi.hProcess, encryptFileBuffer);<br>	DWORD pEncryptImageSize = <span class="hljs-number">0</span>;<br>	LPVOID pEncryptImageBuffer = FileBufferToImageBuffer((BYTE*)encryptFileBuffer, pEncryptImageSize);<br>	<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> old;<br>	WriteProcessMemory(pi.hProcess, (<span class="hljs-keyword">void</span>*)(contx.Ebx + <span class="hljs-number">8</span>), &amp;p, <span class="hljs-keyword">sizeof</span>(DWORD), &amp;old);<br><br>	<span class="hljs-keyword">if</span> (WriteProcessMemory(pi.hProcess, p, pEncryptImageBuffer, pEncryptImageSize, &amp;old))<br>	&#123;<br><br>		DWORD encryptFileOEP = <span class="hljs-number">0</span>;<br>		DWORD encryptFileImageBase = <span class="hljs-number">0</span>;<br><br>		GetEncryptFileContext(encryptFileBuffer, encryptFileOEP, encryptFileImageBase);<br><br>		contx.ContextFlags = CONTEXT_FULL;<br><br>		contx.Eax = encryptFileOEP + (DWORD)p;<br>		<span class="hljs-comment">//contx.Eip</span><br>		SetThreadContext(pi.hThread, &amp;contx);<br><br>		LPVOID szBufferTemp = <span class="hljs-built_in">malloc</span>(pEncryptImageSize);<br>		<span class="hljs-built_in">memset</span>(szBufferTemp, <span class="hljs-number">0</span>, pEncryptImageSize);<br>		ReadProcessMemory(pi.hProcess, p, szBufferTemp, pEncryptImageSize, <span class="hljs-literal">NULL</span>);<br>		ResumeThread(pi.hThread);<br>		CloseHandle(pi.hThread);<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">UnloadShell</span><span class="hljs-params">(HANDLE ProcHnd, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> BaseAddr)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-keyword">unsigned</span> <span class="hljs-title">long</span><span class="hljs-params">(__stdcall* pfZwUnmapViewOfSection)</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span>, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span>)</span></span>;<br>	pfZwUnmapViewOfSection ZwUnmapViewOfSection = <span class="hljs-literal">NULL</span>;<br>	BOOL res = FALSE;<br>	HMODULE m = LoadLibraryA(<span class="hljs-string">&quot;ntdll.dll&quot;</span>);<br>	<span class="hljs-keyword">if</span> (m) &#123;<br>		ZwUnmapViewOfSection = (pfZwUnmapViewOfSection)GetProcAddress(m, <span class="hljs-string">&quot;ZwUnmapViewOfSection&quot;</span>);<br><br>		<span class="hljs-keyword">if</span> (ZwUnmapViewOfSection)<br>			res = (ZwUnmapViewOfSection((<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span>)ProcHnd, BaseAddr) == <span class="hljs-number">0</span>);<br>		FreeLibrary(m);<br>	&#125;<br>	<span class="hljs-keyword">else</span><br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;load library failed!!!\n&quot;</span>);<br>		<span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>	&#125;<br>	<span class="hljs-keyword">return</span>;<br>&#125;<br><span class="hljs-function">LPVOID <span class="hljs-title">FileBufferToImageBuffer</span><span class="hljs-params">(BYTE* decodebuffer, DWORD&amp; size)</span></span><br><span class="hljs-function"></span>&#123;<br>	PIMAGE_DOS_HEADER pDosHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_NT_HEADERS pNTHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_FILE_HEADER pPEHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_OPTIONAL_HEADER32 pOptionHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_SECTION_HEADER pSectionHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_SECTION_HEADER pSectionHeader_LAST = <span class="hljs-literal">NULL</span>;<br><br><br>	pDosHeader = (PIMAGE_DOS_HEADER)decodebuffer;<br>	pNTHeader = (PIMAGE_NT_HEADERS)((DWORD)decodebuffer + pDosHeader-&gt;e_lfanew);<br>	pPEHeader = (PIMAGE_FILE_HEADER)(((DWORD)pNTHeader) + <span class="hljs-number">4</span>);<br>	pOptionHeader = (PIMAGE_OPTIONAL_HEADER32)((DWORD)pPEHeader + IMAGE_SIZEOF_FILE_HEADER);<br>	pSectionHeader = (PIMAGE_SECTION_HEADER)((DWORD)pOptionHeader + pPEHeader-&gt;SizeOfOptionalHeader);<br>	pSectionHeader_LAST = (PIMAGE_SECTION_HEADER)((DWORD)pSectionHeader + (pPEHeader-&gt;NumberOfSections - <span class="hljs-number">1</span>) * <span class="hljs-number">40</span>);<br><br>	<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> fileLength = pSectionHeader_LAST-&gt;PointerToRawData + pSectionHeader_LAST-&gt;SizeOfRawData;<br>	size = pNTHeader-&gt;OptionalHeader.SizeOfImage;<br>	BYTE* pEncryptBuffer = (BYTE*)<span class="hljs-built_in">malloc</span>(size);<br>	<span class="hljs-built_in">memset</span>(pEncryptBuffer, <span class="hljs-number">0</span>, size);<br>	<span class="hljs-built_in">memcpy</span>(pEncryptBuffer, decodebuffer, pNTHeader-&gt;OptionalHeader.SizeOfHeaders);<br>	<span class="hljs-keyword">int</span> i;<br>	<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; pNTHeader-&gt;FileHeader.NumberOfSections; i++)<br>	&#123;<br>		<span class="hljs-built_in">memcpy</span>(pEncryptBuffer + pSectionHeader-&gt;VirtualAddress, decodebuffer + pSectionHeader-&gt;VirtualAddress, pSectionHeader-&gt;SizeOfRawData);<br>		pSectionHeader++;<br>	&#125;<br><br><br>	<span class="hljs-keyword">return</span> pEncryptBuffer;<br>&#125;<br><span class="hljs-function">LPVOID <span class="hljs-title">GetLastSecData</span><span class="hljs-params">(LPSTR lpszFile, DWORD&amp; fileSize)</span></span><br><span class="hljs-function"></span>&#123;<br>	FILE* a = fopen(lpszFile, <span class="hljs-string">&quot;rb&quot;</span>);<br>	fseek(a, <span class="hljs-number">0</span>, SEEK_END);<br>	fileSize = ftell(a);<br>	fseek(a, <span class="hljs-number">0</span>, SEEK_SET);<br>	LPVOID pFileBuffer = <span class="hljs-built_in">calloc</span>(<span class="hljs-number">1</span>, fileSize);<br>	fread(pFileBuffer, fileSize, <span class="hljs-number">1</span>, a);<br>	fclose(a);<br>	<span class="hljs-keyword">if</span> (!pFileBuffer)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;文件读取失败\n&quot;</span>);<br>		<span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>	&#125;<br><br><br>	PIMAGE_DOS_HEADER pDosHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_NT_HEADERS pNTHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_FILE_HEADER pPEHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_OPTIONAL_HEADER32 pOptionHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_SECTION_HEADER pSectionHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_SECTION_HEADER pSectionHeader_LAST = <span class="hljs-literal">NULL</span>;<br><br><br>	pDosHeader = (PIMAGE_DOS_HEADER)pFileBuffer;<br>	pNTHeader = (PIMAGE_NT_HEADERS)((DWORD)pFileBuffer + pDosHeader-&gt;e_lfanew);<br>	pPEHeader = (PIMAGE_FILE_HEADER)(((DWORD)pNTHeader) + <span class="hljs-number">4</span>);<br>	pOptionHeader = (PIMAGE_OPTIONAL_HEADER32)((DWORD)pPEHeader + IMAGE_SIZEOF_FILE_HEADER);<br>	pSectionHeader = (PIMAGE_SECTION_HEADER)((DWORD)pOptionHeader + pPEHeader-&gt;SizeOfOptionalHeader);<br>	pSectionHeader_LAST = (PIMAGE_SECTION_HEADER)((DWORD)pSectionHeader + (pPEHeader-&gt;NumberOfSections - <span class="hljs-number">1</span>) * <span class="hljs-number">40</span>);<br><br>	<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> fileLength = pSectionHeader_LAST-&gt;PointerToRawData + pSectionHeader_LAST-&gt;SizeOfRawData;<br>	fileSize = pSectionHeader_LAST-&gt;SizeOfRawData;<br>	LPVOID pEncryptBuffer = <span class="hljs-built_in">malloc</span>(fileSize);<br>	<span class="hljs-built_in">memset</span>(pEncryptBuffer, <span class="hljs-number">0</span>, fileSize);<br>	CHAR* pNew = (CHAR*)pEncryptBuffer;<br><br>	CHAR* pOld = (CHAR*)((DWORD)pFileBuffer + pSectionHeader_LAST-&gt;PointerToRawData);<br><br>	pEncryptBuffer = pOld;<br><br>	<span class="hljs-keyword">return</span> pEncryptBuffer;<br>&#125;<br><span class="hljs-function">LPVOID <span class="hljs-title">AllocShellSize</span><span class="hljs-params">(LPSTR shellDirectory, HANDLE shellProcess, LPVOID encryptFileBuffer)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">typedef</span> <span class="hljs-keyword">void</span>* (__stdcall* pfVirtualAllocEx)(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span>, <span class="hljs-keyword">void</span>*, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span>, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span>, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span>);<br>	pfVirtualAllocEx MyVirtualAllocEx = <span class="hljs-literal">NULL</span>;<br>	MyVirtualAllocEx = (pfVirtualAllocEx)GetProcAddress(GetModuleHandle((LPCWSTR)<span class="hljs-string">&quot;Kernel32.dll&quot;</span>), <span class="hljs-string">&quot;VirtualAllocEx&quot;</span>); <span class="hljs-comment">//获取VirtualAllocEx 函数地址</span><br>	FILE* a = fopen(shellDirectory, <span class="hljs-string">&quot;rb&quot;</span>);<br>	fseek(a, <span class="hljs-number">0</span>, SEEK_END);<br>	<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> fileSize = ftell(a);<br>	fseek(a, <span class="hljs-number">0</span>, SEEK_SET);<br>	LPVOID pShellBuffer = <span class="hljs-built_in">calloc</span>(<span class="hljs-number">1</span>, fileSize);<br>	fread(pShellBuffer, fileSize, <span class="hljs-number">1</span>, a);<br>	fclose(a);<br><br>	DWORD shellImageBase = <span class="hljs-number">0</span>;<br>	DWORD shellImageSize = <span class="hljs-number">0</span>;<br>	DWORD encryptImageBase = <span class="hljs-number">0</span>;<br>	DWORD encryptImageSize = <span class="hljs-number">0</span>;<br><br><br>	GetNtHeaderInfo(pShellBuffer, shellImageBase, shellImageSize);<br>	GetNtHeaderInfo(encryptFileBuffer, encryptImageBase, encryptImageSize);<br><br>	<span class="hljs-keyword">if</span> (shellImageBase == <span class="hljs-number">0</span> || shellImageSize == <span class="hljs-number">0</span> || encryptImageBase == <span class="hljs-number">0</span> || encryptImageSize == <span class="hljs-number">0</span>)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;分配空间失败\n&quot;</span>);<br>		<span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>	&#125;<br><br>	<span class="hljs-keyword">void</span>* p = <span class="hljs-literal">NULL</span>;<br><br><br>	<span class="hljs-keyword">if</span> (shellImageBase == encryptImageBase)<br>	&#123;<br>		shellImageSize = (shellImageSize &gt;= encryptImageSize) ? shellImageSize : encryptImageSize;<br><br>		p = VirtualAllocEx(shellProcess, (<span class="hljs-keyword">void</span>*)shellImageBase, shellImageSize, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);<br>		<span class="hljs-comment">//int x = GetLastError();</span><br>		<span class="hljs-comment">//printf(&quot;%d\n&quot;, x);</span><br>	&#125;<br><br><br>	<span class="hljs-keyword">if</span> (p == <span class="hljs-literal">NULL</span>)<br>	&#123;<br>		p = VirtualAllocEx(shellProcess, <span class="hljs-literal">NULL</span>, encryptImageSize, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);<br>		<span class="hljs-keyword">if</span> (p) <br>		&#123;<br>			<span class="hljs-keyword">return</span> p;<br>			<span class="hljs-comment">//DoRelocation(encryptFileBuffer, (void*)encryptImageBase, p);</span><br>		&#125;<br>		<span class="hljs-keyword">else</span> <br>		&#123;<br>			<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;分配空间失败\n&quot;</span>);<br>			<span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>		&#125;<br>	&#125;<br><br><br>	<span class="hljs-keyword">return</span> p;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">DoRelocation</span><span class="hljs-params">(LPVOID pFileBuffer, <span class="hljs-keyword">void</span>* OldBase, <span class="hljs-keyword">void</span>* NewBase)</span></span><br><span class="hljs-function"></span>&#123;<br>	PIMAGE_DOS_HEADER pDosHeader = <span class="hljs-literal">NULL</span>;<br>	<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> i,j=<span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span>* t;<br>	pDosHeader = (PIMAGE_DOS_HEADER)pFileBuffer;<br>	PIMAGE_NT_HEADERS peH = (PIMAGE_NT_HEADERS)((DWORD)pFileBuffer + pDosHeader-&gt;e_lfanew);<br>	<span class="hljs-keyword">signed</span> <span class="hljs-keyword">long</span> Delta = (<span class="hljs-keyword">signed</span> <span class="hljs-keyword">long</span>)NewBase - peH-&gt;OptionalHeader.ImageBase;<br>	IMAGE_DATA_DIRECTORY relocations = (peH-&gt;OptionalHeader.DataDirectory[IMAGE_DIRECTORY_ENTRY_BASERELOC]);<br>	PIMAGE_BASE_RELOCATION p = (PIMAGE_BASE_RELOCATION)((DWORD)pFileBuffer + relocations.VirtualAddress);<br>	<span class="hljs-keyword">while</span> (p-&gt;VirtualAddress + p-&gt;SizeOfBlock)<br>	&#123;<br>		<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span>* pw = (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">short</span>*)((<span class="hljs-keyword">int</span>)p + <span class="hljs-keyword">sizeof</span>(*p));<br>		<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; (p-&gt;SizeOfBlock - <span class="hljs-keyword">sizeof</span>(*p)) / <span class="hljs-keyword">sizeof</span>(WORD); ++i)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (((*pw) &amp; <span class="hljs-number">0xF000</span>) == <span class="hljs-number">0x3000</span>) &#123;<br>				t = (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span>*)((DWORD)(pFileBuffer)+p-&gt;VirtualAddress + ((*pw) &amp; <span class="hljs-number">0x0FFF</span>));<br>				*t += Delta;<br>			&#125;<br>			++pw;<br>		&#125;<br>		p = (PIMAGE_BASE_RELOCATION)pw;<br>	&#125;<br>&#125;<br><br><span class="hljs-function">VOID <span class="hljs-title">GetNtHeaderInfo</span><span class="hljs-params">(LPVOID pFileBuffer, DWORD&amp; ImageBase, DWORD&amp; ImageSize)</span></span><br><span class="hljs-function"></span>&#123;<br>	PIMAGE_DOS_HEADER pDosHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_NT_HEADERS pNTHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_FILE_HEADER pPEHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_OPTIONAL_HEADER32 pOptionHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_SECTION_HEADER pSectionHeader = <span class="hljs-literal">NULL</span>;<br><br>	<span class="hljs-keyword">if</span> (!pFileBuffer)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;文件读取失败\n&quot;</span>);<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br><br><br>	<span class="hljs-keyword">if</span> (*((PWORD)pFileBuffer) != IMAGE_DOS_SIGNATURE)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;不是有效的MZ标志\n&quot;</span>);<br>		<span class="hljs-built_in">free</span>(pFileBuffer);<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br><br><br>	pDosHeader = (PIMAGE_DOS_HEADER)pFileBuffer;<br><br><br>	<span class="hljs-keyword">if</span> (*((PDWORD)((DWORD)pFileBuffer + pDosHeader-&gt;e_lfanew)) != IMAGE_NT_SIGNATURE)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;不是有效的PE标志\n&quot;</span>);<br>		<span class="hljs-built_in">free</span>(pFileBuffer);<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br><br>	pNTHeader = (PIMAGE_NT_HEADERS)((DWORD)pFileBuffer + pDosHeader-&gt;e_lfanew);<br><br><br>	pPEHeader = (PIMAGE_FILE_HEADER)(((DWORD)pNTHeader) + <span class="hljs-number">4</span>);<br><br><br>	pOptionHeader = (PIMAGE_OPTIONAL_HEADER32)((DWORD)pPEHeader + IMAGE_SIZEOF_FILE_HEADER);<br><br>	ImageBase = pOptionHeader-&gt;ImageBase;<br>	ImageSize = pOptionHeader-&gt;SizeOfImage;<br><br>&#125;<br><br><span class="hljs-function">VOID <span class="hljs-title">GetEncryptFileContext</span><span class="hljs-params">(LPVOID pFileBuffer, DWORD&amp; OEP, DWORD&amp; ImageBase)</span></span><br><span class="hljs-function"></span>&#123;<br>	PIMAGE_DOS_HEADER pDosHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_NT_HEADERS pNTHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_FILE_HEADER pPEHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_OPTIONAL_HEADER32 pOptionHeader = <span class="hljs-literal">NULL</span>;<br>	PIMAGE_SECTION_HEADER pSectionHeader = <span class="hljs-literal">NULL</span>;<br>	<span class="hljs-comment">//pFileBuffer= ReadPEFile(lpszFile);</span><br><br>	<span class="hljs-keyword">if</span> (!pFileBuffer)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;文件读取失败\n&quot;</span>);<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br><br><br>	<span class="hljs-keyword">if</span> (*((PWORD)pFileBuffer) != IMAGE_DOS_SIGNATURE)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;不是有效的MZ标志\n&quot;</span>);<br>		<span class="hljs-built_in">free</span>(pFileBuffer);<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br><br>	pDosHeader = (PIMAGE_DOS_HEADER)pFileBuffer;<br><br><br>	<span class="hljs-keyword">if</span> (*((PDWORD)((DWORD)pFileBuffer + pDosHeader-&gt;e_lfanew)) != IMAGE_NT_SIGNATURE)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;不是有效的PE标志\n&quot;</span>);<br>		<span class="hljs-built_in">free</span>(pFileBuffer);<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br><br>	pNTHeader = (PIMAGE_NT_HEADERS)((DWORD)pFileBuffer + pDosHeader-&gt;e_lfanew);<br><br><br>	pPEHeader = (PIMAGE_FILE_HEADER)(((DWORD)pNTHeader) + <span class="hljs-number">4</span>);<br><br><br>	pOptionHeader = (PIMAGE_OPTIONAL_HEADER32)((DWORD)pPEHeader + IMAGE_SIZEOF_FILE_HEADER);<br><br><br>	OEP = pOptionHeader-&gt;AddressOfEntryPoint;<br>	ImageBase = pOptionHeader-&gt;ImageBase;<br><br>&#125;<br><br><br><br></code></pre></td></tr></table></figure>
+<h1 id="encode-shell"><a href="#encode-shell" class="headerlink" title="encode-shell"></a>encode-shell</h1><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><code class="hljs c">﻿<span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;Windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><br><span class="hljs-function">LPVOID <span class="hljs-title">FileBufferToImageBuffer</span><span class="hljs-params">(BYTE* decodebuffer, DWORD&amp; size)</span></span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    FILE* a;<br>    FILE* b;<br>    FILE* c;<br>    <span class="hljs-keyword">int</span> i,j;<br>    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> shelladdr[] = <span class="hljs-string">&quot;C:\\Users\\pisanbao\\Desktop\\decode_shell.exe&quot;</span>;<span class="hljs-comment">//shell路径</span><br>    <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> srcaddr[] = <span class="hljs-string">&quot;C:\\Users\\pisanbao\\Desktop\\thread_func.exe&quot;</span>;<span class="hljs-comment">//src路径</span><br>    a = fopen(srcaddr, <span class="hljs-string">&quot;rb&quot;</span>);<br>    fseek(a, <span class="hljs-number">0</span>, SEEK_END);<br>    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> filesize = ftell(a);<br>    fseek(a, <span class="hljs-number">0</span>, SEEK_SET);<br>    DWORD* filebuffer = (DWORD *)<span class="hljs-built_in">calloc</span>(<span class="hljs-number">1</span>, filesize);<br>    fread(filebuffer, filesize, <span class="hljs-number">1</span>, a);<br>    fclose(a);<br>    <span class="hljs-comment">// file buffer get</span><br>    IMAGE_DOS_HEADER* filedosheader = (IMAGE_DOS_HEADER*)filebuffer;<br>    IMAGE_NT_HEADERS* filentheader = (IMAGE_NT_HEADERS*)((BYTE*)filebuffer + filedosheader-&gt;e_lfanew);<br>    IMAGE_SECTION_HEADER* filesection = (IMAGE_SECTION_HEADER*)((BYTE*)filebuffer + filedosheader-&gt;e_lfanew + <span class="hljs-number">4</span> + <span class="hljs-keyword">sizeof</span>(IMAGE_FILE_HEADER) + filentheader-&gt;FileHeader.SizeOfOptionalHeader+<span class="hljs-number">40</span>*(filentheader-&gt;FileHeader.NumberOfSections<span class="hljs-number">-1</span>));<br>    filesize = filesection-&gt;PointerToRawData + filesection-&gt;SizeOfRawData;<br>    b = fopen(shelladdr, <span class="hljs-string">&quot;rb&quot;</span>);<br>    fseek(b, <span class="hljs-number">0</span>, SEEK_END);<br>    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> shellsize = ftell(b);<br>    fseek(b, <span class="hljs-number">0</span>, SEEK_SET);<br>    DWORD* shellbuffer = (DWORD*)<span class="hljs-built_in">calloc</span>(<span class="hljs-number">1</span>, shellsize);<br>    fread(shellbuffer, shellsize, <span class="hljs-number">1</span>, b);<br>    fclose(b);<br>    <span class="hljs-comment">//shell buffer get</span><br>    c = fopen(<span class="hljs-string">&quot;C:\\Users\\pisanbao\\Desktop\\shell.exe&quot;</span>, <span class="hljs-string">&quot;ab+&quot;</span>);<br>    IMAGE_DOS_HEADER * shelldosheader = (IMAGE_DOS_HEADER *)shellbuffer;<br>    IMAGE_NT_HEADERS* shellntheader = (IMAGE_NT_HEADERS*)((BYTE *)shellbuffer + shelldosheader-&gt;e_lfanew);<br>    IMAGE_SECTION_HEADER * shellsection = (IMAGE_SECTION_HEADER *)((BYTE*)shellbuffer + shelldosheader-&gt;e_lfanew + <span class="hljs-number">4</span> + <span class="hljs-keyword">sizeof</span>(IMAGE_FILE_HEADER) + shellntheader-&gt;FileHeader.SizeOfOptionalHeader);<br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; shellntheader-&gt;FileHeader.NumberOfSections; i++)<br>        shellsection++;<br>    WORD temp = shelldosheader-&gt;e_lfanew;<br>    DWORD tempsize = shellntheader-&gt;OptionalHeader.SizeOfHeaders;<br>    shelldosheader-&gt;e_lfanew = <span class="hljs-keyword">sizeof</span>(IMAGE_DOS_HEADER);    <br>    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> realimage = filesize;<br><br>    <span class="hljs-keyword">if</span> (filesize % <span class="hljs-number">0x1000</span>)<br>    &#123;<br>        realimage = ((filesize / <span class="hljs-number">0x1000</span>) + <span class="hljs-number">1</span>) * <span class="hljs-number">0x1000</span>;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        realimage = filesize;<br>    &#125;<br>    <span class="hljs-comment">//unsigned long long tempimage = shellntheader-&gt;OptionalHeader.SizeOfImage;</span><br>    <span class="hljs-built_in">strcpy</span>((<span class="hljs-keyword">char</span> *)shellsection-&gt;Name,<span class="hljs-string">&quot;.psb&quot;</span>);<span class="hljs-comment">//特征名</span><br>    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> count1;<br>    <span class="hljs-keyword">if</span> (filesize % <span class="hljs-number">0x200</span>)<br>    &#123;<br>        count1 = ((filesize / <span class="hljs-number">0x200</span>) + <span class="hljs-number">1</span>) * <span class="hljs-number">0x200</span>;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        count1 = filesize;<br>    &#125;<br>    <span class="hljs-comment">//新增节主要注意的是要把新增的pe当作一段数据来看</span><br>    IMAGE_SECTION_HEADER* tempsection = shellsection;<br>    tempsection--;<br>    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> temptemp;<br>    DWORD imgsize = filentheader-&gt;OptionalHeader.SizeOfImage;<br>    <span class="hljs-keyword">if</span> (tempsection-&gt;Misc.VirtualSize % <span class="hljs-number">0x1000</span>)<br>    &#123;<br>        temptemp = ((tempsection-&gt;Misc.VirtualSize / <span class="hljs-number">0x1000</span>) + <span class="hljs-number">1</span>) * <span class="hljs-number">0x1000</span>;<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        temptemp = tempsection-&gt;Misc.VirtualSize;<br>    &#125;<br>    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> realsize = tempsection-&gt;SizeOfRawData + tempsection-&gt;PointerToRawData;<br>    shellsection-&gt;Misc.VirtualSize = imgsize;<br>    shellsection-&gt;VirtualAddress = tempsection-&gt;VirtualAddress + temptemp;<br>    shellsection-&gt;SizeOfRawData = imgsize;<br>    shellsection-&gt;PointerToRawData = realsize;<span class="hljs-comment">//这边踩坑了，有些编译器会在最后节后面加东西导致文件不对齐</span><br>    shellsection-&gt;Characteristics = <span class="hljs-number">0xe0500060</span>;<br>    shellntheader-&gt;FileHeader.NumberOfSections += <span class="hljs-number">1</span>;        <span class="hljs-comment">//节数+1  </span><br>    shellntheader-&gt;OptionalHeader.SizeOfImage = shellsection-&gt;VirtualAddress + imgsize;<br>    <span class="hljs-keyword">for</span> (i = temp,j=<span class="hljs-number">0</span>; i &lt; tempsize; i++,j++)<br>    &#123;<br>        *((BYTE*)shellbuffer + <span class="hljs-keyword">sizeof</span>(IMAGE_DOS_HEADER)+j) = *((BYTE*)shellbuffer + i);<br>        *((BYTE*)shellbuffer + i) = <span class="hljs-number">0</span>;<br>    &#125;<br>    fwrite((BYTE*)shellbuffer, realsize, <span class="hljs-number">1</span>, c);<br>    <span class="hljs-comment">//新增节完成</span><br>    <span class="hljs-comment">//加密pe最后填充</span><br>    srand(<span class="hljs-number">233</span>);<br>    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> key;<br>    LPVOID encryptFileBuffer = <span class="hljs-literal">NULL</span>;<br>    encryptFileBuffer = FileBufferToImageBuffer((BYTE*)filebuffer, imgsize);<br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; imgsize; i++)<br>    &#123;<br>        key = rand();<br>        *((BYTE*)encryptFileBuffer + i) ^= key;<br>    &#125;<br>    fwrite(encryptFileBuffer, imgsize, <span class="hljs-number">1</span>, c);<br>    <span class="hljs-built_in">free</span>(filebuffer);<br>    <span class="hljs-built_in">free</span>(encryptFileBuffer);<br>    <span class="hljs-built_in">free</span>(shellbuffer);<br>    fclose(c);<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;done!\n&quot;</span>);<br>    getchar();<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-function">LPVOID <span class="hljs-title">FileBufferToImageBuffer</span><span class="hljs-params">(BYTE* decodebuffer, DWORD&amp; size)</span></span><br><span class="hljs-function"></span>&#123;<br>    PIMAGE_DOS_HEADER pDosHeader = <span class="hljs-literal">NULL</span>;<br>    PIMAGE_NT_HEADERS pNTHeader = <span class="hljs-literal">NULL</span>;<br>    PIMAGE_FILE_HEADER pPEHeader = <span class="hljs-literal">NULL</span>;<br>    PIMAGE_OPTIONAL_HEADER32 pOptionHeader = <span class="hljs-literal">NULL</span>;<br>    PIMAGE_SECTION_HEADER pSectionHeader = <span class="hljs-literal">NULL</span>;<br>    PIMAGE_SECTION_HEADER pSectionHeader_LAST = <span class="hljs-literal">NULL</span>;<br><br><br>    pDosHeader = (PIMAGE_DOS_HEADER)decodebuffer;<br>    pNTHeader = (PIMAGE_NT_HEADERS)((DWORD)decodebuffer + pDosHeader-&gt;e_lfanew);<br>    pPEHeader = (PIMAGE_FILE_HEADER)(((DWORD)pNTHeader) + <span class="hljs-number">4</span>);<br>    pOptionHeader = (PIMAGE_OPTIONAL_HEADER32)((DWORD)pPEHeader + IMAGE_SIZEOF_FILE_HEADER);<br>    pSectionHeader = (PIMAGE_SECTION_HEADER)((DWORD)pOptionHeader + pPEHeader-&gt;SizeOfOptionalHeader);<br>    pSectionHeader_LAST = (PIMAGE_SECTION_HEADER)((DWORD)pSectionHeader + (pPEHeader-&gt;NumberOfSections - <span class="hljs-number">1</span>) * <span class="hljs-number">40</span>);<br><br>    <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> fileLength = pSectionHeader_LAST-&gt;PointerToRawData + pSectionHeader_LAST-&gt;SizeOfRawData;<br>    size = pNTHeader-&gt;OptionalHeader.SizeOfImage;<br>    BYTE* pEncryptBuffer = (BYTE*)<span class="hljs-built_in">malloc</span>(size);<br>    <span class="hljs-built_in">memset</span>(pEncryptBuffer, <span class="hljs-number">0</span>, size);<br>    <span class="hljs-built_in">memcpy</span>(pEncryptBuffer, decodebuffer, pNTHeader-&gt;OptionalHeader.SizeOfHeaders);<br>    <span class="hljs-keyword">int</span> i;<br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; pNTHeader-&gt;FileHeader.NumberOfSections; i++)<br>    &#123;<br>        <span class="hljs-built_in">memcpy</span>(pEncryptBuffer + pSectionHeader-&gt;VirtualAddress, decodebuffer + pSectionHeader-&gt;PointerToRawData, pSectionHeader-&gt;SizeOfRawData);<br>        pSectionHeader++;<br>    &#125;<br><br><br>    <span class="hljs-keyword">return</span> pEncryptBuffer;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h1 id="流程简介"><a href="#流程简介" class="headerlink" title="流程简介"></a>流程简介</h1><h2 id="加壳"><a href="#加壳" class="headerlink" title="加壳"></a>加壳</h2><p>encodeshell主要功能是抹去dos stub，新增节并把目标文件xor伪随机数后按照内存对齐后塞入</p>
 <h2 id="解壳"><a href="#解壳" class="headerlink" title="解壳"></a>解壳</h2><ol>
 <li><p>读取主模块数据</p>
@@ -366,17 +312,17 @@
 <p>过程很简单，主要说一下问题</p>
 <h1 id="关于Process-Hollowing"><a href="#关于Process-Hollowing" class="headerlink" title="关于Process Hollowing"></a>关于Process Hollowing</h1><p>github地址:<a target="_blank" rel="noopener" href="https://github.com/psbazx/PE_shell">https://github.com/psbazx/PE_shell</a></p>
 <p>最近把这个技术完善的同时遇到了许多问题</p>
-<p>在此之前已经完成大部分功能除了一个重定位，如果virtualallocex没有分配内存在指定地址需要我们手动重定位后writeprocessmemory进去<br><img src="image-20200730142534271.png" alt="image-20200730142534271"></p>
+<p>在此之前已经完成大部分功能除了一个重定位，如果virtualallocex没有分配内存在指定地址需要我们手动重定位后writeprocessmemory进去<br><img src="image-20200730142534271.png" srcset="/img/loading.gif" lazyload alt="image-20200730142534271"></p>
 <p>但是出现了一点问题，经过调试重定位完全正确，在调试时write完后attach到进程看指定内存发现是正确的</p>
 <p>但是一旦ResumeThread后就出现问题了，地址重定位有问题，仔细比较插值发现是二次重定位了</p>
 <p>所以这边不需要重定位直接可以跑，但是在印象中操作系统并不会帮我们干这些事情，让我一时有点懵逼</p>
 <p>这边参考腾讯游戏安全实验室文章</p>
 <p><a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-501486-1-1.html">https://www.52pojie.cn/thread-501486-1-1.html</a></p>
-<p><img src="image-20200730143146098.png" alt="image-20200730143146098"></p>
+<p><img src="image-20200730143146098.png" srcset="/img/loading.gif" lazyload alt="image-20200730143146098"></p>
 <p>所以为什么不行了呢？操作系统自动帮你完成了重定位？</p>
 <p>测试下发现winxp必须重定位</p>
 <p>目前猜想是win10内核函数的改变，会比较文件imagebase和加载时imagebase</p>
-<p><img src="image-20200730143423712.png" alt="image-20200730143423712"></p>
+<p><img src="image-20200730143423712.png" srcset="/img/loading.gif" lazyload alt="image-20200730143423712"></p>
 <p>​    WriteProcessMemory(pi.hProcess, (void*)(contx.Ebx + 8), &amp;p, sizeof(DWORD), &amp;old);改变了imagebase</p>
 <p>但还不清楚具体会调用哪些函数。。。</p>
 <p>等有空了再把这个坑填了</p>
@@ -384,289 +330,334 @@
 <p>当你调用resume thread后，主线程从内核函数KiStartUserThread开始运行，它会调用LdrInitializeThunk做Image loader，做完之后才调用的RtlUserThreadStart</p>
 <p>LdrInitializeThunk如上链接，会把当前peb+8也就是ebx+8处的imagebase传入LdrPEStartup，当前映射的基地址和pe文件的基地址对比是否相等，不相等则调用对应重定位函数LdrPerformRelocations</p>
 <p>查看LdrpInitializeProcess</p>
-<p><img src="image-20200803105942111.png" alt="image-20200803105942111"></p>
+<p><img src="image-20200803105942111.png" srcset="/img/loading.gif" lazyload alt="image-20200803105942111"></p>
 <p>这边会判断是否相等，不想等则重定位</p>
-<p><img src="image-20200803110108339.png" alt="image-20200803110108339"></p>
+<p><img src="image-20200803110108339.png" srcset="/img/loading.gif" lazyload alt="image-20200803110108339"></p>
 <p>这边再来看一波win10的LdrpInitializeProcess</p>
-<p><img src="image-20200803110705943.png" alt="image-20200803110705943"></p>
+<p><img src="image-20200803110705943.png" srcset="/img/loading.gif" lazyload alt="image-20200803110705943"></p>
 <p>判断是否64位，peb64位的imagebase再0x10偏移处v94 = v8+0x10</p>
 <p>v8再一开始初始化时是peb</p>
-<p><img src="image-20200803110803527.png" alt="image-20200803110803527"></p>
+<p><img src="image-20200803110803527.png" srcset="/img/loading.gif" lazyload alt="image-20200803110803527"></p>
 <p>至于32位则需要看syswow64里的ntdll</p>
-<p><img src="image-20200803111713334.png" alt="image-20200803111713334"></p>
+<p><img src="image-20200803111713334.png" srcset="/img/loading.gif" lazyload alt="image-20200803111713334"></p>
 <p>这边就是+8了</p>
 <p>另外，我github上的代码有一些小bug比如中文路径，存在中文路径会内存分配失败</p>
 
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/re/">#re</a>
+      
+        <a href="/tags/ctf/">#ctf</a>
       
     </div>
-    
-  </div>
   
-    
-    <div class="copyright">
-        <p><span>本文标题:</span><a href="/2020/05/11/%E7%AE%80%E5%8D%95%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8A%A0%E5%AF%86%E5%A3%B3/">简单的二进制加密壳</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
-        <p><span>发布时间:</span>2020-05-10, 17:09:29</p>
-        <p><span>最后更新:</span>2021-01-31, 18:32:35</p>
-        <p>
-            <span>原始链接:</span><a class="post-url" href="/2020/05/11/%E7%AE%80%E5%8D%95%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8A%A0%E5%AF%86%E5%A3%B3/" title="简单的二进制加密壳">http://www.psbazx.com/2020/05/11/%E7%AE%80%E5%8D%95%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8A%A0%E5%AF%86%E5%A3%B3/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://www.psbazx.com/2020/05/11/%E7%AE%80%E5%8D%95%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8A%A0%E5%AF%86%E5%A3%B3/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
-            <script> var clipboard = new Clipboard('.copy-path'); </script>
-        </p>
-        <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
-        </p>
-    </div>
+</div>
 
 
-
-    <nav id="article-nav">
-        
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2020/06/11/windows%E9%A9%B1%E5%8A%A8/">
-                    windows驱动
-                </a>
-            </div>
-        
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2020/04/11/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/">
-                    多线程入门知识
-                </a>
-            </div>
-        
-    </nav>
-
+              
   
-</article>
 
-    <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
-        
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#decode-shell"><span class="toc-number">1.</span> <span class="toc-text">decode-shell</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#encode-shell"><span class="toc-number">2.</span> <span class="toc-text">encode-shell</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%81%E7%A8%8B%E7%AE%80%E4%BB%8B"><span class="toc-number">3.</span> <span class="toc-text">流程简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8A%A0%E5%A3%B3"><span class="toc-number">3.1.</span> <span class="toc-text">加壳</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E5%A3%B3"><span class="toc-number">3.2.</span> <span class="toc-text">解壳</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%B3%E4%BA%8EProcess-Hollowing"><span class="toc-number">4.</span> <span class="toc-text">关于Process Hollowing</span></a></li></ol>
-        
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>简单的二进制加密壳</div>
+      <div>http://www.psbazx.com/2020/05/11/简单的二进制加密壳/</div>
     </div>
-    <style>
-        .left-col .switch-btn,
-        .left-col .switch-area {
-            display: none;
-        }
-        .toc-level-3 i,
-        .toc-level-3 ol {
-            display: none !important;
-        }
-    </style>
-
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
-
-    <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
-    </script>
-
-
-
-    
-<div class="share">
-    
-        <div class="bdsharebuttonbox">
-            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
-            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
-            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
-            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
-            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
-            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
         </div>
-        <script>
-            window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"简单的二进制加密壳　| 皮三宝のBlog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-        </script>
-    
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>May 10, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
 
-    
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/06/11/windows%E9%A9%B1%E5%8A%A8/" title="windows驱动">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">windows驱动</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/04/11/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/" title="多线程入门知识">
+                        <span class="hidden-mobile">多线程入门知识</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
 </div>
 
 
 
 
 
-
-
-    
-
-
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/2020/06/11/windows%E9%A9%B1%E5%8A%A8/" title="上一篇: windows驱动">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        
-
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-
-        
-            <a href="/2020/04/11/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/" title="下一篇: 多线程入门知识">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/08/09/%E6%AF%8F%E6%97%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02022-8-9/">每周学习笔记2022-8月</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/17/windows10-kernel-pool-exploitation/">windows10 kernel pool exploitation</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/06/%E5%85%B3%E4%BA%8E32%E4%BD%8D%E4%B8%8E64%E4%BD%8D%E7%A8%8B%E5%BA%8F%E5%88%87%E6%8D%A2/">关于32位与64位程序切换</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/v8-fullchain/">v8 fullchain</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/ctf-web%E5%88%B7%E9%A2%98/">ctf-web刷题</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/24/cve-2019-5782/">cve-2019-5782</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/v8%E5%85%A5%E9%97%A8/">v8入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/cve-2021-31956-win7-ver/">cve-2021-31956 win7 ver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/06/win7-kernel-pool-exploitation/">win7 kernel pool exploitation</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/27/%E5%88%86%E4%BA%AB%E4%B8%80%E6%B3%A2%E5%B7%A5%E4%BD%9C%E7%BB%8F%E5%8E%86/">分享一波工作经历</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/27/%E5%97%9C%E8%A1%80%E5%8D%B0trainer/">嗜血印trainer</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/27/fuzzgen-build-instructions/">fuzzgen build instructions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/01/COM/">COM</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/01/LPE%E5%9F%BA%E7%A1%80/">LPE基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/16/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E4%B9%8B%E6%97%85/">漏洞挖掘之旅</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/27/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E7%97%85%E6%AF%92%E5%88%86%E6%9E%90/">与黑产的一次对抗</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/27/%E5%85%B3%E4%BA%8ECVE-2020-12431%E7%9A%84%E6%80%BB%E7%BB%93/">关于CVE-2020-12431的总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/16/%E8%B0%83%E8%AF%95%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BC%96%E5%86%99/">调试器学习与编写</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/%E5%85%B3%E4%BA%8Ec/">关于c++</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/03/2020%E5%9B%BD%E8%B5%9B%E6%80%BB%E5%86%B3%E8%B5%9Bre/">2020国赛总决赛re</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/17/sctf-2020-writeup/">sctf 2020 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/13/gactf-2020-writeup/">gactf 2020 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/07/%E5%A4%8D%E4%B9%A0%E4%B8%80%E6%B3%A2pwn/">复习一波pwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/28/Windows%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">Windows内存管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/26/Exception-Handling-in-CTF/">Exception Handling in CTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/25/2020%E5%BC%BA%E7%BD%91%E6%9D%AF/">2020强网杯</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/22/%E7%BB%99%E5%A4%A7%E4%BA%8C%E7%94%BB%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%AE%8C%E7%BE%8E%E7%9A%84%E5%8F%A5%E5%8F%B7/">给大二画上一个完美的句号</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/">异常处理机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/APC/">APC</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/Windows%E5%86%85%E6%A0%B8/">Windows内核</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/%E8%87%AA%E6%97%8B%E9%94%81/">自旋锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/SSDT-HOOK/">SSDT HOOK</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/">API从3到0的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/">进程线程</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/11/windows%E9%A9%B1%E5%8A%A8/">windows驱动</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/11/%E7%AE%80%E5%8D%95%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8A%A0%E5%AF%86%E5%A3%B3/">简单的二进制加密壳</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/11/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/">多线程入门知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/11/PE/">PE</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/05/%E5%A4%A7%E4%BA%8C%E4%B8%8A%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">大二上学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/%E6%9A%91%E5%81%87%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/">暑假学习随笔</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/06/des%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/">des算法小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/03/%E5%88%9D%E6%8E%A2mips%E9%80%86%E5%90%91/">初探mips逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/30/qwbctf-re/">qwbctf re</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/23/HITCON-Training/">HITCON-Training</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/22/%E9%87%91%E9%99%B5%E6%9F%90%E9%81%93re/">金陵某道re</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/08/hello-x1ct34m/">hello X1cT34m</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/%E4%BA%94%E4%B8%80%E5%B0%8F%E7%BB%93/">五一小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/26/%E5%88%86%E4%BA%AB%E5%87%A0%E9%81%93re/">分享几道re</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/24/%E5%9B%BD%E8%B5%9Bwrite-up/">国赛write_up</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/18/%E7%B2%BE%E8%AF%BB%E3%80%8Aglibc%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86ptmalloc%E6%BA%90%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E3%80%8B/">精读《glibc内存管理ptmalloc源代码分析》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/14/susctf-2019/">susctf 2019</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/">PWN养成计划</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/08/%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E5%B0%8F%E7%BB%93-re%E9%A2%98%E8%A7%A3-%E9%99%84%E9%A2%98/">西湖论剑小结-re题解(附题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/06/%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E4%B9%8B%E4%B9%8B%E8%8A%B1/">逆向分析之花</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/05/iot-rootkit%E5%AD%A6%E4%B9%A0-week4-1/">iot rootkit学习 week4</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/28/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-3-1/">iot rootkit 学习 week-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/25/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/">PWN刷题小记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/25/CTF-%E9%80%86%E5%90%91-level-uphexo-d/">CTF 逆向 level up!!!</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/21/iot-rootkit-%E5%AD%A6%E4%B9%A0-week2-2/">iot rootkit 学习 week2-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/20/iot-rootkit-%E5%AD%A6%E4%B9%A0-week2-1/">iot rootkit 学习 week2-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/15/32-or-64/">32 or 64</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/15/%E6%B7%B1%E5%85%A5angr%E4%B9%8BI-hate-smc/">深入angr之I_hate_smc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/CTF%E5%88%B7%E9%A2%98%E5%B0%8F%E8%AE%B0/">CTF刷题小记(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/09/Hello-movfuscator/">Hello movfuscator!</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/06/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-3/">iot rootkit 学习(week 1-3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/">iot rootkit 学习(week 1-2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/03/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1/">iot rootkit 学习(week 1-1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/02/iot-rootkit-%E5%AD%A6%E4%B9%A0-0/">iot rootkit 学习(week 0)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/01/%E5%85%B3%E4%BA%8E%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%80%BB%E7%BB%93/">angr符号执行工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/26/TAMUctf/">TAMUctf</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/22/HGAME-2019-week3/">HGAME 2019 week3</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/20/hello-world/">皮三宝のCTF之旅</a></li></ul>
-
-
-
-
-    <script>
-        
-    </script>
-
-
-<!--gitment 评论-->
-
-  <div class="comments" id="comments">
   
-	<!--汉化-->
-    <link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
-	<script src="https://billts.site/js/gitment.js"></script>
-	<!--原型-->
-	<!--
-	<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js" type="text/javascript"></script>
-	-->
-	
-      <div id="gitmentContainer" style="margin-bottom: -19px;"></div>
-     
-      <style>
-        .gitment-container a {
-          border: none;
-        }
-        .comments {
-          margin: 60px 0 0;padding: 0 60px;
-        }
-      </style>
-     
-      <script type="text/javascript">
-        var gitment = new Gitment({
-			  id: '简单的二进制加密壳',
-			  title: '简单的二进制加密壳',
-			  owner: 'psbazx',
-			  repo: 'psbazx.github.io',
-			  oauth: {
-				client_id: '59c225643d25297ec9a6',
-				client_secret: '68de996daba73b437b8e946e47147532aead193a',
-			  },
-        })
-        gitment.render('gitmentContainer')
-      </script>
-    
-  </div>
 
-<!--gitment 评论 end--></div>
-      <footer id="footer">
-    <div class="outer">
-        <div id="footer-info">
-            <div class="footer-left">
-                <i class="fa fa-copyright"></i> 
-                2019-2022 皮三宝
-            </div>
-            <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
-            </div>
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
         </div>
-        
-            <div class="visit">
-                
-                    <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="到访的死肥宅数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
-                        </span>
-                    </span>
-                
-                
-                    <span>| </span>
-                
-                
-                    <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    </span>
-                
-            </div>
-        
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
-</footer>
-    </div>
-    
-<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            var iPad = window.navigator.userAgent.indexOf('iPad');
-            if (iPad > -1 || $(".left-col").css("display") === "none") {
-                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
-                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
-                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
-            }
-            else {
-                var backgroundnum = 6;
-                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
-                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
-            }
-        })
-    </script>
-
-
-
-
-
-<div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+  </div>
 </div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
 <script>
-    // Open in New Window
-    
-        var oOpenInNew = {
-            
-            
-            
-            
-            
-            
-             archives: ".archive-article-title", 
-             miniArchives: "a.post-list-link", 
-            
-             friends: "#js-friends a", 
-             socail: ".social a" 
-        }
-        for (var x in oOpenInNew) {
-            $(oOpenInNew[x]).attr("target", "_blank");
-        }
-    
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
 </script>
 
-    <script>
-        var originTitle = document.title;
-        var titleTime;
-        document.addEventListener("visibilitychange", function() {
-            if (document.hidden) {
-                document.title = "蜘蛛在上路" + originTitle;
-                clearTimeout(titleTime);
-            }
-            else {
-                document.title = "你在淦神魔" + originTitle;
-                titleTime = setTimeout(function() {
-                    document.title = originTitle;
-                }, 2000);
-            }
-        })
-    </script>
 
-<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
 </script>
 
-  </div>
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
 </body>
 </html>

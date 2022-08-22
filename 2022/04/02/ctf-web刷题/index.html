@@ -1,21 +1,22 @@
+
+
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
 <head>
-
-    <!--[if lt IE 9]>
-        <style>body {display: none; background: none !important} </style>
-        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
-    <![endif]-->
-
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="format-detection" content="telephone=no" />
-<meta name="author" content="皮三宝" />
-
-
-
-<meta name="description" content="平台ctf show 很多水题，写着玩玩。太水的就不写了。">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="平台ctf show 很多水题，写着玩玩。太水的就不写了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ctf-web刷题">
 <meta property="og:url" content="http://www.psbazx.com/2022/04/02/ctf-web%E5%88%B7%E9%A2%98/index.html">
@@ -33,309 +34,254 @@
 <meta property="article:author" content="皮三宝">
 <meta property="article:tag" content="ctf">
 <meta property="article:tag" content="web">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://www.psbazx.com/2022/04/02/ctf-web%E5%88%B7%E9%A2%98/image-20220402210140904.png">
+  
+  
+  
+  <title>ctf-web刷题 - 皮三宝のBlog</title>
 
-<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
-
-
-    <link rel="alternate" href="/atom.xml" title="皮三宝のBlog" type="application/atom+xml">
-
-
-
-    <link rel="shortcut icon" href="/32.ico">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
 
-    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
-    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
-    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
-    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
 
 
 
-<link rel="stylesheet" href="/css/style.css">
 
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
-
-
-<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-
-
-<title>ctf-web刷题 | 皮三宝のBlog</title>
-
-<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
-
-<script>
-    var yiliaConfig = {
-        fancybox: true,
-        animate: true,
-        isHome: false,
-        isPost: true,
-        isArchive: false,
-        isTag: false,
-        isCategory: false,
-        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
-        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
-        search: true
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
-</script>
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
 
 
-    <script>
-        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
-    </script>
-
-
-
-    <script> yiliaConfig.rootUrl = "\/";</script>
-
-
-
-
-
-
+  
 <meta name="generator" content="Hexo 5.3.0"></head>
+
+
 <body>
-  <div id="container">
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-    <header id="header" class="inner">
-        <a href="/" class="profilepic">
-            <img src="/img/pisanbao.jpg" class="animated zoomIn">
-        </a>
-        <hgroup>
-          <h1 class="header-author"><a href="/"></a></h1>
-        </hgroup>
-
-        
-
-        
-            <form id="search-form">
-            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
-            <i class="fa fa-times" onclick="resetSearch()"></i>
-            </form>
-            <div id="local-search-result"></div>
-            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
-        
-
-
-        
-            <div id="switch-btn" class="switch-btn">
-                <div class="icon">
-                    <div class="icon-ctn">
-                        <div class="icon-wrap icon-house" data-idx="0">
-                            <div class="birdhouse"></div>
-                            <div class="birdhouse_holes"></div>
-                        </div>
-                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
-                            <div class="ribbon"></div>
-                        </div>
-                        
-                        <div class="icon-wrap icon-link hide" data-idx="2">
-                            <div class="loopback_l"></div>
-                            <div class="loopback_r"></div>
-                        </div>
-                        
-                        
-                        <div class="icon-wrap icon-me hide" data-idx="3">
-                            <div class="user"></div>
-                            <div class="shoulder"></div>
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-                <div class="tips-box hide">
-                    <div class="tips-arrow"></div>
-                    <ul class="tips-inner">
-                        <li>Menu</li>
-                        <li>Some tags</li>
-                        
-                        <li>通向dalaosのlinks</li>
-                        
-                        
-                        <li>皮三宝</li>
-                        
-                    </ul>
-                </div>
-            </div>
-        
-
-        <div id="switch-area" class="switch-area">
-            <div class="switch-wrap">
-                <section class="switch-part switch-part1">
-                    <nav class="header-menu">
-                        <ul>
-                        
-                            <li><a href="/">PiSanbao&#39;s_Home</a></li>
-                        
-                            <li><a href="/archives/">My_articles</a></li>
-                        
-                            <li><a href="/about/">Who is PiSanbao</a></li>
-                        
-                            <li><a href="/">Can_you_find_my_secrets?</a></li>
-                        
-                            <li><a href="/">/secrets/</a></li>
-                        
-                        </ul>
-                    </nav>
-                    <nav class="header-nav">
-                        <ul class="social">
-                            
-                                <a class="fa Email" href="mailto:1403517540@qq.com" title="Email"></a>
-                            
-                                <a class="fa CSDN" target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43487707?t=1" title="CSDN"></a>
-                            
-                                <a class="fa bilibili" target="_blank" rel="noopener" href="https://space.bilibili.com/20677447" title="bilibili"></a>
-                            
-                                <a class="fa QQ" target="_blank" rel="noopener" href="http://qm.qq.com/cgi-bin/qm/qr?k=qMplqFBOWwPeyGRCczyES8giBIhWAxeu" title="QQ"></a>
-                            
-                                <a class="fa 微信" target="_blank" rel="noopener" href="https://u.wechat.com/ENFVbHA49PGks_bjNpDQqD0" title="微信"></a>
-                            
-                        </ul>
-                    </nav>
-                </section>
-                
-                
-                <section class="switch-part switch-part2">
-                    <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/X1cT34m/" rel="tag">X1cT34m</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angr/" rel="tag">angr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/" rel="tag">ctf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/daily/" rel="tag">daily</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fuzz/" rel="tag">fuzz</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iot/" rel="tag">iot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kernel/" rel="tag">kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lpe/" rel="tag">lpe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pwn/" rel="tag">pwn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/re/" rel="tag">re</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reading/" rel="tag">reading</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rootkit/" rel="tag">rootkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/v8/" rel="tag">v8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/" rel="tag">windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%A5%E5%B8%B8/" rel="tag">日常</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%9D%E7%96%97/" rel="tag">话疗</a></li></ul>
-                    </div>
-                </section>
-                
-                
-                
-                <section class="switch-part switch-part3">
-                    <div id="js-friends">
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://www.brethland.com">brethland</a>
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://yulige.top/">郁离歌</a>
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://120.79.211.91/#qixi2018">人人人</a>
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://blog.wangxiyu.me/#wangxiyu191.github.com">wxy191</a>
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://atum.li/">Atum</a>
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://blog.csdn.net/whklhhhh">奈沙夜影</a>
-                    
-                    </div>
-                </section>
-                
-
-                
-                
-                <section class="switch-part switch-part4">
-                
-                    <div id="js-aboutme">凤凰涅槃，浴火重生。</div>
-                </section>
-                
-            </div>
-        </div>
-    </header>                
-</div>
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-      <div class="overlay">
-          <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
-      </div>
-    <div class="intrude-less">
-        <header id="header" class="inner">
-            <a href="/" class="profilepic">
-                <img src="/img/pisanbao.jpg" class="animated zoomIn">
-            </a>
-            <hgroup>
-              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
-            </hgroup>
-            
-            <nav class="header-menu">
-                <ul>
-                
-                    <li><a href="/">PiSanbao&#39;s_Home</a></li>
-                
-                    <li><a href="/archives/">My_articles</a></li>
-                
-                    <li><a href="/about/">Who is PiSanbao</a></li>
-                
-                    <li><a href="/">Can_you_find_my_secrets?</a></li>
-                
-                    <li><a href="/">/secrets/</a></li>
-                
-                <div class="clearfix"></div>
-                </ul>
-            </nav>
-            <nav class="header-nav">
-                        <ul class="social">
-                            
-                                <a class="fa Email" target="_blank" href="mailto:1403517540@qq.com" title="Email"></a>
-                            
-                                <a class="fa CSDN" target="_blank" href="https://blog.csdn.net/qq_43487707?t=1" title="CSDN"></a>
-                            
-                                <a class="fa bilibili" target="_blank" href="https://space.bilibili.com/20677447" title="bilibili"></a>
-                            
-                                <a class="fa QQ" target="_blank" href="http://qm.qq.com/cgi-bin/qm/qr?k=qMplqFBOWwPeyGRCczyES8giBIhWAxeu" title="QQ"></a>
-                            
-                                <a class="fa 微信" target="_blank" href="https://u.wechat.com/ENFVbHA49PGks_bjNpDQqD0" title="微信"></a>
-                            
-                        </ul>
-            </nav>
-        </header>                
-    </div>
-    <link class="menu-list" tags="Some tags" friends="通向dalaosのlinks" about="皮三宝"/>
-</nav>
-      <div class="body-wrap"><article id="post-ctf-web刷题" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2022/04/02/ctf-web%E5%88%B7%E9%A2%98/" class="article-date">
-      <time datetime="2022-04-01T21:24:55.000Z" itemprop="datePublished">2022-04-01</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      ctf-web刷题
-    </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-
-        
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ctf/" rel="tag">ctf</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
-    </div>
-
-        <div class="clearfix"></div>
-      </div>
-      
+  <header>
     
-    <div class="article-entry" itemprop="articleBody">
-      
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
           
-        <p>平台ctf show</p>
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="ctf-web刷题"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-04-01 21:24" pubdate>
+          April 1, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.8k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          40 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ctf-web刷题</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>平台ctf show</p>
 <p>很多水题，写着玩玩。太水的就不写了。</p>
 <a id="more"></a>
 
@@ -349,32 +295,32 @@
 <h2 id="爆破"><a href="#爆破" class="headerlink" title="爆破"></a>爆破</h2><h3 id="web21"><a href="#web21" class="headerlink" title="web21"></a>web21</h3><p>给了字典，bp直接跑就完事了。</p>
 <p>Cutom iterator然后设置下base64encode即可，记得把urlencode关了</p>
 <p>多跑个几次，有可能会失败</p>
-<p><img src="image-20220402210140904.png" alt="image-20220402210140904"></p>
+<p><img src="image-20220402210140904.png" srcset="/img/loading.gif" lazyload alt="image-20220402210140904"></p>
 <h3 id="web22"><a href="#web22" class="headerlink" title="web22"></a>web22</h3><p>这题更偏向信息搜集，用layer爆子域名即可</p>
-<h3 id="web23"><a href="#web23" class="headerlink" title="web23"></a>web23</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Author</span>: h1xa</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Date</span>:   2020-09-03 11:43:51</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Last</span> Modified by:   h1xa</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Last</span> Modified time: 2020-09-03 11:56:11</span></span><br><span class="line"><span class="comment"># <span class="doctag">@email</span>: h1xa<span class="doctag">@ctfer</span>.com</span></span><br><span class="line"><span class="comment"># <span class="doctag">@link</span>: https://ctfer.com</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">include</span>(<span class="string">&#x27;flag.php&#x27;</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;token&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$token</span> = md5(<span class="variable">$_GET</span>[<span class="string">&#x27;token&#x27;</span>]);</span><br><span class="line">    <span class="keyword">if</span>(substr(<span class="variable">$token</span>, <span class="number">1</span>,<span class="number">1</span>)===substr(<span class="variable">$token</span>, <span class="number">14</span>,<span class="number">1</span>) &amp;&amp; substr(<span class="variable">$token</span>, <span class="number">14</span>,<span class="number">1</span>) ===substr(<span class="variable">$token</span>, <span class="number">17</span>,<span class="number">1</span>))&#123;</span><br><span class="line">        <span class="keyword">if</span>((intval(substr(<span class="variable">$token</span>, <span class="number">1</span>,<span class="number">1</span>))+intval(substr(<span class="variable">$token</span>, <span class="number">14</span>,<span class="number">1</span>))+substr(<span class="variable">$token</span>, <span class="number">17</span>,<span class="number">1</span>))/substr(<span class="variable">$token</span>, <span class="number">1</span>,<span class="number">1</span>)===intval(substr(<span class="variable">$token</span>, <span class="number">31</span>,<span class="number">1</span>)))&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="web23"><a href="#web23" class="headerlink" title="web23"></a>web23</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"># -*- coding: utf-8 -*-</span><br><span class="hljs-comment"># <span class="hljs-doctag">@Author</span>: h1xa</span><br><span class="hljs-comment"># <span class="hljs-doctag">@Date</span>:   2020-09-03 11:43:51</span><br><span class="hljs-comment"># <span class="hljs-doctag">@Last</span> Modified by:   h1xa</span><br><span class="hljs-comment"># <span class="hljs-doctag">@Last</span> Modified time: 2020-09-03 11:56:11</span><br><span class="hljs-comment"># <span class="hljs-doctag">@email</span>: h1xa<span class="hljs-doctag">@ctfer</span>.com</span><br><span class="hljs-comment"># <span class="hljs-doctag">@link</span>: https://ctfer.com</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">*/</span><br>error_reporting(<span class="hljs-number">0</span>);<br><br><span class="hljs-keyword">include</span>(<span class="hljs-string">&#x27;flag.php&#x27;</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;token&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$token</span> = md5(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;token&#x27;</span>]);<br>    <span class="hljs-keyword">if</span>(substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">1</span>,<span class="hljs-number">1</span>)===substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">14</span>,<span class="hljs-number">1</span>) &amp;&amp; substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">14</span>,<span class="hljs-number">1</span>) ===substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">17</span>,<span class="hljs-number">1</span>))&#123;<br>        <span class="hljs-keyword">if</span>((intval(substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">1</span>,<span class="hljs-number">1</span>))+intval(substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">14</span>,<span class="hljs-number">1</span>))+substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">17</span>,<span class="hljs-number">1</span>))/substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">1</span>,<span class="hljs-number">1</span>)===intval(substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">31</span>,<span class="hljs-number">1</span>)))&#123;<br>            <span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br>        &#125;<br>    &#125;<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    highlight_file(<span class="hljs-keyword">__FILE__</span>);<br><br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
 <p>自己写脚本跑</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$string</span> = <span class="string">&#x27;abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span>;</span><br><span class="line"><span class="keyword">for</span>(<span class="variable">$a</span>=<span class="number">0</span>;<span class="variable">$a</span>&lt;strlen(<span class="variable">$string</span>);<span class="variable">$a</span>++)&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="variable">$b</span>=<span class="number">0</span>;<span class="variable">$b</span>&lt;strlen(<span class="variable">$string</span>);<span class="variable">$b</span>++)&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="variable">$c</span>=<span class="number">0</span>;<span class="variable">$c</span>&lt;strlen(<span class="variable">$string</span>);<span class="variable">$c</span>++)&#123;</span><br><span class="line">            <span class="variable">$flag</span> = <span class="variable">$string</span>[<span class="variable">$a</span>].<span class="variable">$string</span>[<span class="variable">$b</span>].<span class="variable">$string</span>[<span class="variable">$c</span>];</span><br><span class="line">            <span class="variable">$token</span> = md5(<span class="variable">$flag</span>);</span><br><span class="line">            <span class="keyword">if</span>(substr(<span class="variable">$token</span>, <span class="number">1</span>,<span class="number">1</span>)===substr(<span class="variable">$token</span>, <span class="number">14</span>,<span class="number">1</span>) &amp;&amp; substr(<span class="variable">$token</span>, <span class="number">14</span>,<span class="number">1</span>) ===substr(<span class="variable">$token</span>, <span class="number">17</span>,<span class="number">1</span>))&#123;</span><br><span class="line">                <span class="keyword">if</span>((intval(substr(<span class="variable">$token</span>, <span class="number">1</span>,<span class="number">1</span>))+intval(substr(<span class="variable">$token</span>, <span class="number">14</span>,<span class="number">1</span>))+substr(<span class="variable">$token</span>, <span class="number">17</span>,<span class="number">1</span>))/substr(<span class="variable">$token</span>, <span class="number">1</span>,<span class="number">1</span>)===intval(substr(<span class="variable">$token</span>, <span class="number">31</span>,<span class="number">1</span>)))&#123;</span><br><span class="line">                    <span class="keyword">echo</span> <span class="variable">$flag</span>.<span class="string">&quot;\n&quot;</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">a6e</span><br><span class="line">aDp</span><br><span class="line"><span class="keyword">b7l</span></span><br><span class="line"><span class="keyword">ejt</span></span><br><span class="line"><span class="keyword">hc2</span></span><br><span class="line"><span class="keyword">jGd</span></span><br><span class="line"><span class="keyword">ktD</span></span><br><span class="line"><span class="keyword">o07</span></span><br><span class="line"><span class="keyword">pjd</span></span><br><span class="line"><span class="keyword">ubv</span></span><br><span class="line"><span class="keyword">v8O</span></span><br><span class="line"><span class="keyword">vMJ</span></span><br><span class="line"><span class="keyword">wuB</span></span><br><span class="line"><span class="keyword">wyG</span></span><br><span class="line"><span class="keyword">xjF</span></span><br><span class="line"><span class="keyword">1zg</span></span><br><span class="line"><span class="keyword">4cQ</span></span><br><span class="line"><span class="keyword">422</span></span><br><span class="line"><span class="keyword">6xU</span></span><br><span class="line"><span class="keyword">6Vh</span></span><br><span class="line"><span class="keyword">7vE</span></span><br><span class="line"><span class="keyword">AKh</span></span><br><span class="line"><span class="keyword">D36</span></span><br><span class="line"><span class="keyword">DCj</span></span><br><span class="line"><span class="keyword">GT7</span></span><br><span class="line"><span class="keyword">H3D</span></span><br><span class="line"><span class="keyword">Jik</span></span><br><span class="line"><span class="keyword">JKh</span></span><br><span class="line"><span class="keyword">KtR</span></span><br><span class="line"><span class="keyword">K2e</span></span><br><span class="line"><span class="keyword">LfJ</span></span><br><span class="line"><span class="keyword">Lqj</span></span><br><span class="line"><span class="keyword">Nzc</span></span><br><span class="line"><span class="keyword">Oie</span></span><br><span class="line"><span class="keyword">OiU</span></span><br><span class="line"><span class="keyword">R7V</span></span><br><span class="line"><span class="keyword">ScB</span></span><br><span class="line"><span class="keyword">SSM</span></span><br><span class="line"><span class="keyword">SVi</span></span><br><span class="line"><span class="keyword">UYg</span></span><br><span class="line"><span class="keyword">WwF</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>error_reporting(<span class="hljs-number">0</span>);<br><br><span class="hljs-variable">$string</span> = <span class="hljs-string">&#x27;abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ&#x27;</span>;<br><span class="hljs-keyword">for</span>(<span class="hljs-variable">$a</span>=<span class="hljs-number">0</span>;<span class="hljs-variable">$a</span>&lt;strlen(<span class="hljs-variable">$string</span>);<span class="hljs-variable">$a</span>++)&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-variable">$b</span>=<span class="hljs-number">0</span>;<span class="hljs-variable">$b</span>&lt;strlen(<span class="hljs-variable">$string</span>);<span class="hljs-variable">$b</span>++)&#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-variable">$c</span>=<span class="hljs-number">0</span>;<span class="hljs-variable">$c</span>&lt;strlen(<span class="hljs-variable">$string</span>);<span class="hljs-variable">$c</span>++)&#123;<br>            <span class="hljs-variable">$flag</span> = <span class="hljs-variable">$string</span>[<span class="hljs-variable">$a</span>].<span class="hljs-variable">$string</span>[<span class="hljs-variable">$b</span>].<span class="hljs-variable">$string</span>[<span class="hljs-variable">$c</span>];<br>            <span class="hljs-variable">$token</span> = md5(<span class="hljs-variable">$flag</span>);<br>            <span class="hljs-keyword">if</span>(substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">1</span>,<span class="hljs-number">1</span>)===substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">14</span>,<span class="hljs-number">1</span>) &amp;&amp; substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">14</span>,<span class="hljs-number">1</span>) ===substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">17</span>,<span class="hljs-number">1</span>))&#123;<br>                <span class="hljs-keyword">if</span>((intval(substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">1</span>,<span class="hljs-number">1</span>))+intval(substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">14</span>,<span class="hljs-number">1</span>))+substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">17</span>,<span class="hljs-number">1</span>))/substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">1</span>,<span class="hljs-number">1</span>)===intval(substr(<span class="hljs-variable">$token</span>, <span class="hljs-number">31</span>,<span class="hljs-number">1</span>)))&#123;<br>                    <span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>.<span class="hljs-string">&quot;\n&quot;</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">a6e<br>aDp<br><span class="hljs-keyword">b7l</span><br><span class="hljs-keyword">ejt</span><br><span class="hljs-keyword">hc2</span><br><span class="hljs-keyword">jGd</span><br><span class="hljs-keyword">ktD</span><br><span class="hljs-keyword">o07</span><br><span class="hljs-keyword">pjd</span><br><span class="hljs-keyword">ubv</span><br><span class="hljs-keyword">v8O</span><br><span class="hljs-keyword">vMJ</span><br><span class="hljs-keyword">wuB</span><br><span class="hljs-keyword">wyG</span><br><span class="hljs-keyword">xjF</span><br><span class="hljs-keyword">1zg</span><br><span class="hljs-keyword">4cQ</span><br><span class="hljs-keyword">422</span><br><span class="hljs-keyword">6xU</span><br><span class="hljs-keyword">6Vh</span><br><span class="hljs-keyword">7vE</span><br><span class="hljs-keyword">AKh</span><br><span class="hljs-keyword">D36</span><br><span class="hljs-keyword">DCj</span><br><span class="hljs-keyword">GT7</span><br><span class="hljs-keyword">H3D</span><br><span class="hljs-keyword">Jik</span><br><span class="hljs-keyword">JKh</span><br><span class="hljs-keyword">KtR</span><br><span class="hljs-keyword">K2e</span><br><span class="hljs-keyword">LfJ</span><br><span class="hljs-keyword">Lqj</span><br><span class="hljs-keyword">Nzc</span><br><span class="hljs-keyword">Oie</span><br><span class="hljs-keyword">OiU</span><br><span class="hljs-keyword">R7V</span><br><span class="hljs-keyword">ScB</span><br><span class="hljs-keyword">SSM</span><br><span class="hljs-keyword">SVi</span><br><span class="hljs-keyword">UYg</span><br><span class="hljs-keyword">WwF</span><br></code></pre></td></tr></table></figure>
 <p>答案很多随便挑一个</p>
-<h3 id="web24"><a href="#web24" class="headerlink" title="web24"></a>web24</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">&lt;?php</span></span><br><span class="line"><span class="section"></span></span><br><span class="line"><span class="section">/*</span></span><br><span class="line"><span class="section"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="section"># @Author: h1xa</span></span><br><span class="line"><span class="section"># @Date:   2020-09-03 13<span class="number">:26</span><span class="number">:39</span></span></span><br><span class="line"><span class="section"># @Last Modified by:   h1xa</span></span><br><span class="line"><span class="section"># @Last Modified time: 2020-09-03 13<span class="number">:53</span><span class="number">:31</span></span></span><br><span class="line"><span class="section"># @email: h1xa@ctfer.com</span></span><br><span class="line"><span class="section"># @link: https://ctfer.com</span></span><br><span class="line"><span class="section"></span></span><br><span class="line"><span class="section">*/</span></span><br><span class="line"><span class="section"></span></span><br><span class="line"><span class="section">error_reporting(0);</span></span><br><span class="line"><span class="section">include(<span class="string">&quot;flag.php&quot;</span>);</span></span><br><span class="line"><span class="section">if(isset($_GET[&#x27;r&#x27;]))&#123;</span></span><br><span class="line"><span class="section">    $r = $_GET[&#x27;r&#x27;];</span></span><br><span class="line"><span class="section">    mt_srand(372619038);</span></span><br><span class="line"><span class="section">    if(intval($r)===intval(mt_rand()))&#123;</span></span><br><span class="line"><span class="section">        echo $flag;</span></span><br><span class="line"><span class="section">    &#125;</span></span><br><span class="line"><span class="section">&#125;else&#123;</span></span><br><span class="line"><span class="section">    highlight_file(__FILE__);</span></span><br><span class="line"><span class="section">    echo system(&#x27;cat /proc/version&#x27;);</span></span><br><span class="line"><span class="section">&#125;</span></span><br><span class="line"><span class="section"></span></span><br><span class="line"><span class="section">?&gt;</span> <span class="attribute">Linux</span> version <span class="number">5</span>.<span class="number">4</span>.<span class="number">0</span>-<span class="number">100</span>-generic (buildd@lcy<span class="number">02</span>-amd<span class="number">64</span>-<span class="number">002</span>) (gcc version <span class="number">9</span>.<span class="number">3</span>.<span class="number">0</span> (Ubuntu <span class="number">9</span>.<span class="number">3</span>.<span class="number">0</span>-<span class="number">17</span>ubuntu<span class="number">1</span>~<span class="number">20</span>.<span class="number">04</span>)) #<span class="number">113</span>-Ubuntu SMP Thu Feb <span class="number">3</span> <span class="number">18</span>:<span class="number">43</span>:<span class="number">29</span> UTC <span class="number">2022</span> Linux version <span class="number">5</span>.<span class="number">4</span>.<span class="number">0</span>-<span class="number">100</span>-generic (buildd@lcy<span class="number">02</span>-amd<span class="number">64</span>-<span class="number">002</span>) (gcc version <span class="number">9</span>.<span class="number">3</span>.<span class="number">0</span> (Ubuntu <span class="number">9</span>.<span class="number">3</span>.<span class="number">0</span>-<span class="number">17</span>ubuntu<span class="number">1</span>~<span class="number">20</span>.<span class="number">04</span>)) #<span class="number">113</span>-Ubuntu SMP Thu Feb <span class="number">3</span> <span class="number">18</span>:<span class="number">43</span>:<span class="number">29</span> UTC <span class="number">2022</span></span><br></pre></td></tr></table></figure>
+<h3 id="web24"><a href="#web24" class="headerlink" title="web24"></a>web24</h3><figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-section">&lt;?php</span><br><span class="hljs-section"></span><br><span class="hljs-section">/*</span><br><span class="hljs-section"># -*- coding: utf-8 -*-</span><br><span class="hljs-section"># @Author: h1xa</span><br><span class="hljs-section"># @Date:   2020-09-03 13<span class="hljs-number">:26</span><span class="hljs-number">:39</span></span><br><span class="hljs-section"># @Last Modified by:   h1xa</span><br><span class="hljs-section"># @Last Modified time: 2020-09-03 13<span class="hljs-number">:53</span><span class="hljs-number">:31</span></span><br><span class="hljs-section"># @email: h1xa@ctfer.com</span><br><span class="hljs-section"># @link: https://ctfer.com</span><br><span class="hljs-section"></span><br><span class="hljs-section">*/</span><br><span class="hljs-section"></span><br><span class="hljs-section">error_reporting(0);</span><br><span class="hljs-section">include(<span class="hljs-string">&quot;flag.php&quot;</span>);</span><br><span class="hljs-section">if(isset($_GET[&#x27;r&#x27;]))&#123;</span><br><span class="hljs-section">    $r = $_GET[&#x27;r&#x27;];</span><br><span class="hljs-section">    mt_srand(372619038);</span><br><span class="hljs-section">    if(intval($r)===intval(mt_rand()))&#123;</span><br><span class="hljs-section">        echo $flag;</span><br><span class="hljs-section">    &#125;</span><br><span class="hljs-section">&#125;else&#123;</span><br><span class="hljs-section">    highlight_file(__FILE__);</span><br><span class="hljs-section">    echo system(&#x27;cat /proc/version&#x27;);</span><br><span class="hljs-section">&#125;</span><br><span class="hljs-section"></span><br><span class="hljs-section">?&gt;</span> <span class="hljs-attribute">Linux</span> version <span class="hljs-number">5</span>.<span class="hljs-number">4</span>.<span class="hljs-number">0</span>-<span class="hljs-number">100</span>-generic (buildd@lcy<span class="hljs-number">02</span>-amd<span class="hljs-number">64</span>-<span class="hljs-number">002</span>) (gcc version <span class="hljs-number">9</span>.<span class="hljs-number">3</span>.<span class="hljs-number">0</span> (Ubuntu <span class="hljs-number">9</span>.<span class="hljs-number">3</span>.<span class="hljs-number">0</span>-<span class="hljs-number">17</span>ubuntu<span class="hljs-number">1</span>~<span class="hljs-number">20</span>.<span class="hljs-number">04</span>)) #<span class="hljs-number">113</span>-Ubuntu SMP Thu Feb <span class="hljs-number">3</span> <span class="hljs-number">18</span>:<span class="hljs-number">43</span>:<span class="hljs-number">29</span> UTC <span class="hljs-number">2022</span> Linux version <span class="hljs-number">5</span>.<span class="hljs-number">4</span>.<span class="hljs-number">0</span>-<span class="hljs-number">100</span>-generic (buildd@lcy<span class="hljs-number">02</span>-amd<span class="hljs-number">64</span>-<span class="hljs-number">002</span>) (gcc version <span class="hljs-number">9</span>.<span class="hljs-number">3</span>.<span class="hljs-number">0</span> (Ubuntu <span class="hljs-number">9</span>.<span class="hljs-number">3</span>.<span class="hljs-number">0</span>-<span class="hljs-number">17</span>ubuntu<span class="hljs-number">1</span>~<span class="hljs-number">20</span>.<span class="hljs-number">04</span>)) #<span class="hljs-number">113</span>-Ubuntu SMP Thu Feb <span class="hljs-number">3</span> <span class="hljs-number">18</span>:<span class="hljs-number">43</span>:<span class="hljs-number">29</span> UTC <span class="hljs-number">2022</span><br></code></pre></td></tr></table></figure>
 <p>伪随机数种子是定的，自然可预测</p>
 <p>输入1155388967</p>
-<h3 id="web25"><a href="#web25" class="headerlink" title="web25"></a>web25</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Author</span>: h1xa</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Date</span>:   2020-09-03 13:56:57</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Last</span> Modified by:   h1xa</span></span><br><span class="line"><span class="comment"># <span class="doctag">@Last</span> Modified time: 2020-09-03 15:47:33</span></span><br><span class="line"><span class="comment"># <span class="doctag">@email</span>: h1xa<span class="doctag">@ctfer</span>.com</span></span><br><span class="line"><span class="comment"># <span class="doctag">@link</span>: https://ctfer.com</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">error_reporting(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">include</span>(<span class="string">&quot;flag.php&quot;</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;r&#x27;</span>]))&#123;</span><br><span class="line">    <span class="variable">$r</span> = <span class="variable">$_GET</span>[<span class="string">&#x27;r&#x27;</span>];</span><br><span class="line">    mt_srand(hexdec(substr(md5(<span class="variable">$flag</span>), <span class="number">0</span>,<span class="number">8</span>)));</span><br><span class="line">    <span class="variable">$rand</span> = intval(<span class="variable">$r</span>)-intval(mt_rand());</span><br><span class="line">    <span class="keyword">if</span>((!<span class="variable">$rand</span>))&#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable">$_COOKIE</span>[<span class="string">&#x27;token&#x27;</span>]==(mt_rand()+mt_rand()))&#123;</span><br><span class="line">            <span class="keyword">echo</span> <span class="variable">$flag</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        <span class="keyword">echo</span> <span class="variable">$rand</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    highlight_file(<span class="keyword">__FILE__</span>);</span><br><span class="line">    <span class="keyword">echo</span> system(<span class="string">&#x27;cat /proc/version&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line">Linux version <span class="number">5.4</span><span class="number">.0</span><span class="number">-100</span>-generic (buildd@lcy02-amd64<span class="number">-002</span>) (gcc version <span class="number">9.3</span><span class="number">.0</span> (Ubuntu <span class="number">9.3</span><span class="number">.0</span><span class="number">-17</span>ubuntu1~<span class="number">20.04</span>)) <span class="comment">#113-Ubuntu SMP Thu Feb 3 18:43:29 UTC 2022 Linux version 5.4.0-100-generic (buildd@lcy02-amd64-002) (gcc version 9.3.0 (Ubuntu 9.3.0-17ubuntu1~20.04)) #113-Ubuntu SMP Thu Feb 3 18:43:29 UTC 2022</span></span><br></pre></td></tr></table></figure>
+<h3 id="web25"><a href="#web25" class="headerlink" title="web25"></a>web25</h3><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br><br><span class="hljs-comment">/*</span><br><span class="hljs-comment"># -*- coding: utf-8 -*-</span><br><span class="hljs-comment"># <span class="hljs-doctag">@Author</span>: h1xa</span><br><span class="hljs-comment"># <span class="hljs-doctag">@Date</span>:   2020-09-03 13:56:57</span><br><span class="hljs-comment"># <span class="hljs-doctag">@Last</span> Modified by:   h1xa</span><br><span class="hljs-comment"># <span class="hljs-doctag">@Last</span> Modified time: 2020-09-03 15:47:33</span><br><span class="hljs-comment"># <span class="hljs-doctag">@email</span>: h1xa<span class="hljs-doctag">@ctfer</span>.com</span><br><span class="hljs-comment"># <span class="hljs-doctag">@link</span>: https://ctfer.com</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">*/</span><br><br><br>error_reporting(<span class="hljs-number">0</span>);<br><span class="hljs-keyword">include</span>(<span class="hljs-string">&quot;flag.php&quot;</span>);<br><span class="hljs-keyword">if</span>(<span class="hljs-keyword">isset</span>(<span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;r&#x27;</span>]))&#123;<br>    <span class="hljs-variable">$r</span> = <span class="hljs-variable">$_GET</span>[<span class="hljs-string">&#x27;r&#x27;</span>];<br>    mt_srand(hexdec(substr(md5(<span class="hljs-variable">$flag</span>), <span class="hljs-number">0</span>,<span class="hljs-number">8</span>)));<br>    <span class="hljs-variable">$rand</span> = intval(<span class="hljs-variable">$r</span>)-intval(mt_rand());<br>    <span class="hljs-keyword">if</span>((!<span class="hljs-variable">$rand</span>))&#123;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-variable">$_COOKIE</span>[<span class="hljs-string">&#x27;token&#x27;</span>]==(mt_rand()+mt_rand()))&#123;<br>            <span class="hljs-keyword">echo</span> <span class="hljs-variable">$flag</span>;<br>        &#125;<br>    &#125;<span class="hljs-keyword">else</span>&#123;<br>        <span class="hljs-keyword">echo</span> <span class="hljs-variable">$rand</span>;<br>    &#125;<br>&#125;<span class="hljs-keyword">else</span>&#123;<br>    highlight_file(<span class="hljs-keyword">__FILE__</span>);<br>    <span class="hljs-keyword">echo</span> system(<span class="hljs-string">&#x27;cat /proc/version&#x27;</span>);<br>&#125;<br>Linux version <span class="hljs-number">5.4</span><span class="hljs-number">.0</span><span class="hljs-number">-100</span>-generic (buildd@lcy02-amd64<span class="hljs-number">-002</span>) (gcc version <span class="hljs-number">9.3</span><span class="hljs-number">.0</span> (Ubuntu <span class="hljs-number">9.3</span><span class="hljs-number">.0</span><span class="hljs-number">-17</span>ubuntu1~<span class="hljs-number">20.04</span>)) <span class="hljs-comment">#113-Ubuntu SMP Thu Feb 3 18:43:29 UTC 2022 Linux version 5.4.0-100-generic (buildd@lcy02-amd64-002) (gcc version 9.3.0 (Ubuntu 9.3.0-17ubuntu1~20.04)) #113-Ubuntu SMP Thu Feb 3 18:43:29 UTC 2022</span><br></code></pre></td></tr></table></figure>
 <p>先输入0然后得到第一个伪随机数，接着利用phpmtseed推出可能的seed</p>
-<p><img src="image-20220402221245889.png" alt="image-20220402221245889"></p>
+<p><img src="image-20220402221245889.png" srcset="/img/loading.gif" lazyload alt="image-20220402221245889"></p>
 <p>一个个测试即可</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">mt_srand(<span class="number">3496916371</span>);</span><br><span class="line"><span class="keyword">echo</span> intval(mt_rand()),<span class="string">&#x27;\n&#x27;</span>;</span><br><span class="line"><span class="keyword">echo</span> intval(mt_rand()+mt_rand())</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="image-20220402221256864.png" alt="image-20220402221256864"></p>
-<h3 id="web26"><a href="#web26" class="headerlink" title="web26"></a>web26</h3><p><img src="image-20220402222302266.png" alt="image-20220402222302266"></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-meta">&lt;?php</span><br>mt_srand(<span class="hljs-number">3496916371</span>);<br><span class="hljs-keyword">echo</span> intval(mt_rand()),<span class="hljs-string">&#x27;\n&#x27;</span>;<br><span class="hljs-keyword">echo</span> intval(mt_rand()+mt_rand())<br><span class="hljs-meta">?&gt;</span><br></code></pre></td></tr></table></figure>
+<p><img src="image-20220402221256864.png" srcset="/img/loading.gif" lazyload alt="image-20220402221256864"></p>
+<h3 id="web26"><a href="#web26" class="headerlink" title="web26"></a>web26</h3><p><img src="image-20220402222302266.png" srcset="/img/loading.gif" lazyload alt="image-20220402222302266"></p>
 <p>爆数据库密码</p>
-<h3 id="web27"><a href="#web27" class="headerlink" title="web27"></a>web27</h3><p><img src="image-20220402222509702.png" alt="image-20220402222509702"></p>
+<h3 id="web27"><a href="#web27" class="headerlink" title="web27"></a>web27</h3><p><img src="image-20220402222509702.png" srcset="/img/loading.gif" lazyload alt="image-20220402222509702"></p>
 <p>这个很眼熟。。。</p>
-<p><img src="image-20220402222634530.png" alt="image-20220402222634530"></p>
+<p><img src="image-20220402222634530.png" srcset="/img/loading.gif" lazyload alt="image-20220402222634530"></p>
 <p>但和南邮没太多关系。根据录取名单爆身份证号就行。</p>
 <h3 id="web28"><a href="#web28" class="headerlink" title="web28"></a>web28</h3><p>看了hint才知道去掉2.txt</p>
 <p>爆目录和前面大同小异，主要是熟悉下工具使用</p>
 <h1 id="web"><a href="#web" class="headerlink" title="web"></a>web</h1><h2 id="web5"><a href="#web5" class="headerlink" title="web5"></a>web5</h2><p>v1=QNKCDZO&amp;v2=240610708</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">error_reporting(0);</span><br><span class="line">    </span><br><span class="line">?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;zh-CN&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">&quot;Content-Type&quot;</span> <span class="attr">content</span>=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>ctf.show_web5<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">center</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>ctf.show_web5<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">center</span>&gt;</span></span><br><span class="line">    &lt;?php</span><br><span class="line">        $flag=&quot;&quot;;</span><br><span class="line">        $v1=$_GET[&#x27;v1&#x27;];</span><br><span class="line">        $v2=$_GET[&#x27;v2&#x27;];</span><br><span class="line">        if(isset($v1) &amp;&amp; isset($v2))&#123;</span><br><span class="line">            if(!ctype_alpha($v1))&#123;</span><br><span class="line">                die(&quot;v1 error&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            if(!is_numeric($v2))&#123;</span><br><span class="line">                die(&quot;v2 error&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            if(md5($v1)==md5($v2))&#123;</span><br><span class="line">                echo $flag;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">        </span><br><span class="line">            echo &quot;where is flag?&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    ?&gt;</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs html">&lt;?php<br>error_reporting(0);<br>    <br>?&gt;<br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;zh-CN&quot;</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;Content-Type&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;text/html; charset=UTF-8&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0&quot;</span> /&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>ctf.show_web5<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">center</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>ctf.show_web5<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">center</span>&gt;</span><br>    &lt;?php<br>        $flag=&quot;&quot;;<br>        $v1=$_GET[&#x27;v1&#x27;];<br>        $v2=$_GET[&#x27;v2&#x27;];<br>        if(isset($v1) &amp;&amp; isset($v2))&#123;<br>            if(!ctype_alpha($v1))&#123;<br>                die(&quot;v1 error&quot;);<br>            &#125;<br>            if(!is_numeric($v2))&#123;<br>                die(&quot;v2 error&quot;);<br>            &#125;<br>            if(md5($v1)==md5($v2))&#123;<br>                echo $flag;<br>            &#125;<br>        &#125;else&#123;<br>        <br>            echo &quot;where is flag?&quot;;<br>        &#125;<br>    ?&gt;<br><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
 <p>md5绕过</p>
 <p>==只判断值是否相等，若两个变量的类型不相等，则会转化为相同类型后再进行比较。</p>
 <p>PHP在处理哈希字符串的时候，它把每一个<strong>以0e开头并且后面字符均为纯数字的哈希值</strong>都解析为0。科学计数法</p>
@@ -386,276 +332,321 @@
 <li>s155964671a</li>
 </ul>
 
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ctf/">#ctf</a>
+      
+        <a href="/tags/web/">#web</a>
       
     </div>
-    
-  </div>
   
-    
-    <div class="copyright">
-        <p><span>本文标题:</span><a href="/2022/04/02/ctf-web%E5%88%B7%E9%A2%98/">ctf-web刷题</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
-        <p><span>发布时间:</span>2022-04-01, 21:24:55</p>
-        <p><span>最后更新:</span>2022-04-02, 22:31:57</p>
-        <p>
-            <span>原始链接:</span><a class="post-url" href="/2022/04/02/ctf-web%E5%88%B7%E9%A2%98/" title="ctf-web刷题">http://www.psbazx.com/2022/04/02/ctf-web%E5%88%B7%E9%A2%98/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://www.psbazx.com/2022/04/02/ctf-web%E5%88%B7%E9%A2%98/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
-            <script> var clipboard = new Clipboard('.copy-path'); </script>
-        </p>
-        <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
-        </p>
-    </div>
+</div>
 
 
-
-    <nav id="article-nav">
-        
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2022/04/03/v8-fullchain/">
-                    v8 fullchain
-                </a>
-            </div>
-        
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2022/03/24/cve-2019-5782/">
-                    cve-2019-5782
-                </a>
-            </div>
-        
-    </nav>
-
+              
   
-</article>
 
-    <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
-        
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#web%E5%85%A5%E9%97%A8"><span class="toc-number">1.</span> <span class="toc-text">web入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%88%86%E7%A0%B4"><span class="toc-number">1.1.</span> <span class="toc-text">爆破</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#web21"><span class="toc-number">1.1.1.</span> <span class="toc-text">web21</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web22"><span class="toc-number">1.1.2.</span> <span class="toc-text">web22</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web23"><span class="toc-number">1.1.3.</span> <span class="toc-text">web23</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web24"><span class="toc-number">1.1.4.</span> <span class="toc-text">web24</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web25"><span class="toc-number">1.1.5.</span> <span class="toc-text">web25</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web26"><span class="toc-number">1.1.6.</span> <span class="toc-text">web26</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web27"><span class="toc-number">1.1.7.</span> <span class="toc-text">web27</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#web28"><span class="toc-number">1.1.8.</span> <span class="toc-text">web28</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#web"><span class="toc-number">2.</span> <span class="toc-text">web</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#web5"><span class="toc-number">2.1.</span> <span class="toc-text">web5</span></a></li></ol></li></ol>
-        
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>ctf-web刷题</div>
+      <div>http://www.psbazx.com/2022/04/02/ctf-web刷题/</div>
     </div>
-    <style>
-        .left-col .switch-btn,
-        .left-col .switch-area {
-            display: none;
-        }
-        .toc-level-3 i,
-        .toc-level-3 ol {
-            display: none !important;
-        }
-    </style>
-
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
-
-    <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
-    </script>
-
-
-
-    
-<div class="share">
-    
-        <div class="bdsharebuttonbox">
-            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
-            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
-            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
-            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
-            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
-            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
         </div>
-        <script>
-            window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"ctf-web刷题　| 皮三宝のBlog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-        </script>
-    
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>April 1, 2022</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
 
-    
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/04/03/v8-fullchain/" title="v8 fullchain">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">v8 fullchain</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/24/cve-2019-5782/" title="cve-2019-5782">
+                        <span class="hidden-mobile">cve-2019-5782</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
 </div>
 
 
 
 
 
-
-
-    
-
-
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/2022/04/03/v8-fullchain/" title="上一篇: v8 fullchain">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        
-
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-
-        
-            <a href="/2022/03/24/cve-2019-5782/" title="下一篇: cve-2019-5782">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/08/09/%E6%AF%8F%E6%97%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02022-8-9/">每周学习笔记2022-8月</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/17/windows10-kernel-pool-exploitation/">windows10 kernel pool exploitation</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/06/%E5%85%B3%E4%BA%8E32%E4%BD%8D%E4%B8%8E64%E4%BD%8D%E7%A8%8B%E5%BA%8F%E5%88%87%E6%8D%A2/">关于32位与64位程序切换</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/v8-fullchain/">v8 fullchain</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/ctf-web%E5%88%B7%E9%A2%98/">ctf-web刷题</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/24/cve-2019-5782/">cve-2019-5782</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/v8%E5%85%A5%E9%97%A8/">v8入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/cve-2021-31956-win7-ver/">cve-2021-31956 win7 ver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/06/win7-kernel-pool-exploitation/">win7 kernel pool exploitation</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/27/%E5%88%86%E4%BA%AB%E4%B8%80%E6%B3%A2%E5%B7%A5%E4%BD%9C%E7%BB%8F%E5%8E%86/">分享一波工作经历</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/27/%E5%97%9C%E8%A1%80%E5%8D%B0trainer/">嗜血印trainer</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/27/fuzzgen-build-instructions/">fuzzgen build instructions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/01/COM/">COM</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/01/LPE%E5%9F%BA%E7%A1%80/">LPE基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/16/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E4%B9%8B%E6%97%85/">漏洞挖掘之旅</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/27/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E7%97%85%E6%AF%92%E5%88%86%E6%9E%90/">与黑产的一次对抗</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/27/%E5%85%B3%E4%BA%8ECVE-2020-12431%E7%9A%84%E6%80%BB%E7%BB%93/">关于CVE-2020-12431的总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/16/%E8%B0%83%E8%AF%95%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BC%96%E5%86%99/">调试器学习与编写</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/%E5%85%B3%E4%BA%8Ec/">关于c++</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/03/2020%E5%9B%BD%E8%B5%9B%E6%80%BB%E5%86%B3%E8%B5%9Bre/">2020国赛总决赛re</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/17/sctf-2020-writeup/">sctf 2020 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/13/gactf-2020-writeup/">gactf 2020 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/07/%E5%A4%8D%E4%B9%A0%E4%B8%80%E6%B3%A2pwn/">复习一波pwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/28/Windows%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">Windows内存管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/26/Exception-Handling-in-CTF/">Exception Handling in CTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/25/2020%E5%BC%BA%E7%BD%91%E6%9D%AF/">2020强网杯</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/22/%E7%BB%99%E5%A4%A7%E4%BA%8C%E7%94%BB%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%AE%8C%E7%BE%8E%E7%9A%84%E5%8F%A5%E5%8F%B7/">给大二画上一个完美的句号</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/">异常处理机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/APC/">APC</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/Windows%E5%86%85%E6%A0%B8/">Windows内核</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/%E8%87%AA%E6%97%8B%E9%94%81/">自旋锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/SSDT-HOOK/">SSDT HOOK</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/">API从3到0的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/">进程线程</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/11/windows%E9%A9%B1%E5%8A%A8/">windows驱动</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/11/%E7%AE%80%E5%8D%95%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8A%A0%E5%AF%86%E5%A3%B3/">简单的二进制加密壳</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/11/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/">多线程入门知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/11/PE/">PE</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/05/%E5%A4%A7%E4%BA%8C%E4%B8%8A%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">大二上学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/%E6%9A%91%E5%81%87%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/">暑假学习随笔</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/06/des%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/">des算法小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/03/%E5%88%9D%E6%8E%A2mips%E9%80%86%E5%90%91/">初探mips逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/30/qwbctf-re/">qwbctf re</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/23/HITCON-Training/">HITCON-Training</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/22/%E9%87%91%E9%99%B5%E6%9F%90%E9%81%93re/">金陵某道re</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/08/hello-x1ct34m/">hello X1cT34m</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/%E4%BA%94%E4%B8%80%E5%B0%8F%E7%BB%93/">五一小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/26/%E5%88%86%E4%BA%AB%E5%87%A0%E9%81%93re/">分享几道re</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/24/%E5%9B%BD%E8%B5%9Bwrite-up/">国赛write_up</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/18/%E7%B2%BE%E8%AF%BB%E3%80%8Aglibc%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86ptmalloc%E6%BA%90%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E3%80%8B/">精读《glibc内存管理ptmalloc源代码分析》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/14/susctf-2019/">susctf 2019</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/">PWN养成计划</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/08/%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E5%B0%8F%E7%BB%93-re%E9%A2%98%E8%A7%A3-%E9%99%84%E9%A2%98/">西湖论剑小结-re题解(附题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/06/%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E4%B9%8B%E4%B9%8B%E8%8A%B1/">逆向分析之花</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/05/iot-rootkit%E5%AD%A6%E4%B9%A0-week4-1/">iot rootkit学习 week4</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/28/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-3-1/">iot rootkit 学习 week-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/25/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/">PWN刷题小记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/25/CTF-%E9%80%86%E5%90%91-level-uphexo-d/">CTF 逆向 level up!!!</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/21/iot-rootkit-%E5%AD%A6%E4%B9%A0-week2-2/">iot rootkit 学习 week2-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/20/iot-rootkit-%E5%AD%A6%E4%B9%A0-week2-1/">iot rootkit 学习 week2-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/15/32-or-64/">32 or 64</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/15/%E6%B7%B1%E5%85%A5angr%E4%B9%8BI-hate-smc/">深入angr之I_hate_smc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/CTF%E5%88%B7%E9%A2%98%E5%B0%8F%E8%AE%B0/">CTF刷题小记(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/09/Hello-movfuscator/">Hello movfuscator!</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/06/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-3/">iot rootkit 学习(week 1-3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/">iot rootkit 学习(week 1-2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/03/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1/">iot rootkit 学习(week 1-1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/02/iot-rootkit-%E5%AD%A6%E4%B9%A0-0/">iot rootkit 学习(week 0)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/01/%E5%85%B3%E4%BA%8E%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%80%BB%E7%BB%93/">angr符号执行工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/26/TAMUctf/">TAMUctf</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/22/HGAME-2019-week3/">HGAME 2019 week3</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/20/hello-world/">皮三宝のCTF之旅</a></li></ul>
-
-
-
-
-    <script>
-        
-    </script>
-
-
-<!--gitment 评论-->
-
-  <div class="comments" id="comments">
   
-	<!--汉化-->
-    <link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
-	<script src="https://billts.site/js/gitment.js"></script>
-	<!--原型-->
-	<!--
-	<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js" type="text/javascript"></script>
-	-->
-	
-      <div id="gitmentContainer" style="margin-bottom: -19px;"></div>
-     
-      <style>
-        .gitment-container a {
-          border: none;
-        }
-        .comments {
-          margin: 60px 0 0;padding: 0 60px;
-        }
-      </style>
-     
-      <script type="text/javascript">
-        var gitment = new Gitment({
-			  id: 'ctf-web刷题',
-			  title: 'ctf-web刷题',
-			  owner: 'psbazx',
-			  repo: 'psbazx.github.io',
-			  oauth: {
-				client_id: '59c225643d25297ec9a6',
-				client_secret: '68de996daba73b437b8e946e47147532aead193a',
-			  },
-        })
-        gitment.render('gitmentContainer')
-      </script>
-    
-  </div>
 
-<!--gitment 评论 end--></div>
-      <footer id="footer">
-    <div class="outer">
-        <div id="footer-info">
-            <div class="footer-left">
-                <i class="fa fa-copyright"></i> 
-                2019-2022 皮三宝
-            </div>
-            <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
-            </div>
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
         </div>
-        
-            <div class="visit">
-                
-                    <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="到访的死肥宅数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
-                        </span>
-                    </span>
-                
-                
-                    <span>| </span>
-                
-                
-                    <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    </span>
-                
-            </div>
-        
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
-</footer>
-    </div>
-    
-<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            var iPad = window.navigator.userAgent.indexOf('iPad');
-            if (iPad > -1 || $(".left-col").css("display") === "none") {
-                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
-                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
-                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
-            }
-            else {
-                var backgroundnum = 6;
-                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
-                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
-            }
-        })
-    </script>
-
-
-
-
-
-<div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+  </div>
 </div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
 <script>
-    // Open in New Window
-    
-        var oOpenInNew = {
-            
-            
-            
-            
-            
-            
-             archives: ".archive-article-title", 
-             miniArchives: "a.post-list-link", 
-            
-             friends: "#js-friends a", 
-             socail: ".social a" 
-        }
-        for (var x in oOpenInNew) {
-            $(oOpenInNew[x]).attr("target", "_blank");
-        }
-    
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
 </script>
 
-    <script>
-        var originTitle = document.title;
-        var titleTime;
-        document.addEventListener("visibilitychange", function() {
-            if (document.hidden) {
-                document.title = "蜘蛛在上路" + originTitle;
-                clearTimeout(titleTime);
-            }
-            else {
-                document.title = "你在淦神魔" + originTitle;
-                titleTime = setTimeout(function() {
-                    document.title = originTitle;
-                }, 2000);
-            }
-        })
-    </script>
 
-<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
 </script>
 
-  </div>
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
 </body>
 </html>

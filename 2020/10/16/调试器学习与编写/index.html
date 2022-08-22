@@ -1,21 +1,22 @@
+
+
 <!DOCTYPE html>
-<html lang="zh-Hans">
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
 <head>
-
-    <!--[if lt IE 9]>
-        <style>body {display: none; background: none !important} </style>
-        <meta http-equiv="Refresh" Content="0; url=//outdatedbrowser.com/" />
-    <![endif]-->
-
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<meta name="format-detection" content="telephone=no" />
-<meta name="author" content="皮三宝" />
-
-
-
-<meta name="description" content="老早前写的东西。。。突然意识到忘记发了，成品代码不见了只有半成品参考&lt;&lt;软件调试&gt;&gt;&amp;&amp;网上各大神的资料">
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="老早前写的东西。。。突然意识到忘记发了，成品代码不见了只有半成品参考&lt;&lt;软件调试&gt;&gt;&amp;&amp;网上各大神的资料">
 <meta property="og:type" content="article">
 <meta property="og:title" content="调试器学习与编写">
 <meta property="og:url" content="http://www.psbazx.com/2020/10/16/%E8%B0%83%E8%AF%95%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BC%96%E5%86%99/index.html">
@@ -40,336 +41,285 @@
 <meta property="article:published_time" content="2020-10-16T15:15:45.000Z">
 <meta property="article:modified_time" content="2021-01-31T19:43:44.929Z">
 <meta property="article:author" content="皮三宝">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://www.psbazx.com/2020/10/16/%E8%B0%83%E8%AF%95%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BC%96%E5%86%99/image-20201011141928644.png">
+  
+  
+  
+  <title>调试器学习与编写 - 皮三宝のBlog</title>
 
-<link rel="apple-touch-icon" href= "/apple-touch-icon.png">
-
-
-    <link rel="alternate" href="/atom.xml" title="皮三宝のBlog" type="application/atom+xml">
-
-
-
-    <link rel="shortcut icon" href="/32.ico">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
 
 
-    <link href="//cdn.bootcss.com/animate.css/3.5.1/animate.min.css" rel="stylesheet">
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
 
-    <link href="//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet">
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
 
 
 
-    <script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
-    <link href="//cdn.bootcss.com/pace/1.0.2/themes/blue/pace-theme-minimal.css" rel="stylesheet">
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
 
 
 
-<link rel="stylesheet" href="/css/style.css">
 
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
-
-
-<link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
-
-
-<title>调试器学习与编写 | 皮三宝のBlog</title>
-
-<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
-
-<script>
-    var yiliaConfig = {
-        fancybox: true,
-        animate: true,
-        isHome: false,
-        isPost: true,
-        isArchive: false,
-        isTag: false,
-        isCategory: false,
-        fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
-        scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
-        search: true
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
     }
-</script>
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
 
 
-    <script>
-        yiliaConfig.jquery_ui = [true, "//cdn.bootcss.com/jqueryui/1.10.4/jquery-ui.min.js", "//cdn.bootcss.com/jqueryui/1.10.4/css/jquery-ui.min.css"];
-    </script>
-
-
-
-    <script> yiliaConfig.rootUrl = "\/";</script>
-
-
-
-
-
-
+  
 <meta name="generator" content="Hexo 5.3.0"></head>
+
+
 <body>
-  <div id="container">
-    <div class="left-col">
-    <div class="overlay"></div>
-<div class="intrude-less">
-    <header id="header" class="inner">
-        <a href="/" class="profilepic">
-            <img src="/img/pisanbao.jpg" class="animated zoomIn">
-        </a>
-        <hgroup>
-          <h1 class="header-author"><a href="/"></a></h1>
-        </hgroup>
-
-        
-
-        
-            <form id="search-form">
-            <input type="text" id="local-search-input" name="q" placeholder="search..." class="search form-control" autocomplete="off" autocorrect="off" searchonload="true" />
-            <i class="fa fa-times" onclick="resetSearch()"></i>
-            </form>
-            <div id="local-search-result"></div>
-            <p class='no-result'>No results found <i class='fa fa-spinner fa-pulse'></i></p>
-        
-
-
-        
-            <div id="switch-btn" class="switch-btn">
-                <div class="icon">
-                    <div class="icon-ctn">
-                        <div class="icon-wrap icon-house" data-idx="0">
-                            <div class="birdhouse"></div>
-                            <div class="birdhouse_holes"></div>
-                        </div>
-                        <div class="icon-wrap icon-ribbon hide" data-idx="1">
-                            <div class="ribbon"></div>
-                        </div>
-                        
-                        <div class="icon-wrap icon-link hide" data-idx="2">
-                            <div class="loopback_l"></div>
-                            <div class="loopback_r"></div>
-                        </div>
-                        
-                        
-                        <div class="icon-wrap icon-me hide" data-idx="3">
-                            <div class="user"></div>
-                            <div class="shoulder"></div>
-                        </div>
-                        
-                    </div>
-                    
-                </div>
-                <div class="tips-box hide">
-                    <div class="tips-arrow"></div>
-                    <ul class="tips-inner">
-                        <li>Menu</li>
-                        <li>Some tags</li>
-                        
-                        <li>通向dalaosのlinks</li>
-                        
-                        
-                        <li>皮三宝</li>
-                        
-                    </ul>
-                </div>
-            </div>
-        
-
-        <div id="switch-area" class="switch-area">
-            <div class="switch-wrap">
-                <section class="switch-part switch-part1">
-                    <nav class="header-menu">
-                        <ul>
-                        
-                            <li><a href="/">PiSanbao&#39;s_Home</a></li>
-                        
-                            <li><a href="/archives/">My_articles</a></li>
-                        
-                            <li><a href="/about/">Who is PiSanbao</a></li>
-                        
-                            <li><a href="/">Can_you_find_my_secrets?</a></li>
-                        
-                            <li><a href="/">/secrets/</a></li>
-                        
-                        </ul>
-                    </nav>
-                    <nav class="header-nav">
-                        <ul class="social">
-                            
-                                <a class="fa Email" href="mailto:1403517540@qq.com" title="Email"></a>
-                            
-                                <a class="fa CSDN" target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43487707?t=1" title="CSDN"></a>
-                            
-                                <a class="fa bilibili" target="_blank" rel="noopener" href="https://space.bilibili.com/20677447" title="bilibili"></a>
-                            
-                                <a class="fa QQ" target="_blank" rel="noopener" href="http://qm.qq.com/cgi-bin/qm/qr?k=qMplqFBOWwPeyGRCczyES8giBIhWAxeu" title="QQ"></a>
-                            
-                                <a class="fa 微信" target="_blank" rel="noopener" href="https://u.wechat.com/ENFVbHA49PGks_bjNpDQqD0" title="微信"></a>
-                            
-                        </ul>
-                    </nav>
-                </section>
-                
-                
-                <section class="switch-part switch-part2">
-                    <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/X1cT34m/" rel="tag">X1cT34m</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/angr/" rel="tag">angr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ctf/" rel="tag">ctf</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/daily/" rel="tag">daily</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fuzz/" rel="tag">fuzz</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iot/" rel="tag">iot</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kernel/" rel="tag">kernel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lpe/" rel="tag">lpe</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pwn/" rel="tag">pwn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/re/" rel="tag">re</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/reading/" rel="tag">reading</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/rootkit/" rel="tag">rootkit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/v8/" rel="tag">v8</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/windows/" rel="tag">windows</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%97%A5%E5%B8%B8/" rel="tag">日常</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AF%9D%E7%96%97/" rel="tag">话疗</a></li></ul>
-                    </div>
-                </section>
-                
-                
-                
-                <section class="switch-part switch-part3">
-                    <div id="js-friends">
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://www.brethland.com">brethland</a>
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://yulige.top/">郁离歌</a>
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://120.79.211.91/#qixi2018">人人人</a>
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://blog.wangxiyu.me/#wangxiyu191.github.com">wxy191</a>
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="http://atum.li/">Atum</a>
-                    
-                      <a class="main-nav-link switch-friends-link" target="_blank" rel="noopener" href="https://blog.csdn.net/whklhhhh">奈沙夜影</a>
-                    
-                    </div>
-                </section>
-                
-
-                
-                
-                <section class="switch-part switch-part4">
-                
-                    <div id="js-aboutme">凤凰涅槃，浴火重生。</div>
-                </section>
-                
-            </div>
-        </div>
-    </header>                
-</div>
-    </div>
-    <div class="mid-col">
-      <nav id="mobile-nav">
-      <div class="overlay">
-          <div class="slider-trigger"></div>
-          <h1 class="header-author js-mobile-header hide"><a href="/" title="回到主页"></a></h1>
-      </div>
-    <div class="intrude-less">
-        <header id="header" class="inner">
-            <a href="/" class="profilepic">
-                <img src="/img/pisanbao.jpg" class="animated zoomIn">
-            </a>
-            <hgroup>
-              <h1 class="header-author"><a href="/" title="回到主页"></a></h1>
-            </hgroup>
-            
-            <nav class="header-menu">
-                <ul>
-                
-                    <li><a href="/">PiSanbao&#39;s_Home</a></li>
-                
-                    <li><a href="/archives/">My_articles</a></li>
-                
-                    <li><a href="/about/">Who is PiSanbao</a></li>
-                
-                    <li><a href="/">Can_you_find_my_secrets?</a></li>
-                
-                    <li><a href="/">/secrets/</a></li>
-                
-                <div class="clearfix"></div>
-                </ul>
-            </nav>
-            <nav class="header-nav">
-                        <ul class="social">
-                            
-                                <a class="fa Email" target="_blank" href="mailto:1403517540@qq.com" title="Email"></a>
-                            
-                                <a class="fa CSDN" target="_blank" href="https://blog.csdn.net/qq_43487707?t=1" title="CSDN"></a>
-                            
-                                <a class="fa bilibili" target="_blank" href="https://space.bilibili.com/20677447" title="bilibili"></a>
-                            
-                                <a class="fa QQ" target="_blank" href="http://qm.qq.com/cgi-bin/qm/qr?k=qMplqFBOWwPeyGRCczyES8giBIhWAxeu" title="QQ"></a>
-                            
-                                <a class="fa 微信" target="_blank" href="https://u.wechat.com/ENFVbHA49PGks_bjNpDQqD0" title="微信"></a>
-                            
-                        </ul>
-            </nav>
-        </header>                
-    </div>
-    <link class="menu-list" tags="Some tags" friends="通向dalaosのlinks" about="皮三宝"/>
-</nav>
-      <div class="body-wrap"><article id="post-调试器学习与编写" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2020/10/16/%E8%B0%83%E8%AF%95%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BC%96%E5%86%99/" class="article-date">
-      <time datetime="2020-10-16T15:15:45.000Z" itemprop="datePublished">2020-10-16</time>
-</a>
-
-
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      调试器学习与编写
-    </h1>
   
 
-      </header>
-      
-      <div class="article-info article-info-post">
-        
-
-        
-        <div class="clearfix"></div>
-      </div>
-      
+  <header>
     
-    <div class="article-entry" itemprop="articleBody">
-      
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
           
-        <p>老早前写的东西。。。突然意识到忘记发了，成品代码不见了只有半成品<br>参考&lt;&lt;软件调试&gt;&gt;&amp;&amp;网上各大神的资料</p>
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="调试器学习与编写"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-10-16 15:15" pubdate>
+          October 16, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.8k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          41 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">调试器学习与编写</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>老早前写的东西。。。突然意识到忘记发了，成品代码不见了只有半成品<br>参考&lt;&lt;软件调试&gt;&gt;&amp;&amp;网上各大神的资料</p>
 <a id="more"></a>
 <p>在学习调试之前首先得明白调试得原理</p>
-<h1 id="分析函数"><a href="#分析函数" class="headerlink" title="分析函数"></a>分析函数</h1><h2 id="DebugActiveProcess"><a href="#DebugActiveProcess" class="headerlink" title="DebugActiveProcess"></a>DebugActiveProcess</h2><p><img src="image-20201011141928644.png" alt="image-20201011141928644"></p>
+<h1 id="分析函数"><a href="#分析函数" class="headerlink" title="分析函数"></a>分析函数</h1><h2 id="DebugActiveProcess"><a href="#DebugActiveProcess" class="headerlink" title="DebugActiveProcess"></a>DebugActiveProcess</h2><p><img src="image-20201011141928644.png" srcset="/img/loading.gif" lazyload alt="image-20201011141928644"></p>
 <p>跟如__imp_DbgUiConnectToDbg</p>
-<p><img src="image-20201011142133962.png" alt="image-20201011142133962"></p>
-<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="symbol">.text:</span>00000001800CD037                 <span class="keyword">mov</span>     <span class="built_in">rcx</span>, <span class="built_in">gs</span>:<span class="number">30h</span> <span class="comment">; teb</span></span><br><span class="line"><span class="symbol">.text:</span>00000001800CD040                 <span class="keyword">add</span>     <span class="built_in">rcx</span>, <span class="number">16A8h</span></span><br><span class="line"><span class="symbol">.text:</span>00000001800CD047                 <span class="keyword">call</span>    NtCreateDebugObject</span><br><span class="line"><span class="symbol">.text:</span>00000001800CD04C                 <span class="keyword">mov</span>     <span class="built_in">ecx</span>, <span class="built_in">eax</span></span><br></pre></td></tr></table></figure>
+<p><img src="image-20201011142133962.png" srcset="/img/loading.gif" lazyload alt="image-20201011142133962"></p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-symbol">.text:</span>00000001800CD037                 <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">rcx</span>, <span class="hljs-built_in">gs</span>:<span class="hljs-number">30h</span> <span class="hljs-comment">; teb</span><br><span class="hljs-symbol">.text:</span>00000001800CD040                 <span class="hljs-keyword">add</span>     <span class="hljs-built_in">rcx</span>, <span class="hljs-number">16A8h</span><br><span class="hljs-symbol">.text:</span>00000001800CD047                 <span class="hljs-keyword">call</span>    NtCreateDebugObject<br><span class="hljs-symbol">.text:</span>00000001800CD04C                 <span class="hljs-keyword">mov</span>     <span class="hljs-built_in">ecx</span>, <span class="hljs-built_in">eax</span><br></code></pre></td></tr></table></figure>
 <p>可以看到进内核创建调试对象然后放到了teb+0x16A8处</p>
-<p><img src="image-20201011142246830.png" alt="image-20201011142246830"></p>
+<p><img src="image-20201011142246830.png" srcset="/img/loading.gif" lazyload alt="image-20201011142246830"></p>
 <p>反调试方法加1</p>
-<p><img src="image-20201011143315424.png" alt="image-20201011143315424"></p>
+<p><img src="image-20201011143315424.png" srcset="/img/loading.gif" lazyload alt="image-20201011143315424"></p>
 <p>继续看</p>
-<p><img src="image-20201011150503549.png" alt="image-20201011150503549"></p>
+<p><img src="image-20201011150503549.png" srcset="/img/loading.gif" lazyload alt="image-20201011150503549"></p>
 <p>跟进0环</p>
-<p><img src="image-20201011150519304.png" alt="image-20201011150519304"></p>
-<p><img src="image-20201011151731430.png" alt="image-20201011151731430"></p>
-<p><img src="image-20201011151858083.png" alt="image-20201011151858083"></p>
+<p><img src="image-20201011150519304.png" srcset="/img/loading.gif" lazyload alt="image-20201011150519304"></p>
+<p><img src="image-20201011151731430.png" srcset="/img/loading.gif" lazyload alt="image-20201011151731430"></p>
+<p><img src="image-20201011151858083.png" srcset="/img/loading.gif" lazyload alt="image-20201011151858083"></p>
 <p>查看如何建立联系</p>
-<p><img src="image-20201011152527156.png" alt="image-20201011152527156"></p>
+<p><img src="image-20201011152527156.png" srcset="/img/loading.gif" lazyload alt="image-20201011152527156"></p>
 <p>主要是判断debugport是否为0，然后吧对象写入</p>
 <p>所以调试大致流程是，调试器进程创建调试对象句柄放入自身teb+16A8h</p>
 <p>然后吧调试对象地址放入被调试进程eprocess的debugport处</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="image-20201023102517762.png" alt="image-20201023102517762"></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="image-20201023102517762.png" srcset="/img/loading.gif" lazyload alt="image-20201023102517762"></p>
 <p>图上不是win10得，数值上有些区别但是大致原理一样</p>
 <h1 id="调试事件的处理"><a href="#调试事件的处理" class="headerlink" title="调试事件的处理"></a>调试事件的处理</h1><p> 主要是通过捕获调试消息，调试消息程序会发送给调试器DbgkpSendApiMessage</p>
 <p>调试事件采集函数：<br>&lt;1&gt; 创建进程、线程必经之路:<br>    PspUserThreadStartup<br>        DbgkCreateThread<br>            DbgkpSendApiMessage(x, x)<br>&lt;2&gt; 退出线程、进程必经之路：<br>    PspExitThread<br>        DbgkExitThread/DbgkExitProcess<br>            DbgkpSendApiMessage(x, x)<br>&lt;3&gt; 加载模块的必经之路：<br>    NtMapViewOfSection<br>        DbgkMapViewOfSection<br>            DbgkpSendApiMessage(x, x)<br>&lt;4&gt; 卸载模块的必经之路：<br>    NtUnMapViewOfSection<br>        DbgkUnMapViewOfSection<br>            DbgkpSendApiMessage(x, x)<br>&lt;5&gt; 异常的必经之路：<br>    KiDispatchException<br>        DbgkForwardException<br>            DbgkpSendApiMessage(x, x)</p>
 <p>可以亲自验证下，以PspUserThreadStartup为例</p>
-<p><img src="image-20201021141049947.png" alt="image-20201021141049947"></p>
-<p><img src="image-20201021141114787.png" alt="image-20201021141114787"></p>
-<p><img src="image-20201021141124962.png" alt="image-20201021141124962"></p>
+<p><img src="image-20201021141049947.png" srcset="/img/loading.gif" lazyload alt="image-20201021141049947"></p>
+<p><img src="image-20201021141114787.png" srcset="/img/loading.gif" lazyload alt="image-20201021141114787"></p>
+<p><img src="image-20201021141124962.png" srcset="/img/loading.gif" lazyload alt="image-20201021141124962"></p>
 <p>至于调试事件</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">DEBUG_EVENT</span> &#123;</span></span><br><span class="line">  DWORD dwDebugEventCode;</span><br><span class="line">  DWORD dwProcessId;</span><br><span class="line">  DWORD dwThreadId;</span><br><span class="line">  <span class="class"><span class="keyword">union</span> &#123;</span></span><br><span class="line">    EXCEPTION_DEBUG_INFO Exception;</span><br><span class="line">    CREATE_THREAD_DEBUG_INFO CreateThread;</span><br><span class="line">    CREATE_PROCESS_DEBUG_INFO CreateProcessInfo;</span><br><span class="line">    EXIT_THREAD_DEBUG_INFO ExitThread;</span><br><span class="line">    EXIT_PROCESS_DEBUG_INFO ExitProcess;</span><br><span class="line">    LOAD_DLL_DEBUG_INFO LoadDll;</span><br><span class="line">    UNLOAD_DLL_DEBUG_INFO UnloadDll;</span><br><span class="line">    OUTPUT_DEBUG_STRING_INFO DebugString;</span><br><span class="line">    RIP_INFO RipInfo;</span><br><span class="line">  &#125; u;</span><br><span class="line">&#125; DEBUG_EVENT, </span><br><span class="line"> *LPDEBUG_EVENT</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">DEBUG_EVENT</span> &#123;</span><br>  DWORD dwDebugEventCode;<br>  DWORD dwProcessId;<br>  DWORD dwThreadId;<br>  <span class="hljs-class"><span class="hljs-keyword">union</span> &#123;</span><br>    EXCEPTION_DEBUG_INFO Exception;<br>    CREATE_THREAD_DEBUG_INFO CreateThread;<br>    CREATE_PROCESS_DEBUG_INFO CreateProcessInfo;<br>    EXIT_THREAD_DEBUG_INFO ExitThread;<br>    EXIT_PROCESS_DEBUG_INFO ExitProcess;<br>    LOAD_DLL_DEBUG_INFO LoadDll;<br>    UNLOAD_DLL_DEBUG_INFO UnloadDll;<br>    OUTPUT_DEBUG_STRING_INFO DebugString;<br>    RIP_INFO RipInfo;<br>  &#125; u;<br>&#125; DEBUG_EVENT, <br> *LPDEBUG_EVENT<br></code></pre></td></tr></table></figure>
 <p>dwDebugEventCode描述了调试事件的类型，总共有9类调试事件：</p>
 <table>
 <thead>
@@ -412,11 +362,11 @@
 </tr>
 </tbody></table>
 <p>下面是调试事件</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdint.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;Windows.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    STARTUPINFO si = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">    si.cb = <span class="keyword">sizeof</span>(si);</span><br><span class="line">    PROCESS_INFORMATION pi = &#123; <span class="number">0</span> &#125;;</span><br><span class="line">    <span class="keyword">if</span> (CreateProcess(<span class="string">L&quot;C:\\Users\\A\\Desktop\\temp.exe&quot;</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, FALSE, DEBUG_ONLY_THIS_PROCESS | CREATE_NEW_CONSOLE, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;si, &amp;pi) == FALSE)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;create process failed\n&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    BOOL waitEvent = TRUE;</span><br><span class="line">    DEBUG_EVENT debugEvent;</span><br><span class="line">    <span class="keyword">while</span> (waitEvent == TRUE &amp;&amp; WaitForDebugEvent(&amp;debugEvent, INFINITE)) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">switch</span> (debugEvent.dwDebugEventCode) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> CREATE_PROCESS_DEBUG_EVENT:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;CREATE_PROCESS_DEBUG_EVENT\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> CREATE_THREAD_DEBUG_EVENT:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;CREATE_THREAD_DEBUG_EVENT\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> EXCEPTION_DEBUG_EVENT:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;EXCEPTION_DEBUG_EVENT\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> EXIT_PROCESS_DEBUG_EVENT:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;EXIT_PROCESS_DEBUG_EVENT\n&quot;</span>);</span><br><span class="line">            waitEvent = FALSE;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> EXIT_THREAD_DEBUG_EVENT:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;EXIT_THREAD_DEBUG_EVENT\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> LOAD_DLL_DEBUG_EVENT:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;LOAD_DLL_DEBUG_EVENT\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> UNLOAD_DLL_DEBUG_EVENT:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;UNLOAD_DLL_DEBUG_EVENT\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> OUTPUT_DEBUG_STRING_EVENT:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;OUTPUT_DEBUG_STRING_EVENT\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> RIP_EVENT:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;RIP_EVENT\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;unknown debug event\n&quot;</span>);</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (waitEvent == TRUE) &#123;</span><br><span class="line">            ContinueDebugEvent(debugEvent.dwProcessId, debugEvent.dwThreadId, DBG_CONTINUE);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    CloseHandle(pi.hThread);</span><br><span class="line">    CloseHandle(pi.hProcess);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdint.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;Windows.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    STARTUPINFO si = &#123; <span class="hljs-number">0</span> &#125;;<br>    si.cb = <span class="hljs-keyword">sizeof</span>(si);<br>    PROCESS_INFORMATION pi = &#123; <span class="hljs-number">0</span> &#125;;<br>    <span class="hljs-keyword">if</span> (CreateProcess(<span class="hljs-string">L&quot;C:\\Users\\A\\Desktop\\temp.exe&quot;</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, FALSE, DEBUG_ONLY_THIS_PROCESS | CREATE_NEW_CONSOLE, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, &amp;si, &amp;pi) == FALSE)<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;create process failed\n&quot;</span>);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>    &#125;<br>    BOOL waitEvent = TRUE;<br>    DEBUG_EVENT debugEvent;<br>    <span class="hljs-keyword">while</span> (waitEvent == TRUE &amp;&amp; WaitForDebugEvent(&amp;debugEvent, INFINITE)) &#123;<br><br>        <span class="hljs-keyword">switch</span> (debugEvent.dwDebugEventCode) &#123;<br><br>        <span class="hljs-keyword">case</span> CREATE_PROCESS_DEBUG_EVENT:<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;CREATE_PROCESS_DEBUG_EVENT\n&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">case</span> CREATE_THREAD_DEBUG_EVENT:<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;CREATE_THREAD_DEBUG_EVENT\n&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">case</span> EXCEPTION_DEBUG_EVENT:<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;EXCEPTION_DEBUG_EVENT\n&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">case</span> EXIT_PROCESS_DEBUG_EVENT:<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;EXIT_PROCESS_DEBUG_EVENT\n&quot;</span>);<br>            waitEvent = FALSE;<br>            <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">case</span> EXIT_THREAD_DEBUG_EVENT:<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;EXIT_THREAD_DEBUG_EVENT\n&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">case</span> LOAD_DLL_DEBUG_EVENT:<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;LOAD_DLL_DEBUG_EVENT\n&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">case</span> UNLOAD_DLL_DEBUG_EVENT:<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;UNLOAD_DLL_DEBUG_EVENT\n&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">case</span> OUTPUT_DEBUG_STRING_EVENT:<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;OUTPUT_DEBUG_STRING_EVENT\n&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">case</span> RIP_EVENT:<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;RIP_EVENT\n&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br><br>        <span class="hljs-keyword">default</span>:<br>            <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;unknown debug event\n&quot;</span>);<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">if</span> (waitEvent == TRUE) &#123;<br>            ContinueDebugEvent(debugEvent.dwProcessId, debugEvent.dwThreadId, DBG_CONTINUE);<br>        &#125;<br>        <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>    &#125;<br>    CloseHandle(pi.hThread);<br>    CloseHandle(pi.hProcess);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h1 id="断点"><a href="#断点" class="headerlink" title="断点"></a>断点</h1><h2 id="软件断点"><a href="#软件断点" class="headerlink" title="软件断点"></a>软件断点</h2><p>这个比较简单，软件断点就是把目标机器码替换为0xcc int 3</p>
 <p>这样就会触发异常发送给调试器，调试器进行处理。</p>
 <p>这时一般都会输出当时ip多少还有各个寄存器的值，其实是利用GetThreadContext来获得</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">WINBASEAPI</span><br><span class="line">BOOL</span><br><span class="line">WINAPI</span><br><span class="line">GetThreadContext(</span><br><span class="line">    _In_ HANDLE hThread,</span><br><span class="line">    _Inout_ LPCONTEXT lpContext</span><br><span class="line">    );</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c++">WINBASEAPI<br>BOOL<br>WINAPI<br>GetThreadContext(<br>    _In_ HANDLE hThread,<br>    _Inout_ LPCONTEXT lpContext<br>    );<br></code></pre></td></tr></table></figure>
 <p>第一个参数是线程的句柄，第二个参数是指向CONTEXT结构的指针。要注意，调用该函数之前需要设置CONTEXT结构的ContextFlags字段，指明你想要获取哪部分寄存器的值。该字段的取值如下：</p>
 <table>
 <thead>
@@ -452,7 +402,7 @@
 <p>主要是通过修改页属性，当访问该页时则会出现缺页异常然后发送调试事件，调试器接收到后进行处理</p>
 <p>与软件断点不同的是，内存断点不需要ip–</p>
 <h2 id="硬件断点"><a href="#硬件断点" class="headerlink" title="硬件断点"></a>硬件断点</h2><p>先看下调试寄存器</p>
-<p><img src="image-20201023200313571.png" alt="image-20201023200313571"></p>
+<p><img src="image-20201023200313571.png" srcset="/img/loading.gif" lazyload alt="image-20201023200313571"></p>
 <p>设置硬件断点：</p>
 <p>1、Dr0~3用于设置硬件断点，由于只有4个断点寄存器，所以最多<br>只能设置4个硬件调试断点。</p>
 <p>2、Dr7是最重要的寄存器：</p>
@@ -466,282 +416,318 @@
 <p>首先硬件断点有个数量限制那就是4个，还有就是与内存断点和软件断点不同的是，硬件断点是通过单步异常来触发</p>
 <h1 id="单步异常"><a href="#单步异常" class="headerlink" title="单步异常"></a>单步异常</h1><p>之前硬件断点学习后对单步异常有个初步了解</p>
 <p>首先单步异常的出现是因为有这个需求，调试的时候需要单步走查看变化，需要一直下断点触发异常，为了满足需求，现在只需要把TF置1</p>
-<p><img src="image-20201023203441916.png" alt="image-20201023203441916"></p>
+<p><img src="image-20201023203441916.png" srcset="/img/loading.gif" lazyload alt="image-20201023203441916"></p>
 <p>这样每走一步就会触发单步异常</p>
 <h1 id="单步步过"><a href="#单步步过" class="headerlink" title="单步步过"></a>单步步过</h1><p>问题:当出现call时，单步入和单步过的实现</p>
 <p>单步过通过软件断点或者硬件断点来实现，通过计算当前指令长度然后下断点后直接跑</p>
 <p>调试器一般都这么实现所以有时候没有跟进call，但是call的函数改变了返回值，导致程序跑飞</p>
 
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>调试器学习与编写</div>
+      <div>http://www.psbazx.com/2020/10/16/调试器学习与编写/</div>
+    </div>
+    <div class="license-meta">
       
-    </div>
-    
-  </div>
-  
-    
-    <div class="copyright">
-        <p><span>本文标题:</span><a href="/2020/10/16/%E8%B0%83%E8%AF%95%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BC%96%E5%86%99/">调试器学习与编写</a></p>
-        <p><span>文章作者:</span><a href="/" title="回到主页"></a></p>
-        <p><span>发布时间:</span>2020-10-16, 15:15:45</p>
-        <p><span>最后更新:</span>2021-02-01, 03:43:44</p>
-        <p>
-            <span>原始链接:</span><a class="post-url" href="/2020/10/16/%E8%B0%83%E8%AF%95%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BC%96%E5%86%99/" title="调试器学习与编写">http://www.psbazx.com/2020/10/16/%E8%B0%83%E8%AF%95%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BC%96%E5%86%99/</a>
-            <span class="copy-path" data-clipboard-text="原文: http://www.psbazx.com/2020/10/16/%E8%B0%83%E8%AF%95%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BC%96%E5%86%99/　　作者: " title="点击复制文章链接"><i class="fa fa-clipboard"></i></span>
-            <script> var clipboard = new Clipboard('.copy-path'); </script>
-        </p>
-        <p>
-            <span>许可协议:</span><i class="fa fa-creative-commons"></i> <a rel="license noopener" target="_blank" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target = "_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
-        </p>
-    </div>
-
-
-
-    <nav id="article-nav">
-        
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2020/11/27/%E5%85%B3%E4%BA%8ECVE-2020-12431%E7%9A%84%E6%80%BB%E7%BB%93/">
-                    关于CVE-2020-12431的总结
-                </a>
-            </div>
-        
-        
-            <div id="article-nav-older" class="article-nav-title">
-                <a href="/2020/10/04/%E5%85%B3%E4%BA%8Ec/">
-                    关于c++
-                </a>
-            </div>
-        
-    </nav>
-
-  
-</article>
-
-    <div id="toc" class="toc-article">
-        <strong class="toc-title">文章目录</strong>
-        
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%86%E6%9E%90%E5%87%BD%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">分析函数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DebugActiveProcess"><span class="toc-number">1.1.</span> <span class="toc-text">DebugActiveProcess</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.2.</span> <span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B0%83%E8%AF%95%E4%BA%8B%E4%BB%B6%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-number">2.</span> <span class="toc-text">调试事件的处理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%96%AD%E7%82%B9"><span class="toc-number">3.</span> <span class="toc-text">断点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E6%96%AD%E7%82%B9"><span class="toc-number">3.1.</span> <span class="toc-text">软件断点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%85%E5%AD%98%E6%96%AD%E7%82%B9"><span class="toc-number">3.2.</span> <span class="toc-text">内存断点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A1%AC%E4%BB%B6%E6%96%AD%E7%82%B9"><span class="toc-number">3.3.</span> <span class="toc-text">硬件断点</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%95%E6%AD%A5%E5%BC%82%E5%B8%B8"><span class="toc-number">4.</span> <span class="toc-text">单步异常</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8D%95%E6%AD%A5%E6%AD%A5%E8%BF%87"><span class="toc-number">5.</span> <span class="toc-text">单步步过</span></a></li></ol>
-        
-    </div>
-    <style>
-        .left-col .switch-btn,
-        .left-col .switch-area {
-            display: none;
-        }
-        .toc-level-3 i,
-        .toc-level-3 ol {
-            display: none !important;
-        }
-    </style>
-
-    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
-
-    <script>
-        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
-    </script>
-
-
-
-    
-<div class="share">
-    
-        <div class="bdsharebuttonbox">
-            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
-            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
-            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
-            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
-            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
-            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
-            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
         </div>
-        <script>
-            window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"调试器学习与编写　| 皮三宝のBlog　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
-        </script>
-    
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>October 16, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
 
-    
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/11/27/%E5%85%B3%E4%BA%8ECVE-2020-12431%E7%9A%84%E6%80%BB%E7%BB%93/" title="关于CVE-2020-12431的总结">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">关于CVE-2020-12431的总结</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/04/%E5%85%B3%E4%BA%8Ec/" title="关于c++">
+                        <span class="hidden-mobile">关于c++</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
 </div>
 
 
 
 
 
-
-
-    
-
-
-
-
-    <div class="scroll" id="post-nav-button">
-        
-            <a href="/2020/11/27/%E5%85%B3%E4%BA%8ECVE-2020-12431%E7%9A%84%E6%80%BB%E7%BB%93/" title="上一篇: 关于CVE-2020-12431的总结">
-                <i class="fa fa-angle-left"></i>
-            </a>
-        
-
-        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
-
-        
-            <a href="/2020/10/04/%E5%85%B3%E4%BA%8Ec/" title="下一篇: 关于c++">
-                <i class="fa fa-angle-right"></i>
-            </a>
-        
-    </div>
-
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2022/08/09/%E6%AF%8F%E6%97%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02022-8-9/">每周学习笔记2022-8月</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/17/windows10-kernel-pool-exploitation/">windows10 kernel pool exploitation</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/06/%E5%85%B3%E4%BA%8E32%E4%BD%8D%E4%B8%8E64%E4%BD%8D%E7%A8%8B%E5%BA%8F%E5%88%87%E6%8D%A2/">关于32位与64位程序切换</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/03/v8-fullchain/">v8 fullchain</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/04/02/ctf-web%E5%88%B7%E9%A2%98/">ctf-web刷题</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/24/cve-2019-5782/">cve-2019-5782</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/21/v8%E5%85%A5%E9%97%A8/">v8入门</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/19/cve-2021-31956-win7-ver/">cve-2021-31956 win7 ver</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/03/06/win7-kernel-pool-exploitation/">win7 kernel pool exploitation</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/27/%E5%88%86%E4%BA%AB%E4%B8%80%E6%B3%A2%E5%B7%A5%E4%BD%9C%E7%BB%8F%E5%8E%86/">分享一波工作经历</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/27/%E5%97%9C%E8%A1%80%E5%8D%B0trainer/">嗜血印trainer</a></li><li class="post-list-item"><a class="post-list-link" href="/2022/02/27/fuzzgen-build-instructions/">fuzzgen build instructions</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/01/COM/">COM</a></li><li class="post-list-item"><a class="post-list-link" href="/2021/02/01/LPE%E5%9F%BA%E7%A1%80/">LPE基础</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/12/16/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E4%B9%8B%E6%97%85/">漏洞挖掘之旅</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/27/%E8%AE%B0%E5%BD%95%E4%B8%80%E6%AC%A1%E7%97%85%E6%AF%92%E5%88%86%E6%9E%90/">与黑产的一次对抗</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/11/27/%E5%85%B3%E4%BA%8ECVE-2020-12431%E7%9A%84%E6%80%BB%E7%BB%93/">关于CVE-2020-12431的总结</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/16/%E8%B0%83%E8%AF%95%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BC%96%E5%86%99/">调试器学习与编写</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/04/%E5%85%B3%E4%BA%8Ec/">关于c++</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/10/03/2020%E5%9B%BD%E8%B5%9B%E6%80%BB%E5%86%B3%E8%B5%9Bre/">2020国赛总决赛re</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/17/sctf-2020-writeup/">sctf 2020 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/13/gactf-2020-writeup/">gactf 2020 writeup</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/09/07/%E5%A4%8D%E4%B9%A0%E4%B8%80%E6%B3%A2pwn/">复习一波pwn</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/28/Windows%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/">Windows内存管理</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/26/Exception-Handling-in-CTF/">Exception Handling in CTF</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/25/2020%E5%BC%BA%E7%BD%91%E6%9D%AF/">2020强网杯</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/22/%E7%BB%99%E5%A4%A7%E4%BA%8C%E7%94%BB%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%AE%8C%E7%BE%8E%E7%9A%84%E5%8F%A5%E5%8F%B7/">给大二画上一个完美的句号</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/">异常处理机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/APC/">APC</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/Windows%E5%86%85%E6%A0%B8/">Windows内核</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/%E8%87%AA%E6%97%8B%E9%94%81/">自旋锁</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/SSDT-HOOK/">SSDT HOOK</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/">API从3到0的学习</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/">进程线程</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/11/windows%E9%A9%B1%E5%8A%A8/">windows驱动</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/11/%E7%AE%80%E5%8D%95%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8A%A0%E5%AF%86%E5%A3%B3/">简单的二进制加密壳</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/04/11/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/">多线程入门知识</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/11/PE/">PE</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/09/05/%E5%A4%A7%E4%BA%8C%E4%B8%8A%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">大二上学习笔记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/07/15/%E6%9A%91%E5%81%87%E5%AD%A6%E4%B9%A0%E9%9A%8F%E7%AC%94/">暑假学习随笔</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/06/des%E7%AE%97%E6%B3%95%E5%B0%8F%E7%BB%93/">des算法小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/03/%E5%88%9D%E6%8E%A2mips%E9%80%86%E5%90%91/">初探mips逆向</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/30/qwbctf-re/">qwbctf re</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/23/HITCON-Training/">HITCON-Training</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/22/%E9%87%91%E9%99%B5%E6%9F%90%E9%81%93re/">金陵某道re</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/08/hello-x1ct34m/">hello X1cT34m</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/05/04/%E4%BA%94%E4%B8%80%E5%B0%8F%E7%BB%93/">五一小结</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/26/%E5%88%86%E4%BA%AB%E5%87%A0%E9%81%93re/">分享几道re</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/24/%E5%9B%BD%E8%B5%9Bwrite-up/">国赛write_up</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/18/%E7%B2%BE%E8%AF%BB%E3%80%8Aglibc%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86ptmalloc%E6%BA%90%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%E3%80%8B/">精读《glibc内存管理ptmalloc源代码分析》</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/14/susctf-2019/">susctf 2019</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/">PWN养成计划</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/08/%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E5%B0%8F%E7%BB%93-re%E9%A2%98%E8%A7%A3-%E9%99%84%E9%A2%98/">西湖论剑小结-re题解(附题)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/06/%E9%80%86%E5%90%91%E5%88%86%E6%9E%90%E4%B9%8B%E4%B9%8B%E8%8A%B1/">逆向分析之花</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/05/iot-rootkit%E5%AD%A6%E4%B9%A0-week4-1/">iot rootkit学习 week4</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/28/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-3-1/">iot rootkit 学习 week-3</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/25/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E%E5%AD%A6%E4%B9%A0/">PWN刷题小记</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/25/CTF-%E9%80%86%E5%90%91-level-uphexo-d/">CTF 逆向 level up!!!</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/21/iot-rootkit-%E5%AD%A6%E4%B9%A0-week2-2/">iot rootkit 学习 week2-2</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/20/iot-rootkit-%E5%AD%A6%E4%B9%A0-week2-1/">iot rootkit 学习 week2-1</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/15/32-or-64/">32 or 64</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/15/%E6%B7%B1%E5%85%A5angr%E4%B9%8BI-hate-smc/">深入angr之I_hate_smc</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/12/CTF%E5%88%B7%E9%A2%98%E5%B0%8F%E8%AE%B0/">CTF刷题小记(1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/09/Hello-movfuscator/">Hello movfuscator!</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/06/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-3/">iot rootkit 学习(week 1-3)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/">iot rootkit 学习(week 1-2)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/03/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1/">iot rootkit 学习(week 1-1)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/02/iot-rootkit-%E5%AD%A6%E4%B9%A0-0/">iot rootkit 学习(week 0)</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/01/%E5%85%B3%E4%BA%8E%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%80%BB%E7%BB%93/">angr符号执行工具</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/26/TAMUctf/">TAMUctf</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/22/HGAME-2019-week3/">HGAME 2019 week3</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/02/20/hello-world/">皮三宝のCTF之旅</a></li></ul>
-
-
-
-
-    <script>
-        
-    </script>
-
-
-<!--gitment 评论-->
-
-  <div class="comments" id="comments">
   
-	<!--汉化-->
-    <link rel="stylesheet" href="https://billts.site/extra_css/gitment.css">
-	<script src="https://billts.site/js/gitment.js"></script>
-	<!--原型-->
-	<!--
-	<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js" type="text/javascript"></script>
-	-->
-	
-      <div id="gitmentContainer" style="margin-bottom: -19px;"></div>
-     
-      <style>
-        .gitment-container a {
-          border: none;
-        }
-        .comments {
-          margin: 60px 0 0;padding: 0 60px;
-        }
-      </style>
-     
-      <script type="text/javascript">
-        var gitment = new Gitment({
-			  id: '调试器学习与编写',
-			  title: '调试器学习与编写',
-			  owner: 'psbazx',
-			  repo: 'psbazx.github.io',
-			  oauth: {
-				client_id: '59c225643d25297ec9a6',
-				client_secret: '68de996daba73b437b8e946e47147532aead193a',
-			  },
-        })
-        gitment.render('gitmentContainer')
-      </script>
-    
-  </div>
 
-<!--gitment 评论 end--></div>
-      <footer id="footer">
-    <div class="outer">
-        <div id="footer-info">
-            <div class="footer-left">
-                <i class="fa fa-copyright"></i> 
-                2019-2022 皮三宝
-            </div>
-            <div class="footer-right">
-                <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by MOxFIVE <i class="fa fa-heart animated infinite pulse"></i>
-            </div>
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
         </div>
-        
-            <div class="visit">
-                
-                    <span id="busuanzi_container_site_pv" style='display:none'>
-                        <span id="site-visit" title="到访的死肥宅数"><i class="fa fa-user" aria-hidden="true"></i><span id="busuanzi_value_site_uv"></span>
-                        </span>
-                    </span>
-                
-                
-                    <span>| </span>
-                
-                
-                    <span id="busuanzi_container_page_pv" style='display:none'>
-                        <span id="page-visit"  title="本页阅读量"><i class="fa fa-eye animated infinite pulse" aria-hidden="true"></i><span id="busuanzi_value_page_pv"></span>
-                        </span>
-                    </span>
-                
-            </div>
-        
+        <div class="list-group" id="local-search-result"></div>
+      </div>
     </div>
-</footer>
-    </div>
-    
-<script data-main="/js/main.js" src="//cdn.bootcss.com/require.js/2.2.0/require.min.js"></script>
-
-    <script>
-        $(document).ready(function() {
-            var iPad = window.navigator.userAgent.indexOf('iPad');
-            if (iPad > -1 || $(".left-col").css("display") === "none") {
-                var bgColorList = ["#9db3f4", "#414141", "#e5a859", "#f5dfc6", "#c084a0", "#847e72", "#cd8390", "#996731"];
-                var bgColor = Math.ceil(Math.random() * (bgColorList.length - 1));
-                $("body").css({"background-color": bgColorList[bgColor], "background-size": "cover"});
-            }
-            else {
-                var backgroundnum = 6;
-                var backgroundimg = "url(/background/bg-x.jpg)".replace(/x/gi, Math.ceil(Math.random() * backgroundnum));
-                $("body").css({"background": backgroundimg, "background-attachment": "fixed", "background-size": "cover"});
-            }
-        })
-    </script>
-
-
-
-
-
-<div class="scroll" id="scroll">
-    <a href="#" title="返回顶部"><i class="fa fa-arrow-up"></i></a>
-    <a href="#comments" onclick="load$hide();" title="查看评论"><i class="fa fa-comments-o"></i></a>
-    <a href="#footer" title="转到底部"><i class="fa fa-arrow-down"></i></a>
+  </div>
 </div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
 <script>
-    // Open in New Window
-    
-        var oOpenInNew = {
-            
-            
-            
-            
-            
-            
-             archives: ".archive-article-title", 
-             miniArchives: "a.post-list-link", 
-            
-             friends: "#js-friends a", 
-             socail: ".social a" 
-        }
-        for (var x in oOpenInNew) {
-            $(oOpenInNew[x]).attr("target", "_blank");
-        }
-    
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
 </script>
 
-    <script>
-        var originTitle = document.title;
-        var titleTime;
-        document.addEventListener("visibilitychange", function() {
-            if (document.hidden) {
-                document.title = "蜘蛛在上路" + originTitle;
-                clearTimeout(titleTime);
-            }
-            else {
-                document.title = "你在淦神魔" + originTitle;
-                titleTime = setTimeout(function() {
-                    document.title = originTitle;
-                }, 2000);
-            }
-        })
-    </script>
 
-<script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
 </script>
 
-  </div>
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
 </body>
 </html>
