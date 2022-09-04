@@ -4,6 +4,32 @@
   
   
   <entry>
+    <title>kafl paper阅读</title>
+    <link href="/2022/09/04/kafl-paper%E9%98%85%E8%AF%BB/"/>
+    <url>/2022/09/04/kafl-paper%E9%98%85%E8%AF%BB/</url>
+    
+    <content type="html"><![CDATA[<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p>介绍了当下fuzz的重要性，基于反馈的fuzzer可以发现很多安全问题。但是针对kernel当今没有很好的解决方案，然后作者解释原因，如kernel crash了整个系统重启，fuzzer也会没。最后介绍kafl，基于硬件特性如hypervisor和pt从而使得fuzzer和操作系统隔离开来。成功挖到许多漏洞。</p><h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>随着各种高大上的保护出现，常见的漏洞越来越难利用，但是内核态的防护还是不多，而且很多复杂防护会影响操作系统运行效率导致没有上。导致关注内核的人越来越多。</p><p>很长一段时间来fuzz都是一种增加软件安全性的好策略。随着afl的公开，业界出现了越来越多的smart fuzz，基于input的反馈来“学习”，从而一步步推出数据格式，增大代码覆盖率。但是afl是面向用户态的缺少内核态支持，内核态复杂很多会遇到很多困难。</p><p>本文的kafl将退出一种全新的技术来允许反馈式fuzz运用于所有基于x86-64的内核。并具有很好的可移植性。</p><h1 id="技术背景"><a href="#技术背景" class="headerlink" title="技术背景"></a>技术背景</h1><p>利用了一些硬件特性，需要cpu支持，本节主要介绍一些硬件的特性。</p><h2 id="x86-64-Virtual-Memory-Layouts"><a href="#x86-64-Virtual-Memory-Layouts" class="headerlink" title="x86-64 Virtual Memory Layouts"></a>x86-64 Virtual Memory Layouts</h2><p>用户态内核态的虚拟地址布局，内核态每个进程共享，一个物理地址映射到多个虚拟地址</p><h2 id="Intel-VT-x"><a href="#Intel-VT-x" class="headerlink" title="Intel VT-x"></a>Intel VT-x</h2><p>kafl内核层fuzz基于硬件虚拟化技术。</p><p>三种不同的cpu，物理cpu，逻辑cpu，虚拟cpu。</p><p>物理cpu是真实的cpu，大部分现代cpu都实现了超线程技术，用于在单核上运行多线程。所以就出现了逻辑cpu，每个核心都有几个逻辑处理器</p><p><img src="image-20220904182308909.png" alt="image-20220904182308909"></p><p>如i9 10900k，就是10核心，20逻辑处理器。</p><p>每个核心俩个逻辑处理器在交错处理时效率会很大，如一个逻辑处理器在进行计算另一个在进行等待</p><p>vt还在学。。。</p><p><a href="https://space.bilibili.com/37877654/?spm_id_from=333.999.0.0">https://space.bilibili.com/37877654/?spm_id_from=333.999.0.0</a><br>b站有up主做了一系列的视频</p><p>//已经9月了先上传一部分，其他的会继续写完。</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>每周学习笔记2022-8-3</title>
+    <link href="/2022/08/25/%E6%AF%8F%E5%91%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02022-8-3/"/>
+    <url>/2022/08/25/%E6%AF%8F%E5%91%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02022-8-3/</url>
+    
+    <content type="html"><![CDATA[<p>每周学习，用于督促下班后好好把握自由时间来学习。</p><a id="more"></a><p>panda先放放，后续会写插件，然后winafl也会进一步整下。</p><p>最近听了几个大佬的分享，深有感触，最近的学习计划会做相应改变。</p><h1 id="图一乐型"><a href="#图一乐型" class="headerlink" title="图一乐型"></a>图一乐型</h1><h2 id="JavaScript-Engines"><a href="#JavaScript-Engines" class="headerlink" title="JavaScript Engines"></a>JavaScript Engines</h2><p><a href="https://www.youtube.com/watch?v=FK2-1FAbbXA">https://www.youtube.com/watch?v=FK2-1FAbbXA</a></p><p>一个不错的视频。这周必须拔草。</p><p>很适合js漏洞入门，之前只是单纯复现cve写exp，其实像v8这种套路固定，写exp只需要知道套路即可。原理却不曾了解。这个视频作者讲解了历代js漏洞的出现成因，大致分为几类等等。还是挺适合入门的。</p><p>后半部分讲了一些常用的利用套路和mitigation。</p><h2 id="vt"><a href="#vt" class="headerlink" title="vt"></a>vt</h2><p><a href="https://space.bilibili.com/37877654/?spm_id_from=333.999.0.0">https://space.bilibili.com/37877654/?spm_id_from=333.999.0.0</a><br>b站有up主做了一系列的视频</p><p>就当学着完了。后续补上，先挖个坑。</p><h2 id="WINAFL"><a href="#WINAFL" class="headerlink" title="WINAFL"></a>WINAFL</h2><p>安装步骤很简单，dynamorio可以直接下现成的二进制包</p><p><a href="https://github.com/DynamoRIO/dynamorio/releases/tag/cronbuild-9.0.19230">https://github.com/DynamoRIO/dynamorio/releases/tag/cronbuild-9.0.19230</a></p><p>接着下载winafl源码后按着说明编译即可。</p><p>后面就是精读paper环节了。</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>每周学习笔记2022-8-2</title>
     <link href="/2022/08/16/%E6%AF%8F%E5%91%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02022-8-2/"/>
     <url>/2022/08/16/%E6%AF%8F%E5%91%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B02022-8-2/</url>
