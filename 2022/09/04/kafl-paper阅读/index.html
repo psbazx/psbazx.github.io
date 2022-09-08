@@ -26,8 +26,10 @@
 <meta property="og:image" content="http://www.psbazx.com/2022/09/04/kafl-paper%E9%98%85%E8%AF%BB/image-20220904182308909.png">
 <meta property="og:image" content="http://www.psbazx.com/2022/09/04/kafl-paper%E9%98%85%E8%AF%BB/image-20220905111402835.png">
 <meta property="og:image" content="http://www.psbazx.com/2022/09/04/kafl-paper%E9%98%85%E8%AF%BB/image-20220906103216438.png">
+<meta property="og:image" content="http://www.psbazx.com/2022/09/04/kafl-paper%E9%98%85%E8%AF%BB/image-20220907231811175.png">
+<meta property="og:image" content="http://www.psbazx.com/2022/09/04/kafl-paper%E9%98%85%E8%AF%BB/image-20220907231833837.png">
 <meta property="article:published_time" content="2022-09-03T16:37:29.000Z">
-<meta property="article:modified_time" content="2022-09-06T16:43:15.366Z">
+<meta property="article:modified_time" content="2022-09-08T02:34:27.159Z">
 <meta property="article:author" content="皮三宝">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://www.psbazx.com/2022/09/04/kafl-paper%E9%98%85%E8%AF%BB/image-20220904182308909.png">
@@ -222,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.2k wörter
+          3.7k wörter
         
       </span>
     
@@ -233,7 +235,7 @@
         
         
         
-          19 minuten
+          31 minuten
         
       </span>
     
@@ -302,8 +304,36 @@
 <p>整个fuzz得流程如上，最开始时用户态loader通过hypercall <code>HC_SUBMIT_PANIC</code>来向QEMU-PT提交内核态异常处理函数地址BugCheck.QEMU-PT接着patch函数从而能更快的接收到函数的异常处理。而不是等待系统重启。</p>
 <p>接着loader通过<code>HC_GET_PROGRAM</code>来启动agent。agent后续三步，先是提交当前进程的cr3，hypervisor会分解cr3寄存器并把其转交给QEMU-PT来过滤。最后agent通过<code>HC_SUBMIT_BUFFER</code>来通知host它期望输入的地址。到此fuzzer初始化完成接着fuzzer会建立起主循环。</p>
 <p>在主循环中agent会通过HC_GET_INPUT来请求一个新输入。然后fuzzer会生成一个新的输入并把它传递给QEMU-PT。因为QEMU-PT对整个guest有完整权限，所以可以直接把input拷贝进agent指定的地址处。然后就会启动VM-Entry来今昔整个VM的运行，同时VM-Entry会启用PT。接着agent接受输入并与内核进行交互。当kernel被fuzz时，QEMU-PT会解码trace的数据并根据需求对bitmap进行更新。当整个交互完成时内核会基于agent反馈，然后agent通过<code>HC_FINISHED</code>来通知。接着QEMU-PT解码整个trace数据把结果传递给kafl做后续处理。agent可以在遇到下一个HC_GET_INPUT以启动下一个迭代前可以继续做处理。</p>
-<h2 id="Fuzzing-Logic"><a href="#Fuzzing-Logic" class="headerlink" title="Fuzzing Logic"></a>Fuzzing Logic</h2><p>整个fuzzing logic由kafl的命令和控制俩部分组成。负责管理一系列输入与输入变异。在大多数情况下他的算法和afl的一样。类似于afl，我们用bitmap来存储基本块信息，根据QEMU-PT的接口获取bitmap来决定哪些输入会触发有趣的行为.</p>
-<p>//已经9月了先上传一部分，其他的会继续写完。</p>
+<h2 id="Fuzzing-Logic"><a href="#Fuzzing-Logic" class="headerlink" title="Fuzzing Logic"></a>Fuzzing Logic</h2><p>整个fuzzing logic由kafl的命令和控制俩部分组成。负责管理一系列输入与输入变异。在大多数情况下他的算法和afl的一样。类似于afl，我们用bitmap来存储基本块信息，根据QEMU-PT的接口获取bitmap来决定哪些输入会触发有趣的行为kafl与afl算法的最大区别就是对多进程和并行的优化，从而如果核心多，会很大程度的提高效率。</p>
+<h2 id="User-Mode-Agent"><a href="#User-Mode-Agent" class="headerlink" title="User Mode Agent"></a>User Mode Agent</h2><p>需要一个agent在虚拟环境下通过hypercall与内核交互。</p>
+<p>理论上只需要俩个组件</p>
+<p>加载器：负责从hyperecall接口接收任意二进制数据，二进制数据就是用户态agent，同时加载器还会检测crash。</p>
+<p>这几个组件可以让我们给VM传递任意二进制数据并在fuzz不同的组件时重用快照。</p>
+<h2 id="Virtualization-Infrastructure"><a href="#Virtualization-Infrastructure" class="headerlink" title="Virtualization Infrastructure"></a>Virtualization Infrastructure</h2><p>整个fuzz逻辑通过QEMU-PT与KVM-PT交互来附加整个VMs。KVM-PT允许我们跟踪每个独立的虚拟cpu。</p>
+<h2 id="Stateful-and-Non-Deterministic-Code"><a href="#Stateful-and-Non-Deterministic-Code" class="headerlink" title="Stateful and Non-Deterministic Code"></a>Stateful and Non-Deterministic Code</h2><p>Tracing整个操作系统导致有很多不确定性，如中断请求时刻都会发生。</p>
+<p>解决方法是过滤中断和黑名单。</p>
+<h2 id="Hypercalls"><a href="#Hypercalls" class="headerlink" title="Hypercalls"></a>Hypercalls</h2><p>hypercall由vmcall指令触发，类似于内核的syscall，hypercall是对于VMMS的。任何三环进程或者内核执行vmcall指令都会触发VM-Exit事件然后VMM来决定如何处理。kafl的hypercall是定制的，magic value被存在rax，hypercall-ID会被存在rbx，hypercall还能从三环被接收。具体hypercall的参数通过rcx传递，一个例子就是<code>HC_SUBMIT_BUFFER</code>他的参数是一个用户态指针存放在rcx中。当执行vmcall时，VM-Exit触发然后QEMU-PT存放并传递字符串指针，过一段时间会拷贝新的输入进这个指针里。最终VM的执行继续。</p>
+<p>还有一种使用案例就是识别crash。具体办法就是patch bugcheck函数为一个hypercall。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs assembly">cli<br>mov rax , KAFL_MAGIC_VALUE<br>mov rbx , HC_CRASH<br>mov rcx , 0 x0<br>vmcall<br></code></pre></td></tr></table></figure>
+<h1 id="Implementation-Details"><a href="#Implementation-Details" class="headerlink" title="Implementation Details"></a>Implementation Details</h1><p>主要介绍一些细节</p>
+<h2 id="KVM-PT"><a href="#KVM-PT" class="headerlink" title="KVM-PT"></a>KVM-PT</h2><p>Intel-PT允许trace分支而不需要该内核或打补丁。但是不能长时间，而KVM-PT允许。</p>
+<h2 id="vCPU-Specific-Traces"><a href="#vCPU-Specific-Traces" class="headerlink" title="vCPU Specific Traces"></a>vCPU Specific Traces</h2><p>为了启用pt，内核态程序需要设置MSR寄存器的特定标志位。设置完后逻辑cpu会跟踪执行的代码（满足过滤要求）。标志位修改需要在cpu从host离开前完成否则进入guest时无权限修改。另外还启用MSR autoload来达成只trace特定vcpu数据。</p>
+<h2 id="Continuous-Tracing"><a href="#Continuous-Tracing" class="headerlink" title="Continuous Tracing"></a>Continuous Tracing</h2><p>讲解了持续化跟踪的办法与处理。</p>
+<p><img src="image-20220907231811175.png" srcset="/img/loading.gif" lazyload alt="image-20220907231811175"></p>
+<h2 id="QEMU-PT"><a href="#QEMU-PT" class="headerlink" title="QEMU-PT"></a>QEMU-PT</h2><p>QEMU-PT作为QEMU扩展给KVM-PT提供用户态接口。接口提供一系列功能如启用关闭PT，检测溢出。KVM-PT可以通过ioctl和mmap来交互。</p>
+<h2 id="PT-Decoder"><a href="#PT-Decoder" class="headerlink" title="PT Decoder"></a>PT Decoder</h2><p><img src="image-20220907231833837.png" srcset="/img/loading.gif" lazyload alt="image-20220907231833837"></p>
+<p>由于fuzz内核会产出一堆的数据所以需要快速精确的decoder。否则这会成为一个瓶颈。</p>
+<p>intel提供了libipt但是并不符合需求。</p>
+<p>kafl利用mmap并采用jit思路。且没有文件落地灯，最终数据都会被转化成AFL bitmap格式</p>
+<h2 id="AFL-Fuzzing-Logic"><a href="#AFL-Fuzzing-Logic" class="headerlink" title="AFL Fuzzing Logic"></a>AFL Fuzzing Logic</h2><p>fuzz部分逻辑与之前博客写的类似，变异然后看是否有新的分支，有则保存后继续变异。</p>
+<p>后面部分就是讲解kafl的实施与应用。没仔细看下去了。</p>
+<p>后续单开文章讲源码解析。</p>
+<h1 id="安装教程"><a href="#安装教程" class="headerlink" title="安装教程"></a>安装教程</h1><p>环境Ubuntu20.04物理机。</p>
+<p>i910900k 128g内存 2tssd</p>
+<p>安装最新版本</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/IntelLabs/kAFL">https://github.com/IntelLabs/kAFL</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs bash">sudo apt-get install python3 python3-venv<br>make deploy<br></code></pre></td></tr></table></figure>
+<p>记得要翻墙。不然特别慢。</p>
 
                 
               </div>
