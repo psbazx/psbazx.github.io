@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>kafl使用</title>
+    <link href="/2022/09/13/kafl%E4%BD%BF%E7%94%A8/"/>
+    <url>/2022/09/13/kafl%E4%BD%BF%E7%94%A8/</url>
+    
+    <content type="html"><![CDATA[<p>每周学习，用于督促下班后好好把握自由时间来学习。</p><a id="more"></a><p>安装教程见上文</p><h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><p><a href="https://github.com/Kharos102/kafl.targets">https://github.com/Kharos102/kafl.targets</a></p><p>(这个链接是大佬总结的各种操作系统的使用demo)</p><p><a href="https://github.com/IntelLabs/kafl.targets/tree/master/linux-kernel">https://github.com/IntelLabs/kafl.targets/tree/master/linux-kernel</a></p><p>(官方的linuxkernel教程)</p><p>先按照教程试了下linux-kernel的没啥问题</p><p>遇到的一些坑讲一下</p><p><img src="image-20220913003740971.png" alt="image-20220913003740971"></p><p>VMX_PT is not loaded!</p><p>这种情况重启电脑进advance setting，选那个kafl的kernel</p><p>//当时在bios里找了半天，明明vmx打开了。以为pt是另外一个单独功能整半天没找着</p><p><img src="image-20220913003923428.png" alt="image-20220913003923428"></p><p>链接里的readme也特别提到了这个。</p><p>其余的按照教程走就行了</p><p><img src="image-20220913004037421.png" alt="image-20220913004037421"></p><p>接下去是windows使用</p><p>demo里给了教程，一个windows的driver自己编译后设置开机自启，我这边windows先打开了测试模式防止签名验证</p><p><code>bcdedit -set &#123;default&#125; TESTSIGNING on</code></p><p>还有就是fuzzer的test case在Ubuntu里编译一下，正常情况下会报错，命令行参数除了<code>-lntdll</code>还要加个<code>-lpsapi</code>.</p><p>//后续，建议大家看intel官方的<a href="https://github.com/IntelLabs/kafl.targets%EF%BC%8C%E8%BF%99%E4%B8%AA%E5%B0%B1%E4%B8%8D%E9%9C%80%E8%A6%81%E9%82%A3%E4%B9%88%E9%BA%BB%E7%83%A6%E4%BA%86%E3%80%82">https://github.com/IntelLabs/kafl.targets，这个就不需要那么麻烦了。</a></p><p>接下去同样吧testcase设置开机自启然后吧镜像转换成qcow2格式。</p><p>这边建议虚拟机在安装前设置单个vmdk文件，省的一堆事，如果按照默认分为多个也没问题，自己克隆出来状态然后</p><p><code>vmware-vdiskmanager.exe -r &quot;G:\win10\windows-10-cl1.vmdk&quot; -t 0 G:\fuck.vmdk</code></p><p>接着跑就完事了。</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>kafl paper阅读</title>
     <link href="/2022/09/04/kafl-paper%E9%98%85%E8%AF%BB/"/>
     <url>/2022/09/04/kafl-paper%E9%98%85%E8%AF%BB/</url>
