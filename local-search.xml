@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>近期学习记录</title>
+    <link href="/2022/10/09/%E8%BF%91%E6%9C%9F%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/"/>
+    <url>/2022/10/09/%E8%BF%91%E6%9C%9F%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/</url>
+    
+    <content type="html"><![CDATA[<p>总结近阶段学习情况</p><a id="more"></a><h1 id="关于kafl"><a href="#关于kafl" class="headerlink" title="关于kafl"></a>关于kafl</h1><p>像kafl这种基于反馈的fuzz，还是很大程度上依赖人工逆向，只能作为一个辅助工具去使用。用于帮助漏洞挖掘。</p><p>如图，某功能点，fuzz一天下来0 crash。</p><p><img src="image-20221009000812280.png" alt="image-20221009000812280"></p><p>后续花了6天时间逆向，重新编写testcase</p><p><img src="image-20221009000851619.png" alt="image-20221009000851619"></p><p>18小时5 crash    //虽然是个bsod</p><p>这也证明了不能完全依赖于kafl，人工逆向+合适的攻击面+合适的testcase+kafl，效率往往会更好。</p><p>kafl也有一定的局限性，示例代码仅仅是通过hook kebugcheck来判断漏洞</p><h1 id="paper阅读"><a href="#paper阅读" class="headerlink" title="paper阅读"></a>paper阅读</h1><p>paper阅读这块感觉自我做的还是不太行，有很大的提升空间。</p><p>往往会遇到很多新的知识面，一开始的做法是遇到一个新的就去百度就去学，学差不多了就回头继续看paper，但是那时已经忘了前面讲的是啥了。</p><p>现阶段，多次阅读，每过一段时间就重新看一下，每次阅读都会有新的感受。</p><p>阅读配合着使用，实践才是检验整理的唯一标准。</p><h1 id="后续规划"><a href="#后续规划" class="headerlink" title="后续规划"></a>后续规划</h1><p>1.paper阅读，量得上去</p><p>2.逆向+testcase编写</p><p>工作没多少时间搞研究，只能私下搞搞了。</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>kafl使用</title>
     <link href="/2022/09/13/kafl%E4%BD%BF%E7%94%A8/"/>
     <url>/2022/09/13/kafl%E4%BD%BF%E7%94%A8/</url>
