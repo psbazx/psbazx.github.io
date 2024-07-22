@@ -1,0 +1,630 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前阵子出于好奇读了部分源码，由于工作原因还没看完，后续有时间把后面的补上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AFL forkserver源码阅读">
+<meta property="og:url" content="http://www.psbazx.com/2024/03/22/AFL-forkserver%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="前阵子出于好奇读了部分源码，由于工作原因还没看完，后续有时间把后面的补上">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-03-22T12:02:33.000Z">
+<meta property="article:modified_time" content="2024-07-22T04:04:06.308Z">
+<meta property="article:author" content="皮三宝">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>AFL forkserver源码阅读 - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="AFL forkserver源码阅读"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-03-22 12:02" pubdate>
+          March 22, 2024 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          14k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          120 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">AFL forkserver源码阅读</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>前阵子出于好奇读了部分源码，由于工作原因还没看完，后续有时间把后面的补上</p>
+<a id="more"></a>
+
+<h1 id="AFL-forkserver部分源码阅读"><a href="#AFL-forkserver部分源码阅读" class="headerlink" title="AFL forkserver部分源码阅读"></a>AFL forkserver部分源码阅读</h1><h2 id="afl-gcc-c-替换as"><a href="#afl-gcc-c-替换as" class="headerlink" title="afl-gcc.c(替换as)"></a>afl-gcc.c(替换as)</h2><p>主要分为两部分</p>
+<p>find_as和edit_params</p>
+<p>find_as负责找到afl-as插桩，从三个地方触发，第一个是直接从环境变量中读取<code>u8 *afl_path = getenv(&quot;AFL_PATH&quot;);</code></p>
+<p>第二个是程序运行时目录寻找<code>dir = ck_strdup(argv0);</code></p>
+<p>如上两种情况都找不到就会从编译时的AFL_PATH中寻找<code>access(AFL_PATH &quot;/as&quot;, X_OK)</code></p>
+<p>edit_params则是负责解析命令行参数并进行修改和替换</p>
+<p>第一步是确定编译器，目录中存在<code>afl-clang, afl-g++等文件，其实都是个软链接指向了afl-gcc</code>，afl-gcc会根据命令行文件判断使用哪个编译器，如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c++">name = <span class="hljs-built_in">strrchr</span>(argv[<span class="hljs-number">0</span>], <span class="hljs-string">&#x27;/&#x27;</span>);<br> <span class="hljs-keyword">if</span> (!name) name = argv[<span class="hljs-number">0</span>]; <span class="hljs-keyword">else</span> name++;<br><br> <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strncmp</span>(name, <span class="hljs-string">&quot;afl-clang&quot;</span>, <span class="hljs-number">9</span>)) &#123;<br><br>   clang_mode = <span class="hljs-number">1</span>;<br><br>   setenv(CLANG_ENV_VAR, <span class="hljs-string">&quot;1&quot;</span>, <span class="hljs-number">1</span>);<br><br>   <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strcmp</span>(name, <span class="hljs-string">&quot;afl-clang++&quot;</span>)) &#123;<br>     u8* alt_cxx = getenv(<span class="hljs-string">&quot;AFL_CXX&quot;</span>);<br>     cc_params[<span class="hljs-number">0</span>] = alt_cxx ? alt_cxx : (u8*)<span class="hljs-string">&quot;clang++&quot;</span>;<br>   &#125; <span class="hljs-keyword">else</span> &#123;<br>     u8* alt_cc = getenv(<span class="hljs-string">&quot;AFL_CC&quot;</span>);<br>     cc_params[<span class="hljs-number">0</span>] = alt_cc ? alt_cc : (u8*)<span class="hljs-string">&quot;clang&quot;</span>;<br>   &#125;<br>   ...<br>   ...<br></code></pre></td></tr></table></figure>
+<p>确定完编译器后会进行后续参数的解析和替换,这里会忽略一些参数如-B，这个是默认带的，afl-gcc会使用-B指定afl-as为汇编器对代码进行汇编和插桩，用于统计代码覆盖率。这是整个函数中最关键的一步，其余的基本就是对参数的解析等</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">while</span> (--argc) &#123;<br>    u8* cur = *(++argv);<br><br>    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strncmp</span>(cur, <span class="hljs-string">&quot;-B&quot;</span>, <span class="hljs-number">2</span>)) &#123;<br><br>      <span class="hljs-keyword">if</span> (!be_quiet) WARNF(<span class="hljs-string">&quot;-B is already set, overriding&quot;</span>);<br><br>      <span class="hljs-keyword">if</span> (!cur[<span class="hljs-number">2</span>] &amp;&amp; argc &gt; <span class="hljs-number">1</span>) &#123; argc--; argv++; &#125;<br>      <span class="hljs-keyword">continue</span>;<br><br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strcmp</span>(cur, <span class="hljs-string">&quot;-integrated-as&quot;</span>)) <span class="hljs-keyword">continue</span>;<br><br>    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strcmp</span>(cur, <span class="hljs-string">&quot;-pipe&quot;</span>)) <span class="hljs-keyword">continue</span>;<br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">if</span> defined(__FreeBSD__) &amp;&amp; defined(__x86_64__)</span><br>    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strcmp</span>(cur, <span class="hljs-string">&quot;-m32&quot;</span>)) m32_set = <span class="hljs-number">1</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><br>    <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strcmp</span>(cur, <span class="hljs-string">&quot;-fsanitize=address&quot;</span>) ||<br>        !<span class="hljs-built_in">strcmp</span>(cur, <span class="hljs-string">&quot;-fsanitize=memory&quot;</span>)) asan_set = <span class="hljs-number">1</span>;<br><br>    <span class="hljs-keyword">if</span> (<span class="hljs-built_in">strstr</span>(cur, <span class="hljs-string">&quot;FORTIFY_SOURCE&quot;</span>)) fortify_set = <span class="hljs-number">1</span>;<br><br>    cc_params[cc_par_cnt++] = cur;<br><br>  &#125;<br><br>  cc_params[cc_par_cnt++] = <span class="hljs-string">&quot;-B&quot;</span>;<br>  cc_params[cc_par_cnt++] = as_path;<br>...<br>...<br></code></pre></td></tr></table></figure>
+<h2 id="afl-as-c-代码插桩"><a href="#afl-as-c-代码插桩" class="headerlink" title="afl-as.c(代码插桩)"></a>afl-as.c(代码插桩)</h2><p>首先也是edit_params，在afl-gcc中，程序指定了afl-as作为连接器，edit_params用于对afl-gcc调用传入的参数进行解析和修改，后续会调用add_instrumentation来对汇编文件进行插桩。这里比较重要的是设置了修改后的.s文件保存路径</p>
+<p><code>modified_file = alloc_printf(&quot;%s/.afl-%u-%u.s&quot;, tmp_dir, getpid(),(u32)time(NULL));</code></p>
+<p>最初始的inputfile由afl-gcc传入。参数解析完后会对原始的汇编文件进行插桩，在每个分支都会有如下插桩代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs assembly">static const u8* trampoline_fmt_64 &#x3D;<br><br>  &quot;\n&quot;<br>  &quot;&#x2F;* --- AFL TRAMPOLINE (64-BIT) --- *&#x2F;\n&quot;<br>  &quot;\n&quot;<br>  &quot;.align 4\n&quot;<br>  &quot;\n&quot;<br>  &quot;leaq -(128+24)(%%rsp), %%rsp\n&quot;<br>  &quot;movq %%rdx,  0(%%rsp)\n&quot;<br>  &quot;movq %%rcx,  8(%%rsp)\n&quot;<br>  &quot;movq %%rax, 16(%%rsp)\n&quot;<br>  &quot;movq $0x%08x, %%rcx\n&quot;<br>  &quot;call __afl_maybe_log\n&quot;<br>  &quot;movq 16(%%rsp), %%rax\n&quot;<br>  &quot;movq  8(%%rsp), %%rcx\n&quot;<br>  &quot;movq  0(%%rsp), %%rdx\n&quot;<br>  &quot;leaq (128+24)(%%rsp), %%rsp\n&quot;<br>  &quot;\n&quot;<br>  &quot;&#x2F;* --- END --- *&#x2F;\n&quot;<br>  &quot;\n&quot;;<br></code></pre></td></tr></table></figure>
+<p>64位程序如上</p>
+<p>其中主要实现位于<code>__afl_maybe_log</code>，代码类似如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++">cur_location = &lt;COMPILE_TIME_RANDOM&gt;;<br>shared_mem[cur_location ^ prev_location]++; <br>prev_location = cur_location &gt;&gt; <span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+<p>设计时存在一个右移操作是想维持覆盖率的方向性</p>
+<p>cur_location为编译时的随机数，在afl-as.c中体现如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c++">gettimeofday(&amp;tv, &amp;tz);<br>rand_seed = tv.tv_sec ^ tv.tv_usec ^ getpid();<br>srandom(rand_seed);<br></code></pre></td></tr></table></figure>
+<p>上述进行了随机数的初始化</p>
+<p>每遇到一个分支就会进行代码插入，并把随机数填充</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lisp">#  define R(<span class="hljs-name">x</span>) (<span class="hljs-name">random</span>() % (<span class="hljs-name">x</span>))<br></code></pre></td></tr></table></figure>
+<p>add_instrumentation函数中最主要的插桩代码如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">if</span> (line[<span class="hljs-number">0</span>] == <span class="hljs-string">&#x27;\t&#x27;</span>) &#123;<br>  <span class="hljs-keyword">if</span> (line[<span class="hljs-number">1</span>] == <span class="hljs-string">&#x27;j&#x27;</span> &amp;&amp; line[<span class="hljs-number">2</span>] != <span class="hljs-string">&#x27;m&#x27;</span> &amp;&amp; R(<span class="hljs-number">100</span>) &lt; inst_ratio) &#123;<br>    <span class="hljs-built_in">fprintf</span>(outf, use_64bit ? trampoline_fmt_64 : trampoline_fmt_32,<br>            R(MAP_SIZE));<br>    ins_lines++;<br>  &#125;<br></code></pre></td></tr></table></figure>
+<p>判断力当前程序架构并插入对应的汇编指令，填充对应的cur_location值。</p>
+<p>所有的汇编解析完后，在最后会插入很长的main_payload。里面就包括了上述统计覆盖率的afl_maybe_log 函数和初始化内存的afl_setup函数</p>
+<h2 id="afl-as-h-fork-server，覆盖率统计实现"><a href="#afl-as-h-fork-server，覆盖率统计实现" class="headerlink" title="afl-as.h(fork server，覆盖率统计实现)"></a>afl-as.h(fork server，覆盖率统计实现)</h2><p>主要讲解main_payload_64</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs assembly">  &quot;  seto  %al\n&quot;<br>  &quot;\n&quot;<br>  &quot;  &#x2F;* Check if SHM region is already mapped. *&#x2F;\n&quot;<br>  &quot;\n&quot;<br>  &quot;  movq  __afl_area_ptr(%rip), %rdx\n&quot;<br>  &quot;  testq %rdx, %rdx\n&quot;<br>  &quot;  je    __afl_setup\n&quot;<br>  &quot;\n&quot;<br>  &quot;__afl_store:\n&quot;<br>  &quot;\n&quot;<br>  &quot;  &#x2F;* Calculate and store hit for the code location specified in rcx. *&#x2F;\n&quot;<br>  &quot;\n&quot;<br>#ifndef COVERAGE_ONLY<br>  &quot;  xorq __afl_prev_loc(%rip), %rcx\n&quot;<br>  &quot;  xorq %rcx, __afl_prev_loc(%rip)\n&quot;<br>  &quot;  shrq $1, __afl_prev_loc(%rip)\n&quot;<br>#endif &#x2F;* ^!COVERAGE_ONLY *&#x2F;<br>  &quot;\n&quot;<br>#ifdef SKIP_COUNTS<br>  &quot;  orb  $1, (%rdx, %rcx, 1)\n&quot;<br>#else<br>  &quot;  incb (%rdx, %rcx, 1)\n&quot;<br>#endif &#x2F;* ^SKIP_COUNTS *&#x2F;<br>  &quot;\n&quot;<br>  &quot;__afl_return:\n&quot;<br>  &quot;\n&quot;<br>  &quot;  addb $127, %al\n&quot;<br>#if defined(__OpenBSD__)  || (defined(__FreeBSD__) &amp;&amp; (__FreeBSD__ &lt; 9))<br>  &quot;  .byte 0x9e &#x2F;* sahf *&#x2F;\n&quot;<br>#else<br>  &quot;  sahf\n&quot;<br>#endif &#x2F;* ^__OpenBSD__, etc *&#x2F;<br>  &quot;  ret\n&quot;<br></code></pre></td></tr></table></figure>
+<p>首先判断共享内存区域是否被映射，如果没有被映射则进入__afl_setup函数，否则进入store函数，这里负责使得对应loc的map值加一统计覆盖率。</p>
+<p>下面看setup函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs assembly">  &quot;__afl_setup:\n&quot;<br>  &quot;\n&quot;<br>  &quot;  &#x2F;* Do not retry setup if we had previous failures. *&#x2F;\n&quot;<br>  &quot;\n&quot;<br>  &quot;  cmpb $0, __afl_setup_failure(%rip)\n&quot;<br>  &quot;  jne __afl_return\n&quot;<br>  &quot;\n&quot;<br>  &quot;  &#x2F;* Check out if we have a global pointer on file. *&#x2F;\n&quot;<br>  &quot;\n&quot;<br>#ifndef __APPLE__<br>  &quot;  movq  __afl_global_area_ptr@GOTPCREL(%rip), %rdx\n&quot;<br>  &quot;  movq  (%rdx), %rdx\n&quot;<br>#else<br>  &quot;  movq  __afl_global_area_ptr(%rip), %rdx\n&quot;<br>#endif &#x2F;* !^__APPLE__ *&#x2F;<br>  &quot;  testq %rdx, %rdx\n&quot;<br>  &quot;  je    __afl_setup_first\n&quot;<br>  &quot;\n&quot;<br>  &quot;  movq %rdx, __afl_area_ptr(%rip)\n&quot;<br>  &quot;  jmp  __afl_store\n&quot; <br></code></pre></td></tr></table></figure>
+<p>判断之前是否初始化失败，失败直接return，接着判断全局变量值是否为空，非空则直接进行赋值然后跳转至afl_store函数，如果都不满足则进入setup_first函数如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs assembly">  &quot;__afl_setup_first:\n&quot;<br>  &quot;\n&quot;<br>  &quot;  &#x2F;* Save everything that is not yet saved and that may be touched by\n&quot;<br>  &quot;     getenv() and several other libcalls we&#39;ll be relying on. *&#x2F;\n&quot;<br>  &quot;\n&quot;<br>  &quot;  leaq -352(%rsp), %rsp\n&quot;<br>  &quot;\n&quot;<br>  &quot;  movq %rax,   0(%rsp)\n&quot;<br>  &quot;  movq %rcx,   8(%rsp)\n&quot;<br>  &quot;  movq %rdi,  16(%rsp)\n&quot;<br>  &quot;  movq %rsi,  32(%rsp)\n&quot;<br>  &quot;  movq %r8,   40(%rsp)\n&quot;<br>  &quot;  movq %r9,   48(%rsp)\n&quot;<br>  &quot;  movq %r10,  56(%rsp)\n&quot;<br>  &quot;  movq %r11,  64(%rsp)\n&quot;<br>  &quot;\n&quot;<br>  &quot;  movq %xmm0,  96(%rsp)\n&quot;<br>  &quot;  movq %xmm1,  112(%rsp)\n&quot;<br>  &quot;  movq %xmm2,  128(%rsp)\n&quot;<br>  &quot;  movq %xmm3,  144(%rsp)\n&quot;<br>  &quot;  movq %xmm4,  160(%rsp)\n&quot;<br>  &quot;  movq %xmm5,  176(%rsp)\n&quot;<br>  &quot;  movq %xmm6,  192(%rsp)\n&quot;<br>  &quot;  movq %xmm7,  208(%rsp)\n&quot;<br>  &quot;  movq %xmm8,  224(%rsp)\n&quot;<br>  &quot;  movq %xmm9,  240(%rsp)\n&quot;<br>  &quot;  movq %xmm10, 256(%rsp)\n&quot;<br>  &quot;  movq %xmm11, 272(%rsp)\n&quot;<br>  &quot;  movq %xmm12, 288(%rsp)\n&quot;<br>  &quot;  movq %xmm13, 304(%rsp)\n&quot;<br>  &quot;  movq %xmm14, 320(%rsp)\n&quot;<br>  &quot;  movq %xmm15, 336(%rsp)\n&quot;<br>  &quot;\n&quot;<br>  &quot;  &#x2F;* Map SHM, jumping to __afl_setup_abort if something goes wrong. *&#x2F;\n&quot;<br>  &quot;\n&quot;<br>  &quot;  &#x2F;* The 64-bit ABI requires 16-byte stack alignment. We&#39;ll keep the\n&quot;<br>  &quot;     original stack ptr in the callee-saved r12. *&#x2F;\n&quot;<br>  &quot;\n&quot;<br>  &quot;  pushq %r12\n&quot;<br>  &quot;  movq  %rsp, %r12\n&quot;<br>  &quot;  subq  $16, %rsp\n&quot;<br>  &quot;  andq  $0xfffffffffffffff0, %rsp\n&quot;<br>  &quot;\n&quot;<br>  &quot;  leaq .AFL_SHM_ENV(%rip), %rdi\n&quot;<br>  CALL_L64(&quot;getenv&quot;)<br>  &quot;\n&quot;<br>  &quot;  testq %rax, %rax\n&quot;<br>  &quot;  je    __afl_setup_abort\n&quot;<br>  &quot;\n&quot;<br>  &quot;  movq  %rax, %rdi\n&quot;<br>  CALL_L64(&quot;atoi&quot;)<br>  &quot;\n&quot;<br>  &quot;  xorq %rdx, %rdx   &#x2F;* shmat flags    *&#x2F;\n&quot;<br>  &quot;  xorq %rsi, %rsi   &#x2F;* requested addr *&#x2F;\n&quot;<br>  &quot;  movq %rax, %rdi   &#x2F;* SHM ID         *&#x2F;\n&quot;<br>  CALL_L64(&quot;shmat&quot;)<br>  &quot;\n&quot;<br>  &quot;  cmpq $-1, %rax\n&quot;<br>  &quot;  je   __afl_setup_abort\n&quot;<br>  &quot;\n&quot;<br>  &quot;  &#x2F;* Store the address of the SHM region. *&#x2F;\n&quot;<br>  &quot;\n&quot;<br>  &quot;  movq %rax, %rdx\n&quot;<br>  &quot;  movq %rax, __afl_area_ptr(%rip)\n&quot;<br>  &quot;\n&quot;<br>#ifdef __APPLE__<br>  &quot;  movq %rax, __afl_global_area_ptr(%rip)\n&quot;<br>#else<br>  &quot;  movq __afl_global_area_ptr@GOTPCREL(%rip), %rdx\n&quot;<br>  &quot;  movq %rax, (%rdx)\n&quot;<br>#endif &#x2F;* ^__APPLE__ *&#x2F;<br>  &quot;  movq %rax, %rdx\n&quot;<br></code></pre></td></tr></table></figure>
+<p>首先保存环境，push一堆寄存器，随后对rsp进行了16字节对齐操作，作者注释中也写到了，<code>andq  $0xfffffffffffffff0, %rsp\n</code>保证了rsp为16字节对齐，开头的sub rsp也是为了防止覆盖先前压入的寄存器，最原始的rsp被保存在了r12寄存器中。后续就是一些初始化，首先获取环境变量AFL_SHM_ENV然后转为整数后传入shmat将内存映射至当前进程的内存空间然后为afl_area_ptr和afl_global_area_ptr进行赋值。如果中间有失败就会进入afl_setup_abort函数中，可以看到代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs assembly">&quot;__afl_setup_abort:\n&quot;<br>&quot;\n&quot;<br>&quot;  &#x2F;* Record setup failure so that we don&#39;t keep calling\n&quot;<br>&quot;     shmget() &#x2F; shmat() over and over again. *&#x2F;\n&quot;<br>&quot;\n&quot;<br>&quot;  incb __afl_setup_failure(%rip)\n&quot;<br>&quot;\n&quot;<br>&quot;  movq %r12, %rsp\n&quot;<br>&quot;  popq %r12\n&quot;<br>&quot;\n&quot;<br>&quot;  movq  0(%rsp), %rax\n&quot;<br>&quot;  movq  8(%rsp), %rcx\n&quot;<br>&quot;  movq 16(%rsp), %rdi\n&quot;<br>&quot;  movq 32(%rsp), %rsi\n&quot;<br>&quot;  movq 40(%rsp), %r8\n&quot;<br>&quot;  movq 48(%rsp), %r9\n&quot;<br>&quot;  movq 56(%rsp), %r10\n&quot;<br>&quot;  movq 64(%rsp), %r11\n&quot;<br>&quot;\n&quot;<br>&quot;  movq  96(%rsp), %xmm0\n&quot;<br>&quot;  movq 112(%rsp), %xmm1\n&quot;<br>&quot;  movq 128(%rsp), %xmm2\n&quot;<br>&quot;  movq 144(%rsp), %xmm3\n&quot;<br>&quot;  movq 160(%rsp), %xmm4\n&quot;<br>&quot;  movq 176(%rsp), %xmm5\n&quot;<br>&quot;  movq 192(%rsp), %xmm6\n&quot;<br>&quot;  movq 208(%rsp), %xmm7\n&quot;<br>&quot;  movq 224(%rsp), %xmm8\n&quot;<br>&quot;  movq 240(%rsp), %xmm9\n&quot;<br>&quot;  movq 256(%rsp), %xmm10\n&quot;<br>&quot;  movq 272(%rsp), %xmm11\n&quot;<br>&quot;  movq 288(%rsp), %xmm12\n&quot;<br>&quot;  movq 304(%rsp), %xmm13\n&quot;<br>&quot;  movq 320(%rsp), %xmm14\n&quot;<br>&quot;  movq 336(%rsp), %xmm15\n&quot;<br>&quot;\n&quot;<br>&quot;  leaq 352(%rsp), %rsp\n&quot;<br>&quot;\n&quot;<br>&quot;  jmp __afl_return\n&quot;<br></code></pre></td></tr></table></figure>
+<p>对afl_setup_failure值加1然后恢复现场，这也保证了编译出来的程序可以正常运行而不是必须以fuzzer的形式。</p>
+<p>最后是forkserver部分如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><code class="hljs assembly">&quot;__afl_forkserver:\n&quot;<br>  &quot;\n&quot;<br>  &quot;  &#x2F;* Enter the fork server mode to avoid the overhead of execve() calls. We\n&quot;<br>  &quot;     push rdx (area ptr) twice to keep stack alignment neat. *&#x2F;\n&quot;<br>  &quot;\n&quot;<br>  &quot;  pushq %rdx\n&quot;<br>  &quot;  pushq %rdx\n&quot;<br>  &quot;\n&quot;<br>  &quot;  &#x2F;* Phone home and tell the parent that we&#39;re OK. (Note that signals with\n&quot;<br>  &quot;     no SA_RESTART will mess it up). If this fails, assume that the fd is\n&quot;<br>  &quot;     closed because we were execve()d from an instrumented binary, or because\n&quot;<br>  &quot;     the parent doesn&#39;t want to use the fork server. *&#x2F;\n&quot;<br>  &quot;\n&quot;<br>  &quot;  movq $4, %rdx               &#x2F;* length    *&#x2F;\n&quot;<br>  &quot;  leaq __afl_temp(%rip), %rsi &#x2F;* data      *&#x2F;\n&quot;<br>  &quot;  movq $&quot; STRINGIFY((FORKSRV_FD + 1)) &quot;, %rdi       &#x2F;* file desc *&#x2F;\n&quot;<br>  CALL_L64(&quot;write&quot;)<br>  &quot;\n&quot;<br>  &quot;  cmpq $4, %rax\n&quot;<br>  &quot;  jne  __afl_fork_resume\n&quot;<br>  &quot;\n&quot;<br>  &quot;__afl_fork_wait_loop:\n&quot;<br>  &quot;\n&quot;<br>  &quot;  &#x2F;* Wait for parent by reading from the pipe. Abort if read fails. *&#x2F;\n&quot;<br>  &quot;\n&quot;<br>  &quot;  movq $4, %rdx               &#x2F;* length    *&#x2F;\n&quot;<br>  &quot;  leaq __afl_temp(%rip), %rsi &#x2F;* data      *&#x2F;\n&quot;<br>  &quot;  movq $&quot; STRINGIFY(FORKSRV_FD) &quot;, %rdi             &#x2F;* file desc *&#x2F;\n&quot;<br>  CALL_L64(&quot;read&quot;)<br>  &quot;  cmpq $4, %rax\n&quot;<br>  &quot;  jne  __afl_die\n&quot;<br>  &quot;\n&quot;<br>  &quot;  &#x2F;* Once woken up, create a clone of our process. This is an excellent use\n&quot;<br>  &quot;     case for syscall(__NR_clone, 0, CLONE_PARENT), but glibc boneheadedly\n&quot;<br>  &quot;     caches getpid() results and offers no way to update the value, breaking\n&quot;<br>  &quot;     abort(), raise(), and a bunch of other things :-( *&#x2F;\n&quot;<br>  &quot;\n&quot;<br>  CALL_L64(&quot;fork&quot;)<br>  &quot;  cmpq $0, %rax\n&quot;<br>  &quot;  jl   __afl_die\n&quot;<br>  &quot;  je   __afl_fork_resume\n&quot;<br>  &quot;\n&quot;<br>  &quot;  &#x2F;* In parent process: write PID to pipe, then wait for child. *&#x2F;\n&quot;<br>  &quot;\n&quot;<br>  &quot;  movl %eax, __afl_fork_pid(%rip)\n&quot;<br>  &quot;\n&quot;<br>  &quot;  movq $4, %rdx                   &#x2F;* length    *&#x2F;\n&quot;<br>  &quot;  leaq __afl_fork_pid(%rip), %rsi &#x2F;* data      *&#x2F;\n&quot;<br>  &quot;  movq $&quot; STRINGIFY((FORKSRV_FD + 1)) &quot;, %rdi             &#x2F;* file desc *&#x2F;\n&quot;<br>  CALL_L64(&quot;write&quot;)<br>  &quot;\n&quot;<br>  &quot;  movq $0, %rdx                   &#x2F;* no flags  *&#x2F;\n&quot;<br>  &quot;  leaq __afl_temp(%rip), %rsi     &#x2F;* status    *&#x2F;\n&quot;<br>  &quot;  movq __afl_fork_pid(%rip), %rdi &#x2F;* PID       *&#x2F;\n&quot;<br>  CALL_L64(&quot;waitpid&quot;)<br>  &quot;  cmpq $0, %rax\n&quot;<br>  &quot;  jle  __afl_die\n&quot;<br>  &quot;\n&quot;<br>  &quot;  &#x2F;* Relay wait status to pipe, then loop back. *&#x2F;\n&quot;<br>  &quot;\n&quot;<br>  &quot;  movq $4, %rdx               &#x2F;* length    *&#x2F;\n&quot;<br>  &quot;  leaq __afl_temp(%rip), %rsi &#x2F;* data      *&#x2F;\n&quot;<br>  &quot;  movq $&quot; STRINGIFY((FORKSRV_FD + 1)) &quot;, %rdi         &#x2F;* file desc *&#x2F;\n&quot;<br>  CALL_L64(&quot;write&quot;)<br>  &quot;\n&quot;<br>  &quot;  jmp  __afl_fork_wait_loop\n&quot;<br>  &quot;\n&quot;<br>  &quot;__afl_fork_resume:\n&quot;<br>  &quot;\n&quot;<br>  &quot;  &#x2F;* In child process: close fds, resume execution. *&#x2F;\n&quot;<br>  &quot;\n&quot;<br>  &quot;  movq $&quot; STRINGIFY(FORKSRV_FD) &quot;, %rdi\n&quot;<br>  CALL_L64(&quot;close&quot;)<br>  &quot;\n&quot;<br>  &quot;  movq $&quot; STRINGIFY((FORKSRV_FD + 1)) &quot;, %rdi\n&quot;<br>  CALL_L64(&quot;close&quot;)<br>  &quot;\n&quot;<br>  &quot;  popq %rdx\n&quot;<br>  &quot;  popq %rdx\n&quot;<br>  &quot;\n&quot;<br>  &quot;  movq %r12, %rsp\n&quot;<br>  &quot;  popq %r12\n&quot;<br>  &quot;\n&quot;<br>  &quot;  movq  0(%rsp), %rax\n&quot;<br>  &quot;  movq  8(%rsp), %rcx\n&quot;<br>  &quot;  movq 16(%rsp), %rdi\n&quot;<br>  &quot;  movq 32(%rsp), %rsi\n&quot;<br>  &quot;  movq 40(%rsp), %r8\n&quot;<br>  &quot;  movq 48(%rsp), %r9\n&quot;<br>  &quot;  movq 56(%rsp), %r10\n&quot;<br>  &quot;  movq 64(%rsp), %r11\n&quot;<br>  &quot;\n&quot;<br>  &quot;  movq  96(%rsp), %xmm0\n&quot;<br>  &quot;  movq 112(%rsp), %xmm1\n&quot;<br>  &quot;  movq 128(%rsp), %xmm2\n&quot;<br>  &quot;  movq 144(%rsp), %xmm3\n&quot;<br>  &quot;  movq 160(%rsp), %xmm4\n&quot;<br>  &quot;  movq 176(%rsp), %xmm5\n&quot;<br>  &quot;  movq 192(%rsp), %xmm6\n&quot;<br>  &quot;  movq 208(%rsp), %xmm7\n&quot;<br>  &quot;  movq 224(%rsp), %xmm8\n&quot;<br>  &quot;  movq 240(%rsp), %xmm9\n&quot;<br>  &quot;  movq 256(%rsp), %xmm10\n&quot;<br>  &quot;  movq 272(%rsp), %xmm11\n&quot;<br>  &quot;  movq 288(%rsp), %xmm12\n&quot;<br>  &quot;  movq 304(%rsp), %xmm13\n&quot;<br>  &quot;  movq 320(%rsp), %xmm14\n&quot;<br>  &quot;  movq 336(%rsp), %xmm15\n&quot;<br>  &quot;\n&quot;<br>  &quot;  leaq 352(%rsp), %rsp\n&quot;<br>  &quot;\n&quot;<br>  &quot;  jmp  __afl_store\n&quot;<br>  &quot;\n&quot;<br>  &quot;__afl_die:\n&quot;<br>  &quot;\n&quot;<br>  &quot;  xorq %rax, %rax\n&quot;<br>  CALL_L64(&quot;_exit&quot;)<br>  &quot;\n&quot;<br></code></pre></td></tr></table></figure>
+<p>首先压栈两次保证16字节对齐，接着向指定的管道<code>FORKSRV_FD + 1</code>写入四字节magicnumber表示子进程已准备就绪,接着比较返回值是否为4判断是否写入成功，失败则进入<code>afl_fork_resume</code>函数，否则进入<code>afl_fork_wait_loop</code>，通过调用read函数来从管道接收消息判断父进程是否返回响应，如果读取失败或者读取字节不足4则进入<code>afl_die</code>函数。如果成功响应则开始fork。如果fork失败则会进入afl_die,如果为0则代表为子进程进入fork_resume,成功的话会保存子进程pid并写入给父进程，接着调用watpid等待子进程结束。关于afl_resume可以看到是关闭了两个管道并恢复了现场环境然后进入覆盖率统计函数，afl_die则是直接exit。</p>
+<p>至此可以大致看到整体的afl框架</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs perl">父进程(fuzzer)<br>负责管理整个afl fuzzer的初始进程，主要负责生成和修改输入的数据并监控子进程(<span class="hljs-keyword">fork</span> server)的状态。他不会执行测试用例而是通过和<span class="hljs-keyword">fork</span> server进行通信，让<span class="hljs-keyword">fork</span> server来启动新的测试用例<br><br>子进程(<span class="hljs-keyword">fork</span> server)<br>即mainpayload代码。主要功能是负责和父进程通信接收信号，每接收到一次信号就通过<span class="hljs-keyword">fork</span>创建一个新的测试用例然后通过<span class="hljs-keyword">waitpid</span>等待测试用例执行并判断其状态，收集结果后继续等待来自父进程的下一个信号。这种设计避免了反复调用execve从而提升了效率<br><br>子子进程(测试用例)<br>由<span class="hljs-keyword">fork</span> server创建的进程，每个进程都独立执行一次，完成测试后将执行结果返回给<span class="hljs-keyword">fork</span> server然后退出。<br></code></pre></td></tr></table></figure>
+<p>这也可以看出来afl比libfuzzer的一个优势，测试用例程序的崩溃并不会影响父进程，都是隔离的，而libfuzzer一旦崩溃就直接退出。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>AFL forkserver源码阅读</div>
+      <div>http://www.psbazx.com/2024/03/22/AFL-forkserver源码阅读/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>March 22, 2024</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/06/27/%E5%85%A5%E8%81%8C%E4%B8%A4%E5%91%A8%E5%B9%B4%E6%80%BB%E7%BB%93/" title="入职两周年总结">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">入职两周年总结</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/01/22/router%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="router学习笔记">
+                        <span class="hidden-mobile">router学习笔记</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>
