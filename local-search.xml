@@ -4,9 +4,35 @@
   
   
   <entry>
+    <title>入职两周年总结</title>
+    <link href="/2024/06/27/%E5%85%A5%E8%81%8C%E4%B8%A4%E5%91%A8%E5%B9%B4%E6%80%BB%E7%BB%93/"/>
+    <url>/2024/06/27/%E5%85%A5%E8%81%8C%E4%B8%A4%E5%91%A8%E5%B9%B4%E6%80%BB%E7%BB%93/</url>
+    
+    <content type="html"><![CDATA[<p>不知不觉在阿里呆了两年了(排除实习)，写下近期的一些学习笔记和职场经验。</p><a id="more"></a><h1 id="学习-技术"><a href="#学习-技术" class="headerlink" title="学习-技术"></a>学习-技术</h1><p>在公司和学校最大的区别是<code>“公司是雇你来赚钱的而不是雇你来学习的”</code></p><p>并不是所有的部门都是研究部门，实际上一旦遇到经济下行的情况研究部门是第一个GG，被开刀子，大部分所谓的研究部门存在的意义可能就是让公司股价上升吧，告诉投资人我们公司目前还在研究一些前沿的技术以此来换取资金//个人猜测</p><p>所以在公司最重要的是把工作的方向和自己喜欢的方向尽可能找个共同点，虽然并不是很多时候都能如愿。</p><p>个人这几年学习方向</p><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs armasm"><span class="hljs-symbol">chrome</span> <span class="hljs-built_in">v8</span><br><span class="hljs-symbol">iot</span><br>通用IM软件逆向+漏洞挖掘<br></code></pre></td></tr></table></figure><h2 id="v8"><a href="#v8" class="headerlink" title="v8"></a>v8</h2><p>v8第一次接触是在21年实习期，这种Nday打0day的思维确实在某一个时间段很吃香，大部分软件都没有意识到开沙箱的重要性，所以往往一个xss or 想办法让其渲染页面即可达成rce。</p><p>当然v8只是一个途径，针对不同的嵌入式浏览器可能还有不同的解决办法，如<a href="https://i.blackhat.com/USA-22/Thursday/US-22-Purani-ElectroVolt-Pwning-Popular-Desktop-Apps.pdf">electron的nday</a>，jsbridge等方法都可以完成rce,v8相对来说通用些，无沙箱能渲染即可rce。</p><h2 id="iot"><a href="#iot" class="headerlink" title="iot"></a>iot</h2><p>iot这个方向就抽象了大致分为两部分</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plain">1.固件提取<br>2.功能分析<br></code></pre></td></tr></table></figure><h3 id="固件提取"><a href="#固件提取" class="headerlink" title="固件提取"></a>固件提取</h3><p>固件提取可以通过很多种方式，有设备的情况下拆机看芯片型号使用对应编程器去读，然后直接解包即可(遇到过一些不能解包的，后面发现是和芯片相关导致固件有特定的格式，这种情况我的解决方案是下载同样的文件系统然后对比着看猜规律，最后配合gpt一波带走)</p><p>没有设备的情况下就要去官网查了，如果提供固件没加密的话最好，加密的情况下又要分情况，一种是能模拟跑起来，那直接内核调试强行srop让其反弹shell(这个之前博客有写)，如果跑不起来就只能想办法找更老版本的固件，因为老版本不一定加密，解密后找到他加密固件的程序对其算法进行逆向即可。</p><p>如果上述条件都不满足，那我只能说gg了。</p><h3 id="功能分析"><a href="#功能分析" class="headerlink" title="功能分析"></a>功能分析</h3><p>这里也分为两个方向，一个就是二进制层看设备监听的哪些端口然后开逆</p><p>还有就是搞他前台rce了，目前见到的大部分都是lua写的，luci框架。看源码即可，如果有遇到lua字节码的情况，找工具反编译即可，如果现成工具不能反编译，那么恭喜，大概率遇到魔改的lua解释器了，这时候就要对着源码逆向魔改的lua解释器，逆出来他到底魔改了哪里，然后对应的修改反汇编工具，个人使用的是unluac</p><p>一个小trick就是可以配个gpt，gpt在代码审计这块还是不错的，能帮助不少。</p><h2 id="通用IM软件逆向-漏洞挖掘"><a href="#通用IM软件逆向-漏洞挖掘" class="headerlink" title="通用IM软件逆向+漏洞挖掘"></a>通用IM软件逆向+漏洞挖掘</h2><p>im软件的攻击面相对来说很多，但是如果以”实战”为目标的话就少了。</p><p>目前最常见的就是浏览器相关，要么就是v8打要么就是想办法js bridge了。</p><p>关于js bridge市面上大概有两种，一种是随便你渲染什么页面，但是他会有白名单，只有在白名单下才能调用特权api，还有一种是尽可能想办法不让你渲染页面的。。。这种不多说了。对于白名单限制的想办法绕过后配合软件的一些功能(如下载执行功能)来实现rce</p><p>假如说目标是搞点bounty的话攻击面其实挺多，比如图片解析视频解析等，看看他是用来哪些第三方的库or插件想办法挖就行，当然挖之前最好阅读下bounty规则免得一场空。</p><p>一些软件逆向都是基本功了，没必要叙述太多，尽可能避免一些伞兵需求即可，公司里并不是所有人都熟悉技术，尤其是二进制这一块可以说是更少了，经常性会遇到一些逆向vmp等需求，想办法问清楚价值不大的话直接拒即可。</p><p>但你要是头铁就是喜欢逆vmp觉得这个可以显得自己多牛逼还是怎么样的也行，只不过在做之前最好考虑下这个东西做出来后对你的绩效帮助大不大，别到最后报着个怀才不遇的心态抱怨着我他妈逆了这么难的东西就给我这个平平无奇的绩效。</p><h2 id="个人研究"><a href="#个人研究" class="headerlink" title="个人研究"></a>个人研究</h2><p>在工作之外能做出东西才是最牛逼的。</p><figure class="highlight smali"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs smali">http3协议<br>chromium<br></code></pre></td></tr></table></figure><p>从去年开始看上了http3也就是quic协议的一些漏洞挖掘，也是借这个机会学习了下fuzz，产出为一个腾讯云quic协议的数组越界，可惜tquic是rust写的一触发越界就报错了没办法写出exp。</p><p>持续半年后放弃了这个方向大致俩个原因</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plain">无钱途&#x2F;钱少<br>用户量少，大部分厂商认为危害不大<br>libwebp事件<br></code></pre></td></tr></table></figure><p>当时libwebp事件出现后师兄约着吃了个饭讨论了后续的研究方向，通用第三方库的漏洞挖掘。</p><p>大家目标还都是做一些牛逼的事情，道路是曲折的，前途是光明的。</p><p>get到了俩cve cvss评分10.0拉满虽然可以吹一波但是 <code>无钱途</code>。</p><p>遇到问题解决问题，几个月的研究发现部分第三方库的漏洞并不能应用到真正的目标上，比如第三方库能触发漏洞，但是应用到真正软件上是在三方库api调用前会有一些check，导致无法触发，即无bounty。</p><p>当然也学到不少，libfuzzer使用越来越熟练了，对很多原理也了解了不少。</p><p>总结到失败经验后及时切换目标，后续就盯着有钱的干，好在后续结果不错，第一个五位数刀乐的bounty大概是有了，希望到年底能get更多。</p><p>//后续的漏洞挖掘放在明年写了。</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>router学习笔记</title>
+    <link href="/2024/01/22/router%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/"/>
+    <url>/2024/01/22/router%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</url>
+    
+    <content type="html"><![CDATA[<p>router相关的一些基础知识学习与理解。uhttpd源码分析+openwrt启动流程学习</p><a id="more"></a><h1 id="router"><a href="#router" class="headerlink" title="router"></a>router</h1><p>基础知识学习与理解</p><h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>串口调试工具 hyperterminal，需要配合杜邦线和usb转ttl转接板。注意如果提前连接好杜邦线再插入usb口可能会获取不到信息，这时要先插入usb口然后开启路由器等待一段时间后将杜邦线插入到ttl转usb转接板上，接法是GND-GND、RXD-TXD、TXD-RXD。</p><h2 id="Bootloader"><a href="#Bootloader" class="headerlink" title="Bootloader"></a>Bootloader</h2><p>Bootloader 是系统上电或复位后最先执行的程序。它的任务是初始化硬件并加载操作系统内核到 RAM 中并运行它。如RAM初始化、内核镜像调用、内核解密、文件系统解密等。</p><p>常见的 bootloader 有：</p><p><code>GRUB</code>:GNU GRand Unified Bootloader 是 Linux、UNIX 和其他操作系统的常见 bootloader。它提供了一个菜单，允许用户选择不同的操作系统或内核版本。</p><p><code>LILO</code>:Linux Loader，是早期的 Linux bootloader，现已被 GRUB 替代。</p><p><code>U-Boot</code>:通用 bootloader，主要用于嵌入式设备。</p><p><code>Fastboot</code>:Android 设备上的 bootloader。</p><p><code>RedBoot:</code>另一种嵌入式设备 bootloader。</p><p><code>Syslinux/Isolinux:</code>用于启动 live CD 或其他轻量级媒体的 bootloader。</p><p><code>EFI/UEFI</code>:现代计算机上的 bootloader 接口，用于替代传统的 BIOS。</p><p>通常，bootloader 存储在设备的只读内存 (ROM) 或其他不可修改的存储中，以确保它在设备启动时始终可用。但也有一些 bootloader 是可以更新的，这样能够为设备提供新功能或修复错误。</p><h2 id="uhttpd源码分析"><a href="#uhttpd源码分析" class="headerlink" title="uhttpd源码分析"></a>uhttpd源码分析</h2><p>先从main函数开始，如下</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">alias</span> *<span class="hljs-title">alias</span>;</span><br><span class="hljs-keyword">bool</span> nofork = <span class="hljs-literal">false</span>;<br><span class="hljs-keyword">char</span> *port;<br><span class="hljs-keyword">int</span> opt, ch;<br><span class="hljs-keyword">int</span> cur_fd;<br><span class="hljs-keyword">int</span> bound = <span class="hljs-number">0</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> HAVE_TLS</span><br><span class="hljs-keyword">int</span> n_tls = <span class="hljs-number">0</span>;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *tls_key = <span class="hljs-literal">NULL</span>, *tls_crt = <span class="hljs-literal">NULL</span>, *tls_ciphers = <span class="hljs-literal">NULL</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> HAVE_LUA</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *lua_prefix = <span class="hljs-literal">NULL</span>, *lua_handler = <span class="hljs-literal">NULL</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> HAVE_UCODE</span><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *ucode_prefix = <span class="hljs-literal">NULL</span>, *ucode_handler = <span class="hljs-literal">NULL</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br></code></pre></td></tr></table></figure><p>根据条件初始化一些变量</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++">BUILD_BUG_ON(<span class="hljs-keyword">sizeof</span>(uh_buf) &lt; PATH_MAX);<span class="hljs-comment">//检查缓冲区大小</span><br><br>uh_dispatch_add(&amp;cgi_dispatch);<br>init_defaults_pre();<br>signal(SIGPIPE, SIG_IGN);<br></code></pre></td></tr></table></figure><p>uh_dispatch_add函数负责吧cgi添加到链表中</p><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">struct</span> dispatch_handler cgi_dispatch = &#123;<br>.script = <span class="hljs-literal">true</span>,<br>.check_path = check_cgi_path,<br>.handle_request = cgi_handle_request,<br>&#125;;<br>void uh<span class="hljs-constructor">_dispatch_add(<span class="hljs-params">struct</span> <span class="hljs-params">dispatch_handler</span> <span class="hljs-operator">*</span><span class="hljs-params">d</span>)</span><br>&#123;<br><span class="hljs-built_in">list</span><span class="hljs-constructor">_add_tail(&amp;<span class="hljs-params">d</span>-&gt;<span class="hljs-params">list</span>, &amp;<span class="hljs-params">dispatch_handlers</span>)</span>;<br>&#125;<br></code></pre></td></tr></table></figure><ul><li><code>.script = true</code>：这可能意味着该处理器是用来处理脚本请求的。</li><li><code>.check_path = check_cgi_path</code>：一个函数指针，可能用于检查请求路径是否为有效的CGI路径。</li><li><code>.handle_request = cgi_handle_request</code>：一个函数指针，用于处理CGI请求。</li></ul><p>init_defaults_pre函数负责初始化配置的默认值</p><figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">static void init<span class="hljs-constructor">_defaults_pre(<span class="hljs-params">void</span>)</span><br>&#123;<br>conf.script_timeout = <span class="hljs-number">60</span>;<br>conf.network_timeout = <span class="hljs-number">30</span>;<br>conf.http_keepalive = <span class="hljs-number">20</span>;<br>conf.max_script_requests = <span class="hljs-number">3</span>;<br>conf.max_connections = <span class="hljs-number">100</span>;<br>conf.realm = <span class="hljs-string">&quot;Protected Area&quot;</span>;<br>conf.cgi_prefix = <span class="hljs-string">&quot;/cgi-bin&quot;</span>;<br>conf.cgi_path = <span class="hljs-string">&quot;/sbin:/usr/sbin:/bin:/usr/bin&quot;</span>;<br><span class="hljs-constructor">INIT_LIST_HEAD(&amp;<span class="hljs-params">conf</span>.<span class="hljs-params">cgi_alias</span>)</span>;<br><span class="hljs-constructor">INIT_LIST_HEAD(&amp;<span class="hljs-params">conf</span>.<span class="hljs-params">lua_prefix</span>)</span>;<br>#<span class="hljs-keyword">if</span> HAVE_UCODE<br><span class="hljs-constructor">INIT_LIST_HEAD(&amp;<span class="hljs-params">conf</span>.<span class="hljs-params">ucode_prefix</span>)</span>;<br>#endif<br>&#125;<br></code></pre></td></tr></table></figure><p>signal(SIGPIPE, SIG_IGN);用来忽略信号，防止客户端突然断开导致uhttpd进程退出</p><figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-string">`signal(SIGPIPE, SIG_IGN);`</span> 是一个常见的编程技巧，用于忽略 <span class="hljs-string">`SIGPIPE`</span> 信号。在网络编程中，当试图写入一个已经关闭的套接字或管道时，进程会收到一个 <span class="hljs-string">`SIGPIPE`</span> 信号。默认情况下，这个信号会导致进程终止。<br><br>在服务器应用程序中，客户端突然断开连接是一个常见的情况。如果没有处理 <span class="hljs-string">`SIGPIPE`</span> 信号，那么每当这种情况发生时，服务器进程都可能会意外终止，这显然是不可接受的。<br><br>通过使用 <span class="hljs-string">`signal(SIGPIPE, SIG_IGN);`</span>，进程告诉操作系统它希望忽略 <span class="hljs-string">`SIGPIPE`</span> 信号。这意味着即使尝试写入已关闭的套接字，进程也不会因为收到 <span class="hljs-string">`SIGPIPE`</span> 信号而终止。相反，写入操作会返回一个错误，通常是 <span class="hljs-string">`EPIPE`</span>，这样程序可以适当地处理这种情况，而不是意外终止。<br></code></pre></td></tr></table></figure><p>在后面就是一个很大的switch case负责解析命令行参数</p><figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lisp">while ((<span class="hljs-name">ch</span> = getopt(<span class="hljs-name">argc</span>, argv, <span class="hljs-string">&quot;A:ab:C:c:Dd:E:e:fh:H:I:i:K:k:L:l:m:N:n:O:o:P:p:qRr:Ss:T:t:U:u:Xx:y:&quot;</span>)) != <span class="hljs-number">-1</span>)<br></code></pre></td></tr></table></figure><p>具体对每个参数的解释和编译配置相关，假如某些配置没有编译那么就会报错，如TLS的选项没有的话就会打印如下错误信息</p><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;uhttpd: TLS support not compiled, &quot;</span><br>                <span class="hljs-string">&quot;ignoring -%c\n&quot;</span>, ch);<br></code></pre></td></tr></table></figure><p>参数的解释与使用可以看源码的usage函数。</p><p>switch case完后会执行如下函数</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">uh_config_parse</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *path = conf.file;<br>FILE *c;<br><span class="hljs-keyword">char</span> line[<span class="hljs-number">512</span>];<br><span class="hljs-keyword">char</span> *col1;<br><span class="hljs-keyword">char</span> *col2;<br><span class="hljs-keyword">char</span> *eol;<br><br><span class="hljs-keyword">if</span> (!path)<br>path = <span class="hljs-string">&quot;/etc/httpd.conf&quot;</span>;<br><br>c = fopen(path, <span class="hljs-string">&quot;r&quot;</span>);<br><span class="hljs-keyword">if</span> (!c)<br><span class="hljs-keyword">return</span>;<br><br><span class="hljs-built_in">memset</span>(line, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(line));<br><br><span class="hljs-keyword">while</span> (fgets(line, <span class="hljs-keyword">sizeof</span>(line) - <span class="hljs-number">1</span>, c)) &#123;<br><span class="hljs-keyword">if</span> ((line[<span class="hljs-number">0</span>] == <span class="hljs-string">&#x27;/&#x27;</span>) &amp;&amp; (<span class="hljs-built_in">strchr</span>(line, <span class="hljs-string">&#x27;:&#x27;</span>) != <span class="hljs-literal">NULL</span>)) &#123;<br><span class="hljs-keyword">if</span> (!(col1 = <span class="hljs-built_in">strchr</span>(line, <span class="hljs-string">&#x27;:&#x27;</span>)) || (*col1++ = <span class="hljs-number">0</span>) ||<br>!(col2 = <span class="hljs-built_in">strchr</span>(col1, <span class="hljs-string">&#x27;:&#x27;</span>)) || (*col2++ = <span class="hljs-number">0</span>) ||<br>!(eol = <span class="hljs-built_in">strchr</span>(col2, <span class="hljs-string">&#x27;\n&#x27;</span>)) || (*eol++  = <span class="hljs-number">0</span>))<br><span class="hljs-keyword">continue</span>;<br><br>uh_auth_add(line, col1, col2);<br>&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strncmp</span>(line, <span class="hljs-string">&quot;I:&quot;</span>, <span class="hljs-number">2</span>)) &#123;<br><span class="hljs-keyword">if</span> (!(col1 = <span class="hljs-built_in">strchr</span>(line, <span class="hljs-string">&#x27;:&#x27;</span>)) || (*col1++ = <span class="hljs-number">0</span>) ||<br>!(eol = <span class="hljs-built_in">strchr</span>(col1, <span class="hljs-string">&#x27;\n&#x27;</span>)) || (*eol++  = <span class="hljs-number">0</span>))<br><span class="hljs-keyword">continue</span>;<br><br>uh_index_add(strdup(col1));<br>&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strncmp</span>(line, <span class="hljs-string">&quot;E404:&quot;</span>, <span class="hljs-number">5</span>)) &#123;<br><span class="hljs-keyword">if</span> (!(col1 = <span class="hljs-built_in">strchr</span>(line, <span class="hljs-string">&#x27;:&#x27;</span>)) || (*col1++ = <span class="hljs-number">0</span>) ||<br>!(eol = <span class="hljs-built_in">strchr</span>(col1, <span class="hljs-string">&#x27;\n&#x27;</span>)) || (*eol++  = <span class="hljs-number">0</span>))<br><span class="hljs-keyword">continue</span>;<br><br>conf.error_handler = strdup(col1);<br>&#125;<br><span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((line[<span class="hljs-number">0</span>] == <span class="hljs-string">&#x27;*&#x27;</span>) &amp;&amp; (<span class="hljs-built_in">strchr</span>(line, <span class="hljs-string">&#x27;:&#x27;</span>) != <span class="hljs-literal">NULL</span>)) &#123;<br><span class="hljs-keyword">if</span> (!(col1 = <span class="hljs-built_in">strchr</span>(line, <span class="hljs-string">&#x27;*&#x27;</span>)) || (*col1++ = <span class="hljs-number">0</span>) ||<br>!(col2 = <span class="hljs-built_in">strchr</span>(col1, <span class="hljs-string">&#x27;:&#x27;</span>)) || (*col2++ = <span class="hljs-number">0</span>) ||<br>!(eol = <span class="hljs-built_in">strchr</span>(col2, <span class="hljs-string">&#x27;\n&#x27;</span>)) || (*eol++  = <span class="hljs-number">0</span>))<br><span class="hljs-keyword">continue</span>;<br><br>uh_interpreter_add(col1, col2);<br>&#125;<br>&#125;<br><br>fclose(c);<br>&#125;<br></code></pre></td></tr></table></figure><p>参数-c可以指定config文件，如果没有指定的话就会使用默认的<code>/etc/httpd.conf</code></p><p>然后就是解析config文件分为四种</p><ol><li><strong>以 <code>/</code> 开头，且包含 <code>:</code> 的行</strong>：<br>这种类型的行被认为是定义了HTTP Basic Auth的行。每一行的格式应为<code>/path:username:password</code>，其中<code>/path</code>是需要保护的路径，<code>username</code>是用户名，<code>password</code>是密码。这些信息会被提取出来，并通过调用<code>uh_auth_add(line, col1, col2)</code>函数添加到验证信息列表中。</li><li><strong>以 <code>I:</code> 开头的行</strong>：<br>这种类型的行用来定义默认的索引文件。索引文件的名称紧随<code>I:</code>之后。该名称会被提取出来，通过<code>uh_index_add(strdup(col1))</code>函数添加到索引文件列表中。</li><li><strong>以 <code>E404:</code> 开头的行</strong>：<br>这种类型的行用来定义HTTP 404错误的处理程序。错误处理程序的路径紧随<code>E404:</code>之后。该路径会被提取出来，保存到<code>conf.error_handler</code>变量中。</li><li><strong>以 <code>\*</code> 开头，且包含 <code>:</code> 的行</strong>：<br>这种类型的行用来定义解释器。每一行的格式应为<code>*.ext:/path/to/interpreter</code>，其中<code>*.ext</code>是需要被解释的文件扩展名，<code>/path/to/interpreter</code>是用来解释这类文件的解释器的路径。这些信息会被提取出来，并通过调用<code>uh_interpreter_add(col1, col2)</code>函数添加到解释器列表中。</li></ol><p>接着依旧是根据编译选项的几个分支处理</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> HAVE_TLS</span><br><span class="hljs-keyword">if</span> (n_tls) &#123;<br><span class="hljs-keyword">if</span> (!tls_crt || !tls_key) &#123;<br><span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Please specify a certificate and &quot;</span><br><span class="hljs-string">&quot;a key file to enable SSL support\n&quot;</span>);<br><span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-keyword">if</span> (uh_tls_init(tls_key, tls_crt, tls_ciphers))<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>&#125;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> HAVE_LUA</span><br><span class="hljs-keyword">if</span> (lua_handler || lua_prefix) &#123;<br><span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Need handler and prefix to enable Lua support\n&quot;</span>);<br><span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-keyword">if</span> (!list_empty(&amp;conf.lua_prefix) &amp;&amp; uh_plugin_init(<span class="hljs-string">&quot;uhttpd_lua.so&quot;</span>))<br><span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> HAVE_UCODE</span><br><span class="hljs-keyword">if</span> (ucode_handler || ucode_prefix) &#123;<br><span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Need handler and prefix to enable ucode support\n&quot;</span>);<br><span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-keyword">if</span> (!list_empty(&amp;conf.ucode_prefix) &amp;&amp; uh_plugin_init(<span class="hljs-string">&quot;uhttpd_ucode.so&quot;</span>))<br><span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> HAVE_UBUS</span><br><span class="hljs-keyword">if</span> (conf.ubus_prefix &amp;&amp; uh_plugin_init(<span class="hljs-string">&quot;uhttpd_ubus.so&quot;</span>))<br><span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br></code></pre></td></tr></table></figure><p>主要是负责初始化工作。</p><p>下面是根据参数来判断是否fork使得uhttpd成为守护进程,从而可以在后台无干扰的运行，其中<code>cur_fd = open(&quot;/dev/null&quot;, O_WRONLY);</code>这一行使其无需与任何终端交互。</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">/* fork (if not disabled) */</span><br><span class="hljs-keyword">if</span> (!nofork) &#123;<br><span class="hljs-keyword">switch</span> (fork()) &#123;<br><span class="hljs-keyword">case</span> <span class="hljs-number">-1</span>:<br>perror(<span class="hljs-string">&quot;fork()&quot;</span>);<br><span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br><br><span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:<br><span class="hljs-comment">/* daemon setup */</span><br><span class="hljs-keyword">if</span> (chdir(<span class="hljs-string">&quot;/&quot;</span>))<br>perror(<span class="hljs-string">&quot;chdir()&quot;</span>);<br><br>cur_fd = open(<span class="hljs-string">&quot;/dev/null&quot;</span>, O_WRONLY);<br><span class="hljs-keyword">if</span> (cur_fd &gt; <span class="hljs-number">0</span>) &#123;<br>dup2(cur_fd, <span class="hljs-number">0</span>);<br>dup2(cur_fd, <span class="hljs-number">1</span>);<br>dup2(cur_fd, <span class="hljs-number">2</span>);<br>&#125;<br><br><span class="hljs-keyword">break</span>;<br><br><span class="hljs-keyword">default</span>:<br><span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>&#125;<br>&#125;<br></code></pre></td></tr></table></figure><p>至于守护进程解释如下</p><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs markdown">守护进程（Daemon Process）是运行在Unix和类Unix系统（如Linux）后台的特殊进程。与普通进程不同，它不与任何终端相关联。以下是守护进程的一些关键特点：<br><br><span class="hljs-bullet">1.</span> <span class="hljs-strong">**后台运行**</span>：守护进程在后台运行，不需要与前台交互。<br><br><span class="hljs-bullet">2.</span> <span class="hljs-strong">**没有终端**</span>：守护进程没有控制终端，因此它不会收到用户输入。<br><br><span class="hljs-bullet">3.</span> <span class="hljs-strong">**生命周期**</span>：通常，守护进程的生命周期从系统启动开始，一直到系统关闭。<br><br><span class="hljs-bullet">4.</span> <span class="hljs-strong">**常见的守护进程**</span>：很多系统级的服务，如web服务器、数据库服务器等，都是作为守护进程运行的。<br><br><span class="hljs-bullet">5.</span> <span class="hljs-strong">**创建守护进程**</span>：通常，守护进程是通过以下步骤创建的：<br><span class="hljs-bullet">   -</span> 调用<span class="hljs-code">`fork()`</span>并使父进程退出，这样子进程成为孤儿进程，并被init进程（进程ID为1）接管。<br><span class="hljs-bullet">   -</span> 更改文件模式掩码（umask），确保守护进程有适当的文件权限。<br><span class="hljs-bullet">   -</span> 更改工作目录到根目录，以确保守护进程不会阻止任何文件系统被卸载。<br><span class="hljs-bullet">   -</span> 关闭所有打开的文件描述符，这样守护进程不会持有不需要的资源。<br><span class="hljs-bullet">   -</span> 打开<span class="hljs-code">`/dev/null`</span>，并将标准输入、输出和错误重定向到它，这样守护进程不会在任何终端上显示输出或接收输入。<br><span class="hljs-bullet">   -</span> 调用<span class="hljs-code">`setsid()`</span>以创建新的会话，并使守护进程成为会话领导。<br><br><span class="hljs-bullet">6.</span> <span class="hljs-strong">**使用场景**</span>：守护进程通常用于提供各种网络服务（例如HTTP、SSH、FTP）或执行特定任务，如日志轮换、备份和系统监控。<br><br><span class="hljs-bullet">7.</span> <span class="hljs-strong">**结束与管理**</span>：守护进程可以由系统管理员使用命令（如<span class="hljs-code">`kill`</span>）终止，或通过系统工具（如<span class="hljs-code">`systemd`</span>、<span class="hljs-code">`init`</span>、<span class="hljs-code">`upstart`</span>等）进行管理和监控。<br></code></pre></td></tr></table></figure><p>最后就是</p><p><code>return run_server();</code></p><p>到此main函数结束。</p><p>服务启动函数定义在main函数如下</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">run_server</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>uloop_init();            <span class="hljs-comment">// 初始化事件循环库</span><br>uh_setup_listeners();    <span class="hljs-comment">// 设置HTTP服务器的监听器</span><br>uh_plugin_post_init();   <span class="hljs-comment">// 初始化插件后的处理</span><br>uloop_run();             <span class="hljs-comment">// 运行事件循环，等待客户端连接和处理</span><br><br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure><p>下面分析其功能</p><ol><li><p><strong>uloop_init</strong>:</p><p>这个函数用于初始化uloop库。在开始使用任何uloop功能之前，你首先需要调用此函数。它为后续的事件处理做好准备。</p></li><li><p><strong>uloop_run</strong>:</p><p>这个函数启动了事件循环。当你设置了一些事件监听器或计时器并准备好处理这些事件时，你可以调用这个函数。事件循环将持续运行，直到没有更多的事件要处理，或者直到调用<code>uloop_end</code>。</p></li></ol><p><strong>主要功能</strong>：</p><p><code>uloop</code>的主要目的是允许你的程序异步地响应各种事件，如：</p><ul><li><strong>文件描述符上的可读/可写事件</strong>：例如，当有新的TCP连接到达监听套接字时，或当一个文件变得可读时。</li><li><strong>计时器</strong>：允许你在某个时间点后执行某个操作。</li><li><strong>信号</strong>：允许你捕获和响应系统信号。</li></ul><p>简单来说，<code>uloop</code>允许你编写一个能够同时处理多个操作并响应外部事件的程序，而无需使用多线程或多进程。</p><p>使用<code>uloop</code>的一般流程是：</p><ol><li><p>使用<code>uloop_init</code>初始化。</p></li><li><p>设置你想要监听的事件。</p></li><li><p>调用<code>uloop_run</code>来启动事件循环。</p></li><li><p>在事件循环中，你的回调函数将被触发并处理相关的事件。</p></li><li><p>当完成所有操作或需要退出程序时，可以调用<code>uloop_end</code>来结束事件循环。</p></li></ol><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">uh_setup_listeners</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">listener</span> *<span class="hljs-title">l</span>;</span><br><span class="hljs-keyword">int</span> yes = <span class="hljs-number">1</span>;<br><br>list_for_each_entry(l, &amp;listeners, <span class="hljs-built_in">list</span>) &#123;<br><span class="hljs-keyword">int</span> sock = l-&gt;fd.fd;<br><br><span class="hljs-comment">/* TCP keep-alive */</span><br><span class="hljs-keyword">if</span> (conf.tcp_keepalive &gt; <span class="hljs-number">0</span>) &#123;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> linux</span><br><span class="hljs-keyword">int</span> tcp_ka_idl, tcp_ka_int, tcp_ka_cnt, tcp_fstopn;<br><br>tcp_ka_idl = <span class="hljs-number">1</span>;<br>tcp_ka_cnt = <span class="hljs-number">3</span>;<br>tcp_ka_int = conf.tcp_keepalive;<br>tcp_fstopn = <span class="hljs-number">5</span>;<br><br>setsockopt(sock, SOL_TCP, TCP_KEEPIDLE,  &amp;tcp_ka_idl, <span class="hljs-keyword">sizeof</span>(tcp_ka_idl));<span class="hljs-comment">//TCP_KEEPIDLE: 这定义了当连接上最后一次数据传输之后，多久开始发送keep-alive探针。</span><br>setsockopt(sock, SOL_TCP, TCP_KEEPINTVL, &amp;tcp_ka_int, <span class="hljs-keyword">sizeof</span>(tcp_ka_int));<span class="hljs-comment">//TCP_KEEPINTVL: 在探针之间等待的时间。</span><br>setsockopt(sock, SOL_TCP, TCP_KEEPCNT,   &amp;tcp_ka_cnt, <span class="hljs-keyword">sizeof</span>(tcp_ka_cnt));<span class="hljs-comment">//TCP_KEEPCNT: 在认为连接已死之前，需要发送的未被确认的探针的数量。</span><br>setsockopt(sock, SOL_TCP, TCP_FASTOPEN,  &amp;tcp_fstopn, <span class="hljs-keyword">sizeof</span>(tcp_fstopn));<span class="hljs-comment">//TCP_FASTOPEN: 它允许数据在初始的SYN（TCP连接的开始）中被发送，这可以加速开放新的连接。</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><br>setsockopt(sock, SOL_SOCKET, SO_KEEPALIVE, &amp;yes, <span class="hljs-keyword">sizeof</span>(yes));<br>&#125;<br><br>l-&gt;fd.cb = listener_cb;<br>uloop_fd_add(&amp;l-&gt;fd, ULOOP_READ);<span class="hljs-comment">//将监听器的文件描述符（socket）添加到事件循环中，并设置为读模式。</span><br>&#125;<br>&#125;<br></code></pre></td></tr></table></figure><p> 函数的主要步骤如下：</p><ol><li><p>遍历每一个监听器,服务可能多端口监听。</p></li><li><p>如果配置中指定了TCP keep-alive的时间，那么设置相关的socket选项。这是用来检测并丢弃死掉的连接，确保资源不会被无效的客户端长时间占用。</p></li><li><p>在Linux系统上，可以设置更详细的TCP keep-alive参数，如keep-alive闲置时间、未确认的探针数等。</p></li><li><p>为每个监听器设置回调函数<code>listener_cb</code>，该函数会在有新的连接请求时被调用。</p></li><li><p>将监听器添加到事件循环中，并设置为监听读事件。这意味着每当有新的连接请求时，<code>listener_cb</code>函数将被调用。</p></li></ol><p>简单来说功能是为了初始化所有的监听器为其设置回调函数。</p><p>回调函数功能如下</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">listener_cb</span><span class="hljs-params">(struct uloop_fd *fd, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> events)</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">listener</span> *<span class="hljs-title">l</span> =</span> container_of(fd, struct listener, fd);<br><br><span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br><span class="hljs-keyword">if</span> (!uh_accept_client(fd-&gt;fd, l-&gt;tls))<br><span class="hljs-keyword">break</span>;<br>&#125;<br><br><span class="hljs-keyword">if</span> (conf.max_connections &amp;&amp; n_clients &gt;= conf.max_connections)<br>uh_block_listener(l);<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">uh_block_listener</span><span class="hljs-params">(struct listener *l)</span></span><br><span class="hljs-function"></span>&#123;<br>uloop_fd_delete(&amp;l-&gt;fd);<br>n_blocked++;<br>l-&gt;blocked = <span class="hljs-literal">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure><p>不断接受客户端链接，超出最大链接数量则阻塞。阻塞函数为uh_block_listener会为其设置对应的标志位，并增加对应的引用计数。</p><p>uh_accept_client函数定义在<code>client.c</code>中</p><p>这个函数会尝试接受一个新的客户端的链接</p><ul><li>先声明和初始化一些局部变量。</li><li>使用<code>accept</code>函数尝试从给定的文件描述符<code>fd</code>接受一个新的客户端连接。<ul><li>如果<code>accept</code>失败，则返回<code>false</code>。</li></ul></li><li><code>set_addr</code>函数用于保存客户端和服务器的地址信息。</li><li>根据是否是TLS连接，为新连接分配一个流并设置适当的回调。</li><li><code>ustream_fd_init</code>用于初始化新连接的ustream。</li><li><code>uh_poll_connection</code>函数调用来轮询连接。</li><li><code>list_add_tail</code>将新客户端添加到客户端列表中。</li><li>增加<code>n_clients</code>的计数器。</li></ul><p>uh_plugin_post_init函数主要是初始化所注册的插件</p><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">uh_plugin_post_init</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">uhttpd_plugin</span> *<span class="hljs-title">p</span>;</span><br><br>list_for_each_entry(p, &amp;plugins, <span class="hljs-built_in">list</span>) <span class="hljs-comment">// 遍历所有已注册的插件</span><br><span class="hljs-keyword">if</span> (p-&gt;post_init)                  <span class="hljs-comment">// 检查插件是否有post_init方法</span><br>p-&gt;post_init();                <span class="hljs-comment">// 调用该插件的post_init方法</span><br>&#125;<br></code></pre></td></tr></table></figure><p>以上是基本的启动流程代码，还有很多其他的部分如cgi处理，总的来说这类web服务器功能就是接受客户端的请求并做出响应，可以自行处理也可以交给后端的一些其他接口来处理如cgi lua php等</p><h2 id="openwrt启动流程"><a href="#openwrt启动流程" class="headerlink" title="openwrt启动流程"></a>openwrt启动流程</h2><p><code>vmlinux--&gt;/etc/preinit--&gt;/sbin/init--&gt;/etc/inittab--&gt;/etc/rc.d/*</code></p><p>内核在执行完kernel_init后会执行/etc/preinit脚本，该脚本主要功能负责初始化，特别是文件系统。preinit的工作之一就是将rom和overlay的文件系统合并。其次就是一些环境变量的设置，硬件方面的检测和设置等。</p><p>preinit执行完后会执行/sbin/init，该程序会负责初始化系统并管理所有其他的进程，通过解析/etc/inittab文件来实现，文件如下</p><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-meta">::sysinit:/etc/init.d/rcS</span> S boot<br><span class="hljs-meta">::shutdown:/etc/init.d/rcS</span> K shutdown<br>ttyS0::askfirst:/usr/libexec/login.sh<br>hvc0::askfirst:/usr/libexec/login.sh<br>tty1::askfirst:/usr/libexec/login.sh<br></code></pre></td></tr></table></figure><p>前俩行分别指系统初始化和关机时要启动的脚本他们分别会执行/etc/rc.d/下所有S或K开头的脚本，按照优先级依次执行。rc.d中存放的都是快捷方式链接到了init.d目录下。</p><p>想要持续化可以考虑修改rc.d和init.d目录下的文件，创建对应的文件也可以。前提是有overlay特性，注意不能修改preinit，因为preinit使用的还是rom中的，运行完后会把overlay和rom合并。</p><p>具体可见参考资料<a href="https://oldwiki.archive.openwrt.org/doc/techref/preinit_mount">openwrt启动流程</a></p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>纤程学习</title>
-    <link href="/2024/07/22/%E7%BA%A4%E7%A8%8B%E5%AD%A6%E4%B9%A0/"/>
-    <url>/2024/07/22/%E7%BA%A4%E7%A8%8B%E5%AD%A6%E4%B9%A0/</url>
+    <link href="/2023/12/22/%E7%BA%A4%E7%A8%8B%E5%AD%A6%E4%B9%A0/"/>
+    <url>/2023/12/22/%E7%BA%A4%E7%A8%8B%E5%AD%A6%E4%B9%A0/</url>
     
     <content type="html"><![CDATA[<p>前阵子看到的一篇slides，感觉挺有意思，记录下学习过程。</p><a id="more"></a><h1 id="From-Dead-Data-to-Digestion"><a href="#From-Dead-Data-to-Digestion" class="headerlink" title="From Dead Data to Digestion"></a>From Dead Data to Digestion</h1><h2 id="Fibers"><a href="#Fibers" class="headerlink" title="Fibers"></a>Fibers</h2><p>轻量级纤程</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plain">线程<br>每个进程强制，至少一个线程<br>内核切换<br><br>纤程<br>每个线程可选择，一个线程同时只能有一个纤程运行<br>用户态切换由应用程序决定<br></code></pre></td></tr></table></figure><p>每个纤程用户态存在一个fiber objects用来描述纤程</p><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs fortran">Components:<br>• Fiber Objects– including Fiber <span class="hljs-keyword">Data</span><br>• Fiber <span class="hljs-keyword">Local</span> Storage (FLS):<br>• <span class="hljs-built_in">Index</span><br>• Slots<br>• Fiber Callback functions<br></code></pre></td></tr></table></figure><p><img src="image-20230921135228998.png" alt="image-20230921135228998"></p><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver"><span class="hljs-number">1.</span> Thread converts itself <span class="hljs-built_in">to</span> <span class="hljs-keyword">a</span> fiber – ConvertThreadToFiber().<br><span class="hljs-number">2.</span> Create <span class="hljs-keyword">a</span> <span class="hljs-keyword">second</span> fiber– CreateFiber().<br><span class="hljs-number">3.</span> (Optional) Allocate FLS – FlsAlloc().<br><span class="hljs-number">4.</span> Switch <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> newly created fiber – SwitchToFiber().<br><span class="hljs-number">5.</span> When finished, <span class="hljs-built_in">convert</span> <span class="hljs-keyword">a</span> fiber back <span class="hljs-built_in">to</span> <span class="hljs-keyword">a</span> thread – ConvertFiberToThread().<br></code></pre></td></tr></table></figure><p>针对恶意代码的执行有俩种方式</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sql">• Executing shellcode <span class="hljs-keyword">in</span> a <span class="hljs-keyword">local</span> process <span class="hljs-keyword">using</span> fibers:<br><span class="hljs-number">1.</span> <span class="hljs-keyword">Convert</span> a Thread <span class="hljs-keyword">to</span> a Fiber.<br><span class="hljs-number">2.</span> <span class="hljs-keyword">Allocate</span> memory <span class="hljs-operator">&amp;</span> <span class="hljs-keyword">copy</span> <span class="hljs-keyword">over</span> shellcode.<br><span class="hljs-number">3.</span> <span class="hljs-keyword">Create</span> a <span class="hljs-keyword">new</span> fiber, supply the shellcode address.<br><span class="hljs-number">4.</span> Schedule the newly created fiber.<br>• Fiber <span class="hljs-keyword">Local</span> Storage <span class="hljs-keyword">and</span> callback functions:<br><span class="hljs-number">1.</span> <span class="hljs-keyword">Convert</span> a Thread <span class="hljs-keyword">to</span> a Fiber.<br><span class="hljs-number">2.</span> <span class="hljs-keyword">Allocate</span> FLS index, suppling an evil callback<br>function.<br><span class="hljs-number">3.</span> (Optional) <span class="hljs-keyword">Set</span> a FLS slot <span class="hljs-keyword">value</span> <span class="hljs-keyword">to</span> use <span class="hljs-keyword">as</span> a callback<br>parameter.<br><span class="hljs-number">4.</span> <span class="hljs-keyword">Free</span> the FLS index <span class="hljs-operator">/</span> <span class="hljs-keyword">Delete</span> fiber<br></code></pre></td></tr></table></figure><p>一种是直接分配内存后让其执行，shellcode作为参数传递，另一种是通过设置FLS回调函数来实现。</p><h2 id="优势-amp-劣势"><a href="#优势-amp-劣势" class="headerlink" title="优势&amp;劣势"></a>优势&amp;劣势</h2><p>目前内核针对用户态的监控还没有纤程的只有线程，如PsSetCreateThreadNotifyRoutine。所以可以通过纤程来进行注入。</p><p>但是纤程不像线程有成熟的api可以调用比如createremotethread且有关的文档很少，基本没有讲过其internal的，也没有一些开源的工具。</p><h2 id="fiber原理与实现"><a href="#fiber原理与实现" class="headerlink" title="fiber原理与实现"></a>fiber原理与实现</h2><p>后续作者讲解了纤程的本质与实现。</p><p>用户态存在api IsThreadAFiber来判断当前线程是否为纤程</p><p>主要是通过判断teb的SameTebFlags标志位来实现。</p><p>这个api没有远程的实现，想要远程实现可以通过<code>CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0) </code>首先获取所有的线程id然后<code>OpenThread() + NtQueryInformationThread()</code>获取teb的基址后续就是<code>ReadProcessMemory()</code>读取标志位来判断是否为纤程</p><p>接着是纤程的data位于<code>TEB.NT_TIB.FiberData</code></p><p>这部分是由函数<code>ConvertThreadToFiber</code>来实现</p><p><img src="image-20230921191949390.png" alt="image-20230921191949390"></p><p>知道了fiber object如何构造我们也可以自己来实现了。</p><p>关于检测这块，作者提到了遍历heap来实现，因为fiber的object固定大小为0x530</p><p><img src="image-20230921192427787.png" alt="image-20230921192427787"></p><p>获取到结构体后可以根据结构体的内容获取到双向链表，目标线程的所有纤程结构体</p><p>还能用于判断纤程是否为挂起</p><p>至此我们可以获取到与线程相关的所有纤程结构体</p><p>接着我们可以进一步获取fls里的所有内容通过分析<code>RtlFlsGetValue</code></p><p>然后就能进一步分析获取所有的FLS回调函数。</p><h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>考虑到纯用户态实现+没有内核回调函数，是否可以通过人工实现远程纤程注入？</p><p>检测方法可以通过看有没有改写teb来实现</p><h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>1.强行设置纤程</p><p>teb+0x17ee处存在flag标志位</p><p><code>teb-&gt;SameTebFlags |= 4u</code>即可</p><p>2.回调函数设置</p><p>结构体位于<code>ntdll.dll+184E50</code></p><p><code>struct _RTLP_FLS_CONTEXT RtlpFlsContext</code></p><p>其中偏移处+8是GLOBAL_FLS_DATA</p><p><img src="image-20230922112028288.png" alt="image-20230922112028288"></p><p>设置对应的number和回调函数即可</p><p>FlsSetValue函数主要是为其添加参数，参数位于</p><p>fiberdata=teb+0x20</p><p>flsdata=fiberdata+0x510</p><p>flsdata处存储了其对应的参数,这个必须要设置不然不会执行。</p><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>blackhat USA 2023(From Dead Data to Digestion Extracting Windows Fibers for your digital forensics diet)</p>]]></content>
     
@@ -22,6 +48,19 @@
     <url>/2023/07/22/CE%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5%E6%A8%A1%E6%9D%BF-%E8%87%AA%E7%94%A8/</url>
     
     <content type="html"><![CDATA[<p>自用注入模板，突然发现在某些场景下挺实用，比如hook sqlitekey函数 or sqliteexec函数时打印出所有的参数变量。</p><a id="more"></a><h1 id="CE-代码注入"><a href="#CE-代码注入" class="headerlink" title="CE 代码注入"></a>CE 代码注入</h1><p>针对飞书 sqlite3_key_v2（liblark.dll+761b9a0）函数hook</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs awk">&#123;<span class="hljs-variable">$lua</span>&#125;<br><span class="hljs-keyword">function</span> myfunction(param)<br>print(<span class="hljs-string">&quot;called&quot;</span>)<br>local keypointer = readInteger(param+<span class="hljs-number">16</span>)<br>local len = readInteger(param+<span class="hljs-number">20</span>)<br>local bytes = readBytes(keypointer,len,true)<br>local key=<span class="hljs-string">&#x27;&#x27;</span><br><span class="hljs-keyword">for</span> i=<span class="hljs-number">1</span>,len <span class="hljs-keyword">do</span><br>    key = key..string.char(bytes[i])<br>end<br>print(<span class="hljs-string">&quot;key :&quot;</span> .. key)<br>print(string.format(<span class="hljs-string">&quot;len:%d&quot;</span>,len))<br>end<br><br><br>&#123;<span class="hljs-variable">$asm</span>&#125;<br>loadlibrary(luaclient-i386.dll)<br>luacall(openLuaServer(<span class="hljs-string">&#x27;CELUASERVER&#x27;</span>))<br>globalalloc(luainit, <span class="hljs-number">128</span>)<br>globalalloc(LuaFunctionCall, <span class="hljs-number">128</span>)<br>label(luainit_exit)<br>globalalloc(luaserverinitialized, <span class="hljs-number">4</span>)<br>globalalloc(luaservername, <span class="hljs-number">12</span>)<br>luaservername:<br>db <span class="hljs-string">&#x27;CELUASERVER&#x27;</span>,<span class="hljs-number">0</span><br>luainit:<br>cmp [luaserverinitialized],<span class="hljs-number">0</span><br>jne luainit_exit<br>push luaservername <span class="hljs-regexp">//</span>初次调用则会加载lua的dll<br>call CELUA_Initialize <span class="hljs-regexp">//</span>this <span class="hljs-keyword">function</span> is defined <span class="hljs-keyword">in</span> the luaclient dll<br>mov [luaserverinitialized],eax<br>luainit_exit:<br>ret<br>LuaFunctionCall:<br>push ebp<br>mov ebp,esp<br>call luainit<br>push [ebp+c]<br>push [ebp+<span class="hljs-number">8</span>]<br>call CELUA_ExecuteFunction<br>pop ebp<br>ret <span class="hljs-number">8</span><br><br>alloc(newmem,<span class="hljs-number">2048</span>)<br>label(returnhere)<br>label(originalcode)<br>label(<span class="hljs-keyword">exit</span>)<br><br>myluascript:<br>db <span class="hljs-string">&#x27;myfunction(parameter)&#x27;</span>,<span class="hljs-number">0</span><br>newmem: <span class="hljs-regexp">//</span>this is allocated memory, you have read,write,execute access<br><span class="hljs-regexp">//</span>place your code here<br>push ebp <span class="hljs-regexp">//</span>ebp保存<br>mov ebp,esp <span class="hljs-regexp">//</span>ebp初始化<br>push eax <span class="hljs-regexp">//</span>eax环境保存<br>push ebp <span class="hljs-regexp">//</span>此处将ebp作为参数传入<br>push myluascript <span class="hljs-regexp">//</span>函数名称<br>call LuaFunctionCall <span class="hljs-regexp">//</span>lua调用<br>pop eax <span class="hljs-regexp">//</span>eax恢复<br>mov esp,ebp <span class="hljs-regexp">//</span>esp还原<br>pop ebp <span class="hljs-regexp">//</span>ebp恢复<br><br>originalcode:<br>push esi<br>push [esp+<span class="hljs-number">0</span>C]<br><br><span class="hljs-keyword">exit</span>:<br>jmp returnhere<br><br><span class="hljs-string">&quot;liblark.dll&quot;</span>+<span class="hljs-number">761</span>B9A0:<br>jmp newmem<br>returnhere:<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>gdb固件提取插件</title>
+    <link href="/2023/06/12/gdb%E5%9B%BA%E4%BB%B6%E6%8F%90%E5%8F%96%E6%8F%92%E4%BB%B6/"/>
+    <url>/2023/06/12/gdb%E5%9B%BA%E4%BB%B6%E6%8F%90%E5%8F%96%E6%8F%92%E4%BB%B6/</url>
+    
+    <content type="html"><![CDATA[<p>修了个小bug，方便提取固件使用</p><a id="more"></a><h1 id="iot类一键获取shell"><a href="#iot类一键获取shell" class="headerlink" title="iot类一键获取shell"></a>iot类一键获取shell</h1><h2 id="gef插件代码"><a href="#gef插件代码" class="headerlink" title="gef插件代码"></a>gef插件代码</h2><p>原作者的插件代码并没有完全公开，缺少了很多，也可能是由于版本适配问题，以下是修改过的最新代码。</p><p>底层原理见参考资料，使用时注意吧断点全部清除。如果gef用不习惯可以移植pwndbg，只需要更改gdbinit即可</p><figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">source</span> <span class="hljs-regexp">/home/</span>pisanbao<span class="hljs-regexp">/pwndbg/g</span>dbinit.py<br><span class="hljs-keyword">source</span> ~/gef.py<br></code></pre></td></tr></table></figure><p>这样就能在gef中使用一些pwndbg定义的命令了后面在source一下插件代码正常使用即可，其中patterns found可能会出现小bug在只找到一个pattern的时候就不是patterns是pattern</p><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExecveCommand</span>(<span class="hljs-params">GenericCommand</span>):</span><br>    <span class="hljs-string">&quot;&quot;&quot;use execve do anything cmd&quot;&quot;&quot;</span><br>    _cmdline_ = <span class="hljs-string">&quot;execve&quot;</span><br>    _syntax_  = <span class="hljs-string">&quot;&#123;:s&#125; [cmd]|set addr [address]&quot;</span>.<span class="hljs-built_in">format</span>(_cmdline_)<br>    _example_ = <span class="hljs-string">&quot;&#123;:s&#125; /usr/sbin/telnetd -l /bin/bash -p 23333\n&#123;:s&#125; set addr 0x7fb4360748ae&quot;</span>.<span class="hljs-built_in">format</span>(_cmdline_, _cmdline_)<br><br>    _aliases_ = [<span class="hljs-string">&quot;exec&quot;</span>,]<br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span>(<span class="hljs-params">self</span>):</span><br>        <span class="hljs-built_in">super</span>().__init__(complete=gdb.COMPLETE_FILENAME)<br>        self.findAddr = <span class="hljs-literal">None</span><br>        <span class="hljs-keyword">return</span><br><br><span class="hljs-meta">    @only_if_gdb_running</span><br>    <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">do_invoke</span>(<span class="hljs-params">self, argv</span>):</span><br>        <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">        mips/arm todo</span><br><span class="hljs-string">        &#x27;&#x27;&#x27;</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(argv) &gt; <span class="hljs-number">0</span>:<br>            <span class="hljs-keyword">if</span> argv[<span class="hljs-number">0</span>] == <span class="hljs-string">&quot;debug&quot;</span>:<br>                <span class="hljs-comment"># debug = 1</span><br>                dofunc = <span class="hljs-built_in">print</span><br>                argv = argv[<span class="hljs-number">1</span>:]<br>            <span class="hljs-keyword">elif</span> argv[<span class="hljs-number">0</span>] == <span class="hljs-string">&quot;set&quot;</span>:<br>                <span class="hljs-keyword">if</span> argv[<span class="hljs-number">1</span>] == <span class="hljs-string">&quot;addr&quot;</span>:<br>                    self.findAddr = <span class="hljs-built_in">int</span>(argv[<span class="hljs-number">2</span>], <span class="hljs-number">16</span>)<br>                    info(<span class="hljs-string">&quot;set success&quot;</span>)<br>                <span class="hljs-keyword">return</span><br>            <span class="hljs-keyword">else</span>:<br>                <span class="hljs-comment"># debug = 0</span><br>                dofunc = gdb.execute<br>        <span class="hljs-keyword">else</span>:<br>            err(<span class="hljs-string">&quot;The lack of argv.&quot;</span>)<br>            <span class="hljs-keyword">return</span><br>        cmd = <span class="hljs-string">&quot; &quot;</span>.join(argv)<br>        cmd = [<span class="hljs-string">b&quot;/bin/sh&quot;</span>, <span class="hljs-string">b&quot;-c&quot;</span>, cmd.encode()]<br>        current_arch = gef.arch<br>        <span class="hljs-comment"># print(current_arch.sp)</span><br>        <span class="hljs-comment"># print(current_arch.pc)</span><br>        <span class="hljs-comment"># print(current_arch.ptrsize)</span><br>        <span class="hljs-comment"># print(endian_str())</span><br>        <span class="hljs-comment"># print(current_arch.syscall_instructions)</span><br>        <span class="hljs-comment"># print(current_arch.syscall_register)</span><br>        <span class="hljs-comment"># print(current_arch.special_registers)</span><br>        <span class="hljs-comment"># print(current_arch.function_parameters)</span><br>        <span class="hljs-comment"># print(current_arch.arch)</span><br>        <span class="hljs-comment"># print(current_arch.get_ith_parameter)</span><br>        <span class="hljs-comment"># print(current_arch.gpr_registers)</span><br>        <span class="hljs-comment"># print(current_arch.get_ra)</span><br>        <span class="hljs-comment"># write_memory</span><br>        <br>        inferior = gdb.selected_inferior()<br>        write_memory = inferior.write_memory<br><br>        <span class="hljs-keyword">try</span>:<br>            rsp = current_arch.sp<br>            nowpc = self.findAddr <span class="hljs-keyword">or</span> current_arch.pc<br>        <span class="hljs-keyword">except</span> gdb.error <span class="hljs-keyword">as</span> e:<br>            err(<span class="hljs-string">&quot;%s Please start first.&quot;</span>%e)<br>            <span class="hljs-keyword">return</span><br>        bit = current_arch.ptrsize<br>        print(<span class="hljs-string">f&quot;current_arch.ptrsize=<span class="hljs-subst">&#123;current_arch.ptrsize&#125;</span>&quot;</span>)<br>        <span class="hljs-keyword">if</span> current_arch.arch == <span class="hljs-string">&quot;X86&quot;</span>:<br>            arg0 = <span class="hljs-string">&quot;$rdi&quot;</span> <span class="hljs-keyword">if</span> bit == <span class="hljs-number">8</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;$ebx&quot;</span><br>            arg1 = <span class="hljs-string">&quot;$rsi&quot;</span> <span class="hljs-keyword">if</span> bit == <span class="hljs-number">8</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;$ecx&quot;</span><br>            arg2 = <span class="hljs-string">&quot;$rdx&quot;</span> <span class="hljs-keyword">if</span> bit == <span class="hljs-number">8</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;$edx&quot;</span><br>            sysreg = current_arch.syscall_register<br>            sysreg_value = <span class="hljs-number">59</span> <span class="hljs-keyword">if</span> bit == <span class="hljs-number">8</span> <span class="hljs-keyword">else</span> <span class="hljs-number">11</span><br>            syscall_instr = <span class="hljs-number">0x050F</span> <span class="hljs-keyword">if</span> bit == <span class="hljs-number">8</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0x80CD</span><br>        <span class="hljs-keyword">else</span>:<br>            err(<span class="hljs-string">&quot;%s can&#x27;t implementation.&quot;</span> % current_arch.arch)<br>            <span class="hljs-keyword">return</span><br>        spc = nowpc &amp; (~<span class="hljs-number">0xFFF</span>)<br>        res = gdb.execute(<span class="hljs-string">&quot;find /h %s,%s,%s&quot;</span>%(spc, spc+<span class="hljs-number">0x10000</span>, syscall_instr), to_string=<span class="hljs-literal">True</span>)<br>        print(<span class="hljs-string">f&quot;syscall addr=<span class="hljs-subst">&#123;res&#125;</span>&quot;</span>)<br>        <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;patterns found.&quot;</span> <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> res:<br>            err(<span class="hljs-string">&quot;can&#x27;t find syscall. Please break in libc.&quot;</span>)<br>            <span class="hljs-keyword">return</span><br>        newpc = res.splitlines()[<span class="hljs-number">0</span>].split(<span class="hljs-string">&#x27; &#x27;</span>)[<span class="hljs-number">0</span>]<br>        print(<span class="hljs-string">f&quot;newpc addr=<span class="hljs-subst">&#123;newpc&#125;</span>&quot;</span>)<br>        endian_symbol = endian_str()<br>        endian = <span class="hljs-string">&quot;little&quot;</span> <span class="hljs-keyword">if</span> endian_symbol == <span class="hljs-string">&quot;&lt;&quot;</span> <span class="hljs-keyword">else</span> <span class="hljs-string">&quot;big&quot;</span><br>        print(<span class="hljs-string">f&quot;endian_symbol=<span class="hljs-subst">&#123;endian_symbol&#125;</span>&quot;</span>)<br>        startaddr = rsp + <span class="hljs-number">0x100</span><br>        args_list = []<br>        <span class="hljs-comment"># cmd write to stack</span><br>        <span class="hljs-keyword">for</span> cstr <span class="hljs-keyword">in</span> cmd:<br>            args_list.append(startaddr)<br>            cstr += <span class="hljs-string">b&quot;\x00&quot;</span> * (<span class="hljs-number">4</span> - (<span class="hljs-built_in">len</span>(cstr) % <span class="hljs-number">4</span>))<br>            length = <span class="hljs-built_in">len</span>(cstr)<br>            <span class="hljs-comment">#print(f&quot;i am here~~~&#123;cstr&#125;&quot;)</span><br>            write_memory(startaddr, cstr, length)<br>            startaddr += length<br>            <span class="hljs-comment"># for i in range(0, len(cstr), 4):</span><br>            <span class="hljs-comment">#     t = hex(struct.unpack(endian_symbol+&#x27;I&#x27;, cstr[i:i+4])[0])</span><br>            <span class="hljs-comment">#     dofunc(&quot;set  *(%s)=%s&quot;%(hex(startaddr), t))</span><br>                <span class="hljs-comment"># startaddr += 4</span><br>        args_list.append(<span class="hljs-number">0</span>)<br>        <span class="hljs-comment"># set cmd point (rsi)</span><br>        rsiAddr = rsp + <span class="hljs-number">0x50</span><br>        addrvalue = <span class="hljs-string">b&quot;&quot;</span><br>        <span class="hljs-keyword">for</span> addr <span class="hljs-keyword">in</span> args_list:<br>            addrvalue += addr.to_bytes(bit, endian)<br><br>        write_memory(rsiAddr, addrvalue, <span class="hljs-built_in">len</span>(addrvalue))<br>            <span class="hljs-comment"># for i in range(0, len(addr), 4):</span><br>            <span class="hljs-comment">#     t = hex(struct.unpack(endian_symbol+&#x27;I&#x27;, addr[i:i+4])[0])</span><br>            <span class="hljs-comment">#     dofunc(&quot;set  *(%s+%d)=%s&quot;%(hex(rsiAddr), i, t))</span><br>            <span class="hljs-comment"># rsiAddr += bit</span><br><br>        <span class="hljs-comment"># set first arguments.</span><br>        dofunc(<span class="hljs-string">&quot;set %s=%s&quot;</span>%(arg0, <span class="hljs-built_in">hex</span>(args_list[<span class="hljs-number">0</span>])))<br>        <span class="hljs-comment"># set second arguments</span><br>        dofunc(<span class="hljs-string">&quot;set %s=%s&quot;</span>%(arg1, <span class="hljs-built_in">hex</span>(rsp + <span class="hljs-number">0x50</span>)))<br>        <span class="hljs-comment"># set third arguments</span><br>        dofunc(<span class="hljs-string">&quot;set %s=0&quot;</span>%arg2)<br>        <span class="hljs-comment"># set syscall register</span><br>        print(<span class="hljs-string">f&quot;i am here now~~~&quot;</span>)<br>        dofunc(<span class="hljs-string">&quot;set %s=%s&quot;</span>%(sysreg, sysreg_value))<br>        <span class="hljs-comment"># set $pc=$sp</span><br>        print(<span class="hljs-string">f&quot;i am here~~~<span class="hljs-subst">&#123;newpc&#125;</span>&quot;</span>)<br>        dofunc(<span class="hljs-string">&quot;set $pc=%s&quot;</span>%newpc)<br>        print(<span class="hljs-string">f&quot;i am here~~~&quot;</span>)<br>        <span class="hljs-comment"># set *$pc</span><br>        <span class="hljs-comment"># dofunc(&quot;set *(int *)$pc=%s&quot;%hex(syscall_instr))</span><br>        <span class="hljs-comment"># show context</span><br>        <span class="hljs-comment"># dofunc(&quot;context&quot;)</span><br>        <span class="hljs-comment"># continue</span><br>        dofunc(<span class="hljs-string">&quot;c&quot;</span>)<br>        <span class="hljs-keyword">return</span><br>        <br>register_external_command(ExecveCommand())<br></code></pre></td></tr></table></figure><p>最终效果如下，注意调试时要gdb aaa，aaa是vmlinuz转换成的文件</p><p>可以使用vmlinux-to-elf或者extract-vmlinux或者binwalk强行提取</p><p><img src="image-20230526193258763.png" alt="image-20230526193258763"></p><h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://paper.seebug.org/1660/">https://paper.seebug.org/1660/</a></p>]]></content>
     
     
     
@@ -455,9 +494,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -476,9 +515,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -497,9 +536,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -518,9 +557,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -579,9 +618,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -645,9 +684,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -666,9 +705,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -687,9 +726,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -708,9 +747,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -729,9 +768,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -750,9 +789,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -771,9 +810,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -792,9 +831,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -832,9 +871,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -872,9 +911,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -893,9 +932,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -914,9 +953,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -935,9 +974,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -977,9 +1016,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -998,9 +1037,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
       <tag>X1cT34m</tag>
       
@@ -1021,9 +1060,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -1042,9 +1081,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -1063,9 +1102,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -1103,9 +1142,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
       <tag>pwn</tag>
       
@@ -1147,9 +1186,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -1168,9 +1207,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -1252,9 +1291,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -1315,9 +1354,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -1336,9 +1375,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
       <tag>angr</tag>
       
@@ -1359,9 +1398,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -1380,9 +1419,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -1485,9 +1524,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
       <tag>angr</tag>
       
@@ -1508,9 +1547,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
@@ -1529,9 +1568,9 @@
     
     <tags>
       
-      <tag>ctf</tag>
-      
       <tag>re</tag>
+      
+      <tag>ctf</tag>
       
     </tags>
     
