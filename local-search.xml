@@ -4,6 +4,32 @@
   
   
   <entry>
+    <title>纤程学习</title>
+    <link href="/2024/07/22/%E7%BA%A4%E7%A8%8B%E5%AD%A6%E4%B9%A0/"/>
+    <url>/2024/07/22/%E7%BA%A4%E7%A8%8B%E5%AD%A6%E4%B9%A0/</url>
+    
+    <content type="html"><![CDATA[<p>前阵子看到的一篇slides，感觉挺有意思，记录下学习过程。</p><a id="more"></a><h1 id="From-Dead-Data-to-Digestion"><a href="#From-Dead-Data-to-Digestion" class="headerlink" title="From Dead Data to Digestion"></a>From Dead Data to Digestion</h1><h2 id="Fibers"><a href="#Fibers" class="headerlink" title="Fibers"></a>Fibers</h2><p>轻量级纤程</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plain">线程<br>每个进程强制，至少一个线程<br>内核切换<br><br>纤程<br>每个线程可选择，一个线程同时只能有一个纤程运行<br>用户态切换由应用程序决定<br></code></pre></td></tr></table></figure><p>每个纤程用户态存在一个fiber objects用来描述纤程</p><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs fortran">Components:<br>• Fiber Objects– including Fiber <span class="hljs-keyword">Data</span><br>• Fiber <span class="hljs-keyword">Local</span> Storage (FLS):<br>• <span class="hljs-built_in">Index</span><br>• Slots<br>• Fiber Callback functions<br></code></pre></td></tr></table></figure><p><img src="image-20230921135228998.png" alt="image-20230921135228998"></p><h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver"><span class="hljs-number">1.</span> Thread converts itself <span class="hljs-built_in">to</span> <span class="hljs-keyword">a</span> fiber – ConvertThreadToFiber().<br><span class="hljs-number">2.</span> Create <span class="hljs-keyword">a</span> <span class="hljs-keyword">second</span> fiber– CreateFiber().<br><span class="hljs-number">3.</span> (Optional) Allocate FLS – FlsAlloc().<br><span class="hljs-number">4.</span> Switch <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> newly created fiber – SwitchToFiber().<br><span class="hljs-number">5.</span> When finished, <span class="hljs-built_in">convert</span> <span class="hljs-keyword">a</span> fiber back <span class="hljs-built_in">to</span> <span class="hljs-keyword">a</span> thread – ConvertFiberToThread().<br></code></pre></td></tr></table></figure><p>针对恶意代码的执行有俩种方式</p><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sql">• Executing shellcode <span class="hljs-keyword">in</span> a <span class="hljs-keyword">local</span> process <span class="hljs-keyword">using</span> fibers:<br><span class="hljs-number">1.</span> <span class="hljs-keyword">Convert</span> a Thread <span class="hljs-keyword">to</span> a Fiber.<br><span class="hljs-number">2.</span> <span class="hljs-keyword">Allocate</span> memory <span class="hljs-operator">&amp;</span> <span class="hljs-keyword">copy</span> <span class="hljs-keyword">over</span> shellcode.<br><span class="hljs-number">3.</span> <span class="hljs-keyword">Create</span> a <span class="hljs-keyword">new</span> fiber, supply the shellcode address.<br><span class="hljs-number">4.</span> Schedule the newly created fiber.<br>• Fiber <span class="hljs-keyword">Local</span> Storage <span class="hljs-keyword">and</span> callback functions:<br><span class="hljs-number">1.</span> <span class="hljs-keyword">Convert</span> a Thread <span class="hljs-keyword">to</span> a Fiber.<br><span class="hljs-number">2.</span> <span class="hljs-keyword">Allocate</span> FLS index, suppling an evil callback<br>function.<br><span class="hljs-number">3.</span> (Optional) <span class="hljs-keyword">Set</span> a FLS slot <span class="hljs-keyword">value</span> <span class="hljs-keyword">to</span> use <span class="hljs-keyword">as</span> a callback<br>parameter.<br><span class="hljs-number">4.</span> <span class="hljs-keyword">Free</span> the FLS index <span class="hljs-operator">/</span> <span class="hljs-keyword">Delete</span> fiber<br></code></pre></td></tr></table></figure><p>一种是直接分配内存后让其执行，shellcode作为参数传递，另一种是通过设置FLS回调函数来实现。</p><h2 id="优势-amp-劣势"><a href="#优势-amp-劣势" class="headerlink" title="优势&amp;劣势"></a>优势&amp;劣势</h2><p>目前内核针对用户态的监控还没有纤程的只有线程，如PsSetCreateThreadNotifyRoutine。所以可以通过纤程来进行注入。</p><p>但是纤程不像线程有成熟的api可以调用比如createremotethread且有关的文档很少，基本没有讲过其internal的，也没有一些开源的工具。</p><h2 id="fiber原理与实现"><a href="#fiber原理与实现" class="headerlink" title="fiber原理与实现"></a>fiber原理与实现</h2><p>后续作者讲解了纤程的本质与实现。</p><p>用户态存在api IsThreadAFiber来判断当前线程是否为纤程</p><p>主要是通过判断teb的SameTebFlags标志位来实现。</p><p>这个api没有远程的实现，想要远程实现可以通过<code>CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0) </code>首先获取所有的线程id然后<code>OpenThread() + NtQueryInformationThread()</code>获取teb的基址后续就是<code>ReadProcessMemory()</code>读取标志位来判断是否为纤程</p><p>接着是纤程的data位于<code>TEB.NT_TIB.FiberData</code></p><p>这部分是由函数<code>ConvertThreadToFiber</code>来实现</p><p><img src="image-20230921191949390.png" alt="image-20230921191949390"></p><p>知道了fiber object如何构造我们也可以自己来实现了。</p><p>关于检测这块，作者提到了遍历heap来实现，因为fiber的object固定大小为0x530</p><p><img src="image-20230921192427787.png" alt="image-20230921192427787"></p><p>获取到结构体后可以根据结构体的内容获取到双向链表，目标线程的所有纤程结构体</p><p>还能用于判断纤程是否为挂起</p><p>至此我们可以获取到与线程相关的所有纤程结构体</p><p>接着我们可以进一步获取fls里的所有内容通过分析<code>RtlFlsGetValue</code></p><p>然后就能进一步分析获取所有的FLS回调函数。</p><h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>考虑到纯用户态实现+没有内核回调函数，是否可以通过人工实现远程纤程注入？</p><p>检测方法可以通过看有没有改写teb来实现</p><h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>1.强行设置纤程</p><p>teb+0x17ee处存在flag标志位</p><p><code>teb-&gt;SameTebFlags |= 4u</code>即可</p><p>2.回调函数设置</p><p>结构体位于<code>ntdll.dll+184E50</code></p><p><code>struct _RTLP_FLS_CONTEXT RtlpFlsContext</code></p><p>其中偏移处+8是GLOBAL_FLS_DATA</p><p><img src="image-20230922112028288.png" alt="image-20230922112028288"></p><p>设置对应的number和回调函数即可</p><p>FlsSetValue函数主要是为其添加参数，参数位于</p><p>fiberdata=teb+0x20</p><p>flsdata=fiberdata+0x510</p><p>flsdata处存储了其对应的参数,这个必须要设置不然不会执行。</p><h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>blackhat USA 2023(From Dead Data to Digestion Extracting Windows Fibers for your digital forensics diet)</p>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>CE代码注入模板(自用)</title>
+    <link href="/2023/07/22/CE%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5%E6%A8%A1%E6%9D%BF-%E8%87%AA%E7%94%A8/"/>
+    <url>/2023/07/22/CE%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5%E6%A8%A1%E6%9D%BF-%E8%87%AA%E7%94%A8/</url>
+    
+    <content type="html"><![CDATA[<p>自用注入模板，突然发现在某些场景下挺实用，比如hook sqlitekey函数 or sqliteexec函数时打印出所有的参数变量。</p><a id="more"></a><h1 id="CE-代码注入"><a href="#CE-代码注入" class="headerlink" title="CE 代码注入"></a>CE 代码注入</h1><p>针对飞书 sqlite3_key_v2（liblark.dll+761b9a0）函数hook</p><figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs awk">&#123;<span class="hljs-variable">$lua</span>&#125;<br><span class="hljs-keyword">function</span> myfunction(param)<br>print(<span class="hljs-string">&quot;called&quot;</span>)<br>local keypointer = readInteger(param+<span class="hljs-number">16</span>)<br>local len = readInteger(param+<span class="hljs-number">20</span>)<br>local bytes = readBytes(keypointer,len,true)<br>local key=<span class="hljs-string">&#x27;&#x27;</span><br><span class="hljs-keyword">for</span> i=<span class="hljs-number">1</span>,len <span class="hljs-keyword">do</span><br>    key = key..string.char(bytes[i])<br>end<br>print(<span class="hljs-string">&quot;key :&quot;</span> .. key)<br>print(string.format(<span class="hljs-string">&quot;len:%d&quot;</span>,len))<br>end<br><br><br>&#123;<span class="hljs-variable">$asm</span>&#125;<br>loadlibrary(luaclient-i386.dll)<br>luacall(openLuaServer(<span class="hljs-string">&#x27;CELUASERVER&#x27;</span>))<br>globalalloc(luainit, <span class="hljs-number">128</span>)<br>globalalloc(LuaFunctionCall, <span class="hljs-number">128</span>)<br>label(luainit_exit)<br>globalalloc(luaserverinitialized, <span class="hljs-number">4</span>)<br>globalalloc(luaservername, <span class="hljs-number">12</span>)<br>luaservername:<br>db <span class="hljs-string">&#x27;CELUASERVER&#x27;</span>,<span class="hljs-number">0</span><br>luainit:<br>cmp [luaserverinitialized],<span class="hljs-number">0</span><br>jne luainit_exit<br>push luaservername <span class="hljs-regexp">//</span>初次调用则会加载lua的dll<br>call CELUA_Initialize <span class="hljs-regexp">//</span>this <span class="hljs-keyword">function</span> is defined <span class="hljs-keyword">in</span> the luaclient dll<br>mov [luaserverinitialized],eax<br>luainit_exit:<br>ret<br>LuaFunctionCall:<br>push ebp<br>mov ebp,esp<br>call luainit<br>push [ebp+c]<br>push [ebp+<span class="hljs-number">8</span>]<br>call CELUA_ExecuteFunction<br>pop ebp<br>ret <span class="hljs-number">8</span><br><br>alloc(newmem,<span class="hljs-number">2048</span>)<br>label(returnhere)<br>label(originalcode)<br>label(<span class="hljs-keyword">exit</span>)<br><br>myluascript:<br>db <span class="hljs-string">&#x27;myfunction(parameter)&#x27;</span>,<span class="hljs-number">0</span><br>newmem: <span class="hljs-regexp">//</span>this is allocated memory, you have read,write,execute access<br><span class="hljs-regexp">//</span>place your code here<br>push ebp <span class="hljs-regexp">//</span>ebp保存<br>mov ebp,esp <span class="hljs-regexp">//</span>ebp初始化<br>push eax <span class="hljs-regexp">//</span>eax环境保存<br>push ebp <span class="hljs-regexp">//</span>此处将ebp作为参数传入<br>push myluascript <span class="hljs-regexp">//</span>函数名称<br>call LuaFunctionCall <span class="hljs-regexp">//</span>lua调用<br>pop eax <span class="hljs-regexp">//</span>eax恢复<br>mov esp,ebp <span class="hljs-regexp">//</span>esp还原<br>pop ebp <span class="hljs-regexp">//</span>ebp恢复<br><br>originalcode:<br>push esi<br>push [esp+<span class="hljs-number">0</span>C]<br><br><span class="hljs-keyword">exit</span>:<br>jmp returnhere<br><br><span class="hljs-string">&quot;liblark.dll&quot;</span>+<span class="hljs-number">761</span>B9A0:<br>jmp newmem<br>returnhere:<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>asan论文阅读</title>
     <link href="/2023/05/22/asan%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/"/>
     <url>/2023/05/22/asan%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/</url>
@@ -429,9 +455,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -450,9 +476,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -471,9 +497,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -492,9 +518,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -553,9 +579,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -619,9 +645,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -640,9 +666,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -661,9 +687,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -682,9 +708,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -703,9 +729,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -724,9 +750,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -745,9 +771,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -766,9 +792,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -806,9 +832,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -846,9 +872,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -867,9 +893,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -888,9 +914,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -909,9 +935,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -951,9 +977,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -972,9 +998,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
       <tag>X1cT34m</tag>
       
@@ -995,9 +1021,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -1016,9 +1042,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -1037,9 +1063,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -1077,9 +1103,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
       <tag>pwn</tag>
       
@@ -1121,9 +1147,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -1142,9 +1168,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -1226,9 +1252,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -1289,9 +1315,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -1310,9 +1336,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
       <tag>angr</tag>
       
@@ -1333,9 +1359,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -1354,9 +1380,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -1459,9 +1485,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
       <tag>angr</tag>
       
@@ -1482,9 +1508,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
@@ -1503,9 +1529,9 @@
     
     <tags>
       
-      <tag>re</tag>
-      
       <tag>ctf</tag>
+      
+      <tag>re</tag>
       
     </tags>
     
