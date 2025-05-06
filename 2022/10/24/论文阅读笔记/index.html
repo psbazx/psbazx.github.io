@@ -1,0 +1,655 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="总结近阶段学习情况">
+<meta property="og:type" content="article">
+<meta property="og:title" content="论文阅读笔记">
+<meta property="og:url" content="http://www.psbazx.com/2022/10/24/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="总结近阶段学习情况">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2022/10/24/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/image-20221022153817005.png">
+<meta property="og:image" content="http://www.psbazx.com/2022/10/24/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/image-20221023174503083.png">
+<meta property="article:published_time" content="2022-10-23T20:48:17.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:18.646Z">
+<meta property="article:author" content="皮三宝">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2022/10/24/%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB%E7%AC%94%E8%AE%B0/image-20221022153817005.png">
+  
+  
+  
+  <title>论文阅读笔记 - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="论文阅读笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-10-23 20:48" pubdate>
+          October 23, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.7k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          32 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">论文阅读笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>总结近阶段学习情况</p>
+<a id="more"></a>
+
+<h1 id="REDQUEEN"><a href="#REDQUEEN" class="headerlink" title="REDQUEEN"></a>REDQUEEN</h1><p>本文主要是提出了一种方法，用于解决类似魔术字节还有校验值比较的问题。使用的方法是输入到状态的对应，类似一个轻量级的污点追踪，为了解决前者使用了hook，不仅仅是比较指令还有函数调用(涉及内存和字符串比较)lea和减法相关的指令，解决后续问题主要采用了指令集的patch，等到无法增加代码覆盖率时再反推，判断是否可以修复这些patch从而解决一系列校验值比较问题。</p>
+<h2 id="Abstract"><a href="#Abstract" class="headerlink" title="Abstract"></a>Abstract</h2><p>提出当今fuzz的缺陷，遇到checksum或者是magic num时bypass校验的效率不是很高。对于此类校验通常会去使用符号执行或者污点追踪引擎，但是这类工具通常会需要借助要源码或是指定操作系统，可移植性不好。</p>
+<p>鉴于此，本文提出一种替代方案，称为redqueen。</p>
+<h2 id="INTRODUCTION"><a href="#INTRODUCTION" class="headerlink" title="INTRODUCTION"></a>INTRODUCTION</h2><p>FUZZ近些年在学术界和工业界都取得了不错的影响力。这是目前测试程序安全性的一种常用手段。为了确保在实践中使用fuzz，通常需要极少的前置条件。但这与效率冲突。为了提高效率一般都需要一个不错的种子输入或者是需要一个格式生成器来帮助fuzzer学习输入的格式应该是什么样的。给予反馈的fuzzer就是如此，吧触发新状态的输入保存。以产生更多的测试用例。</p>
+<h3 id="常见的fuzz障碍"><a href="#常见的fuzz障碍" class="headerlink" title="常见的fuzz障碍"></a>常见的fuzz障碍</h3><p>最常见的就是checksum和magicnum。忽略掉随机生成正确的种子的情况，基于反馈的fuzz基本不会产出正确的input来覆盖更多的代码，</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">/* magic number example */</span><br><span class="hljs-keyword">if</span>( u64 ( input ) == u64 (<span class="hljs-string">&quot; MAGICHDR &quot;</span>))<br>	bug (<span class="hljs-number">1</span>) ;<br><span class="hljs-comment">/* nested checksum example */</span><br><span class="hljs-keyword">if</span>( u64 ( input ) == sum ( input +<span class="hljs-number">8</span> , len <span class="hljs-number">-8</span>) )<br>	<span class="hljs-keyword">if</span>( u64 ( input +<span class="hljs-number">8</span>) == sum ( input +<span class="hljs-number">16</span> , len <span class="hljs-number">-16</span>) )<br>		<span class="hljs-keyword">if</span>( input [<span class="hljs-number">16</span>]== ’R ’ &amp;&amp; input [<span class="hljs-number">17</span>]== ’Q ’)<br>			bug (<span class="hljs-number">2</span>) ;<br><br></code></pre></td></tr></table></figure>
+<p>过去人们更倾向于使用高级的代码分析技术来解决此类问题，如污点追踪或是符号执行。（ANGORA和T-FUZZ）这类方法通常需要对环境有一个精确的描述如lib call的行为底层操作系统的行为以及平台所使用的指令集。因此很难再使用复杂指令集或是不常见的库和操作系统上使用。这类方法违背了afl设计的初衷。AFL的成功很大程度上是因为其对程序的假设很少，基于此我们提出了一种新型的fuzz方法，该类方法可用于任意目标来增加代码覆盖率。</p>
+<h3 id="输入到状态对应"><a href="#输入到状态对应" class="headerlink" title="输入到状态对应"></a>输入到状态对应</h3><p>这边讲了具体的实现，其实实现的方法很巧妙。。。主要原理是观察比较指令cmp这种。一般程序对输入都不会经过处理直接操作，比如与一些魔术字节相比较，字符串直接以小端序的形式存储在寄存器中。redqueen将其标记为污点，从而实现一个轻量级的污点追踪。</p>
+<h3 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h3><p>1.引入了输入到状态对应的概念来帮助fuzz</p>
+<p>2.演示了该种概念的效果，可用于替代符号执行和污点追踪生成的种子可以覆盖更多的代码</p>
+<p>3.该类方法被集成在REDQUEEN中</p>
+<h2 id="相关工作"><a href="#相关工作" class="headerlink" title="相关工作"></a>相关工作</h2><p>介绍几类不同的fuzz的原理</p>
+<p>1.符号执行</p>
+<p>2.污点追踪</p>
+<p>3.基于补丁</p>
+<p>4.基于二进制文件</p>
+<p>5.afl家族</p>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">if</span>( u64 ( input ) == u64 (<span class="hljs-string">&quot; MAGICHDR &quot;</span>) )<br>	bug (<span class="hljs-number">1</span>) ;<br></code></pre></td></tr></table></figure>
+<p>面对如上魔术字节情况。普通的afl变异很难触发bug。目前能解决如上魔术字节问题的fuzz不是需要源码就是有很大的性能开销。</p>
+<p>reqqueen是基于输入到状态对应的一种轻量级方法。以全自动的方式处理魔术字节。考虑到程序状态中的值通常直接对应于输入的部分这一事实。每次遇到新路径时，都会对比较指令进行跟踪，如果遇到不同参数的比较，通常会提取两个参数进行一个自定义的变异<code>&lt;pattern 7→ repl&gt;</code>.如下表所示。</p>
+<table>
+<thead>
+<tr>
+<th>C-Code</th>
+<th align="center">u64(input) == u64(“MAGICHDR”)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Input</td>
+<td align="center">“TestSeedInput”</td>
+</tr>
+<tr>
+<td>Observed (ASCII)</td>
+<td align="center">“deeStesT” == “RDHCIGAM”</td>
+</tr>
+<tr>
+<td>Variations for &lt; and &gt; comparisons</td>
+<td align="center">“deeStesT” →“RDHCIGAL”, “deeStesT” →“RDHCIGAN”</td>
+</tr>
+<tr>
+<td>Mutations after little-endian encoding</td>
+<td align="center">&lt;“TestSeed” 7→ “MAGICHDR”&gt; , &lt;“TestSeed” 7→ “LAGICHDR”&gt;, &lt;“TestSeed” 7→ “NAGICHDR”&gt;</td>
+</tr>
+</tbody></table>
+<p>当对新输入进行模糊测试时，会挂钩所有比较指令并提取参数，此外还会挂钩所有的调用函数，因为部分函数也会实现一些比较功能如<code>strcmp</code>.</p>
+<p>步骤见上表:</p>
+<p>1.将<code>TestSeedInput</code>看做是input，比较指令会比较八个字节，字符串以小端序形式存储在寄存器中。所以看到的是“deeStesT” == “RDHCIGAM”</p>
+<p>2.因为在运行时我们无法判断此次cmp是判断大于还是小于或是等于，所以还会对比较的值做一些变化，即加一和减一的操作(见表中的RDHCIGAL和RDHCIGAN)。正因此，redqueen还能帮助发现offbyone的bug。</p>
+<p>3.当然需要考虑到大多数情况下输入都会经过一些处理如加密然后再进行比较，为了应对这类的操作，redqueen准备了不同的编码应用于变异，最常见就是就字节顺序转换。</p>
+<p><img src="image-20221022153817005.png" srcset="/img/loading.gif" lazyload alt="目前支持的一些变换操作"></p>
+<p>4.应用。redqueen使用的是部分变异。如输入“TestSeedInput”时只有比较的前八个字节“TestSeed”才会被变异，新生成的testcase就是“MAGICHDRInput”</p>
+<p>5.标记。用于解决候选input数量庞大的问题通常会采用一种“colored”copy，即随机。如input为“ZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZZ”时会得到ZZZZZZZZ 7→ MAGICHDR。这个变异可适用于24个不同的地方，为了解决这种问题，redqueen会在不改变代码覆盖率的情况下对输入进行一个变异，比如将其变异为“QYISLKFYDBYYSYWSIBSXEAXOKHNRUCYU”，这样得到的就是QYISLKFY 7→ MAGICHDR，仅有一处适用，候选的输入就降为了0。</p>
+<p>6.字符串与内存。除了上述的一些比较，程序中还会出现一些通过调用函数来比较的方法，这时redqueen会hook函数调用，如果函数至少接受俩个参数，会提取其指向的前128个字节并将其视为整数。针对memcpy和strcmp类的函数还会采取不同的措施。</p>
+<p>7.输入字典。</p>
+<p>上述的都是针对魔术字节的一些处理方法，至于针对校验和。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">if</span>( u64 ( input ) == sum ( input +<span class="hljs-number">8</span> , len <span class="hljs-number">-8</span>) )<br>	<span class="hljs-keyword">if</span>( u64 ( input +<span class="hljs-number">8</span>) == sum ( input +<span class="hljs-number">16</span> , len <span class="hljs-number">-16</span>) )<br>		<span class="hljs-keyword">if</span>( input [<span class="hljs-number">16</span>]== ’R’ &amp;&amp; input [<span class="hljs-number">17</span>]== ’Q’)<br>			bug (<span class="hljs-number">2</span>) ;<br></code></pre></td></tr></table></figure>
+<p>目前的很多方法像FLAYER T-FUZZ等。都是直接删除检查，如果有一些有趣的行为发生才会通过符号执行来想办法绕过检查。</p>
+<p>这一部分可能有点难看懂，其实还是一种比较巧妙的方法，首先redqueen会识别到比较指令然后对其进行patch，比如patch成cmp ax,ax然后再次运行，如果产生了新的路径就会进入validation mode，在这个状态下会重复上述动作，如果没有新的状态就会取消上述patch。接着用类似magic bytes的方法，逆向着解决，如上图会先解决input [16]== ’R’ &amp;&amp; input [17]== ’Q’接着解决u64 ( input +8)最后才是u64 ( input)</p>
+<h2 id="实施细节"><a href="#实施细节" class="headerlink" title="实施细节"></a>实施细节</h2><p>基于KAFL，用相同的方式来获取代码覆盖率。此外会利用KVM-PT和QEMU-PT提供的VMI来插入断点来监视运行时的寄存器的值。</p>
+<h3 id="hook-比较指令"><a href="#hook-比较指令" class="headerlink" title="hook 比较指令"></a>hook 比较指令</h3><p>每次反汇编程序遇到一个类似比较的指令时都会保存其地址然后在下一次redqueen分析阶段就会就会进行hook。当进入分析时，断点被触发，参数被提取并保存到缓冲区中。值得注意的是，redqueen不仅hook cmp指令还会hook call指令和减法指令。前者是为了识别出内存和字符串比较，后者是编译器实现cmp的另一种写法，一般会用在switch中。也有时候会以另一种形式呈现比如lea或者是add一个复数。如果call指令的前俩个参数是一个正常的指针，redqueen就问认为这是个潜在的比较函数然后会吧参数指向的前128个字节dump出来。</p>
+<h3 id="着色标记"><a href="#着色标记" class="headerlink" title="着色标记"></a>着色标记</h3><p>即在不改变程序执行路径（AFL bitmap）的情况下尽可能用随机值替换字符串。这增加了输入的熵，减少了候选的input数量可以很大程度的增加效率。</p>
+<h3 id="patch-指令"><a href="#patch-指令" class="headerlink" title="patch 指令"></a>patch 指令</h3><p>候选的哈希比较指令列表被计算出后就会对其进行patch，一般都会使用必真的比较指令如cmp al,al，其余的会用nop填充。当patch时，所新增的bitmap不会被添加到队列中。</p>
+<h3 id="输入验证和修复"><a href="#输入验证和修复" class="headerlink" title="输入验证和修复"></a>输入验证和修复</h3><p>算法如图</p>
+<p><img src="image-20221023174503083.png" srcset="/img/loading.gif" lazyload alt="算法"></p>
+<p>接下去就是讲解redqueen是否能解决这一系列问题和与其他工具比较效率咋样，这边就不多写了。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>论文阅读笔记</div>
+      <div>http://www.psbazx.com/2022/10/24/论文阅读笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>October 23, 2022</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/05/22/asan%E8%AE%BA%E6%96%87%E9%98%85%E8%AF%BB/" title="asan论文阅读">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">asan论文阅读</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/10/09/%E8%BF%91%E6%9C%9F%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/" title="近期学习记录">
+                        <span class="hidden-mobile">近期学习记录</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

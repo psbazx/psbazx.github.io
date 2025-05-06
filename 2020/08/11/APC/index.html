@@ -1,0 +1,695 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Asyncroneus Procedure Call">
+<meta property="og:type" content="article">
+<meta property="og:title" content="APC">
+<meta property="og:url" content="http://www.psbazx.com/2020/08/11/APC/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="Asyncroneus Procedure Call">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200805112723064.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200805112751269.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200805114122583.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200810201936038.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200810201717250.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200810202058017.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200810202316162.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200812164609526.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200810203214212.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200812160006391.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200812165125835.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200812174017589.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200812183050966.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200812183623033.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200812191529622.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200812192455067.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200812183108021.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200812202353445.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200812203145476.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200812203213871.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200812203303206.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200812203326893.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200812203452432.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200812203825208.png">
+<meta property="article:published_time" content="2020-08-10T20:00:50.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:17.509Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="ctf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2020/08/11/APC/image-20200805112723064.png">
+  
+  
+  
+  <title>APC - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="APC"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-08-10 20:00" pubdate>
+          August 10, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.8k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">APC</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>Asyncroneus Procedure Call</p>
+<a id="more"></a>
+
+<h1 id="什么是APC"><a href="#什么是APC" class="headerlink" title="什么是APC"></a>什么是APC</h1><p>Asyncroneus Procedure Call也就是异步过程调用</p>
+<p><img src="image-20200805112723064.png" srcset="/img/loading.gif" lazyload alt="image-20200805112723064"></p>
+<p>windbg查看一波，位于kthread+0x34处</p>
+<p><img src="image-20200805112751269.png" srcset="/img/loading.gif" lazyload alt="image-20200805112751269"></p>
+<p>上图是apc状态结构体成员</p>
+<p>第一个是个双向链表，分为俩个队列，用户态和内核态，所以APC注入也分三环零环</p>
+<p>process是线程所属或挂靠的进程</p>
+<p>下面三都是标志位，第一个表示是否有内核apc函数在运行</p>
+<p>然后是表示是否有内核apc和是否有用户apc正在等待中</p>
+<p><img src="image-20200805114122583.png" srcset="/img/loading.gif" lazyload alt="image-20200805114122583"></p>
+<p>再来看一下备用APC队列</p>
+<p><img src="image-20200810201936038.png" srcset="/img/loading.gif" lazyload alt="image-20200810201936038">这个主要是在进程挂靠时起作用，保存原始进程的apc队列</p>
+<p>当进程恢复时再根据备用apc队列恢复原始apc队列</p>
+<p><img src="image-20200810201717250.png" srcset="/img/loading.gif" lazyload alt="image-20200810201717250"></p>
+<p>这边是ApcStatePointer</p>
+<p>为了操作方便，_KTHREAD结构体中定义了一个指针数组ApcStatePointer ，长度为2。</p>
+<p>正常情况下：<br>    ApcStatePointer[0]  指向 ApcState<br>    ApcStatePointer[1]  指向 SavedApcState</p>
+<p>挂靠情况下：<br>    ApcStatePointer[0]  指向 SavedApcState<br>    ApcStatePointer[1]  指向 ApcState    </p>
+<p><img src="image-20200810202058017.png" srcset="/img/loading.gif" lazyload alt="image-20200810202058017"></p>
+<p>+0x165 ApcStateIndex用来表示apc状态</p>
+<p>0 正常状态  1 挂靠状态</p>
+<p>结合一下ApcStatePointer可以发现ApcStatePointer[ApcStateIndex]永远表示当前apc队列</p>
+<p><img src="image-20200810202316162.png" srcset="/img/loading.gif" lazyload alt="image-20200810202316162"></p>
+<p>紧接着他的是ApcQueueable，这用来表示是否能向当前线程插入apc，当线程正在执行退出的代码时，会将这个值设置为0 ，如果此时执行<br>插入APC的代码(KeInsertQueueApc),在插入函数中会判断这个值的状态，如果为0，则插入失败。</p>
+<p>之所以叫apc呢主要是因为当apc执行，一般都是俩个线程A,B</p>
+<p>B线程向A线程中插入APC然后等A线程执行时再执行APC，所以叫异步过程调用</p>
+<p>具体见下</p>
+<p><img src="image-20200812164609526.png" srcset="/img/loading.gif" lazyload alt="image-20200812164609526"></p>
+<h1 id="APC挂入"><a href="#APC挂入" class="headerlink" title="APC挂入"></a>APC挂入</h1><p><img src="image-20200810203214212.png" srcset="/img/loading.gif" lazyload alt="image-20200810203214212"></p>
+<p>这边来介绍下APC的挂入过程</p>
+<h2 id="ring3"><a href="#ring3" class="headerlink" title="ring3"></a>ring3</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function">DWORD WINAPI <span class="hljs-title">QueueUserAPC</span><span class="hljs-params">(</span></span><br><span class="hljs-function"><span class="hljs-params">  _In_ PAPCFUNC  pfnAPC,</span></span><br><span class="hljs-function"><span class="hljs-params">  _In_ HANDLE    hThread,</span></span><br><span class="hljs-function"><span class="hljs-params">  _In_ ULONG_PTR dwData</span></span><br><span class="hljs-function"><span class="hljs-params">)</span></span>;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_WARNINGS</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;   </span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdint.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;pthread.h&gt;  </span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> comment(lib, <span class="hljs-meta-string">&quot;pthreadVC2.lib&quot;</span>)</span><br><span class="hljs-function">DWORD WINAPI <span class="hljs-title">threadproc</span><span class="hljs-params">()</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> WINAPI <span class="hljs-title">apcfunc</span><span class="hljs-params">(LPVOID dwParam)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	HANDLE hthread = ::CreateThread(<span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>, (LPTHREAD_START_ROUTINE)threadproc, <span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">NULL</span>);<br>	QueueUserAPC((PAPCFUNC)apcfunc, hthread, (DWORD)(PVOID)<span class="hljs-string">&quot;This is APC\n&quot;</span>);<br>	getchar();<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> WINAPI <span class="hljs-title">apcfunc</span><span class="hljs-params">(LPVOID dwParam)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%s&quot;</span>, (PVOID)dwParam);<br>&#125;<br><span class="hljs-function">DWORD WINAPI <span class="hljs-title">threadproc</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>)<br>	&#123;<br>		SleepEx(<span class="hljs-number">1000</span>, <span class="hljs-number">1</span>);<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hello\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-comment">/*同理转换下可以注其他程序</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">注意下这边的SleepEx(1000, 1);</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">用户模式的APC需要目标线程处在alertable等待状态才能被成功的调度执行*/</span><br></code></pre></td></tr></table></figure>
+<p>一般情况下都选择直接使用QueueUserApc来挂入APC，当然也能用_NtQueueApcThread@20,后者可以不使用IntCallUserApc、换成自己的函数，函数参数也可以有三个了，而PARCFUNC只有一个参数，整体区别不大</p>
+<p><img src="image-20200812160006391.png" srcset="/img/loading.gif" lazyload alt="image-20200812160006391"></p>
+<h2 id="ring0"><a href="#ring0" class="headerlink" title="ring0"></a>ring0</h2><p>见流程图，首先从KeInitializeApc开始，该函数主要是填充KAPC结构体</p>
+<p>KiInsertQueueApc根据KAPC结构中的ApcStateIndex找到对应的APC队列，再根据KAPC结构中的ApcMode确定是用户队列还是内核队列，将KAPC挂到对应的队列中(挂到KAPC的ApcListEntry处)，再根据KAPC结构中的Inserted置1，标识当前的KAPC为已插入状态，修改KAPC_STATE结构中的KernelApcPending/UserApcPending</p>
+<h1 id="内核APC执行"><a href="#内核APC执行" class="headerlink" title="内核APC执行"></a>内核APC执行</h1><p>既然已经知道APC挂入流程了，现在来康康APC执行</p>
+<p><img src="image-20200812165125835.png" srcset="/img/loading.gif" lazyload alt="image-20200812165125835"></p>
+<p>系统调用、中断、异常处理时系统都会查看APC队列是否有需要执行的APC，因为每当发生时都会执行KiServiceExit</p>
+<p>下面来逆一波KiServiceExit</p>
+<p><img src="image-20200812174017589.png" srcset="/img/loading.gif" lazyload alt="image-20200812174017589"></p>
+<p>检查是否有用户apc，有则处理</p>
+<p><img src="image-20200812183050966.png" srcset="/img/loading.gif" lazyload alt="image-20200812183050966"></p>
+<p>再看看KiDeliverApc</p>
+<p><img src="image-20200812183623033.png" srcset="/img/loading.gif" lazyload alt="image-20200812183623033"></p>
+<p>这边有个判断内核APC是否为空，不空则跳转</p>
+<p><img src="image-20200812191529622.png" srcset="/img/loading.gif" lazyload alt="image-20200812191529622"></p>
+<p>然后判断函数地址是否为空，并往栈中填充参数</p>
+<p><img src="image-20200812192455067.png" srcset="/img/loading.gif" lazyload alt="image-20200812192455067"></p>
+<p>下面就是负责执行内核apc并删除队列恢复状态然后再次循环</p>
+<p><img src="image-20200812183108021.png" srcset="/img/loading.gif" lazyload alt="image-20200812183108021"></p>
+<p>流程如上，这边注意下ApcState.UserApcPending必须为真，这边就是说明只有可唤醒得线程才会投递APC</p>
+<h1 id="用户APC执行"><a href="#用户APC执行" class="headerlink" title="用户APC执行"></a>用户APC执行</h1><p>用户APC相对内核来说就复杂多了，因为涉及到许多堆栈切换操作</p>
+<p>首先得从内核态到用户态，再到内核态</p>
+<p>而且到用户态不能回到当初进入内核态处，得回到对应apc函数入口</p>
+<p><img src="image-20200812202353445.png" srcset="/img/loading.gif" lazyload alt="image-20200812202353445"></p>
+<p>具体用户态APC如上，首先判断条件，第一个参数是否为1，是否有用户态apc再执行，用户态apc队列是否为空</p>
+<p>满足条件后讲ApcState.UserApcPending置0然后开始处理，删除队列，释放KAPC结构体内存</p>
+<p>然后开始KiInitializeUserApc</p>
+<p><img src="image-20200812203145476.png" srcset="/img/loading.gif" lazyload alt="image-20200812203145476"></p>
+<p><img src="image-20200812203213871.png" srcset="/img/loading.gif" lazyload alt="image-20200812203213871"></p>
+<p>用户空间堆栈完事后开始各种初始化</p>
+<p><img src="image-20200812203303206.png" srcset="/img/loading.gif" lazyload alt="image-20200812203303206"></p>
+<p>填充寄存器</p>
+<p><img src="image-20200812203326893.png" srcset="/img/loading.gif" lazyload alt="image-20200812203326893"></p>
+<p>最后让eip指向KeUserApcDispatcher</p>
+<p><img src="image-20200812203452432.png" srcset="/img/loading.gif" lazyload alt="image-20200812203452432"></p>
+<p>apc处理完后执行_ZwContinue@8返回内核恢复trapframe继续上面得循环判断处理，如没有则恢复trapframe然后回三环原来进0环的地方</p>
+<p><img src="image-20200812203825208.png" srcset="/img/loading.gif" lazyload alt="image-20200812203825208"></p>
+<p>以后会写APC注入，用户态和内核态的</p>
+<p>用户态的很简单其实，用上面发的代码改一改，注自己线程换成注别的，拿进程pid然后拿线程句柄后写内存然后照搬套路。</p>
+<p>内核态有空写下。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/re/">#re</a>
+      
+        <a href="/tags/ctf/">#ctf</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>APC</div>
+      <div>http://www.psbazx.com/2020/08/11/APC/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>August 10, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/" title="异常处理机制">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">异常处理机制</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/08/11/Windows%E5%86%85%E6%A0%B8/" title="Windows内核">
+                        <span class="hidden-mobile">Windows内核</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

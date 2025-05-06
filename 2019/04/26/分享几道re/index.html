@@ -1,0 +1,610 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="这几天一直打比赛忙不过来，偶尔抽出点时间写了几题先上一道最水的吧">
+<meta property="og:type" content="article">
+<meta property="og:title" content="分享几道re">
+<meta property="og:url" content="http://www.psbazx.com/2019/04/26/%E5%88%86%E4%BA%AB%E5%87%A0%E9%81%93re/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="这几天一直打比赛忙不过来，偶尔抽出点时间写了几题先上一道最水的吧">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/26/%E5%88%86%E4%BA%AB%E5%87%A0%E9%81%93re/1.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/26/%E5%88%86%E4%BA%AB%E5%87%A0%E9%81%93re/2.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/26/%E5%88%86%E4%BA%AB%E5%87%A0%E9%81%93re/3.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/26/%E5%88%86%E4%BA%AB%E5%87%A0%E9%81%93re/4.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/26/%E5%88%86%E4%BA%AB%E5%87%A0%E9%81%93re/5.png">
+<meta property="article:published_time" content="2019-04-25T17:33:52.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:18.295Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="ctf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2019/04/26/%E5%88%86%E4%BA%AB%E5%87%A0%E9%81%93re/1.png">
+  
+  
+  
+  <title>分享几道re - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="分享几道re"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-04-25 17:33" pubdate>
+          April 25, 2019 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.6k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          22 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">分享几道re</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>这几天一直打比赛忙不过来，偶尔抽出点时间写了几题<br>先上一道最水的吧</p>
+<a id="more"></a>
+<h2 id="XCTF-3rd-GCTF-2017-hackme"><a href="#XCTF-3rd-GCTF-2017-hackme" class="headerlink" title="XCTF 3rd-GCTF-2017 hackme"></a>XCTF 3rd-GCTF-2017 hackme</h2><p>这道题主逻辑其实特别简单<br><img src="1.png" srcset="/img/loading.gif" lazyload alt="1"><br>输入22个之判断部分，根据伪随机数来生成v9<br>然后用v9和输入的对应xor接着匹配<br>那就很简单了，下好断点记录下v9低8位的值就行<br>因为程序只验证部分就通过，所以只能解出部分。<br>但在提交的时候需要完整的flag<br>这不难，直接改了v7后记录v9<br>毕竟水题啊</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs asm">a &#x3D; [0x5F, 0xF2, 0x5E, 0x8B, 0x4E, 0x0E, 0xA3, 0xAA, 0xC7, 0x93,<br>  0x81, 0x3D, 0x5F, 0x74, 0xA3, 0x09, 0x91, 0x2B, 0x49, 0x28,<br>  0x93, 0x67]<br>b &#x3D; [0x4e,0xb7,0x4e,0x42,0x9e,0x30,0x39,0x9b,0xec,0x9e,0x3f,0x35,0x6a,0x98<br>     ,0xf1,0xf6,4,0x6d,0x93,0xa9,0x2f,0x1c,0xa5,0x1a]<br>c &#x3D; [0x11,0xA,0X11,0XD,0X1,0XF,0X0,0x6,0x3,0x1,2,4,5,7,8,9,0xb,0xc,0xe,0x10,<br>     0x12,0x13,0x14,0x15]<br>flag &#x3D; [0]*22<br>for i in range(len(b)):<br>    flag[c[i]] &#x3D; a[c[i]]^b[i]<br>print flag<br>aaa &#x3D; &#39;&#39;<br>for i in range(len(flag)):<br>    if flag[i]:<br>        aaa +&#x3D; chr(flag[i])<br>    else:<br>        aaa +&#x3D; &#39;t&#39;<br>print aaa<br></code></pre></td></tr></table></figure>
+<h2 id="CUIT-2017-re150"><a href="#CUIT-2017-re150" class="headerlink" title="CUIT-2017 re150"></a>CUIT-2017 re150</h2><p>稍微增加些难度<br>这是一道smc+花的题<br>smc的话就不能在修改处下断点，每次调试都要从头来<br>至于花。。。就不能反编译了啊//其实是因为我不怎么会去花<br>所以，不能反编译加不能下断点<br>有点小恶心<br>好在这题的加密部分不怎么难<br><img src="2.png" srcset="/img/loading.gif" lazyload alt="2"><br>疯狂跟函数可以发现主要函数位置<br>加密段有花。。。没办法<br><img src="3.png" srcset="/img/loading.gif" lazyload alt="3"><br>怼汇编吧。。。<br>下断点看值配合一点黑盒可以看出来</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs asm">b &#x3D; [0x73, 0x8D, 0xF2, 0x4C, 0xC7, 0xD4, 0x7B, 0xF7, 0x18, 0x32,<br>  0x71, 0x0D, 0xCF, 0xDC, 0x67, 0x4F, 0x7F, 0x0B, 0x6D, 0x00]<br>a &#x3D; [49, 24, 206, 133, 87, 180, 218, 119, 49, 185,<br>  82, 39, 26, 6, 139, 205, 113, 161, 74]<br>flag &#x3D; &#39;&#39;<br>c &#x3D; [0]*19<br>for i in range(19):<br>    for j in range(128):<br>        temp &#x3D; j<br>        x &#x3D; int(temp &#x2F; 2 ** (i % 8)) &amp; 0xff<br>        y &#x3D; (temp &lt;&lt; (8 - i % 8)) &amp; 0xff<br>        x |&#x3D; y<br>        if b[i] &#x3D;&#x3D; x ^ i ^ 0x20:<br>            flag +&#x3D; chr(j)<br>            break<br>print flag<br></code></pre></td></tr></table></figure>
+<h2 id="XCTF-4th-QCTF-2018-babyre"><a href="#XCTF-4th-QCTF-2018-babyre" class="headerlink" title="XCTF 4th-QCTF-2018 babyre"></a>XCTF 4th-QCTF-2018 babyre</h2><p>这题写了我好久啊<br>最后才发现是rust写的。。。<br>感觉最近写的这种非c的逆向比较多啊。。。<br>对于这种类型题目的写法。。。说实话，只能怼汇编<br>配合黑盒上手<br>插件的话能用就用，但是用插件的前提是你认得出这是什么语言<br><img src="4.png" srcset="/img/loading.gif" lazyload alt="4"><br>首先是跟<br>找到关键函数<br>可以看到程序有俩次加密<br>在加密之前有一次移位操作<br>进第一次加密的时候就能发现了，按照某种顺序打乱字符串<br>第一次加密其实就是加法<br>第二次是移位后or<br><img src="5.png" srcset="/img/loading.gif" lazyload alt="5"><br>最后是匹配<br>可以看到匹配的数组<br>长度的话前面有一次验证，有个跳转，这边就不上了。<br>直接上代码吧</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs asm">b &#x3D; [0xDA, 0xD8, 0x3D, 0x4C, 0xE3, 0x63, 0x97, 0x3D, 0xC1, 0x91,<br>  0x97, 0x0E, 0xE3, 0x5C, 0x8D, 0x7E, 0x5B, 0x91, 0x6F, 0xFE,<br>  0xDB, 0xD0, 0x17, 0xFE, 0xD3, 0x21, 0x99, 0x4B, 0x73, 0xD0,<br>  0xAB, 0xFE]<br>flag &#x3D; &#39;&#39;<br>a &#x3D; [0]*32<br>for i in range(0,32,4):<br>    for j in range(0xff):<br>        temp &#x3D; j<br>        if (temp&gt;&gt;2)|(temp&lt;&lt;6)&amp;0xff &#x3D;&#x3D; b[(i+9)%32]:<br>            a[(i+9)%32] &#x3D; j<br>        elif (temp&gt;&gt;7)|(temp&lt;&lt;1)&amp;0xff &#x3D;&#x3D; b[(i+10)%32]:<br>            a[(i+10)%32] &#x3D; j<br>        elif (temp&gt;&gt;4)|(temp&lt;&lt;4)&amp;0xff &#x3D;&#x3D; b[(i+11)%32]:<br>            a[(i+11)%32] &#x3D; j<br>        elif (temp&gt;&gt;5)|(temp&lt;&lt;3)&amp;0xff &#x3D;&#x3D; b[(i+12)%32]:<br>            a[(i+12)%32] &#x3D; j<br>for i in range(len(a)):<br>    if i%4 &#x3D;&#x3D; 0:<br>        a[(i + 3) % 32] &#x3D; chr(a[(i+3)%32]-0x81)<br>    elif i%4 &#x3D;&#x3D; 1:<br>        a[(i + 3) % 32] &#x3D; chr(a[(i+3)%32]-7)<br>    elif i%4 &#x3D;&#x3D; 2:<br>        a[(i + 3) % 32] &#x3D; chr(a[(i+3)%32]-0x12)<br>    else:<br>        a[(i + 3) % 32] &#x3D; chr(a[(i+3)%32]-0x58)<br>for i in range(0,32,4):<br>    flag +&#x3D; a[i+1]<br>    flag +&#x3D; a[i+3]<br>    flag +&#x3D; a[i]<br>    flag +&#x3D; a[i+2]<br>print flag<br></code></pre></td></tr></table></figure>
+<p>花费大把时间怼出来一题还是蛮爽的。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/re/">#re</a>
+      
+        <a href="/tags/ctf/">#ctf</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>分享几道re</div>
+      <div>http://www.psbazx.com/2019/04/26/分享几道re/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>April 25, 2019</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/05/04/%E4%BA%94%E4%B8%80%E5%B0%8F%E7%BB%93/" title="五一小结">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">五一小结</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/04/24/%E5%9B%BD%E8%B5%9Bwrite-up/" title="国赛write_up">
+                        <span class="hidden-mobile">国赛write_up</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

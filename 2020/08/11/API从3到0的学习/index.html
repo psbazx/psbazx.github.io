@@ -1,0 +1,759 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="主要是记录下逆向过程 api从三环到零环的调用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="API从3到0的学习">
+<meta property="og:url" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="主要是记录下逆向过程 api从三环到零环的调用">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200709034307624.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200709034418063.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200709041346718.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200709034813255.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200709042527814.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200709042738747.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200709042807821.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200710123545634.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200710124401242.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200710124907345.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200710125923729.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200710130006685.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200710130228227.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200710130942858.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200710131013361.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200710131046910.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200710131205514.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200710131324039.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200711005227693.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200711011458861.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200711142344469.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200711011640903.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200711012337978.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200711012826399.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200715124630512.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200715124723869.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200715124747529.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200715125002945.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200715125037338.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200715125239805.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200715145007223.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200715145113267.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200715145139189.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200715145211820.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200715150103631.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200715150905530.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200715151051374.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200721172913416.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200721173606448.png">
+<meta property="article:published_time" content="2020-08-10T17:36:22.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:17.525Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="ctf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20200709034307624.png">
+  
+  
+  
+  <title>API从3到0的学习 - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="API从3到0的学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-08-10 17:36" pubdate>
+          August 10, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">API从3到0的学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>主要是记录下逆向过程</p>
+<p>api从三环到零环的调用</p>
+<a id="more"></a>
+<h1 id="API"><a href="#API" class="headerlink" title="API"></a>API</h1><h2 id="x86"><a href="#x86" class="headerlink" title="x86"></a>x86</h2><p>为了方便先以x86为例子来演示</p>
+<p>函数为VirtualAllocEx</p>
+<p><img src="image-20200709034307624.png" srcset="/img/loading.gif" lazyload alt="image-20200709034307624"></p>
+<p>可以看到调用了NtAllocateVirtualMemory来自ntdll.dll</p>
+<p><img src="image-20200709034418063.png" srcset="/img/loading.gif" lazyload alt="image-20200709034418063"></p>
+<p>这边可以看到调用了7FFE0300h处所指向的的函数</p>
+<p>这就涉及到一个结构体_KUSER_SHARED_DATA</p>
+<p>User 层地址为：0x7ffe0000<br>Kernnel 层地址为：0xffdf0000</p>
+<p>他们分别映射在同一个物理页，但是只有0环才有写权限 //pte属性rw位</p>
+<p><img src="image-20200709041346718.png" srcset="/img/loading.gif" lazyload alt="image-20200709041346718"></p>
+<p><img src="image-20200709034813255.png" srcset="/img/loading.gif" lazyload alt="image-20200709034813255"></p>
+<p>windbg查看结构体，可见0x300偏移处是 +0x300 SystemCall，查看一波地址</p>
+<p><img src="image-20200709042527814.png" srcset="/img/loading.gif" lazyload alt="image-20200709042527814"></p>
+<p>这边是sysenter快速调用，所需要替换的寄存器都放在msr寄存器中，当然除了ss，ss是通过cs+8计算得</p>
+<p>当然如果cpu不支持的话也有中断门，esp0和ss0在tss任务段，但现在基本都使用快速调用了</p>
+<p><img src="image-20200709042738747.png" srcset="/img/loading.gif" lazyload alt="image-20200709042738747"></p>
+<p>可以在ntdll中看到</p>
+<p><img src="image-20200709042807821.png" srcset="/img/loading.gif" lazyload alt="image-20200709042807821"></p>
+<p>上面是中断门。</p>
+<p>下面来分析一波进入0环后的操作</p>
+<p>分析的内核文件是ntoskrnl，如果是29912分页就不是分析这个了，应该是ntkrnlpa，这边默认101012分页，文件在c盘system32下可找到</p>
+<p><img src="image-20200710123545634.png" srcset="/img/loading.gif" lazyload alt="image-20200710123545634"></p>
+<p>中断门0x2e在idt表中查找到对应处理函数//KiSystemService</p>
+<p>如果是快速调用的话是KiFastCallEntry</p>
+<p><img src="image-20200710124401242.png" srcset="/img/loading.gif" lazyload alt="image-20200710124401242"></p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ada">+<span class="hljs-number">0</span>x07c V86Es            : <span class="hljs-type">Uint4B</span><br>+<span class="hljs-number">0</span>x080 V86Ds            : <span class="hljs-type">Uint4B</span><br>+<span class="hljs-number">0</span>x084 V86Fs            : <span class="hljs-type">Uint4B</span><br>+<span class="hljs-number">0</span>x088 V86Gs            : <span class="hljs-type">Uint4B</span><br></code></pre></td></tr></table></figure>
+<p>是在虚拟8086下使用</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs ada">+<span class="hljs-number">0</span>x068 Eip              : <span class="hljs-type">Uint4B</span><br>+<span class="hljs-number">0</span>x06c SegCs            : <span class="hljs-type">Uint4B</span><br>+<span class="hljs-number">0</span>x070 EFlags           : <span class="hljs-type">Uint4B</span><br>+<span class="hljs-number">0</span>x074 HardwareEsp      : <span class="hljs-type">Uint4B</span><br>+<span class="hljs-number">0</span>x078 HardwareSegSs    : <span class="hljs-type">Uint4B</span><br></code></pre></td></tr></table></figure>
+<p>这五个是中断发生时保存的</p>
+<p>下面分析代码</p>
+<p><img src="image-20200710124907345.png" srcset="/img/loading.gif" lazyload alt="image-20200710124907345"></p>
+<p>这边保存寄存器，其实就是往ktrapframe里面赋值，可以发现0就是errorcode</p>
+<p>当权限切换至0环，因为已经压栈5个参数，所以esp指向的正好是trapframe的errorcode处</p>
+<p>push完后修改fs寄存器，在gdt表中可查看fs对应了kpcr</p>
+<p><img src="image-20200710125923729.png" srcset="/img/loading.gif" lazyload alt="image-20200710125923729"></p>
+<p><img src="image-20200710130006685.png" srcset="/img/loading.gif" lazyload alt="image-20200710130006685"></p>
+<p>然后是吧异常链表压栈，我们都知道在三环fs所对应的是teb，在0环就是kpcr了，所以所使用的异常链表不一样，压栈链表后第一个操作就是清空mov     dword ptr ds:0FFDFF000h, 0FFFFFFFFh</p>
+<p>下面给esi赋值，esi指向了_KTHREAD</p>
+<p><img src="image-20200710130228227.png" srcset="/img/loading.gif" lazyload alt="image-20200710130228227"></p>
+<p>可以看见kpcr 0x124偏移处是+0x004 CurrentThread    : Ptr32 _KTHREAD</p>
+<p>接着吧cs取出最低位and 1赋值给esi+0x140</p>
+<p>就是+0x140 PreviousMode     : Char</p>
+<p>很简单，因为cs低俩位表示所处权限模式</p>
+<p>接着把esi+0x134的TrapFrame给ebx，再把ebx赋值到esp+0x3c处然后吧当前TrapFrame保存给esi+0x134</p>
+<p>然后是ebp和eip给调试所需要保存位置mov     [ebp+0Ch], edx保存参数</p>
+<p><img src="image-20200710130942858.png" srcset="/img/loading.gif" lazyload alt="image-20200710130942858"></p>
+<p>最后一部分操作如上，esi+0x2c</p>
+<p>查看一波就是检测调试状态</p>
+<p><img src="image-20200710131013361.png" srcset="/img/loading.gif" lazyload alt="image-20200710131013361"></p>
+<p>如果处在调试状态就跳转</p>
+<p><img src="image-20200710131046910.png" srcset="/img/loading.gif" lazyload alt="image-20200710131046910"></p>
+<p>可以看到就是在赋值调试所需要的寄存器</p>
+<p>如果不在调试就直接跳转</p>
+<p>//这边可以扩展假如你起个线程往里面不停写值，调试的时候就无法下硬件断点了，因为相关调试寄存器都没赋值。</p>
+<p><img src="image-20200710131205514.png" srcset="/img/loading.gif" lazyload alt="image-20200710131205514"></p>
+<p>可以看到改地址所处函数为KiFastCallEntry，即是快速调用处</p>
+<p><img src="image-20200710131324039.png" srcset="/img/loading.gif" lazyload alt="image-20200710131324039"></p>
+<p>这边就是当cpu支持快速调用时，所做的保存现场操作了</p>
+<p><img src="image-20200711005227693.png" srcset="/img/loading.gif" lazyload alt="image-20200711005227693"></p>
+<p>稍微逆向一下，其实可以明显发现大部分与中断相同，就是中断前操作系统已经帮你push五个寄存器，而快速调用需要自己来</p>
+<p>下面来看一波系统服务表，因为api进0环时之前说过是通过eax来找到所调用函数的，那怎么找就涉及到系统服务表了</p>
+<p><img src="image-20200711011458861.png" srcset="/img/loading.gif" lazyload alt="image-20200711011458861"></p>
+<p>先来看看系统服务表，里面有俩张，分别是俩个内核模块得导出函数，系统服务表里面并没有所有内核函数，而是有所有提供给三环的内核函数，下面win32k得是和图形相关的内核函数</p>
+<p><img src="image-20200711142344469.png" srcset="/img/loading.gif" lazyload alt="image-20200711142344469"></p>
+<p>在windbg重通过查找ssdt来找到系统服务表</p>
+<p><img src="image-20200711011640903.png" srcset="/img/loading.gif" lazyload alt="image-20200711011640903"></p>
+<p>系统服务表位于kthread+0xe0处</p>
+<p>至于如何判断使用哪个表得看eax，eax低12位位索引，第13位决定了用哪张表，参数个数则以字节为单位，占多少字节个数就是多少，比如俩个int那么个数就是8。</p>
+<p>下面开始逆向</p>
+<p><img src="image-20200711012337978.png" srcset="/img/loading.gif" lazyload alt="image-20200711012337978"></p>
+<p>eax&gt;&gt;8</p>
+<p>and 0x30</p>
+<p>如果第13位为0，那么所得答案就是0，否则为0x10，而这正好是系统服务表第一级大小</p>
+<p>add     edi, [esi+0E0h]就正好可以决定使用哪张表，然后and eax 0xfff，取了低12位索引。</p>
+<p>判断是否越界</p>
+<p>然后是针对第二张表的一些操作这边忽略直接跳转</p>
+<p><img src="image-20200711012826399.png" srcset="/img/loading.gif" lazyload alt="image-20200711012826399"></p>
+<p>mov     cl, [eax+ebx]此时ebx指向了参数个数edi指向了所用系统服务表开始</p>
+<p>mov     ebx, [edi+eax*4]吧所需要调用函数地址给ebx</p>
+<p>下面参数拷贝一次性拷贝4字节，从esi开始这边指向了参数，拷贝到edi就是esp位置，拷贝ecx&gt;&gt;2个4字节</p>
+<p>然后call ebx，三环到0环api如何调用就基本逆完</p>
+<h2 id="x64"><a href="#x64" class="headerlink" title="x64"></a>x64</h2><p>环境win10 x64</p>
+<p>这边以VirtualAlloc为例</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span> </span>&#123;<br>	<span class="hljs-keyword">char</span>* lpv = (<span class="hljs-keyword">char</span>*)VirtualAlloc(<span class="hljs-literal">NULL</span>, <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>, MEM_RESERVE,PAGE_READWRITE);<br>	getchar();<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>程序反编译如下</p>
+<p><img src="image-20200715124630512.png" srcset="/img/loading.gif" lazyload alt="image-20200715124630512"></p>
+<p>可以看到跳转到了kernel32</p>
+<p><img src="image-20200715124723869.png" srcset="/img/loading.gif" lazyload alt="image-20200715124723869"></p>
+<p>紧接着kernel32跳转kernelbase.dll</p>
+<p><img src="image-20200715124747529.png" srcset="/img/loading.gif" lazyload alt="image-20200715124747529"></p>
+<p>在kernelbase.dll中查询相关函数</p>
+<p>可以发现调用了ntdll的函数</p>
+<p><img src="image-20200715125002945.png" srcset="/img/loading.gif" lazyload alt="image-20200715125002945"></p>
+<p><img src="image-20200715125037338.png" srcset="/img/loading.gif" lazyload alt="image-20200715125037338"></p>
+<p>和x86很像，查看_KUSER_SHARED_DATA偏移308处</p>
+<p><img src="image-20200715125239805.png" srcset="/img/loading.gif" lazyload alt="image-20200715125239805"></p>
+<p>系统调用，可以判断这边是在验证cpu是否支持快速调用，如不支持则跳转int 0x2e中断门</p>
+<p>下面康康快速调用入口(64)看ntoskrnl.exe</p>
+<p><img src="image-20200715145007223.png" srcset="/img/loading.gif" lazyload alt="image-20200715145007223"></p>
+<p>gs和fs一样，所以在零环这边gs就是kpcr</p>
+<p>切换堆栈后开始往trapframe里push保存现场环境</p>
+<p><img src="image-20200715145113267.png" srcset="/img/loading.gif" lazyload alt="image-20200715145113267"></p>
+<p>可以看到gs:10h处是用户空间esp</p>
+<p><img src="image-20200715145139189.png" srcset="/img/loading.gif" lazyload alt="image-20200715145139189"></p>
+<p>替换rsp为rsp0，开始保存环境</p>
+<p><img src="image-20200715145211820.png" srcset="/img/loading.gif" lazyload alt="image-20200715145211820"></p>
+<p>trapframe如上</p>
+<p><img src="image-20200715150103631.png" srcset="/img/loading.gif" lazyload alt="image-20200715150103631"></p>
+<p>保存现场工作完成后开始更具系统调用号来找系统服务表</p>
+<p><img src="image-20200715150905530.png" srcset="/img/loading.gif" lazyload alt="image-20200715150905530"></p>
+<p>x64和x86还是不一样，这边取表做了些运算</p>
+<p><img src="image-20200715151051374.png" srcset="/img/loading.gif" lazyload alt="image-20200715151051374"></p>
+<p>运算完成后调用对应内核函数</p>
+<p>关于WOW64的话这边有个学习链接</p>
+<p><a target="_blank" rel="noopener" href="https://www.slideshare.net/YardenShafir/jumping-into-heavens-gate">https://www.slideshare.net/YardenShafir/jumping-into-heavens-gate</a></p>
+<p>简而言之是把32位转换成64位，后面还是走的64位ntdll的syscall</p>
+<p><img src="image-20200721172913416.png" srcset="/img/loading.gif" lazyload alt="image-20200721172913416"></p>
+<p>如上图所示，转换为64位</p>
+<p><img src="image-20200721173606448.png" srcset="/img/loading.gif" lazyload alt="image-20200721173606448"></p>
+<p>因为ida是32位不能反编译，这边用64位打开查看eip偏移9处</p>
+<p>直接是跳转，后面就是把栈中的参数按照64位调用方式传递给寄存器然后就是和64位一样的路线了</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/re/">#re</a>
+      
+        <a href="/tags/ctf/">#ctf</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>API从3到0的学习</div>
+      <div>http://www.psbazx.com/2020/08/11/API从3到0的学习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>August 10, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/08/11/SSDT-HOOK/" title="SSDT HOOK">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">SSDT HOOK</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/" title="进程线程">
+                        <span class="hidden-mobile">进程线程</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

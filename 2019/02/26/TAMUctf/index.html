@@ -1,0 +1,642 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前几天的一个美国的比赛因为是第一次写国外比赛的题，和国内区别还是有的，题目也不怎么难。。。但有点奇怪吧。。。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TAMUctf">
+<meta property="og:url" content="http://www.psbazx.com/2019/02/26/TAMUctf/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="前几天的一个美国的比赛因为是第一次写国外比赛的题，和国内区别还是有的，题目也不怎么难。。。但有点奇怪吧。。。">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2019/02/26/TAMUctf/1.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/02/26/TAMUctf/2.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/02/26/TAMUctf/3.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/02/26/TAMUctf/4.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/02/26/TAMUctf/5.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/02/26/TAMUctf/6.png">
+<meta property="article:published_time" content="2019-02-26T14:10:21.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:17.728Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="ctf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2019/02/26/TAMUctf/1.png">
+  
+  
+  
+  <title>TAMUctf - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="TAMUctf"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-02-26 14:10" pubdate>
+          February 26, 2019 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.8k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          49 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">TAMUctf</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>前几天的一个美国的比赛<br>因为是第一次写国外比赛的题，和国内区别还是有的，题目也不怎么难。。。但有点奇怪吧。。。</p>
+<a id="more"></a>
+<h1 id="RE"><a href="#RE" class="headerlink" title="RE"></a>RE</h1><p>RE方向目前写出来7题，有一道汇编的没做。。。</p>
+<h2 id="Cheesy"><a href="#Cheesy" class="headerlink" title="Cheesy"></a>Cheesy</h2><p>直接放入ida<br><img src="1.png" srcset="/img/loading.gif" lazyload alt="cheesy1"><br>可以看到很多像base64的字符串<br>一个个解一下<br>gigem{3a5y_R3v3r51N6!}</p>
+<h2 id="Snakes-over-cheese"><a href="#Snakes-over-cheese" class="headerlink" title="Snakes over cheese"></a>Snakes over cheese</h2><p>反编译直接</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><code class="hljs asm">#!&#x2F;usr&#x2F;bin&#x2F;env python<br># encoding: utf-8<br># 如果觉得不错，可以推荐给你的朋友！http:&#x2F;&#x2F;tool.lu&#x2F;pyc<br>from datetime import datetime<br>Fqaa &#x3D; [<br>    102,<br>    108,<br>    97,<br>    103,<br>    123,<br>    100,<br>    101,<br>    99,<br>    111,<br>    109,<br>    112,<br>    105,<br>    108,<br>    101,<br>    125]<br>XidT &#x3D; [<br>    83,<br>    117,<br>    112,<br>    101,<br>    114,<br>    83,<br>    101,<br>    99,<br>    114,<br>    101,<br>    116,<br>    75,<br>    101,<br>    121]<br><br>def main():<br>    print &#39;Clock.exe&#39;<br>    input &#x3D; raw_input(&#39;&gt;: &#39;).strip()<br>    kUIl &#x3D; &#39;&#39;<br>    for i in XidT:<br>        kUIl +&#x3D; chr(i)<br>    <br>    if input &#x3D;&#x3D; kUIl:<br>        alYe &#x3D; &#39;&#39;<br>        for i in Fqaa:<br>            alYe +&#x3D; chr(i)<br>        <br>        print alYe<br>    else:<br>        print datetime.now()<br><br>if __name__ &#x3D;&#x3D; &#39;__main__&#39;:<br>    main()<br></code></pre></td></tr></table></figure>
+<p>看到可疑的字符串<br>吧对应ASCII整出<br>flag{decompile}<br>SuperSecretKey</p>
+<h2 id="042"><a href="#042" class="headerlink" title="042"></a>042</h2><p>用文本编辑器打开后。。。<br>因为以前一直看的是intel汇编<br>这种汇编第一次见<br>往下翻可以看到一堆mov操作<br>吧ASCII打出</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asm">flag &#x3D; &#39;gigem&#123;&#39;<br>a &#x3D; [65,53,53,51,77,98,49,89]<br>for i in range(len(a)):<br>    flag +&#x3D; chr(a[i])<br>flag +&#x3D; &#39;&#125;&#39;<br>print flag<br></code></pre></td></tr></table></figure>
+<p>gigem{A553Mb1Y}</p>
+<h2 id="KeyGenMe"><a href="#KeyGenMe" class="headerlink" title="KeyGenMe"></a>KeyGenMe</h2><p>程序主要是根据输入进行加密后再字符串匹配<br><img src="2.png" srcset="/img/loading.gif" lazyload alt="key"><br>一开始想用z3去解的，但是因为key可以是很多种<br>就直接爆破了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs asm">a &#x3D; &#39;H[OIonU2_&lt;__nK&lt;KsK&#39;<br>for i in range(len(a)-1):<br>    key &#x3D; &#39;&#39;<br>    for temp in range(32,128):<br>        if ord(a[i+1]) &#x3D;&#x3D; ((temp + 12) * ord(a[i]) + 17) % 70 + 48:<br>            key +&#x3D; chr(temp)<br>    print key<br>#G4Z2S09577095926<br></code></pre></td></tr></table></figure>
+<p>直接输入后得flag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asm">pisanbao@pisanbao-virtual-machine:~&#x2F;ctf$ nc rev.tamuctf.com 7223<br><br>Please Enter a product key to continue: <br>G4Z2S09577095926<br>gigem&#123;k3y63n_m3?_k3y63n_y0u!&#125;<br><br></code></pre></td></tr></table></figure>
+<h2 id="NoCCBytes"><a href="#NoCCBytes" class="headerlink" title="NoCCBytes"></a>NoCCBytes</h2><p>这题的话<br>刚刚又做了一遍，一开始有点懵逼<br>后来发现还是不怎么难啊<br>程序大概是对输入进行了一堆神奇的操作，再对里面一串字符串进行解密操作后与之相匹配<br>那么简单了啊<br>直接调试在这个解密的地方下断点<br>毕竟每次异或操作的数是v2，v2不会变<br><img src="3.png" srcset="/img/loading.gif" lazyload alt="nocc"><br>发现v2值为0x11<br>那么直接解密</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asm">a &#x3D; &#39;Fpee~Bphb&#39;<br>flag &#x3D; &#39;&#39;<br>for i in range(len(a)):<br>    flag +&#x3D; chr(ord(a[i])^0x11)<br>print flag<br># WattoSays<br></code></pre></td></tr></table></figure>
+<p>答案出现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asm">pisanbao@pisanbao-virtual-machine:~$ nc rev.tamuctf.com 8188<br><br>Welcome. Please Enter a password to continue: <br>WattoSays<br>gigem&#123;Y0urBreakpo1nt5Won7Work0nMeOnlyMon3y&#125;<br><br></code></pre></td></tr></table></figure>
+<p>还有俩到题目虽然说是写出来了，但是方法不是那么的正常。。。<br>如果有些出来的希望能私信一下<br>我想知道咋写鸭~~~</p>
+<h2 id="Cr4ckZ33C0d3"><a href="#Cr4ckZ33C0d3" class="headerlink" title="Cr4ckZ33C0d3"></a>Cr4ckZ33C0d3</h2><p>虽然说题目要求用z3去写<br>但是呢。。。。。。。。。。。。。<br>没写出来<br>不知道为什么<br>z3写出来的答案总是有问题//不知道是不是因为<br>没办法了，只能慢慢分析然后用c去写<br>而且这题呢。。。输入29个字符，只对其中部分有限制<br>或者说？这题也有多解？？？像keygenme一样？？？<br>//导致z3解不出？？？（猜测）<br>程序只对17个字符进行判断<br>其中7个字符可以定下<br>让我们来解其余10个</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs asm">已知条件<br>a[0] &#x3D; 77<br>a[5] &#x3D; 45<br>a[11] &#x3D; 45<br>a[17] &#x3D; 45<br>a[20] &#x3D; 66<br>a[21] &#x3D; 66<br>a[23] &#x3D; 45<br><br>限制条件<br>(unsigned int)(a1[1] - 48) &lt;&#x3D; 9<br>      &amp;&amp; (unsigned int)(a1[4] - 48) &lt;&#x3D; 9<br>      &amp;&amp; (unsigned int)(a1[6] - 48) &lt;&#x3D; 9<br>      &amp;&amp; (unsigned int)(a1[9] - 48) &lt;&#x3D; 9<br>      &amp;&amp; (unsigned int)(a1[15] - 48) &lt;&#x3D; 9<br>      &amp;&amp; (unsigned int)(a1[18] - 48) &lt;&#x3D; 9<br>      &amp;&amp; (unsigned int)(a1[22] - 48) &lt;&#x3D; 9<br>      &amp;&amp; (unsigned int)(a1[27] - 48) &lt;&#x3D; 9<br>      &amp;&amp; (unsigned int)(a1[28] - 48) &lt;&#x3D; 9<br>	这边不一一列举,只把重要的写一下。<br></code></pre></td></tr></table></figure>
+<p>来看一下check3<br>a1[4] - 48 == 2 * (a1[1] - 48) + 1 &amp;&amp; a1[4] - 48 &gt; 7 &amp;&amp; a1[9] == a1[4] - (a1[1] - 48) + 2<br>首先上面限制条件a[4] - 48 &lt;= 9,这边又有a[4] - 48 &gt; 7<br>所以a[4]只能取56，57<br>再看a1[4] - 48 == 2 * (a1[1] - 48) + 1<br>所以a[4] - 48 为奇数<br>a[4] = 57<br>所以a[1] = 52,a[9] = 55<br>ok,现在还剩下7个未知<br>再看看check4,5,6,7,8</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asm">(a1[1] + a1[4] * a1[6]) % 41 &#x3D;&#x3D; 5;<br>	(a1 + 27) + *(char *)(a1 + 28)) % 13 &#x3D;&#x3D; 8;<br>	(a1 + 27) + *(char *)(a1 + 22)) % 22 &#x3D;&#x3D; 18;<br>	(a1 + 18) + *(char *)(a1 + 22)) % 11 &#x3D;&#x3D; 5;<br>	(a1[22] + a1[28] + a1[18]) % 26 &#x3D;&#x3D; 4;<br>	别忘了这边涉及的所有未知数都有a[x]-48&lt;&#x3D;9的限制<br></code></pre></td></tr></table></figure>
+<p>c语言爆破，套个5层循环。。。//其实可以爆，毕竟范围限制在那</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs asm">int main()<br>&#123;<br>    char a27,a28,a22,a18,a6;<br>    for(a27&#x3D;32;a27&lt;58;a27++)&#x2F;&#x2F;32开始为可打印字符<br>    &#123;<br>        for(a22&#x3D;32;a22&lt;58;a22++)<br>    &#123;<br>        for(a28&#x3D;32;a28&lt;58;a28++)<br>        &#123;<br>        for(a18&#x3D;32;a18&lt;58;a18++)<br>        &#123;<br>        for(a6&#x3D;32;a6&lt;58;a6++)<br>    &#123;<br>        if((52+57*a6)%41&#x3D;&#x3D;5 &amp;&amp; (a27+a28)%13&#x3D;&#x3D;8 &amp;&amp; (a27+a22)%22&#x3D;&#x3D;18 &amp;&amp; (a18+a22)%11 &#x3D;&#x3D; 5 &amp;&amp; (a22+a28+a18)%26&#x3D;&#x3D;4)<br>            printf(&quot;a6&#x3D;%d,a18&#x3D;%d,a22&#x3D;%d,a27&#x3D;%d,a28&#x3D;%d\n&quot;,a6,a18,a22,a27,a28);<br>    &#125;<br>    &#125;<br>    &#125;<br>    &#125;<br>    &#125;<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>头文件啥的不加了<br>跑出来结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asm">a6&#x3D;56,a18&#x3D;41,a22&#x3D;52,a27&#x3D;32,a28&#x3D;41<br>a6&#x3D;56,a18&#x3D;32,a22&#x3D;50,a27&#x3D;34,a28&#x3D;52<br>a6&#x3D;56,a18&#x3D;54,a22&#x3D;39,a27&#x3D;45,a28&#x3D;41<br>a6&#x3D;56,a18&#x3D;45,a22&#x3D;37,a27&#x3D;47,a28&#x3D;52<br>a6&#x3D;56,a18&#x3D;36,a22&#x3D;35,a27&#x3D;49,a28&#x3D;37<br>a6&#x3D;56,a18&#x3D;54,a22&#x3D;50,a27&#x3D;56,a28&#x3D;56<br></code></pre></td></tr></table></figure>
+<p>果断选择最后一个<br>下面看check9<br>这就可以用z3了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs asm">from z3 import *<br>s &#x3D; Solver()<br>a15 &#x3D; BitVec(&#39;a15&#39;,8)<br>s.add((((((a15-56)&gt;&gt;31)&gt;&gt;30)+a15-56)&amp;3)-(((a15-56)&gt;&gt;31)&gt;&gt;30)&#x3D;&#x3D;1)<br>if s.check()&#x3D;&#x3D;sat:<br>    print s.model()#[a15 &#x3D; 57]<br><br></code></pre></td></tr></table></figure>
+<p>a15 = 57<br>check0A是帮你验证的，因为前面有多解嘛<br>选择最像的，验证我就不验证了啊<br>看check0C</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs asm">int main()<br>&#123;<br>    char a9;<br>    for(a9&#x3D;32;a9&lt;58;a9++)<br>    &#123;<br>        if((56+57*a9)%10&#x3D;&#x3D;1)<br>            printf(&quot;a9&#x3D;%d\n&quot;,a9);<br>    &#125;<br>&#x2F;&#x2F;a9&#x3D;35<br>&#x2F;&#x2F;a9&#x3D;45<br>&#x2F;&#x2F;a9&#x3D;55<br>    return 0;<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+<p>a9 = 55<br>那就ok了啊</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs asm">int main()<br>&#123;<br>    char a[29]&#x3D;&#123;0&#125;;<br>    a[0] &#x3D; 77;<br>a[1] &#x3D; 52;<br>a[4] &#x3D; 57;<br>a[5] &#x3D; 45;<br>a[6] &#x3D; 56;<br>a[9] &#x3D; 55;<br>a[11] &#x3D; 45;<br>a[15] &#x3D; 57;<br>a[17] &#x3D; 45;<br>a[18] &#x3D; 54;<br>a[20] &#x3D; 66;<br>a[21] &#x3D; 66;<br>a[22] &#x3D; 50;<br>a[23] &#x3D; 45;<br>a[27] &#x3D; 56;<br>a[28] &#x3D; 56;<br>int i;<br>for(i&#x3D;0;i&lt;29;i++)<br>&#123;<br>    if(a[i])<br>        printf(&quot;%c&quot;,a[i]);<br>    else<br>        printf(&quot;0&quot;);<br>&#125;<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>跑一下<br>M4009-80070-00090-60BB2-00088<br>看样子就是答案了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asm">pisanbao@pisanbao-virtual-machine:~$ nc rev.tamuctf.com 8189<br><br>Please Enter a product key to continue: <br>M4009-80070-00090-60BB2-00088<br>gigem&#123;z3_b3st_thr33&#125;<br><br></code></pre></td></tr></table></figure>
+<h2 id="Obfuscaxor"><a href="#Obfuscaxor" class="headerlink" title="Obfuscaxor"></a>Obfuscaxor</h2><p>黑盒测试猜出来的答案<br>放进ida发现这部分有点奇怪，看汇编<br><img src="4.png" srcset="/img/loading.gif" lazyload alt="o"><br>转成代码发现strcmp<br><img src="5.png" srcset="/img/loading.gif" lazyload alt="o"><br>接下去就是猜了。。。<br>猜测加密方法<br>我们输入一串a进去<br>看输出<br><img src="6.png" srcset="/img/loading.gif" lazyload alt="o"><br>4个一循环<br>那就可以猜测异或了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs asm">a &#x3D; [0xAE, 0x9E, 0xFF, 0x9C, 0xAB, 0xC7, 0xD3, 0x81, 0xE7, 0xEE,<br>  0xFB, 0x8A, 0x9D, 0xEF, 0x8D, 0xAE]<br>b &#x3D; [0xBF, 0xCC, 0xDF, 0x8E]<br>key &#x3D; &#39;&#39;<br>for i in range(len(a)):<br>    key +&#x3D; chr(a[i]^b[i%4]^ord(&#39;a&#39;))<br>print key<br># p3Asujmn9CEeCB3A<br></code></pre></td></tr></table></figure>
+<p>得到key</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asm">pisanbao@pisanbao-virtual-machine:~$ nc rev.tamuctf.com 7224<br><br>Please Enter a product key to continue: <br>p3Asujmn9CEeCB3A<br>gigem&#123;x0r_64d5by&#125;<br><br></code></pre></td></tr></table></figure>
+<p>pwn的话<br>有机会再总结下吧。。。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/re/">#re</a>
+      
+        <a href="/tags/ctf/">#ctf</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>TAMUctf</div>
+      <div>http://www.psbazx.com/2019/02/26/TAMUctf/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>February 26, 2019</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/03/01/%E5%85%B3%E4%BA%8E%E7%AC%A6%E5%8F%B7%E6%89%A7%E8%A1%8C%E7%9A%84%E4%B8%80%E4%BA%9B%E5%B0%8F%E5%B0%8F%E7%9A%84%E6%80%BB%E7%BB%93/" title="angr符号执行工具">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">angr符号执行工具</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/02/22/HGAME-2019-week3/" title="HGAME 2019 week3">
+                        <span class="hidden-mobile">HGAME 2019 week3</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

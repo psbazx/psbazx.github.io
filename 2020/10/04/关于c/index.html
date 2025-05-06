@@ -1,0 +1,1481 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="之前人人人面试的时候开了外放，嫖到了一波面试题，问了许多c++，正巧把一些常问的问题总结下，顺带复习一波 仅为面试复习用，具体内容参考&lt;&lt;c++反汇编与逆向分析技术揭秘&gt;&gt;，毕竟本人c++也不咋滴233。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于c++">
+<meta property="og:url" content="http://www.psbazx.com/2020/10/04/%E5%85%B3%E4%BA%8Ec/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="之前人人人面试的时候开了外放，嫖到了一波面试题，问了许多c++，正巧把一些常问的问题总结下，顺带复习一波 仅为面试复习用，具体内容参考&lt;&lt;c++反汇编与逆向分析技术揭秘&gt;&gt;，毕竟本人c++也不咋滴233。">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2020/10/04/%E5%85%B3%E4%BA%8Ec/image-20201004111321286.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/10/04/%E5%85%B3%E4%BA%8Ec/image-20201004194754698.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/10/04/%E5%85%B3%E4%BA%8Ec/image-20201004194936044.png">
+<meta property="article:published_time" content="2020-10-03T16:54:35.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:18.251Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="ctf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2020/10/04/%E5%85%B3%E4%BA%8Ec/image-20201004111321286.png">
+  
+  
+  
+  <title>关于c++ - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="关于c++"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-10-03 16:54" pubdate>
+          October 3, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          19k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          163 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">关于c++</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>之前人人人面试的时候开了外放，嫖到了一波面试题，问了许多c++，正巧把一些常问的问题总结下，顺带复习一波</p>
+<p>仅为面试复习用，具体内容参考&lt;&lt;c++反汇编与逆向分析技术揭秘&gt;&gt;，毕竟本人c++也不咋滴233。</p>
+<a id="more"></a>
+
+<h1 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h1><p>一般都会问引用和指针区别</p>
+<p>这个很容易，引用本质上就是指针，都是一块内存放了某个变量的地址，至于为什么有引用主要是安全，但这个安全也只是针对编译来说的，引用不可修改而指针可以，本质上还是个指针只不过是编译器来维护。</p>
+<h1 id="虚表"><a href="#虚表" class="headerlink" title="虚表"></a>虚表</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Function_1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Function_1...\n&quot;</span>);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Function_2</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Function_2...\n&quot;</span>);<br>    &#125;<br>&#125;;<br><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    Base base;<br>    base.Function_1();<br>    base.Function_2();<br>    Base* p = &amp;base;<br>    p-&gt;Function_1();<br>    p-&gt;Function_2();<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>在分情况讨论虚表时先给个例子</p>
+<p><img src="image-20201004111321286.png" srcset="/img/loading.gif" lazyload alt="image-20201004111321286"></p>
+<p>可见如果是通过对象调用的话是直接调用的</p>
+<p>但如果是指针调用那就会涉及虚表，可以看到间接call，当然因为编译器版本问题可能有些出入。</p>
+<p>再来个例子帮助更好理解虚表</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Base</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> x;<br>    <span class="hljs-keyword">int</span> y;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Function_1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Function_1...\n&quot;</span>);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Function_2</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Function_2...\n&quot;</span>);<br>    &#125;<br>&#125;;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    Base base;<br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, <span class="hljs-keyword">sizeof</span>(base));<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>含有虚函数的类成员第一项是个指针指向虚表，虚表放的是各个虚函数地址，所以这边大小为12，即使定义6个虚函数大小还是12.</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th align="left">虚函数表</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Base对象</td>
+<td>0x123245</td>
+<td>—&gt;</td>
+<td align="left">0x123456</td>
+<td></td>
+<td>Function_1()</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>..</td>
+<td></td>
+<td align="left">0x123456</td>
+<td></td>
+<td>Function_2()</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>..</td>
+<td></td>
+<td align="left">0x123456</td>
+<td></td>
+<td>Function_3()</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>..</td>
+<td></td>
+<td align="left"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>..</td>
+<td></td>
+<td align="left"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>其他成员</td>
+<td></td>
+<td align="left"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td align="left"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>下面分几个情况讨论下</p>
+<h2 id="单继承无覆盖"><a href="#单继承无覆盖" class="headerlink" title="单继承无覆盖"></a>单继承无覆盖</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Function_1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base:Function_1...\n&quot;</span>);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Function_2</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base:Function_2...\n&quot;</span>);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Function_3</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base:Function_3...\n&quot;</span>);<br>    &#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Sub</span> :</span>Base<br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Function_4</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Function_4...\n&quot;</span>);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Function_5</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Function_5...\n&quot;</span>);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Function_6</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Function_6...\n&quot;</span>);<br>    &#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">//查看 Sub 的虚函数表					</span><br>    Sub sub;<br><br>    <span class="hljs-comment">//对象的前四个字节就是虚函数表					</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub 的虚函数表地址为：%x\n&quot;</span>, *(<span class="hljs-keyword">int</span>*)&amp;sub);<br><br>    <span class="hljs-comment">//通过函数指针调用函数，验证正确性					</span><br>    <span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">void</span><span class="hljs-params">(*pFunction)</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;<br><br>    pFunction pFn;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">6</span>; i++)<br>    &#123;<br>        pFn = (pFunction) * ((<span class="hljs-keyword">int</span>*)(*(<span class="hljs-keyword">int</span>*)&amp;sub) + i);<br>        pFn();<br>    &#125;<br><br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th>虚函数表</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Sub对象</td>
+<td>0x123245</td>
+<td>—&gt;</td>
+<td>0x123456</td>
+<td></td>
+<td>Base:Function_1</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>..</td>
+<td></td>
+<td>0x123457</td>
+<td></td>
+<td>Base:Function_2</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>..</td>
+<td></td>
+<td>0x135466</td>
+<td></td>
+<td>Base:Function_3</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>..</td>
+<td></td>
+<td>0x135466</td>
+<td></td>
+<td>Sub:Function_4</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>..</td>
+<td></td>
+<td>0x135466</td>
+<td></td>
+<td>Sub:Function_5</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>其他成员</td>
+<td></td>
+<td>0x135466</td>
+<td></td>
+<td>Sub:Function_6</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td>00000000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="单继承有覆盖"><a href="#单继承有覆盖" class="headerlink" title="单继承有覆盖"></a>单继承有覆盖</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Function_1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base:Function_1...\n&quot;</span>);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Function_2</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base:Function_2...\n&quot;</span>);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Function_3</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base:Function_3...\n&quot;</span>);<br>    &#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Sub</span> :</span>Base<br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Function_1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Function_1...\n&quot;</span>);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Function_2</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Function_2...\n&quot;</span>);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Function_6</span><span class="hljs-params">()</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Function_6...\n&quot;</span>);<br>    &#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">//查看 Sub 的虚函数表				</span><br>    Sub sub;<br><br>    <span class="hljs-comment">//对象的前四个字节就是虚函数表				</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub 的虚函数表地址为：%x\n&quot;</span>, *(<span class="hljs-keyword">int</span>*)&amp;sub);<br><br>    <span class="hljs-comment">//通过函数指针调用函数，验证正确性				</span><br>    <span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">void</span><span class="hljs-params">(*pFunction)</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;<br><br>    pFunction pFn;<br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">6</span>; i++)<br>    &#123;<br>        <span class="hljs-keyword">int</span> temp = *((<span class="hljs-keyword">int</span>*)(*(<span class="hljs-keyword">int</span>*)&amp;sub) + i);<br>        <span class="hljs-keyword">if</span> (temp == <span class="hljs-number">0</span>)<br>        &#123;<br>            <span class="hljs-keyword">break</span>;<br>        &#125;<br>        pFn = (pFunction)temp;<br>        pFn();<br>    &#125;<br><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%x\n&quot;</span>, *((<span class="hljs-keyword">int</span>*)(*(<span class="hljs-keyword">int</span>*)&amp;sub) + <span class="hljs-number">6</span>));<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th>虚函数表</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Sub对象</td>
+<td>0x123245</td>
+<td>—&gt;</td>
+<td>0x123456</td>
+<td></td>
+<td>Sub:Function_1</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>..</td>
+<td></td>
+<td>0x123457</td>
+<td></td>
+<td>Sub:Function_2</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>..</td>
+<td></td>
+<td>0x135466</td>
+<td></td>
+<td>Base:Function_3</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>..</td>
+<td></td>
+<td>0x135466</td>
+<td></td>
+<td>Sub:Function_6</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>..</td>
+<td></td>
+<td>00000000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>其他成员</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="多继承无覆盖"><a href="#多继承无覆盖" class="headerlink" title="多继承无覆盖"></a>多继承无覆盖</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base1</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base1:Fn_1...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_2</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base1:Fn_2...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base2</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_3</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base2:Fn_3...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_4</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base2:Fn_4...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Sub</span> :</span>Base1, Base2<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_5</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Fn_5...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_6</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Fn_6...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-comment">//查看 Sub 的虚函数表						</span><br>	Sub sub;<br><br>	<span class="hljs-comment">//通过函数指针调用函数，验证正确性						</span><br>	<span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">void</span><span class="hljs-params">(*pFunction)</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;<br><br><br>	<span class="hljs-comment">//对象的前四个字节是第一个Base1的虚表						</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub 的虚函数表地址为：%x\n&quot;</span>, *(<span class="hljs-keyword">int</span>*)&amp;sub);<br><br>	pFunction pFn;<br><br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">6</span>; i++)<br>	&#123;<br>		<span class="hljs-keyword">int</span> temp = *((<span class="hljs-keyword">int</span>*)(*(<span class="hljs-keyword">int</span>*)&amp;sub) + i);<br>		<span class="hljs-keyword">if</span> (temp == <span class="hljs-number">0</span>)<br>		&#123;<br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br>		pFn = (pFunction)temp;<br>		pFn();<br>	&#125;<br><br>	<span class="hljs-comment">//对象的第二个四字节是Base2的虚表						</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub 的虚函数表地址为：%x\n&quot;</span>, *(<span class="hljs-keyword">int</span>*)((<span class="hljs-keyword">int</span>)&amp;sub + <span class="hljs-number">4</span>));<br><br>	pFunction pFn1;<br><br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">0</span>; k &lt; <span class="hljs-number">2</span>; k++)<br>	&#123;<br>		<span class="hljs-keyword">int</span> temp = *((<span class="hljs-keyword">int</span>*)(*(<span class="hljs-keyword">int</span>*)((<span class="hljs-keyword">int</span>)&amp;sub + <span class="hljs-number">4</span>)) + k);<br>		pFn1 = (pFunction)temp;<br>		pFn1();<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>多继承就有俩虚表了这边注意</p>
+<table>
+<thead>
+<tr>
+<th>Sub对象</th>
+<th>0x123245</th>
+<th>—&gt;</th>
+<th>Fn_1()</th>
+<th>Fn_2()</th>
+<th>Sub:Fn_5</th>
+<th>Sub:Fn_6</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>0x345678</td>
+<td>—&gt;</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>..</td>
+<td></td>
+<td>Fn_3()</td>
+<td>Fn_4()</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>..</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>..</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>其他成员</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>此时Sub对象的大小为8字节</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h2 id="多继承有覆盖"><a href="#多继承有覆盖" class="headerlink" title="多继承有覆盖"></a>多继承有覆盖</h2><h3 id="情形1"><a href="#情形1" class="headerlink" title="情形1"></a>情形1</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base1</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base1:Fn_1...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_2</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base1:Fn_2...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base2</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_3</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base2:Fn_3...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_4</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base2:Fn_4...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Sub</span> :</span>Base1, Base2<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Fn_1...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_3</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Fn_3...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_5</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Fn_5...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-comment">//查看 Sub 的虚函数表						</span><br>	Sub sub;<br><br>	<span class="hljs-comment">//通过函数指针调用函数，验证正确性						</span><br>	<span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">void</span><span class="hljs-params">(*pFunction)</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;<br><br><br>	<span class="hljs-comment">//对象的前四个字节是第一个Base1的虚表						</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub 的虚函数表地址为：%x\n&quot;</span>, *(<span class="hljs-keyword">int</span>*)&amp;sub);<br><br>	pFunction pFn;<br><br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">6</span>; i++)<br>	&#123;<br>		<span class="hljs-keyword">int</span> temp = *((<span class="hljs-keyword">int</span>*)(*(<span class="hljs-keyword">int</span>*)&amp;sub) + i);<br>		<span class="hljs-keyword">if</span> (temp == <span class="hljs-number">0</span>)<br>		&#123;<br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br>		pFn = (pFunction)temp;<br>		pFn();<br>	&#125;<br><br>	<span class="hljs-comment">//对象的第二个四字节是Base2的虚表						</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub 的虚函数表地址为：%x\n&quot;</span>, *(<span class="hljs-keyword">int</span>*)((<span class="hljs-keyword">int</span>)&amp;sub + <span class="hljs-number">4</span>));<br><br>	pFunction pFn1;<br><br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> k = <span class="hljs-number">0</span>; k &lt; <span class="hljs-number">2</span>; k++)<br>	&#123;<br>		<span class="hljs-keyword">int</span> temp = *((<span class="hljs-keyword">int</span>*)(*(<span class="hljs-keyword">int</span>*)((<span class="hljs-keyword">int</span>)&amp;sub + <span class="hljs-number">4</span>)) + k);<br>		pFn1 = (pFunction)temp;<br>		pFn1();<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Sub对象</th>
+<th>0x123245</th>
+<th>—&gt;</th>
+<th>Sub:Fn_1</th>
+<th>Base1:Fn_2</th>
+<th>Sub:Fn_5</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td>0x345678</td>
+<td>—&gt;</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td>Sub:Fn_3</td>
+<td>Base2:Fn_4</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>其他成员</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>此时Sub对象的大小为8字节</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="情形2"><a href="#情形2" class="headerlink" title="情形2"></a>情形2</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base1</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base1:Fn_1...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_2</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base1:Fn_2...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base2</span> :</span>Base1<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_3</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base2:Fn_3...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_4</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base2:Fn_4...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Sub</span> :</span>Base2<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_5</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Fn_5...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_6</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Fn_6...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-comment">//查看 Sub 的虚函数表					</span><br>	Sub sub;<br><br>	<span class="hljs-comment">//观察大小：虚函数表只有一个					</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%x\n&quot;</span>, <span class="hljs-keyword">sizeof</span>(sub));<br><br>	<span class="hljs-comment">//通过函数指针调用函数，验证正确性					</span><br>	<span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">void</span><span class="hljs-params">(*pFunction)</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;<br><br><br>	<span class="hljs-comment">//对象的前四个字节是就是虚函数表					</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub 的虚函数表地址为：%x\n&quot;</span>, *(<span class="hljs-keyword">int</span>*)&amp;sub);<br><br>	pFunction pFn;<br><br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">6</span>; i++)<br>	&#123;<br>		<span class="hljs-keyword">int</span> temp = *((<span class="hljs-keyword">int</span>*)(*(<span class="hljs-keyword">int</span>*)&amp;sub) + i);<br>		<span class="hljs-keyword">if</span> (temp == <span class="hljs-number">0</span>)<br>		&#123;<br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br>		pFn = (pFunction)temp;<br>		pFn();<br>	&#125;<br><br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th>虚函数表</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>Sub对象</td>
+<td>0x123245</td>
+<td>—&gt;</td>
+<td>0x123456</td>
+<td></td>
+<td>Base1:Fn_1()</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td>0x123457</td>
+<td></td>
+<td>Base1:Fn_2()</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td>0x135466</td>
+<td></td>
+<td>Base2:Fn_3()</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td>0x135466</td>
+<td></td>
+<td>Base2:Fn_4()</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td>0x135466</td>
+<td></td>
+<td>Sub:Fn_5()</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>其他成员</td>
+<td></td>
+<td>0x135466</td>
+<td></td>
+<td>Sub:Fn_6()</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>00000000</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="情形3"><a href="#情形3" class="headerlink" title="情形3"></a>情形3</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base1</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base1:Fn_1...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_2</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base1:Fn_2...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base2</span> :</span>Base1<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base2:Fn_1...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_3</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base2:Fn_3...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Sub</span> :</span>Base2<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_5</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Fn_5...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-comment">//查看 Sub 的虚函数表					</span><br>	Sub sub;<br><br>	<span class="hljs-comment">//观察大小：虚函数表只有一个					</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%x\n&quot;</span>, <span class="hljs-keyword">sizeof</span>(sub));<br><br>	<span class="hljs-comment">//通过函数指针调用函数，验证正确性					</span><br>	<span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">void</span><span class="hljs-params">(*pFunction)</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;<br><br><br>	<span class="hljs-comment">//对象的前四个字节是就是虚函数表					</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub 的虚函数表地址为：%x\n&quot;</span>, *(<span class="hljs-keyword">int</span>*)&amp;sub);<br><br>	pFunction pFn;<br><br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">6</span>; i++)<br>	&#123;<br>		<span class="hljs-keyword">int</span> temp = *((<span class="hljs-keyword">int</span>*)(*(<span class="hljs-keyword">int</span>*)&amp;sub) + i);<br>		<span class="hljs-keyword">if</span> (temp == <span class="hljs-number">0</span>)<br>		&#123;<br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br>		pFn = (pFunction)temp;<br>		pFn();<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th>虚函数表</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>Sub对象</td>
+<td>0x123245</td>
+<td>—&gt;</td>
+<td>Base2:Fn_1</td>
+<td>Base1:Fn_2</td>
+<td>Base2:Fn_3</td>
+<td>Sub:Fn_5</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>其他成员</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="情形4"><a href="#情形4" class="headerlink" title="情形4"></a>情形4</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base1</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base1:Fn_1...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_2</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base1:Fn_2...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base2</span> :</span>Base1<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base2:Fn_1...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_3</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base2:Fn_3...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Sub</span> :</span>Base2<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Fn_1...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_5</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Fn_5...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-comment">//查看 Sub 的虚函数表					</span><br>	Sub sub;<br><br>	<span class="hljs-comment">//观察大小：虚函数表只有一个					</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%x\n&quot;</span>, <span class="hljs-keyword">sizeof</span>(sub));<br><br>	<span class="hljs-comment">//通过函数指针调用函数，验证正确性					</span><br>	<span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">void</span><span class="hljs-params">(*pFunction)</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;<br><br><br>	<span class="hljs-comment">//对象的前四个字节是就是虚函数表					</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub 的虚函数表地址为：%x\n&quot;</span>, *(<span class="hljs-keyword">int</span>*)&amp;sub);<br><br>	pFunction pFn;<br><br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">6</span>; i++)<br>	&#123;<br>		<span class="hljs-keyword">int</span> temp = *((<span class="hljs-keyword">int</span>*)(*(<span class="hljs-keyword">int</span>*)&amp;sub) + i);<br>		<span class="hljs-keyword">if</span> (temp == <span class="hljs-number">0</span>)<br>		&#123;<br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br>		pFn = (pFunction)temp;<br>		pFn();<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th>虚函数表</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>Sub对象</td>
+<td>0x123245</td>
+<td>—&gt;</td>
+<td>Sub:Fn_1</td>
+<td>Base1:Fn_2</td>
+<td>Base2:Fn_3</td>
+<td>Sub:Fn_5</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>其他成员</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h3 id="情形5"><a href="#情形5" class="headerlink" title="情形5"></a>情形5</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base1</span></span><br><span class="hljs-class">&#123;</span><br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base1:Fn_1...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_2</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base1:Fn_2...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Base2</span> :</span>Base1<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_3</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Base2:Fn_3...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Sub</span> :</span>Base2<br>&#123;<br><span class="hljs-keyword">public</span>:<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_1</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Fn_1...\n&quot;</span>);<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-keyword">virtual</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Fn_3</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub:Fn_3...\n&quot;</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-comment">//查看 Sub 的虚函数表					</span><br>	Sub sub;<br><br>	<span class="hljs-comment">//观察大小：虚函数表只有一个					</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%x\n&quot;</span>, <span class="hljs-keyword">sizeof</span>(sub));<br><br>	<span class="hljs-comment">//通过函数指针调用函数，验证正确性					</span><br>	<span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">void</span><span class="hljs-params">(*pFunction)</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span>;<br><br><br>	<span class="hljs-comment">//对象的前四个字节是就是虚函数表					</span><br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Sub 的虚函数表地址为：%x\n&quot;</span>, *(<span class="hljs-keyword">int</span>*)&amp;sub);<br><br>	pFunction pFn;<br><br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">6</span>; i++)<br>	&#123;<br>		<span class="hljs-keyword">int</span> temp = *((<span class="hljs-keyword">int</span>*)(*(<span class="hljs-keyword">int</span>*)&amp;sub) + i);<br>		<span class="hljs-keyword">if</span> (temp == <span class="hljs-number">0</span>)<br>		&#123;<br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br>		pFn = (pFunction)temp;<br>		pFn();<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>虚函数表</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>Sub对象</td>
+<td>0x123245</td>
+<td>—&gt;</td>
+<td>Sub:Fn_1</td>
+<td>Base1:Fn_2</td>
+<td>Sub:Fn_3</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>..</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td>其他成员</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>主要是第一个情形要分清楚</p>
+<p>其他几个都差不多</p>
+<h1 id="STL"><a href="#STL" class="headerlink" title="STL"></a>STL</h1><p>Standard Template Library 标准模板库</p>
+<p>前面讲的这些都是基础中的基础了，如果面试官往难了问一般问stl或者智能指针，但是一般不会问这些因为不是搞开发。。。</p>
+<h2 id="智能指针"><a href="#智能指针" class="headerlink" title="智能指针"></a>智能指针</h2><p>unique_ptr  拥有独有对象所有权语义的智能指针</p>
+<p>shared_ptr  拥有共享对象所有权语义的智能指针</p>
+<p>weak_ptr    到 std::shared_ptr 所管理对象的弱引用</p>
+<h3 id="unique-ptr-amp-amp-shared-ptr"><a href="#unique-ptr-amp-amp-shared-ptr" class="headerlink" title="unique_ptr &amp;&amp; shared_ptr"></a>unique_ptr &amp;&amp; shared_ptr</h3><p>unique_ptr和shared_ptr是俩个主要的智能指针</p>
+<p>unique_ptr是通过指针占有并管理另一对象，并在 unique_ptr 离开作用域时释放该对象的智能指针。在下列两者之一发生时用关联的删除器释放对象</p>
+<ul>
+<li>销毁了管理的 unique_ptr 对象</li>
+<li>通过 operator= 或 reset() 赋值另一指针给管理的 unique_ptr 对象。</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;memory&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">person</span></span><br><span class="hljs-class">&#123;</span><br>	~person()<br>	&#123;<br>		<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;~person\n&quot;</span>;<br>	&#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">//独占式的指针对象，在任何时间、资源只能被一个指针占有，当unique_ptr离开作用域，指针所包含的内容会被释放。</span><br>	<span class="hljs-function"><span class="hljs-built_in">unique_ptr</span>&lt;person&gt; <span class="hljs-title">pointer</span><span class="hljs-params">(<span class="hljs-keyword">new</span> person)</span></span>;<br>	<span class="hljs-comment">//person *a = new person;</span><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>unique_ptr在离开作用域时会自动帮你释放内存而不需要手动delete，所以叫“智能”。</p>
+<p>有个特点就是对象只能被一个指针占有,代码如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;memory&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">person</span></span><br><span class="hljs-class">&#123;</span><br>	~person()<br>	&#123;<br>		<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;~person\n&quot;</span>;<br>	&#125;<br>	<span class="hljs-built_in">string</span> str;<br>&#125;;<br><span class="hljs-function"><span class="hljs-built_in">unique_ptr</span>&lt;person&gt; <span class="hljs-title">test</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">return</span> <span class="hljs-built_in">unique_ptr</span>&lt;person&gt;(<span class="hljs-keyword">new</span> person);<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">unique_ptr</span>&lt;person&gt; pointer = test();<br>	pointer-&gt;str = <span class="hljs-string">&quot;hello&quot;</span>;<br>	<span class="hljs-built_in">unique_ptr</span>&lt;person&gt; p2 = move(pointer);<br>	<span class="hljs-keyword">if</span> (!pointer)<br>	&#123;<br>		<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;pointer为空\n&quot;</span>;<br>	&#125;<br>	<span class="hljs-keyword">if</span> (p2)<br>	&#123;<br>		<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;p2不为空\n&quot;</span>;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><img src="image-20201004194754698.png" srcset="/img/loading.gif" lazyload alt="image-20201004194754698"></p>
+<p>反编译康康</p>
+<p>有c++逆向内味了</p>
+<p><img src="image-20201004194936044.png" srcset="/img/loading.gif" lazyload alt="image-20201004194936044"></p>
+<p>随便一个函数就占了近100行</p>
+<p>再看看shared_ptr </p>
+<p>如果理解了上面的，理解这个很容易，多了个方法就是查看引用计数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;memory&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-function"><span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">sp</span><span class="hljs-params">(<span class="hljs-keyword">new</span> <span class="hljs-built_in">string</span>(<span class="hljs-string">&quot;hello&quot;</span>))</span></span>;<br>	<span class="hljs-built_in">cout</span> &lt;&lt; sp.use_count() &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;<br>	<span class="hljs-built_in">cout</span> &lt;&lt; *sp &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;<br>	<span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-built_in">string</span>&gt; sp1 = sp;<br>	<span class="hljs-built_in">cout</span> &lt;&lt; sp.use_count() &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>下面就要讲下智能指针的问题了</p>
+<h3 id="安全隐患"><a href="#安全隐患" class="headerlink" title="安全隐患"></a>安全隐患</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;memory&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">person</span></span><br><span class="hljs-class">&#123;</span><br>	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">show</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;person\n&quot;</span>;<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-built_in">shared_ptr</span>&lt;person&gt; <span class="hljs-title">getshared</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-built_in">shared_ptr</span>&lt;person&gt;(<span class="hljs-keyword">this</span>);<br>	&#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-function"><span class="hljs-built_in">shared_ptr</span>&lt;person&gt; <span class="hljs-title">ptr</span><span class="hljs-params">(<span class="hljs-keyword">new</span> person)</span></span>;<br>	<span class="hljs-built_in">shared_ptr</span>&lt;person&gt; ptr2 = ptr-&gt;getshared();<br>	<span class="hljs-built_in">cout</span> &lt;&lt; ptr.use_count() &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>打印出来的结果是1，所以当main函数结束后，ptr释放了，计数-1，此时ptr2还指向一个被释放的内存，这就出现了内存泄漏。</p>
+<p>想要解决问题的话得用另一个模板</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;memory&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">person</span></span><br><span class="hljs-class">:</span>enable_shared_from_this&lt;person&gt;&#123;<br>	<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">show</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-built_in">cout</span> &lt;&lt; <span class="hljs-string">&quot;person\n&quot;</span>;<br>	&#125;<br>	<span class="hljs-function"><span class="hljs-built_in">shared_ptr</span>&lt;person&gt; <span class="hljs-title">getshared</span><span class="hljs-params">()</span></span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-keyword">return</span> shared_from_this();<br>	&#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-function"><span class="hljs-built_in">shared_ptr</span>&lt;person&gt; <span class="hljs-title">ptr</span><span class="hljs-params">(<span class="hljs-keyword">new</span> person)</span></span>;<br>	<span class="hljs-built_in">shared_ptr</span>&lt;person&gt; ptr2 = ptr-&gt;getshared();<br>	<span class="hljs-built_in">cout</span> &lt;&lt; ptr.use_count() &lt;&lt; <span class="hljs-string">&quot;\n&quot;</span>;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>当然问题不止这个</p>
+<p>比如用裸指针创建时</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">( )</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-comment">// 错误</span><br> <span class="hljs-keyword">int</span>* p = <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span>;<br> <span class="hljs-function"><span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">sptr1</span><span class="hljs-params">( p)</span></span>;   <span class="hljs-comment">// count 1</span><br> <span class="hljs-function"><span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">sptr2</span><span class="hljs-params">( p )</span></span>;  <span class="hljs-comment">// count 1</span><br><br><span class="hljs-comment">// 正确</span><br> <span class="hljs-function"><span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">sptr1</span><span class="hljs-params">( <span class="hljs-keyword">new</span> <span class="hljs-keyword">int</span> )</span></span>;  <span class="hljs-comment">// count 1</span><br> <span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt; sptr2 = sptr1;     <span class="hljs-comment">// count 2</span><br> <span class="hljs-built_in">shared_ptr</span>&lt;<span class="hljs-keyword">int</span>&gt; sptr3;           <br> sptr3 =sptr1                       <span class="hljs-comment">// count 3</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="STRING"><a href="#STRING" class="headerlink" title="STRING"></a>STRING</h2><p>内存布局前16个为字符空间，这是当字符长度小于16时，后面一个unsigned int表示目前字符串长度，在后面一个表示容量capacity</p>
+<p>当长度大于容量时会扩容</p>
+<p>当长度大于15时，内存布局开头会变成一个指针，指针指向处为字符串</p>
+<h2 id="VECTOR"><a href="#VECTOR" class="headerlink" title="VECTOR"></a>VECTOR</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;vector&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;iostream&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;memory&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;string&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-built_in">std</span>;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-function"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">test1</span><span class="hljs-params">()</span></span>;<br>	<span class="hljs-function"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">test2</span><span class="hljs-params">(<span class="hljs-number">5</span>)</span></span>;<br>	<span class="hljs-function"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">test3</span><span class="hljs-params">(<span class="hljs-number">5</span>,<span class="hljs-number">3</span>)</span></span>;<br>	<span class="hljs-function"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">test4</span><span class="hljs-params">(test3)</span></span>;<br>	<span class="hljs-function"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; <span class="hljs-title">test5</span><span class="hljs-params">(test4.begin(),test4.end())</span></span>;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-function"><span class="hljs-keyword">int</span> __cdecl <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> **argv, <span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> **envp)</span></span><br><span class="hljs-function"></span>&#123;<br>  <span class="hljs-keyword">int</span> v3; <span class="hljs-comment">// eax</span><br>  <span class="hljs-keyword">int</span> v4; <span class="hljs-comment">// eax</span><br>  <span class="hljs-keyword">int</span> v6; <span class="hljs-comment">// [esp-1Ch] [ebp-1B4h]</span><br>  <span class="hljs-keyword">int</span> v7; <span class="hljs-comment">// [esp-18h] [ebp-1B0h]</span><br>  <span class="hljs-keyword">int</span> v8; <span class="hljs-comment">// [esp-14h] [ebp-1ACh]</span><br>  <span class="hljs-keyword">char</span> v9; <span class="hljs-comment">// [esp-10h] [ebp-1A8h]</span><br>  <span class="hljs-keyword">int</span> v10; <span class="hljs-comment">// [esp-Ch] [ebp-1A4h]</span><br>  <span class="hljs-keyword">int</span> v11; <span class="hljs-comment">// [esp-8h] [ebp-1A0h]</span><br>  <span class="hljs-keyword">int</span> v12; <span class="hljs-comment">// [esp-4h] [ebp-19Ch]</span><br>  <span class="hljs-keyword">int</span> v13; <span class="hljs-comment">// [esp+0h] [ebp-198h]</span><br>  <span class="hljs-keyword">int</span> v14; <span class="hljs-comment">// [esp+4h] [ebp-194h]</span><br>  <span class="hljs-keyword">int</span> v15; <span class="hljs-comment">// [esp+10h] [ebp-188h]</span><br>  <span class="hljs-keyword">int</span> v16; <span class="hljs-comment">// [esp+18h] [ebp-180h]</span><br>  <span class="hljs-keyword">int</span> *v17; <span class="hljs-comment">// [esp+24h] [ebp-174h]</span><br>  <span class="hljs-keyword">char</span> *v18; <span class="hljs-comment">// [esp+30h] [ebp-168h]</span><br>  <span class="hljs-keyword">int</span> v19; <span class="hljs-comment">// [esp+48h] [ebp-150h]</span><br>  <span class="hljs-keyword">char</span> v20; <span class="hljs-comment">// [esp+15Ch] [ebp-3Ch]</span><br>  <span class="hljs-keyword">int</span> v21; <span class="hljs-comment">// [esp+194h] [ebp-4h]</span><br><br>  __CheckForDebuggerJustMyCode(&amp;unk_424033);<br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;::__autoclassinit2(<span class="hljs-number">0x10</span>u);<br>  v3 = <span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;::allocator&lt;<span class="hljs-keyword">int</span>&gt;(v13, v14);<br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;(<span class="hljs-number">5</span>, v3);<br>  v21 = <span class="hljs-number">0</span>;<br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;::__autoclassinit2(<span class="hljs-number">0x10</span>u);<br>  v19 = <span class="hljs-number">3</span>;<br>  v4 = <span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;::allocator&lt;<span class="hljs-keyword">int</span>&gt;(v13, v14);<br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;(<span class="hljs-number">5</span>, &amp;v19, v4);<br>  LOBYTE(v21) = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;::__autoclassinit2(<span class="hljs-number">0x10</span>u);<br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;(&amp;v20);<br>  LOBYTE(v21) = <span class="hljs-number">2</span>;<br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;::__autoclassinit2(<span class="hljs-number">0x10</span>u);<br>  v12 = <span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;::allocator&lt;<span class="hljs-keyword">int</span>&gt;(v13, v14);<br>  v18 = &amp;v9;<br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;::end(&amp;v9);<br>  v17 = &amp;v6;<br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;::begin(&amp;v6);<br>  v15 = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;(v6, v7, v8, v9, v10, v11, v12);<br>  v16 = <span class="hljs-number">0</span>;<br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;::~<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;(v13, v14);<br>  LOBYTE(v21) = <span class="hljs-number">1</span>;<br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;::~<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;(v13, v14);<br>  LOBYTE(v21) = <span class="hljs-number">0</span>;<br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;::~<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;(v13, v14);<br>  v21 = <span class="hljs-number">0xFFFFFFFF</span>;<br>  <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;::~<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>,<span class="hljs-built_in">std</span>::allocator&lt;<span class="hljs-keyword">int</span>&gt;&gt;(v13, v14);<br>  <span class="hljs-keyword">return</span> v16;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>配合源码看起来容易学<br>vector a的第一个字段是size 大小第二个字段是capacity 容量<br>和<code>std::string</code>差不多<br>当<code>size&gt;capacity</code>也就是空间不够用时<br>首先配置一块新空间，然后将元素从旧空间一一搬往新空间，再把旧空间归还给操作系统</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/re/">#re</a>
+      
+        <a href="/tags/ctf/">#ctf</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>关于c++</div>
+      <div>http://www.psbazx.com/2020/10/04/关于c/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>October 3, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/10/16/%E8%B0%83%E8%AF%95%E5%99%A8%E5%AD%A6%E4%B9%A0%E4%B8%8E%E7%BC%96%E5%86%99/" title="调试器学习与编写">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">调试器学习与编写</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/10/03/2020%E5%9B%BD%E8%B5%9B%E6%80%BB%E5%86%B3%E8%B5%9Bre/" title="2020国赛总决赛re">
+                        <span class="hidden-mobile">2020国赛总决赛re</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

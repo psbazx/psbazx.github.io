@@ -1,0 +1,651 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="驱动基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="windows驱动">
+<meta property="og:url" content="http://www.psbazx.com/2020/06/11/windows%E9%A9%B1%E5%8A%A8/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="驱动基础">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2020/06/11/windows%E9%A9%B1%E5%8A%A8/image-20200705145916994.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/06/11/windows%E9%A9%B1%E5%8A%A8/image-20200707153903687.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/06/11/windows%E9%A9%B1%E5%8A%A8/image-20200707153922061.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/06/11/windows%E9%A9%B1%E5%8A%A8/image-20200705151121257.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/06/11/windows%E9%A9%B1%E5%8A%A8/image-20200705151216292.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/06/11/windows%E9%A9%B1%E5%8A%A8/image-20200705150932187.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/06/11/windows%E9%A9%B1%E5%8A%A8/image-20200706134904077.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/06/11/windows%E9%A9%B1%E5%8A%A8/image-20200707154727646.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/06/11/windows%E9%A9%B1%E5%8A%A8/image-20200711201509953.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/06/11/windows%E9%A9%B1%E5%8A%A8/image-20200711235534638.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/06/11/windows%E9%A9%B1%E5%8A%A8/image-20200712002747826.png">
+<meta property="article:published_time" content="2020-06-10T17:21:28.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:18.188Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="ctf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2020/06/11/windows%E9%A9%B1%E5%8A%A8/image-20200705145916994.png">
+  
+  
+  
+  <title>windows驱动 - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="windows驱动"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-06-10 17:21" pubdate>
+          June 10, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.5k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">windows驱动</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>驱动基础</p>
+<a id="more"></a>
+
+<h1 id="驱动"><a href="#驱动" class="headerlink" title="驱动"></a>驱动</h1><h2 id="驱动环境"><a href="#驱动环境" class="headerlink" title="驱动环境"></a>驱动环境</h2><p>因为老早前就整过驱动了，环境重新搭了下。</p>
+<p>这边是win10专业版，虚拟机也是win10专业版</p>
+<p><img src="image-20200705145916994.png" srcset="/img/loading.gif" lazyload alt="image-20200705145916994"></p>
+<p><img src="image-20200707153903687.png" srcset="/img/loading.gif" lazyload alt="image-20200707153903687"></p>
+<p><img src="image-20200707153922061.png" srcset="/img/loading.gif" lazyload alt="image-20200707153922061"></p>
+<p>首先配置调试环境，这边按图设置一波就行</p>
+<p>然后是软件配置这边安利俩个工具DriverMonitor和Dbgview，记得用管理员权限打开</p>
+<p><img src="image-20200705151121257.png" srcset="/img/loading.gif" lazyload alt="image-20200705151121257"></p>
+<p>驱动代码如下</p>
+<p><img src="image-20200705151216292.png" srcset="/img/loading.gif" lazyload alt="image-20200705151216292"></p>
+<p>就成功了，如果报错签名问题的话重启电脑在启动设置那边禁用驱动签名</p>
+<p><img src="image-20200705150932187.png" srcset="/img/loading.gif" lazyload alt="image-20200705150932187"></p>
+<p>但是这是一次性的重启一次就不行了</p>
+<p>需要永久禁用驱动签名的话输入bcdedit -set {default} TESTSIGNING on来启动测试模式</p>
+<p><img src="image-20200706134904077.png" srcset="/img/loading.gif" lazyload alt="image-20200706134904077"></p>
+<p>再说说调试<br><img src="image-20200707154727646.png" srcset="/img/loading.gif" lazyload alt="image-20200707154727646"></p>
+<p>遇到符号路径问题输入</p>
+<p>! sym</p>
+<p>.reload</p>
+<p>即可</p>
+<h2 id="驱动模块知识"><a href="#驱动模块知识" class="headerlink" title="驱动模块知识"></a>驱动模块知识</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;ntddk.h&gt;</span></span><br><span class="hljs-function">VOID <span class="hljs-title">Unload</span><span class="hljs-params">(IN PDRIVER_OBJECT pDriverObject)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> STATUS_SUCCESS;<br>&#125;<br><br><span class="hljs-function">NTSTATUS <span class="hljs-title">DriverEntry</span><span class="hljs-params">(IN PDRIVER_OBJECT  pDriverObject, IN PUNICODE_STRING  RegistryPath)</span> </span>&#123;<br>    DbgPrint(<span class="hljs-string">&quot;%p,%wZ&quot;</span>, pDriverObject, RegistryPath);<br>    pDriverObject-&gt;DriverUnload = Unload;<br>    <span class="hljs-keyword">return</span> STATUS_SUCCESS;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>编译加载，dbgview查看</p>
+<p>FFFF870B6A6A8E30,\REGISTRY\MACHINE\SYSTEM\ControlSet001\Services\Kernel_learning</p>
+<p>windbg查看对应结构体_driver_object</p>
+<p><img src="image-20200711201509953.png" srcset="/img/loading.gif" lazyload alt="image-20200711201509953"></p>
+<p>可以看到我们加载驱动的许多信息</p>
+<p>再看看ldr，这个和三环peb的很像，在三环隐藏进程需要断链断三个，0环order和init不使用，所以只有第一个加载顺序，把所有内核模块都存在一个链表里,我们可以通过这个遍历所有内核模块</p>
+<p><img src="image-20200711235534638.png" srcset="/img/loading.gif" lazyload alt="image-20200711235534638"></p>
+<p>可以看到内核文件还有硬件抽象层dll</p>
+<p>接下去尝试一波写代码遍历所有内核模块，成果如下</p>
+<p><img src="image-20200712002747826.png" srcset="/img/loading.gif" lazyload alt="image-20200712002747826"></p>
+<p>代码如下(把驱动名改成模块名更准确些，但就不钻牛角尖了)</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;ntddk.h&gt;</span></span><br><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">LDR_DATA_TABLE_ENTRY</span> &#123;</span><br>	LIST_ENTRY InLoadOrderLinks;<br>	LIST_ENTRY InMemoryOrderLinks;<br>	LIST_ENTRY InInitializationOrderLinks;<br>	PVOID DllBase;<br>	PVOID EntryPoint;<br>	ULONG SizeOfImage;<br>	UNICODE_STRING FullDllName;<br>	UNICODE_STRING BaseDllName;<br>	ULONG Flags;<br>	USHORT LoadCount;<br>	USHORT TlsIndex;<br>	<span class="hljs-class"><span class="hljs-keyword">union</span> &#123;</span><br>		LIST_ENTRY HashLinks;<br>		<span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>			PVOID SectionPointer;<br>			ULONG CheckSum;<br>		&#125;;<br>	&#125;;<br>	<span class="hljs-class"><span class="hljs-keyword">union</span> &#123;</span><br>		<span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>			ULONG TimeDateStamp;<br>		&#125;;<br>		<span class="hljs-class"><span class="hljs-keyword">struct</span> &#123;</span><br>			PVOID LoadedImports;<br>		&#125;;<br>	&#125;;<br>&#125; LDR_DATA_TABLE_ENTRY, * PLDR_DATA_TABLE_ENTRY;<br><br><span class="hljs-function">VOID <span class="hljs-title">Unload</span><span class="hljs-params">(IN PDRIVER_OBJECT pDriverObject)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">return</span> STATUS_SUCCESS;<br>&#125;<br><br><span class="hljs-function">NTSTATUS <span class="hljs-title">DriverEntry</span><span class="hljs-params">(IN PDRIVER_OBJECT  pDriverObject, IN PUNICODE_STRING  RegistryPath)</span> </span>&#123;<br>	LDR_DATA_TABLE_ENTRY* fuck1, * fuck2;<br>	fuck1 = (LDR_DATA_TABLE_ENTRY*)pDriverObject-&gt;DriverSection;<br>	<span class="hljs-comment">//DbgPrint(&quot;驱动名%wZ\n&quot;, &amp;fuck1-&gt;FullDllName);</span><br>	PLIST_ENTRY fuck3;<br>	fuck3 = fuck1-&gt;InLoadOrderLinks.Flink;	<br>	<span class="hljs-keyword">while</span> (TRUE)<br>	&#123;<br>		fuck2 = (LDR_DATA_TABLE_ENTRY*)fuck3;<br>		DbgPrint(<span class="hljs-string">&quot;驱动名%wZ\n&quot;</span>, &amp;fuck2-&gt;FullDllName);<br>		fuck3 = fuck3-&gt;Flink;<br>		<span class="hljs-keyword">if</span> (fuck3 == &amp;fuck1-&gt;InLoadOrderLinks)<br>		&#123;<br>			fuck2 = (LDR_DATA_TABLE_ENTRY*)fuck3;<br>			DbgPrint(<span class="hljs-string">&quot;驱动名%wZ\n&quot;</span>, &amp;fuck2-&gt;FullDllName);<br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br>	&#125;<br><br>    pDriverObject-&gt;DriverUnload = Unload;<br>    <span class="hljs-keyword">return</span> STATUS_SUCCESS;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>当然与三环相对应也能进行模块隐藏，三环只需要断链三个链表，0环除了做这个还有一个二叉平衡树需要操作</p>
+<p>再来一波常规的驱动编程，其实驱动编程很win32控件很像，在win32控件中消息循环对不同消息做不同处理，而在内核中则是一个新的封装的结构体叫做IRP，在消息循环中消息对应窗口对象而在内核中则是设备对象。如果熟悉win32消息处理机制的话学起来其实特别轻松</p>
+<p>基本编程思路是</p>
+<p>1.创建设备对象</p>
+<p>2.规定通信方式</p>
+<p>3.注册符号链接</p>
+<p>4.注册irp处理函数</p>
+<p>5.编写irp处理函数</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/re/">#re</a>
+      
+        <a href="/tags/ctf/">#ctf</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>windows驱动</div>
+      <div>http://www.psbazx.com/2020/06/11/windows驱动/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>June 10, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/" title="进程线程">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">进程线程</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/05/11/%E7%AE%80%E5%8D%95%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8A%A0%E5%AF%86%E5%A3%B3/" title="简单的二进制加密壳">
+                        <span class="hidden-mobile">简单的二进制加密壳</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

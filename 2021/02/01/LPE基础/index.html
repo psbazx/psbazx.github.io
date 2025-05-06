@@ -1,0 +1,679 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="国内资料太少只能摁磕英文，好在英语底子还在。 和symbolic link相关的技术在不久后windows会上通用补丁，基本可以无视了 大部分资料都是来自国外Google project zero的James Forshaw，包括工具。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LPE基础">
+<meta property="og:url" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="国内资料太少只能摁磕英文，好在英语底子还在。 和symbolic link相关的技术在不久后windows会上通用补丁，基本可以无视了 大部分资料都是来自国外Google project zero的James Forshaw，包括工具。">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210112191658472.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210112192551052.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210112193014416.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210112201750789.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210112213801439.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210112214036075.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210112220242108.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210131220515454.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210131220620637.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210131223834400.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210131224323160.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210131224452135.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210131230751209.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210131230856259.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210131231041991.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210131231056493.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210131235954558.png">
+<meta property="og:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210201000002494.png">
+<meta property="article:published_time" content="2021-02-01T00:17:49.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:17.652Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="windows">
+<meta property="article:tag" content="lpe">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2021/02/01/LPE%E5%9F%BA%E7%A1%80/image-20210112191658472.png">
+  
+  
+  
+  <title>LPE基础 - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="LPE基础"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2021-02-01 00:17" pubdate>
+          February 1, 2021 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.8k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          15 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">LPE基础</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>国内资料太少只能摁磕英文，好在英语底子还在。</p>
+<p>和symbolic link相关的技术在不久后windows会上通用补丁，基本可以无视了</p>
+<p>大部分资料都是来自国外Google project zero的James Forshaw，包括工具。</p>
+<a id="more"></a>
+
+<h1 id="Introduction-to-Logical-Privilege-Escalation-on-Windows"><a href="#Introduction-to-Logical-Privilege-Escalation-on-Windows" class="headerlink" title="Introduction.to.Logical.Privilege.Escalation.on.Windows"></a>Introduction.to.Logical.Privilege.Escalation.on.Windows</h1><h2 id="Path-Canonicalization"><a href="#Path-Canonicalization" class="headerlink" title="Path Canonicalization"></a>Path Canonicalization</h2><p><img src="image-20210112191658472.png" srcset="/img/loading.gif" lazyload alt="image-20210112191658472"></p>
+<p>这种看似只能load C:\Windows\ 目录下的dll，但是可以通过”..”绕过来回退到上级目录</p>
+<h2 id="Insecure-Path-Usage"><a href="#Insecure-Path-Usage" class="headerlink" title="Insecure Path Usage"></a>Insecure Path Usage</h2><p><img src="image-20210112192551052.png" srcset="/img/loading.gif" lazyload alt="image-20210112192551052"></p>
+<p>这种就是加了check的情况</p>
+<p>可以通过ads附加数据流</p>
+<p>ads实例可以参考CVE-2020-12431</p>
+<p>可以把它当作一个文件，为一个文件或者文件夹添加ads，然后loadlib直接load我们写入的这个ads即可</p>
+<p><img src="image-20210112193014416.png" srcset="/img/loading.gif" lazyload alt="image-20210112193014416"></p>
+<p>教材ppt写的很明确</p>
+<h2 id="TOCTOU"><a href="#TOCTOU" class="headerlink" title="TOCTOU"></a>TOCTOU</h2><h3 id="TOCTOU-on-Name"><a href="#TOCTOU-on-Name" class="headerlink" title="TOCTOU on Name"></a>TOCTOU on Name</h3><p><img src="image-20210112201750789.png" srcset="/img/loading.gif" lazyload alt="image-20210112201750789"></p>
+<p>这个主要是利用了LoadLibrary函数的特性会添加扩展名</p>
+<p>当然也可以通过条件竞争来打</p>
+<p><img src="image-20210112213801439.png" srcset="/img/loading.gif" lazyload alt="image-20210112213801439"></p>
+<p>还有一种TOCTOU也是最常见的就是利用oplock和symbolic link</p>
+<h3 id="Symbolic-Link-TOCTOU"><a href="#Symbolic-Link-TOCTOU" class="headerlink" title="Symbolic Link TOCTOU"></a>Symbolic Link TOCTOU</h3><p><img src="image-20210112214036075.png" srcset="/img/loading.gif" lazyload alt="image-20210112214036075"></p>
+<p>可以看到check了扩展名</p>
+<p>oplock主要是为了增加条件竞争的成功概率</p>
+<p>具体方法是创建软连接然后设置oplock，oplock触发后移除软连接并创建相同文件夹然后拷贝我们的dll进去即可</p>
+<h2 id="DosDevices-Redirect"><a href="#DosDevices-Redirect" class="headerlink" title="DosDevices Redirect"></a>DosDevices Redirect</h2><p><img src="image-20210112220242108.png" srcset="/img/loading.gif" lazyload alt="image-20210112220242108"></p>
+<p>在学习的时候也掌握了大部分漏洞挖掘技巧</p>
+<p>寻找攻击面-&gt;写脚本搜索-&gt;写exp</p>
+<h2 id="HARD-LINK"><a href="#HARD-LINK" class="headerlink" title="HARD LINK"></a>HARD LINK</h2><p>CVE-2018-8440</p>
+<p>SchRpcSetSecurity函数在win10中会检测C:\Windows\Tasks目录下是否存在后缀为.job的文件，如果存在则会写入DACL(Discretionary Access Control List,自主访问控制列表)数据。如果将job文件硬链接到特定的dll那么特定的dll就会被写入DACL数据，本来普通用户对特定的dll只具有读权限，这样就具有了写权限，接下来向dll写入漏洞利用代码并启动相应的程序就可以提权了</p>
+<p>CVE-2018-0983 原理与其类似</p>
+<h1 id="SANBOX"><a href="#SANBOX" class="headerlink" title="SANBOX"></a>SANBOX</h1><p>这边学习资料来自Nullcon</p>
+<p><em>James Forshaw</em>的俩个slides</p>
+<h2 id="The-Windows-Sandbox-Paradox"><a href="#The-Windows-Sandbox-Paradox" class="headerlink" title="The Windows Sandbox Paradox"></a>The Windows Sandbox Paradox</h2><p>这个是2015年的，当时win10还没出来着，但是原理还是很接近的，2019和这个差不多，重点讲了symbolic link但是要没了，为了方便直接放一起写了</p>
+<p>Sandboxing Requirement</p>
+<p>Easy to get in, hard to get out</p>
+<p>Protects the user’s data from disclosure</p>
+<p>Work within the limits of the OS</p>
+<p>Sandboxed application is usable</p>
+<p>​    Limited Performance Impact</p>
+<p>基本上广义的sandbox就是指权限较低的，被限制了某些权限的进程，需要一些资源的时候就通过具有权限的broker process来获取，以前还以为是win10上那个像虚拟机的</p>
+<p><img src="image-20210131220515454.png" srcset="/img/loading.gif" lazyload alt="image-20210131220515454"></p>
+<p>完整性级别一般是low，但是win10有新的ie sanbox是appcontainer</p>
+<p><img src="image-20210131220620637.png" srcset="/img/loading.gif" lazyload alt="image-20210131220620637"></p>
+<p>上图是一般的access check，先是强制完整性校验，假如你完整性比访问程序低，你不能获取写权限</p>
+<p>接着是owner check，这个是用来防止有人在acl中限制了owner，然后owner就不能访问自己的文件。</p>
+<p>最后就是dacl check</p>
+<p>但是遇到sandbox时就多加一轮</p>
+<p><img src="image-20210131223834400.png" srcset="/img/loading.gif" lazyload alt="image-20210131223834400"></p>
+<p>微软提供了函数来让你创建一个低权限的进程，创建时会发现crash，因为进程初始化会调用一些函数来load dll，而进程没有权限</p>
+<p><img src="image-20210131224323160.png" srcset="/img/loading.gif" lazyload alt="image-20210131224323160"></p>
+<p><img src="image-20210131224452135.png" srcset="/img/loading.gif" lazyload alt="image-20210131224452135"></p>
+<p>接下来就是讲攻击面</p>
+<p>讲到symbolic的不介绍了。。。毕竟快没了</p>
+<p><img src="image-20210131230751209.png" srcset="/img/loading.gif" lazyload alt="image-20210131230751209"></p>
+<p>路径规范化问题可以看前面有过介绍</p>
+<p><img src="image-20210131230856259.png" srcset="/img/loading.gif" lazyload alt="image-20210131230856259"></p>
+<p>ads也是</p>
+<p><img src="image-20210131231041991.png" srcset="/img/loading.gif" lazyload alt="image-20210131231041991"></p>
+<p><img src="image-20210131231056493.png" srcset="/img/loading.gif" lazyload alt="image-20210131231056493"></p>
+<p>假如申请Sharing Sections没有命名，sanbox process可以获得写权限</p>
+<p>（可以看到申请的是writable，DuplicateHandle给了sanbox process 一个RO的memory）</p>
+<p>这个是在chrome里发现的问题</p>
+<p>具体就是因为没有命名导致没有安全描述符可以重新调用DuplicateHandle来获得一个可写的内存</p>
+<p><img src="image-20210131235954558.png" srcset="/img/loading.gif" lazyload alt="image-20210131235954558"></p>
+<p><img src="image-20210201000002494.png" srcset="/img/loading.gif" lazyload alt="image-20210201000002494"></p>
+<p>如上图所示</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/windows/">#windows</a>
+      
+        <a href="/tags/lpe/">#lpe</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>LPE基础</div>
+      <div>http://www.psbazx.com/2021/02/01/LPE基础/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>February 1, 2021</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021/02/01/COM/" title="COM">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">COM</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/12/16/%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98%E4%B9%8B%E6%97%85/" title="漏洞挖掘之旅">
+                        <span class="hidden-mobile">漏洞挖掘之旅</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

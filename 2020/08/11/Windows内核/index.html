@@ -1,0 +1,688 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="暂未完结~还在更新中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows内核">
+<meta property="og:url" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="暂未完结~还在更新中">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200805172733850.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200806145948705.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200806150757137.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200811223215032.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200811223349565.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200813234919654.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200813234945624.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200814181939008.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200814182017671.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200814182152731.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200814183539461.png">
+<meta property="article:published_time" content="2020-08-10T17:51:56.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:17.760Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="ctf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2020/08/11/Windows%E5%86%85%E6%A0%B8/image-20200805172733850.png">
+  
+  
+  
+  <title>Windows内核 - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Windows内核"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-08-10 17:51" pubdate>
+          August 10, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.3k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          36 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Windows内核</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>暂未完结~还在更新中</p>
+<a id="more"></a>
+
+<h1 id="Windows内核"><a href="#Windows内核" class="headerlink" title="Windows内核"></a>Windows内核</h1><h2 id="windows内核中的关键组件"><a href="#windows内核中的关键组件" class="headerlink" title="windows内核中的关键组件"></a>windows内核中的关键组件</h2><h3 id="HAL-硬件抽象层"><a href="#HAL-硬件抽象层" class="headerlink" title="HAL(硬件抽象层)"></a>HAL(硬件抽象层)</h3><p>顾名思义，硬件抽象层主要目的是为了给上层程序提供一个抽象的环境而不需要与硬件直接打交道</p>
+<p>通过hal层访问硬件即可不需要考虑硬件之间的差异，而硬件厂商仅需要提供一个hal</p>
+<h3 id="内核-微内核"><a href="#内核-微内核" class="headerlink" title="内核(微内核)"></a>内核(微内核)</h3><p>微内核即是内核模块ntosknrl.exe中的下层部分，主要负责线程调度和中断，异常处理。对于多处理器还负责同步处理器之间的行为和优化系统性能。</p>
+<p>简而言之内核的功能就是让系统中的所有处理器尽可能高效运行。</p>
+<p>如线程切换，windows线程切换可见之前文章以x86为例寻找调度链表根据优先级进行线程切换</p>
+<h3 id="执行体"><a href="#执行体" class="headerlink" title="执行体"></a>执行体</h3><p>执行体包含五种类型函数</p>
+<p>1.导出的函数，就是一些api，接口在ntdll中通过调用api来执行这些函数</p>
+<p>2.导出且可在用户态使用，但不能通过api调用的函数，如各种查询函数</p>
+<p>3.只能在内核模式下用的函数，在windows ddk中有这些函数的相关文档只需声明下就可用，见ssdt hook代码</p>
+<p>4.为执行体组件中相互调用没有文档化函数</p>
+<p>5.属于某个组件的内部函数</p>
+<p>这边的组件都是执行体内部的组件</p>
+<h3 id="设备驱动程序"><a href="#设备驱动程序" class="headerlink" title="设备驱动程序"></a>设备驱动程序</h3><p>windows内核中除了内核模块ntosknrl.exe和HAL外基本都是设备驱动程序，驱动对我而言就像3环的dll，就是个模块，一个一个贴近虚拟内存中，可以和设备相关也可以完全无关，所有驱动格式都是PE文件格式，至于PE文件格式就不多介绍了，看之前的文章</p>
+<h3 id="系统线程和系统进程"><a href="#系统线程和系统进程" class="headerlink" title="系统线程和系统进程"></a>系统线程和系统进程</h3><p>1.Idle，系统空闲进程，这个之前有提到过，在线程切换拿块，如果调度链表中没有线程那么cpu就会执行idle thread来让cpu空转</p>
+<p>2.system进程，包含内核模式系统线程</p>
+<p>3.会话管理器(smss.exe)，为第一个创建的用户模式进程</p>
+<p>4.登录进程(winlogon.exe)负责处理交互用户的登录和注销</p>
+<p>5.windows子系统进程(csrss.exe)，负责为用户提供子系统环境，包括控制台窗口功能以及创建和删除进程线程</p>
+<p>6.本地安全权威子系统进程(lsass.exe)，负责本地系统安全策略</p>
+<p>7.shell进程(explorer.exe)，windows默认shell，提供系统与用户交互的各种界面</p>
+<p>8.服务控制管理器(services.exe)负责管理windows系统服务，如事件日志，任务调度器和各种网络组件</p>
+<h2 id="Windows内核的基本概念"><a href="#Windows内核的基本概念" class="headerlink" title="Windows内核的基本概念"></a>Windows内核的基本概念</h2><h3 id="处理器模式"><a href="#处理器模式" class="headerlink" title="处理器模式"></a>处理器模式</h3><p>之前在保护模式中讲过这个，段选择子低俩位表示当时所处的特权级，windows只是用了0和3俩个特权级也就是内核和用户俩个模式下，有许多指令只能在0环下才能使用如操作GDT IDT MSR寄存器的指令，当处于3环时，它处于一种相对隔离的状态，能够执行的指令和访问的内存都受限制。一旦超过限制就会触发异常，操作系统捕获异常并进行处理决定是否继续执行，所以操作系统可以保护自己免受用户态代码影响，但是当cpu处于内核态时这种保护就不存在了，一旦捕捉到异常或者指令错误都会系统崩溃(蓝屏)</p>
+<p>同时在不同模式下能访问的地址空间也不一样，三环只能访问当前进程的用户态空间，内核模式中就能访问所有地址空间，而且内核模式下的代码和数据共享，所有进程一旦指令流进入内核，系统地址空间中的代码和数据都是相同的(有个别例外)</p>
+<p>再说一下切换模式的情况</p>
+<p>1.用户态代码触发异常</p>
+<p>2.用户态代码执行时被中断打断(软中断或硬中断)</p>
+<p>3.执行特殊的模式切换指令如快速调用</p>
+<h3 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h3><p>简单来说就是段页机制，然而windows并没有段式内存管理方案只是简单将32位虚拟内存空间按照0-4gb的线性地址的空间来看待</p>
+<p>0-2gb是进程私有，2-4gb是系统地址空间是所有进程共享，当然存在某些数据库程序希望私有空间大，就利用了windows的/3gb引导选项这样系统空间就只占用1gb</p>
+<p>再讲讲页</p>
+<p>再系统地址控件重不同区域使用并不完全相同的内存页面管理方法，比较典型的有</p>
+<p>1.非换页内存池，这部分内存区域在初始化时就被映射到物理页面</p>
+<p>2.换页内存池，空闲页面并没有被映射到物理页</p>
+<p>3.系统PTE区域，并非存放PTE而是表示这部分地址范围是以PTE形式来管理的</p>
+<p>进程地址空间是随进程一起被创建的，每个进程都有自己的页目录表(cr3寄存器)，其中一半是共享的，即系统地址空间，其余初始化为0，进程地址空间按照其虚拟地址是否被分配或保留来进行管理，用windows api函数像virtualalloc或virtualfree来申请或释放地址范围，而在内核中有个VAD树来表示进程那2gb内存的使用情况，vad也就是虚拟地址描述符，是一个平衡二叉搜索树。</p>
+<h3 id="进程和线程管理"><a href="#进程和线程管理" class="headerlink" title="进程和线程管理"></a>进程和线程管理</h3><p>进程定义一个执行环境包括它自己的私有地址空间一个句柄表和一个安全环境</p>
+<p>线程就是一个控制流有自己的调用栈记录的他的执行历史</p>
+<p>每个进程至少有1个线程，当然可以有多个，当进程最后一个线程结束时进程也随之结束，windows是一个多进程的操作系统环境，对于处理器资源分配是按照线程来的，可以参照之前的文章</p>
+<p><img src="image-20200805172733850.png" srcset="/img/loading.gif" lazyload alt="image-20200805172733850"></p>
+<h3 id="中断和异常"><a href="#中断和异常" class="headerlink" title="中断和异常"></a>中断和异常</h3><p>中断是处理器与外部设备打交道的重要途径，异常是处理器的正常指令流在执行的过程中产生的一些特殊事件需要紧急处理才能继续原来的指令流。</p>
+<p>他们都会打断一个正常的指令流，但区别在中断是异步的而异常是同步的</p>
+<p>中断控制器APIC允许设定每一个硬件终端的优先级但是windows并没有使用中断控制器的优先级，而是定义了一套软件中断优先级成为中断请求级别IRQL，处理器在运行时总是有一个当前的IRQL，发生中断时如果中断源的IRQL小于等于当前级别则中断屏蔽，直到遇到高的为止</p>
+<p>IRQL越大优先级越高，当为0时表示普通线程，优先级最低可以被其他中断打断，为1时是APC，也就是异步过程调用，在一个线程中插入一个APC对象可以打断该线程的执行，当为2时是表示处理器正在做线程调度或者选择新的线程，正在处理一个硬件中断的后半部分，被称之为DPC，3-26是设备的IRQL，27-31是一些特殊硬件中断像时钟中断电源中断处理器间中断等。</p>
+<p>延迟过程调用因为设计问题，优先级高于任何一个线程相关的函数，也屏蔽了线程调度同时低于所有硬件中断，所以不会屏蔽他们，之所以被称作延迟过程调用是因为它往往用来执行一些相对高优先级没那么重要的任务，比如更新中断时间，系统时间以及当前线程的时间信息等，并判断系统的定时器数组中是否有定时器到期，有则发出DISPATCH_LEVEL的软中断请求。</p>
+<p>与DPC不同APC是线程相关的例程，当一个线程获取执行权时他的APC会立即被执行，这一特性非常用于实现各种异步通知时间如I/O的完成通知。</p>
+<h2 id="Windows内核中的公共管理设施"><a href="#Windows内核中的公共管理设施" class="headerlink" title="Windows内核中的公共管理设施"></a>Windows内核中的公共管理设施</h2><h3 id="Windows内核中的对象管理"><a href="#Windows内核中的对象管理" class="headerlink" title="Windows内核中的对象管理"></a>Windows内核中的对象管理</h3><p>每一个对象都由俩部分组成，对象头和对象体</p>
+<p>对象头就是object_header，这个在句柄表中有所体现//进程句柄表指向对象头，但全局句柄表就不一样了</p>
+<p><img src="image-20200806145948705.png" srcset="/img/loading.gif" lazyload alt="image-20200806145948705"></p>
+<p>所有内核对象头都包含了对象管理所需要的基本信息包括对象名称类型引用计数安全描述符等。</p>
+<p>同时每一种对象都需要有一个对应的类型对象</p>
+<p><img src="image-20200806150757137.png" srcset="/img/loading.gif" lazyload alt="image-20200806150757137"></p>
+<p>对象的生命周期管理是根据引用计数来的，当引用计数为0时会销毁对象</p>
+<h2 id="Windows引导过程"><a href="#Windows引导过程" class="headerlink" title="Windows引导过程"></a>Windows引导过程</h2><p>1.BIOS获取控制权限进行硬件的检测工作然后将控制权转移给操作系统</p>
+<p>2.操作系统获取控制权后先从硬盘的主引导记录开始也就是MBR，MBR寻找引导代码即引导扇区然后将控制权交给引导扇区的代码，windows setup程序再安装时就会填充MBR，引导分区被windows格式化为windows所支持的文件系统，典型的如NTFS和FAT，NTFS是windowsNT的原生文件系统，FAT是MS-DOS时代继承和发展过来的</p>
+<p>引导扇区主要是给windows提供有关该硬盘上卷的结构和格式方面的信息，并从根目录中读取windows的加载程序即ntldr，然后将控制权转交给ntldr入口函数。当然为了做到这些，单个扇区512B无法完成这些功能，为此windows让引导扇区中的代码读入其他扇区中的代码然后跳转到下一个扇区的代码区。</p>
+<p>3.进入ntldr后就是实模式了，实模式处理器的寄存器都是16为直接访问物理内存，ntldr文件主要有俩部分组成，第一个部分是实模式代码，第二个部分是pe文件，这部分被称作os loader，先说说实模式部分，实模式主要负责完成需在16位的环境下执行的初始化工作如清除键盘缓冲区，然后为切换到保护模式做好准备，然后切换到保护模式后将控制权转交给os loader</p>
+<p>os loader获取控制权时虽然已经是保护模式，但还运行在实模式下，虚拟地址转译机制尚未开启，os loader首先把物理内存管理起来，用内存描述符记录并构造页目录和页表，始得16MB一下可以通过页映射来访问，打开页面映射机制后os loader继续执行其他的初始化工作，接着从系统分区读入boot.ini文件并解析，根据引导选项来设置参数，最后加载我们熟悉的内核模块映像文件ntoskrnl.exe，以及HAL映像文件，加载注册表等一些工作做完后把控制权交给ntoskrnl.exe入口</p>
+<p><img src="image-20200811223215032.png" srcset="/img/loading.gif" lazyload alt="image-20200811223215032"></p>
+<h3 id="内核初始化"><a href="#内核初始化" class="headerlink" title="内核初始化"></a>内核初始化</h3><p><img src="image-20200811223349565.png" srcset="/img/loading.gif" lazyload alt="image-20200811223349565"></p>
+<p>。。。有点多，书上主要介绍线程进程初始化还有多核情况处理</p>
+<p>具体如上图</p>
+<h2 id="进程与线程"><a href="#进程与线程" class="headerlink" title="进程与线程"></a>进程与线程</h2><p>之前写过进程线程的相关东西，其实看起来挺快，书上讲的也不错，这边只记录一些我漏学的小知识，前面作者只是单纯的介绍下进程与线程概念，根据windows调度算法介绍线程是如何被选择的//这些前面的文章都写过，x86就是在32个就绪链表里做选择，这边提到个用户级线程的概念，应该是模拟线程切换把，根据自己的需要自己选择线程的调度算法。后面就是介绍进程与线程结构体中的每一项的成员的意义，这个在之前文章里也写过就不重复了</p>
+<h3 id="windows进程的句柄表"><a href="#windows进程的句柄表" class="headerlink" title="windows进程的句柄表"></a>windows进程的句柄表</h3><p>每当进程利用名称来打开或者创建一个对象的时候都会获取一个句柄，通过句柄可以找到该对象的位置，所以句柄只是个引用，句柄表也分私有和公有，公有的是全局句柄表，每个进程都有一个句柄表，俩个应用程序以共享的方式打开了同一个文件，他们获取的句柄值可能不同，但都能通过该句柄找到文件对象的位置，主要还是因为用的不是一个句柄表。</p>
+<p>那就来康康句柄表在哪</p>
+<p><img src="image-20200813234919654.png" srcset="/img/loading.gif" lazyload alt="image-20200813234919654"></p>
+<p>首先查看eprocess + 0xc4的地址</p>
+<p><img src="image-20200813234945624.png" srcset="/img/loading.gif" lazyload alt="image-20200813234945624"></p>
+<p>这个tablecode指向了句柄表//记得低3为清0，表示属性</p>
+<p>假如句柄为0xa 对应值位于tablecode+0xa*2处，因为句柄表中每个成员占8字节</p>
+<p>成员低四字节低三位清零后指向了我们的对象_OBJECT_HEADER</p>
+<p><img src="image-20200814181939008.png" srcset="/img/loading.gif" lazyload alt="image-20200814181939008"></p>
+<p><img src="image-20200814182017671.png" srcset="/img/loading.gif" lazyload alt="image-20200814182017671"></p>
+<p>_HANDLE_TABLE结构体每项成员如上图</p>
+<p>其中第一项为tablecode是一个指针，第二位表示句柄表层数</p>
+<p><img src="image-20200814182152731.png" srcset="/img/loading.gif" lazyload alt="image-20200814182152731"></p>
+<p>句柄表结构如上</p>
+<p>再看看句柄表项内容</p>
+<p><img src="image-20200814183539461.png" srcset="/img/loading.gif" lazyload alt="image-20200814183539461"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/re/">#re</a>
+      
+        <a href="/tags/ctf/">#ctf</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Windows内核</div>
+      <div>http://www.psbazx.com/2020/08/11/Windows内核/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>August 10, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/08/11/APC/" title="APC">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">APC</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/08/11/%E8%87%AA%E6%97%8B%E9%94%81/" title="自旋锁">
+                        <span class="hidden-mobile">自旋锁</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

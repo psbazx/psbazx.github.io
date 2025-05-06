@@ -1,0 +1,672 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="简述windows内存管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Windows内存管理">
+<meta property="og:url" content="http://www.psbazx.com/2020/08/28/Windows%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="简述windows内存管理">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/28/Windows%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/image-20200827214645231.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/28/Windows%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/image-20200827215302271.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/28/Windows%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/image-20200827215516571.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/28/Windows%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/image-20200905120631895.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/28/Windows%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/image-20200905121508613.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/28/Windows%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/image-20200905121712705.png">
+<meta property="article:published_time" content="2020-08-27T20:27:39.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:17.744Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="re">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2020/08/28/Windows%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/image-20200827214645231.png">
+  
+  
+  
+  <title>Windows内存管理 - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="Windows内存管理"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-08-27 20:27" pubdate>
+          August 27, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.7k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          65 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Windows内存管理</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>简述windows内存管理</p>
+<a id="more"></a>
+
+<h1 id="windows进程空间划分"><a href="#windows进程空间划分" class="headerlink" title="windows进程空间划分"></a>windows进程空间划分</h1><table>
+<thead>
+<tr>
+<th>分区</th>
+<th>x86 32位Windows</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>空指针赋值区</td>
+<td>0x00000000 - 0x0000FFFF</td>
+</tr>
+<tr>
+<td>用户模式区</td>
+<td>0x00010000 - 0x7FFEFFFF</td>
+</tr>
+<tr>
+<td>64KB禁入区</td>
+<td>0x7FFF0000 - 0x7FFFFFFF</td>
+</tr>
+<tr>
+<td>内核</td>
+<td>0x80000000 - 0xFFFFFFFF</td>
+</tr>
+</tbody></table>
+<p>首先有个问题，我们都知道用户态空间中存放着用户私有数据代码还有dll，那每当我们需要分配空间时，例如调用virtualalloc函数，操作系统是如何找到一块未被使用的内存呢？</p>
+<p>所以说每个进程中都存在一个结构体记录了用户态地址分配情况(内核态基本相同)</p>
+<h2 id="VAD"><a href="#VAD" class="headerlink" title="VAD"></a>VAD</h2><p>VAD组织成一个AVL自平衡二叉树。</p>
+<p>位于eprocess处</p>
+<p><img src="image-20200827214645231.png" srcset="/img/loading.gif" lazyload alt="image-20200827214645231"></p>
+<p><img src="image-20200827215302271.png" srcset="/img/loading.gif" lazyload alt="image-20200827215302271"></p>
+<p>查看一波结构</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c">nt!_MMVAD					<br>   +<span class="hljs-number">0x000</span> StartingVpn  	<span class="hljs-comment">//线性地址开始位置(页为单位)</span><br>   +<span class="hljs-number">0x004</span> EndingVpn	<span class="hljs-comment">//线性地址结束位置(页为单位)</span><br>   +<span class="hljs-number">0x008</span> Parent 	<span class="hljs-comment">//父节点</span><br>   +<span class="hljs-number">0x00c</span> LeftChild 	<span class="hljs-comment">//左子树</span><br>   +<span class="hljs-number">0x010</span> RightChild 	<span class="hljs-comment">//右子树</span><br>   +<span class="hljs-number">0x014</span> u <br>   +<span class="hljs-number">0x018</span> ControlArea<br>   +<span class="hljs-number">0x01c</span> FirstPrototypePte <br>   +<span class="hljs-number">0x020</span> LastContiguousPte<br>   +<span class="hljs-number">0x024</span> u2 <br></code></pre></td></tr></table></figure>
+<p>前俩个成员表示了线性地址开始与结束地址，单位是页，所以乘上0x1000</p>
+<p>parent是父节点，因为这是根节点所以是null</p>
+<p>u表示了这段内存的属性</p>
+<p><img src="image-20200827215516571.png" srcset="/img/loading.gif" lazyload alt="image-20200827215516571"></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c">kd&gt; dt _MMVAD_FLAGS<br>nt!_MMVAD_FLAGS<br>   +<span class="hljs-number">0x000</span> CommitCharge<br>   +<span class="hljs-number">0x000</span> PhysicalMapping<br>   +<span class="hljs-number">0x000</span> ImageMap <br>	<span class="hljs-comment">//1 镜像文件  0 其他</span><br>   +<span class="hljs-number">0x000</span> UserPhysicalPages <br>   +<span class="hljs-number">0x000</span> NoChange<br>   +<span class="hljs-number">0x000</span> WriteWatch <br>   +<span class="hljs-number">0x000</span> Protection<br>	<span class="hljs-comment">//1 READONLY  2  EXECUTE  3  EXECUTE _READ  4 READWITER  </span><br>	<span class="hljs-comment">//5 WRITECOPY  6  EXECUTE _READWITER   7 EXECUTE_WRITECOPY  </span><br>   +<span class="hljs-number">0x000</span> LargePages <br>   +<span class="hljs-number">0x000</span> MemCommit <br>   +<span class="hljs-number">0x000</span> PrivateMemory<br>	<span class="hljs-comment">//1 PrivateMemory 2 Map</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">kd</span>&gt; !vad <span class="hljs-number">0</span>x<span class="hljs-number">89986468</span> <br><span class="hljs-attribute">VAD</span>   Level     Start       End Commit<br><span class="hljs-attribute">8953a9b8</span>  <span class="hljs-number">3</span>        <span class="hljs-number">10</span>        <span class="hljs-number">10</span>      <span class="hljs-number">1</span> Private      READWRITE          <br><span class="hljs-attribute">899b56f0</span>  <span class="hljs-number">2</span>        <span class="hljs-number">20</span>        <span class="hljs-number">20</span>      <span class="hljs-number">1</span> Private      READWRITE          <br><span class="hljs-attribute">899b55b0</span>  <span class="hljs-number">5</span>        <span class="hljs-number">30</span>        <span class="hljs-number">3</span>f      <span class="hljs-number">6</span> Private      READWRITE          <br><span class="hljs-attribute">89521148</span>  <span class="hljs-number">4</span>        <span class="hljs-number">40</span>        <span class="hljs-number">7</span>f     <span class="hljs-number">18</span> Private      READWRITE          <br><span class="hljs-attribute">89984880</span>  <span class="hljs-number">3</span>        <span class="hljs-number">80</span>        <span class="hljs-number">82</span>      <span class="hljs-number">0</span> Mapped       READONLY           Pagefile section, shared commit <span class="hljs-number">0</span>x<span class="hljs-number">3</span><br><span class="hljs-attribute">895191d0</span>  <span class="hljs-number">4</span>        <span class="hljs-number">90</span>        <span class="hljs-number">91</span>      <span class="hljs-number">0</span> Mapped       READONLY           Pagefile section, shared commit <span class="hljs-number">0</span>x<span class="hljs-number">2</span><br><span class="hljs-attribute">89a63878</span>  <span class="hljs-number">1</span>        a<span class="hljs-number">0</span>       <span class="hljs-number">19</span>f     <span class="hljs-number">21</span> Private      READWRITE          <br><span class="hljs-attribute">8997f0a8</span>  <span class="hljs-number">4</span>       <span class="hljs-number">1</span>a<span class="hljs-number">0</span>       <span class="hljs-number">1</span>af      <span class="hljs-number">6</span> Private      READWRITE          <br><span class="hljs-attribute">899b5a00</span>  <span class="hljs-number">3</span>       <span class="hljs-number">1</span>b<span class="hljs-number">0</span>       <span class="hljs-number">1</span>bf      <span class="hljs-number">0</span> Mapped       READWRITE          Pagefile section, shared commit <span class="hljs-number">0</span>x<span class="hljs-number">3</span><br><span class="hljs-attribute">8952c0a8</span>  <span class="hljs-number">4</span>       <span class="hljs-number">1</span>c<span class="hljs-number">0</span>       <span class="hljs-number">1</span>d<span class="hljs-number">5</span>      <span class="hljs-number">0</span> Mapped       READONLY           \WINDOWS\system<span class="hljs-number">32</span>\unicode.nls<br><span class="hljs-attribute">899b1870</span>  <span class="hljs-number">2</span>       <span class="hljs-number">1</span>e<span class="hljs-number">0</span>       <span class="hljs-number">220</span>      <span class="hljs-number">0</span> Mapped       READONLY           \WINDOWS\system<span class="hljs-number">32</span>\locale.nls<br><span class="hljs-attribute">899b57f0</span>  <span class="hljs-number">4</span>       <span class="hljs-number">230</span>       <span class="hljs-number">270</span>      <span class="hljs-number">0</span> Mapped       READONLY           \WINDOWS\system<span class="hljs-number">32</span>\sortkey.nls<br><span class="hljs-attribute">8997def0</span>  <span class="hljs-number">3</span>       <span class="hljs-number">280</span>       <span class="hljs-number">285</span>      <span class="hljs-number">0</span> Mapped       READONLY           \WINDOWS\system<span class="hljs-number">32</span>\sorttbls.nls<br><span class="hljs-attribute">89986468</span>  <span class="hljs-number">0</span>       <span class="hljs-number">290</span>       <span class="hljs-number">2</span>d<span class="hljs-number">0</span>      <span class="hljs-number">0</span> Mapped       READONLY           Pagefile section, shared commit <span class="hljs-number">0</span>x<span class="hljs-number">41</span><br><span class="hljs-attribute">89527cc0</span>  <span class="hljs-number">5</span>       <span class="hljs-number">2</span>e<span class="hljs-number">0</span>       <span class="hljs-number">3</span>a<span class="hljs-number">7</span>      <span class="hljs-number">0</span> Mapped       EXECUTE_READ       Pagefile section, shared commit <span class="hljs-number">0</span>x<span class="hljs-number">4</span><br><span class="hljs-attribute">8997c3f8</span>  <span class="hljs-number">6</span>       <span class="hljs-number">3</span>b<span class="hljs-number">0</span>       <span class="hljs-number">3</span>bf      <span class="hljs-number">8</span> Private      READWRITE          <br><span class="hljs-attribute">8956ac58</span>  <span class="hljs-number">7</span>       <span class="hljs-number">3</span>c<span class="hljs-number">0</span>       <span class="hljs-number">3</span>c<span class="hljs-number">0</span>      <span class="hljs-number">1</span> Private      READWRITE          <br><span class="hljs-attribute">895232a8</span>  <span class="hljs-number">8</span>       <span class="hljs-number">3</span>d<span class="hljs-number">0</span>       <span class="hljs-number">3</span>d<span class="hljs-number">0</span>      <span class="hljs-number">1</span> Private      READWRITE          <br><span class="hljs-attribute">895211c8</span> <span class="hljs-number">10</span>       <span class="hljs-number">3</span>e<span class="hljs-number">0</span>       <span class="hljs-number">3</span>e<span class="hljs-number">1</span>      <span class="hljs-number">0</span> Mapped       READONLY           Pagefile section, shared commit <span class="hljs-number">0</span>x<span class="hljs-number">2</span><br><span class="hljs-attribute">8953a6e0</span>  <span class="hljs-number">9</span>       <span class="hljs-number">3</span>f<span class="hljs-number">0</span>       <span class="hljs-number">3</span>f<span class="hljs-number">1</span>      <span class="hljs-number">0</span> Mapped       READONLY           Pagefile section, shared commit <span class="hljs-number">0</span>x<span class="hljs-number">2</span><br><span class="hljs-attribute">89c551b0</span> <span class="hljs-number">10</span>       <span class="hljs-number">400</span>       <span class="hljs-number">40</span>f      <span class="hljs-number">3</span> Private      READWRITE          <br><span class="hljs-attribute">89522b08</span>  <span class="hljs-number">4</span>       <span class="hljs-number">410</span>       <span class="hljs-number">41</span>f      <span class="hljs-number">8</span> Private      READWRITE          <br><span class="hljs-attribute">89519150</span>  <span class="hljs-number">3</span>       <span class="hljs-number">420</span>       <span class="hljs-number">42</span>f      <span class="hljs-number">4</span> Private      READWRITE          <br><span class="hljs-attribute">899798c8</span>  <span class="hljs-number">4</span>       <span class="hljs-number">430</span>       <span class="hljs-number">432</span>      <span class="hljs-number">0</span> Mapped       READONLY           \WINDOWS\system<span class="hljs-number">32</span>\ctype.nls<br><span class="hljs-attribute">8954b718</span>  <span class="hljs-number">2</span>       <span class="hljs-number">440</span>       <span class="hljs-number">47</span>f      <span class="hljs-number">3</span> Private      READWRITE          <br><span class="hljs-attribute">8996f178</span>  <span class="hljs-number">5</span>       <span class="hljs-number">480</span>       <span class="hljs-number">582</span>      <span class="hljs-number">0</span> Mapped       READONLY           Pagefile section, shared commit <span class="hljs-number">0</span>x<span class="hljs-number">103</span><br><span class="hljs-attribute">8996f218</span>  <span class="hljs-number">4</span>       <span class="hljs-number">590</span>       <span class="hljs-number">88</span>f      <span class="hljs-number">0</span> Mapped       EXECUTE_READ       Pagefile section, shared commit <span class="hljs-number">0</span>x<span class="hljs-number">22</span><br><span class="hljs-attribute">89b09108</span>  <span class="hljs-number">3</span>       <span class="hljs-number">890</span>       <span class="hljs-number">90</span>f      <span class="hljs-number">1</span> Private      READWRITE          <br><span class="hljs-attribute">89520ae8</span>  <span class="hljs-number">5</span>       <span class="hljs-number">910</span>       <span class="hljs-number">95</span>f      <span class="hljs-number">0</span> Mapped       READONLY           Pagefile section, shared commit <span class="hljs-number">0</span>x<span class="hljs-number">50</span><br><span class="hljs-attribute">89520b18</span>  <span class="hljs-number">4</span>       <span class="hljs-number">960</span>       <span class="hljs-number">960</span>      <span class="hljs-number">0</span> Mapped       READWRITE          Pagefile section, shared commit <span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">89981558</span>  <span class="hljs-number">6</span>       <span class="hljs-number">970</span>       <span class="hljs-number">9</span>af      <span class="hljs-number">0</span> Mapped       READWRITE          Pagefile section, shared commit <span class="hljs-number">0</span>x<span class="hljs-number">10</span><br><span class="hljs-attribute">899b5630</span>  <span class="hljs-number">5</span>       <span class="hljs-number">9</span>b<span class="hljs-number">0</span>       <span class="hljs-number">9</span>bd      <span class="hljs-number">0</span> Mapped       READWRITE          Pagefile section, shared commit <span class="hljs-number">0</span>xe<br><span class="hljs-attribute">899ad850</span>  <span class="hljs-number">7</span>       <span class="hljs-number">9</span>c<span class="hljs-number">0</span>       abf    <span class="hljs-number">123</span> Private      READWRITE          <br><span class="hljs-attribute">899b5a30</span>  <span class="hljs-number">6</span>       ad<span class="hljs-number">0</span>       b<span class="hljs-number">4</span>f      <span class="hljs-number">0</span> Mapped       READWRITE          Pagefile section, shared commit <span class="hljs-number">0</span>x<span class="hljs-number">7</span><br><span class="hljs-attribute">89546d90</span>  <span class="hljs-number">7</span>       b<span class="hljs-number">50</span>       bcf      <span class="hljs-number">0</span> Mapped       READWRITE          Pagefile section, shared commit <span class="hljs-number">0</span>x<span class="hljs-number">2</span><br><span class="hljs-attribute">899ba9e0</span>  <span class="hljs-number">1</span>      <span class="hljs-number">1000</span>      <span class="hljs-number">1012</span>      <span class="hljs-number">3</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\notepad.exe<br><span class="hljs-attribute">89527d30</span>  <span class="hljs-number">7</span>     <span class="hljs-number">58</span>fb<span class="hljs-number">0</span>     <span class="hljs-number">59179</span>      <span class="hljs-number">9</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\AppPatch\AcGenral.dll<br><span class="hljs-attribute">89519c60</span>  <span class="hljs-number">8</span>     <span class="hljs-number">5</span>adc<span class="hljs-number">0</span>     <span class="hljs-number">5</span>adf<span class="hljs-number">6</span>      <span class="hljs-number">2</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\uxtheme.dll<br><span class="hljs-attribute">89527c90</span>  <span class="hljs-number">6</span>     <span class="hljs-number">5</span>cc<span class="hljs-number">30</span>     <span class="hljs-number">5</span>cc<span class="hljs-number">55</span>     <span class="hljs-number">20</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\shimeng.dll<br><span class="hljs-attribute">8953a6b0</span>  <span class="hljs-number">7</span>     <span class="hljs-number">62</span>c<span class="hljs-number">20</span>     <span class="hljs-number">62</span>c<span class="hljs-number">28</span>      <span class="hljs-number">1</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\lpk.dll<br><span class="hljs-attribute">89522ad8</span>  <span class="hljs-number">5</span>     <span class="hljs-number">72</span>f<span class="hljs-number">70</span>     <span class="hljs-number">72</span>f<span class="hljs-number">95</span>      <span class="hljs-number">3</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\winspool.drv<br><span class="hljs-attribute">899b5660</span>  <span class="hljs-number">8</span>     <span class="hljs-number">73640</span>     <span class="hljs-number">7366</span>d      <span class="hljs-number">2</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\MSCTFIME.IME<br><span class="hljs-attribute">899b5970</span>  <span class="hljs-number">7</span>     <span class="hljs-number">73</span>fa<span class="hljs-number">0</span>     <span class="hljs-number">7400</span>a     <span class="hljs-number">16</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\usp<span class="hljs-number">10</span>.dll<br><span class="hljs-attribute">89518648</span>  <span class="hljs-number">8</span>     <span class="hljs-number">74680</span>     <span class="hljs-number">746</span>cb      <span class="hljs-number">3</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\MSCTF.dll<br><span class="hljs-attribute">895198f8</span>  <span class="hljs-number">6</span>     <span class="hljs-number">759</span>d<span class="hljs-number">0</span>     <span class="hljs-number">75</span>a<span class="hljs-number">7</span>e      <span class="hljs-number">3</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\userenv.dll<br><span class="hljs-attribute">89979c40</span>  <span class="hljs-number">7</span>     <span class="hljs-number">76300</span>     <span class="hljs-number">7631</span>c      <span class="hljs-number">1</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\imm<span class="hljs-number">32</span>.dll<br><span class="hljs-attribute">89a65c70</span>  <span class="hljs-number">4</span>     <span class="hljs-number">76320</span>     <span class="hljs-number">76366</span>      <span class="hljs-number">4</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\comdlg<span class="hljs-number">32</span>.dll<br><span class="hljs-attribute">899adb98</span>  <span class="hljs-number">8</span>     <span class="hljs-number">76990</span>     <span class="hljs-number">76</span>acc      <span class="hljs-number">8</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\ole<span class="hljs-number">32</span>.dll<br><span class="hljs-attribute">899ad7e0</span>  <span class="hljs-number">7</span>     <span class="hljs-number">76</span>b<span class="hljs-number">10</span>     <span class="hljs-number">76</span>b<span class="hljs-number">39</span>      <span class="hljs-number">2</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\winmm.dll<br><span class="hljs-attribute">899adbc8</span>  <span class="hljs-number">8</span>     <span class="hljs-number">770</span>f<span class="hljs-number">0</span>     <span class="hljs-number">7717</span>a      <span class="hljs-number">4</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\oleaut<span class="hljs-number">32</span>.dll<br><span class="hljs-attribute">899b6b38</span>  <span class="hljs-number">6</span>     <span class="hljs-number">77180</span>     <span class="hljs-number">77282</span>      <span class="hljs-number">2</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\WinSxS\x<span class="hljs-number">86</span>_Microsoft.Windows.Common-Controls_<span class="hljs-number">6595</span>b<span class="hljs-number">64144</span>ccf<span class="hljs-number">1</span>df_<span class="hljs-number">6</span>.<span class="hljs-number">0</span>.<span class="hljs-number">2600</span>.<span class="hljs-number">5512</span>_x-ww_<span class="hljs-number">35</span>d<span class="hljs-number">4</span>ce<span class="hljs-number">83</span>\comctl<span class="hljs-number">32</span>.dll<br><span class="hljs-attribute">899add30</span>  <span class="hljs-number">8</span>     <span class="hljs-number">77</span>bb<span class="hljs-number">0</span>     <span class="hljs-number">77</span>bc<span class="hljs-number">4</span>      <span class="hljs-number">2</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\msacm<span class="hljs-number">32</span>.dll<br><span class="hljs-attribute">895180a8</span>  <span class="hljs-number">9</span>     <span class="hljs-number">77</span>bd<span class="hljs-number">0</span>     <span class="hljs-number">77</span>bd<span class="hljs-number">7</span>      <span class="hljs-number">1</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\version.dll<br><span class="hljs-attribute">89b08508</span>  <span class="hljs-number">7</span>     <span class="hljs-number">77</span>be<span class="hljs-number">0</span>     <span class="hljs-number">77</span>c<span class="hljs-number">37</span>      <span class="hljs-number">7</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\msvcrt.dll<br><span class="hljs-attribute">895232e8</span>  <span class="hljs-number">8</span>     <span class="hljs-number">77</span>d<span class="hljs-number">10</span>     <span class="hljs-number">77</span>d<span class="hljs-number">9</span>f      <span class="hljs-number">2</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\user<span class="hljs-number">32</span>.dll<br><span class="hljs-attribute">8996f148</span>  <span class="hljs-number">5</span>     <span class="hljs-number">77</span>da<span class="hljs-number">0</span>     <span class="hljs-number">77</span>e<span class="hljs-number">48</span>      <span class="hljs-number">5</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\advapi<span class="hljs-number">32</span>.dll<br><span class="hljs-attribute">899b5690</span>  <span class="hljs-number">6</span>     <span class="hljs-number">77</span>e<span class="hljs-number">50</span>     <span class="hljs-number">77</span>ee<span class="hljs-number">1</span>      <span class="hljs-number">1</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\rpcrt<span class="hljs-number">4</span>.dll<br><span class="hljs-attribute">89b084d8</span>  <span class="hljs-number">8</span>     <span class="hljs-number">77</span>ef<span class="hljs-number">0</span>     <span class="hljs-number">77</span>f<span class="hljs-number">38</span>      <span class="hljs-number">2</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\gdi<span class="hljs-number">32</span>.dll<br><span class="hljs-attribute">89b08478</span>  <span class="hljs-number">9</span>     <span class="hljs-number">77</span>f<span class="hljs-number">40</span>     <span class="hljs-number">77</span>fb<span class="hljs-number">5</span>      <span class="hljs-number">2</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\shlwapi.dll<br><span class="hljs-attribute">899b5710</span>  <span class="hljs-number">7</span>     <span class="hljs-number">77</span>fc<span class="hljs-number">0</span>     <span class="hljs-number">77</span>fd<span class="hljs-number">0</span>      <span class="hljs-number">1</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\secur<span class="hljs-number">32</span>.dll<br><span class="hljs-attribute">899b5a90</span>  <span class="hljs-number">3</span>     <span class="hljs-number">7</span>c<span class="hljs-number">800</span>     <span class="hljs-number">7</span>c<span class="hljs-number">91</span>d      <span class="hljs-number">5</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\kernel<span class="hljs-number">32</span>.dll<br><span class="hljs-attribute">899848b0</span>  <span class="hljs-number">2</span>     <span class="hljs-number">7</span>c<span class="hljs-number">920</span>     <span class="hljs-number">7</span>c<span class="hljs-number">9</span>b<span class="hljs-number">2</span>      <span class="hljs-number">5</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\ntdll.dll<br><span class="hljs-attribute">899b58e0</span>  <span class="hljs-number">5</span>     <span class="hljs-number">7</span>d<span class="hljs-number">590</span>     <span class="hljs-number">7</span>dd<span class="hljs-number">83</span>     <span class="hljs-number">30</span> Mapped  Exe  EXECUTE_WRITECOPY  \WINDOWS\system<span class="hljs-number">32</span>\shell<span class="hljs-number">32</span>.dll<br><span class="hljs-attribute">899b57c0</span>  <span class="hljs-number">4</span>     <span class="hljs-number">7</span>f<span class="hljs-number">6</span>f<span class="hljs-number">0</span>     <span class="hljs-number">7</span>f<span class="hljs-number">7</span>ef      <span class="hljs-number">0</span> Mapped       EXECUTE_READ       Pagefile section, shared commit <span class="hljs-number">0</span>x<span class="hljs-number">6</span><br><span class="hljs-attribute">89984850</span>  <span class="hljs-number">3</span>     <span class="hljs-number">7</span>ffa<span class="hljs-number">0</span>     <span class="hljs-number">7</span>ffd<span class="hljs-number">2</span>      <span class="hljs-number">0</span> Mapped       READONLY           Pagefile section, shared commit <span class="hljs-number">0</span>x<span class="hljs-number">33</span><br><span class="hljs-attribute">89983180</span>  <span class="hljs-number">4</span>     <span class="hljs-number">7</span>ffd<span class="hljs-number">4</span>     <span class="hljs-number">7</span>ffd<span class="hljs-number">4</span>      <span class="hljs-number">1</span> Private      READWRITE          <br><span class="hljs-attribute">899ad870</span>  <span class="hljs-number">5</span>     <span class="hljs-number">7</span>ffdf     <span class="hljs-number">7</span>ffdf      <span class="hljs-number">1</span> Private      READWRITE          <br></code></pre></td></tr></table></figure>
+<p>用!vad指令来查看一波notepad的vad树</p>
+<p>89986468  0       290       2d0      0 Mapped       READONLY           Pagefile section, shared commit 0x41</p>
+<p>以这个为例之前看到PrivateMemory为0所以是map</p>
+<p>Protection是1所以是READONLY</p>
+<p>ImageMap是0所以非镜像文件</p>
+<p>!vad这个指令其实就是方便寻找，如何实现也显而易见</p>
+<h1 id="windows线性地址管理"><a href="#windows线性地址管理" class="headerlink" title="windows线性地址管理"></a>windows线性地址管理</h1><p>windows有俩种申请内存的方式</p>
+<p>1.通过VirtualAlloc/VirtualAllocEx申请 Private Memory</p>
+<p>2.通过CreateFileMapping映射 Mapped Memory</p>
+<h2 id="Private-Memory"><a href="#Private-Memory" class="headerlink" title="Private  Memory"></a>Private  Memory</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c">LPVOID VirtualAlloc&#123;<br>	LPVOID lpAddress, 	<span class="hljs-comment">// 要分配的内存区域的地址</span><br>	DWORD dwSize, 		<span class="hljs-comment">// 分配的大小</span><br>	DWORD flAllocationType, 	<span class="hljs-comment">// 分配的类型</span><br>	DWORD flProtect 	<span class="hljs-comment">// 该内存的初始保护属性</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>可能有人会疑惑像malloc这种函数也是申请内存，为什么不在里面。</p>
+<p>进程初始化的时候操作系统会用VirtualAlloc/VirtualAllocEx申请一块堆块，malloc只是从那块申请的堆块中拿出一小份</p>
+<p>这些知识打过pwn的同学都知道</p>
+<h2 id="Mapped-Memory"><a href="#Mapped-Memory" class="headerlink" title="Mapped  Memory"></a>Mapped  Memory</h2><p>mapped memory主分俩种，共享内存和共享文件</p>
+<h3 id="共享内存"><a href="#共享内存" class="headerlink" title="共享内存"></a>共享内存</h3><p>也就是映射在同一个物理页</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> MapFileName <span class="hljs-meta-string">&quot;共享内存&quot;</span>	</span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-comment">//内核对象:1、物理页     2、文件	</span><br>	HANDLE g_hMapFile = CreateFileMapping(INVALID_HANDLE_VALUE, <span class="hljs-literal">NULL</span>, PAGE_READWRITE, <span class="hljs-number">0</span>, BUFSIZ, (LPCWCHAR)MapFileName);<br><br>	<span class="hljs-comment">//将物理页与线性地址进行映射			</span><br>	LPTSTR g_lpBuff = (LPTSTR)MapViewOfFile(g_hMapFile, FILE_MAP_ALL_ACCESS, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, BUFSIZ);<br>	*(PDWORD)g_lpBuff = <span class="hljs-number">0x12345678</span>;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%p&quot;</span>, g_lpBuff);<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>当其他进程需要该内存时用OpenFileMapping即可，MapFileName就是其参数</p>
+<p>和之前内核对象的学习很像</p>
+<h3 id="共享文件"><a href="#共享文件" class="headerlink" title="共享文件"></a>共享文件</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	HANDLE g_hFile = CreateFile((LPCWSTR)<span class="hljs-string">&quot;NOTEPAD.EXE&quot;</span>, GENERIC_READ | GENERIC_WRITE, FILE_SHARE_READ, <span class="hljs-literal">NULL</span>, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, <span class="hljs-literal">NULL</span>);<br>	HANDLE g_hMapFile = CreateFileMapping(g_hFile, <span class="hljs-literal">NULL</span>, PAGE_READWRITE, <span class="hljs-number">0</span>, BUFSIZ, <span class="hljs-literal">NULL</span>);<br>	LPTSTR g_lpBuff = (LPTSTR)MapViewOfFile(g_hMapFile, FILE_MAP_ALL_ACCESS, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, BUFSIZ);<br>	*(PDWORD)g_lpBuff = <span class="hljs-number">0x12345678</span>;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>共享文件和共享内存区别就在于一个获取句柄，CreateFileMapping时传入即可，这是会给改文件分配一个物理页，但是还不会建立与线性地址的映射关系，到MapViewOfFile时才会建立</p>
+<h3 id="镜像文件"><a href="#镜像文件" class="headerlink" title="镜像文件"></a>镜像文件</h3><p>说白了就是LoadLibrary</p>
+<p>用LoadLibrary加载的都会有写拷贝属性，这样就不会因为修改而影响到其他文件</p>
+<h4 id="写拷贝"><a href="#写拷贝" class="headerlink" title="写拷贝"></a>写拷贝</h4><p>像一般dll都是多进程共享一个物理页面，如果其中一个进程hook了dll，所有进程都会被影响，所以需要写拷贝</p>
+<p><img src="image-20200905120631895.png" srcset="/img/loading.gif" lazyload alt="image-20200905120631895"></p>
+<p>绕过写拷贝只需要把pte的rw位置1，这样就不会触发异常</p>
+<h1 id="物理内存管理"><a href="#物理内存管理" class="headerlink" title="物理内存管理"></a>物理内存管理</h1><p>因为windows操作系统的限制，xp只能支持4gb内存，即使是29912分页</p>
+<p><img src="image-20200905121508613.png" srcset="/img/loading.gif" lazyload alt="image-20200905121508613"></p>
+<p>但是服务器版本就没有限制可以识别到64gb</p>
+<p>每个物理页都对应一个结构体</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">nt!_MMPFN<br>   +<span class="hljs-number">0x000</span> u1               : __unnamed<br>   +<span class="hljs-number">0x004</span> PteAddress       : Ptr32 _MMPTE<br>   +<span class="hljs-number">0x008</span> u2               : __unnamed<br>   +<span class="hljs-number">0x00c</span> u3               : __unnamed<br>   +<span class="hljs-number">0x010</span> OriginalPte      : _MMPTE<br>   +<span class="hljs-number">0x018</span> u4               : __unnamed<br></code></pre></td></tr></table></figure>
+<p>3、物理页状态<br>0：MmZeroedPageListHead        零化链表（是系统在空闲的时候进行零化的，不是程序自己清零的那种）<br>1：MmFreePageListHead        空闲链表（物理页是周转使用的，刚被释放的物理页是没有清0，系统空闲的时候有专门的线程从这个队列摘取物理页，加以清0后再挂入MmZeroedPageListHead）<br>2：MmStandbyPageListHead        备用链表（当系统内存不够的时候，操作系统会把物理内存中的数据交换到硬盘上，此时页面不是直接挂到空闲链表上去，而是挂到备用链表上，虽然我释放了，但里边的内容还是有意义的）<br>3：MmModifiedPageListHead<br>4：MmModifiedNoWritePageListHead<br>5：MmBadPageListHead            坏链</p>
+<p><img src="image-20200905121712705.png" srcset="/img/loading.gif" lazyload alt="image-20200905121712705"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/re/">#re</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>Windows内存管理</div>
+      <div>http://www.psbazx.com/2020/08/28/Windows内存管理/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>August 27, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/09/07/%E5%A4%8D%E4%B9%A0%E4%B8%80%E6%B3%A2pwn/" title="复习一波pwn">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">复习一波pwn</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/08/26/Exception-Handling-in-CTF/" title="Exception Handling in CTF">
+                        <span class="hidden-mobile">Exception Handling in CTF</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

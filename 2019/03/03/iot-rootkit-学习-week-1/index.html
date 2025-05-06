@@ -1,0 +1,628 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="记录下week1的学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iot rootkit 学习(week 1-1)">
+<meta property="og:url" content="http://www.psbazx.com/2019/03/03/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="记录下week1的学习">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/03/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1/1.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/03/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1/2.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/03/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1/3.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/03/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1/4.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/03/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1/5.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/03/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1/6.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/03/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1/7.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/03/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1/8.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/03/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1/9.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/03/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1/10.png">
+<meta property="article:published_time" content="2019-03-03T13:29:43.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:17.964Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="iot">
+<meta property="article:tag" content="rootkit">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2019/03/03/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1/1.png">
+  
+  
+  
+  <title>iot rootkit 学习(week 1-1) - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="iot rootkit 学习(week 1-1)"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-03-03 13:29" pubdate>
+          March 3, 2019 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.4k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          20 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">iot rootkit 学习(week 1-1)</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>记录下week1的学习</p>
+<a id="more"></a>
+<h1 id="Embedded-Linux-Boot-Process"><a href="#Embedded-Linux-Boot-Process" class="headerlink" title="Embedded Linux Boot Process"></a>Embedded Linux Boot Process</h1><p><img src="1.png" srcset="/img/loading.gif" lazyload alt="1"></p>
+<h2 id="soC-ROM-Bootloader"><a href="#soC-ROM-Bootloader" class="headerlink" title="soC ROM Bootloader"></a>soC ROM Bootloader</h2><p>当soc被启动时首先启动reset vector——复位向量<br>这是制造商提前编程好的东西<br>然后会吧控制权给soC ROM Bootloader<br>soC ROM Bootloader会启动一些基本硬件<br>然后开始在Boot Device中寻找First Stage Bootloader，并把控制权给予First Stage Bootloader</p>
+<h2 id="First-Stage-Bootloader"><a href="#First-Stage-Bootloader" class="headerlink" title="First Stage Bootloader"></a>First Stage Bootloader</h2><p>First Stage Bootloader会找到Second Stage Bootloader<br>并将其载入RAM中，然后把控制权转移给Second Stage Bootloader</p>
+<p>这边作者也提及了一些注意点<br>比如说pass control而不是call<br>因为如果是call的话，在运行结束后会return<br>而事实不是这样，当First Stage Bootloader将控制权给Second Stage Bootloader后<br>要等到下一次启动，First Stage Bootloader才会启动<br>还有关于stage的，这边只提及有俩个阶段，然而事实上这都要依赖于嵌入式系统，没准有很多阶段。</p>
+<h2 id="Second-Stage-Bootloader"><a href="#Second-Stage-Bootloader" class="headerlink" title="Second Stage Bootloader"></a>Second Stage Bootloader</h2><p>Second Stage Bootloader的责任是把内核还有设备树载入到RAM中<br>然后根据自己的配置，启动内核还有内核引导程序后把控制权给Linux Kernel</p>
+<h2 id="Kernel"><a href="#Kernel" class="headerlink" title="Kernel"></a>Kernel</h2><p>内核会初始化许多硬件，然后寻找引导程序并定位Root Filesystem,然后运行他<br>如果运行成功内核会在Root Filesystem中寻找初始化程序<br>//后面没听懂作者在讲啥，英语有点渣</p>
+<h1 id="BBB"><a href="#BBB" class="headerlink" title="BBB"></a>BBB</h1><p>//作者在这边吐槽惊叹了很多</p>
+<h2 id="AM3358"><a href="#AM3358" class="headerlink" title="AM3358"></a>AM3358</h2><p><img src="2.png" srcset="/img/loading.gif" lazyload alt="2"><br>176kb ROM<br>64kb RAM<br>64kb shared RAM<br>存储器不怎么大<br>//这边后面会解释原因<br>//成本问题</p>
+<h2 id="Public-Bootrom-Architecture"><a href="#Public-Bootrom-Architecture" class="headerlink" title="Public Bootrom Architecture"></a>Public Bootrom Architecture</h2><p><img src="3.png" srcset="/img/loading.gif" lazyload alt="3"><br>作者在这边讲的大概是关于这玩意的硬件支持和软件支持</p>
+<h2 id="ROM-Bootloader-Init"><a href="#ROM-Bootloader-Init" class="headerlink" title="ROM Bootloader Init"></a>ROM Bootloader Init</h2><p><img src="4.png" srcset="/img/loading.gif" lazyload alt="4"><br>首先是系统的启动然后初始化了许多基础的东西<br>然后进入主程序(main routine)把栈建立<br>接着会启动看门狗定时器(WDT)<br>这边来解释下WDT<br>看门狗定时器（WDT，Watch Dog Timer）是单片机的一个组成部分，它实际上是一个计数器，一般给看门狗一个数字，程序开始运行后看门狗开始倒计数。如果程序运行正常，过一段时间CPU应发出指令让看门狗复位，重新开始倒计数。如果看门狗减到0就认为程序没有正常工作，强制整个系统复位。___from baidu<br>WDT倒计时是3min<br>给引导程序来寻找First Stage Bootloader<br>WDT完事后就是设置时钟<br>接着就是引导下一阶段</p>
+<p>下面作者讲的大概是在ROM Bootloader Init完后是如何启动各种设备的</p>
+<h3 id="ROM-Bootloader-Device-Boot-Order"><a href="#ROM-Bootloader-Device-Boot-Order" class="headerlink" title="ROM Bootloader: Device Boot Order"></a>ROM Bootloader: Device Boot Order</h3><p><img src="5.png" srcset="/img/loading.gif" lazyload alt="5"><br>至于引导下一阶段，首先要找到下一阶段在哪？<br>首先肯定不在系统芯片内，因为系统芯片AM3358的ROM没有那么大<br>所以必须在外部寻找<br>那如何找呢？<br>这是由设计者通过某种方式来让ROM Bootloader知道如何引导下一阶段。。。<br>//其实是我没听懂<br>//但看流程图的话，貌似是一个一个的寻找<br>//直到定位到就停下<br>//否则失败</p>
+<h3 id="ROM-Bootloader-MMC-SD-Caed-Booting"><a href="#ROM-Bootloader-MMC-SD-Caed-Booting" class="headerlink" title="ROM Bootloader: MMC/SD Caed Booting"></a>ROM Bootloader: MMC/SD Caed Booting</h3><p><img src="6.png" srcset="/img/loading.gif" lazyload alt="6"><br>ROM Bootloader初始化驱动，然后根据俩种模式来定位First Stage Bootloader<br><img src="7.png" srcset="/img/loading.gif" lazyload alt="7"><br>可以看到有俩种寻址方法<br>第一种是根据特定的偏移位<br>第二种是啥我也没听懂。。。正在询问老师中<br>//吐槽一下下这口音，把MLO听成了”M雷罗”,我也是醉了<br>//感觉这堆视频看完英语6级听力不用愁(flag)</p>
+<h2 id="BBB-Boot-Process"><a href="#BBB-Boot-Process" class="headerlink" title="BBB Boot Process"></a>BBB Boot Process</h2><p><img src="8.png" srcset="/img/loading.gif" lazyload alt="8"><br>这边是个总结<br>soC ROM Bootloader 就是在那个AM3358里的<br>工作主要是加载下一阶段的引导，主要是SPL和MLO<br>然后First Stage Bootloader会加载Second Stage Bootloader<br>使用的引导方式是U-boot<br>配置文件是uEnv.txt<br>接着就是引导Linux内核和设备树文件啥的<br>最后就是整个文件初始化系统进程</p>
+<h3 id="How-does-it-work"><a href="#How-does-it-work" class="headerlink" title="How does it work?"></a>How does it work?</h3><p>总算熬到最后了<br><img src="9.png" srcset="/img/loading.gif" lazyload alt="9"><br>可以看到左边是那个芯片<br>RAM 128KB<br>ROM 176KB//具体可看上文<br>还有是我们的SD卡<br>和系统的RAM<br>当我们插入SD卡的时候有三个划分<br>可以看到就是图8的那上面三个<br>好了，开始总结</p>
+<h4 id="1"><a href="#1" class="headerlink" title="1"></a>1</h4><p>首先启动芯片<br>ROM Bootloader开始运行，第一步他会在sd卡中寻找FAT32<br>然后找然后从中找到MLO，把他肛进RAM<br>完事<br>如果没有找到MLO<br>他会放弃，然后寻找还有啥设备<br>总结一下，第一步就是找到MLO，把MLO肛进RAM,接着把控制权给MLO</p>
+<h4 id="2"><a href="#2" class="headerlink" title="2"></a>2</h4><p>然后MLO会找到U-Boot，并把它肛进系统的RAM<br>然后U-Boot会找到uEnv.txt，同样也是肛进系统的RAM<br>然后U-Boot会接着找到Linux内核和设备树<br>至于怎么找//因为由俩个EXT4嘛<br>其实这些信息都在uEnv.txt中<br>U-Boot把Linux内核和设备树肛进系统的RAM<br>并引导，然后把控制权给内核<br>内核会运行Root Filesystem，然后运行在系统RAM的初始化程序<br>然后初始化程序会初始化用户空间进程</p>
+<h3 id="解答问题"><a href="#解答问题" class="headerlink" title="解答问题"></a>解答问题</h3><h4 id="1-要MLO有个卵用？为什么不直接把U-Boot肛进RAM然后运行？"><a href="#1-要MLO有个卵用？为什么不直接把U-Boot肛进RAM然后运行？" class="headerlink" title="1.要MLO有个卵用？为什么不直接把U-Boot肛进RAM然后运行？"></a>1.要MLO有个卵用？为什么不直接把U-Boot肛进RAM然后运行？</h4><p>因为存储器不够大，而U-Boot太大了<br>成本太贵。。。只能这样<br>估计用的是SRAM</p>
+<h4 id="2-既然不能直接载入soc内部RAM，为什么不直接载入系统RAM呢？"><a href="#2-既然不能直接载入soc内部RAM，为什么不直接载入系统RAM呢？" class="headerlink" title="2.既然不能直接载入soc内部RAM，为什么不直接载入系统RAM呢？"></a>2.既然不能直接载入soc内部RAM，为什么不直接载入系统RAM呢？</h4><p>因为系统芯片不知道你的外设是啥<br>ROM Bootloader不知道如何把U-Boot载入系统RAM<br>但是MLO知道<br>所以可以通过MLO来间接把U-Boot肛进系统RAM</p>
+<h1 id="喜大普奔"><a href="#喜大普奔" class="headerlink" title="喜大普奔"></a>喜大普奔</h1><p>30多分钟视频看了2天<br>总算稍微看懂点了<br>起码不是一脸懵逼<br><img src="10.png" srcset="/img/loading.gif" lazyload alt="10"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/iot/">#iot</a>
+      
+        <a href="/tags/rootkit/">#rootkit</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>iot rootkit 学习(week 1-1)</div>
+      <div>http://www.psbazx.com/2019/03/03/iot-rootkit-学习-week-1/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>March 3, 2019</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/" title="iot rootkit 学习(week 1-2)">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">iot rootkit 学习(week 1-2)</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/03/02/iot-rootkit-%E5%AD%A6%E4%B9%A0-0/" title="iot rootkit 学习(week 0)">
+                        <span class="hidden-mobile">iot rootkit 学习(week 0)</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

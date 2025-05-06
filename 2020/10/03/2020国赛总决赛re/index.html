@@ -1,0 +1,614 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="多亏易霖博，国赛总决赛都能给整成解题了。之前就喷过ylb平台垃圾运维态度整的和你欠他钱一样，好了这次国赛又来了。俩个re原题大赛">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2020国赛总决赛re">
+<meta property="og:url" content="http://www.psbazx.com/2020/10/03/2020%E5%9B%BD%E8%B5%9B%E6%80%BB%E5%86%B3%E8%B5%9Bre/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="多亏易霖博，国赛总决赛都能给整成解题了。之前就喷过ylb平台垃圾运维态度整的和你欠他钱一样，好了这次国赛又来了。俩个re原题大赛">
+<meta property="og:locale">
+<meta property="article:published_time" content="2020-10-02T17:03:58.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:17.467Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="ctf">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2020国赛总决赛re - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2020国赛总决赛re"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-10-02 17:03" pubdate>
+          October 2, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.7k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          73 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">2020国赛总决赛re</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>多亏易霖博，国赛总决赛都能给整成解题了。之前就喷过ylb平台垃圾运维态度整的和你欠他钱一样，好了这次国赛又来了。俩个re原题大赛</p>
+<a id="more"></a>
+
+<h1 id="babyriscv"><a href="#babyriscv" class="headerlink" title="babyriscv"></a>babyriscv</h1><p><a target="_blank" rel="noopener" href="http://217.logdown.com/posts/235490-isg2014-bt">http://217.logdown.com/posts/235490-isg2014-bt</a></p>
+<p>易霖博可能从哪嫖到了源码，本来是arm的硬是整成了riscv架构</p>
+<p>脚本复制粘贴改下数据出flag</p>
+<p>没错这就是国赛</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python">s = <span class="hljs-string">&#x27;BpmvcuriVayeQLIKJ  f  U2  l  od  Z  hx  5  _T  s  t&#123;  k  7F  n  Ej  X  C&#125;  O  AN  w  D8  Y  bq  9  gP  W  63  G  MR  4  Sz  H  &#x27;</span><br>i = <span class="hljs-number">0</span><br>tb = &#123;&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">dfs</span>(<span class="hljs-params">x,y</span>):</span><br>  <span class="hljs-keyword">global</span> i,tb<br>  <span class="hljs-keyword">if</span> i&lt;<span class="hljs-built_in">len</span>(s):<br>    z = s[i]<br>    i += <span class="hljs-number">1</span><br>    <span class="hljs-keyword">if</span> z!=<span class="hljs-string">&#x27; &#x27;</span>:<br>      tb[y] = z<br>      dfs(x+<span class="hljs-number">1</span>,<span class="hljs-number">48</span>*(x+<span class="hljs-number">1</span>)+y)<br>      dfs(x+<span class="hljs-number">1</span>,<span class="hljs-number">49</span>*(x+<span class="hljs-number">1</span>)+y)<br><br>dfs(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>)<br>v = [<span class="hljs-number">6544</span>, <span class="hljs-number">6559</span>, <span class="hljs-number">2160</span>, <span class="hljs-number">484</span>, <span class="hljs-number">3755</span>, <span class="hljs-number">484</span>, <span class="hljs-number">2177</span>, <span class="hljs-number">2177</span>, <span class="hljs-number">5774</span>, <span class="hljs-number">3756</span>, <span class="hljs-number">6528</span>, <span class="hljs-number">5054</span>, <span class="hljs-number">0</span>, <span class="hljs-number">5067</span>, <span class="hljs-number">3756</span>, <span class="hljs-number">1008</span>, <span class="hljs-number">3168</span>, <span class="hljs-number">288</span>, <span class="hljs-number">483</span>, <span class="hljs-number">1008</span>, <span class="hljs-number">5067</span>, <span class="hljs-number">3168</span>, <span class="hljs-number">3756</span>, <span class="hljs-number">725</span>, <span class="hljs-number">1351</span>, <span class="hljs-number">725</span>, <span class="hljs-number">2640</span>, <span class="hljs-number">3756</span>, <span class="hljs-number">290</span>, <span class="hljs-number">6559</span>, <span class="hljs-number">4393</span>, <span class="hljs-number">480</span>, <span class="hljs-number">1728</span>, <span class="hljs-number">2168</span>]<br><span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;&#x27;</span>.join(tb[x] <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> v)<br><span class="hljs-comment">#flag&#123;gOOd_JoB5_rev3r5e_bAby_RlscV&#125;</span><br></code></pre></td></tr></table></figure>
+<p>实在是妙，下次办比赛再换个架构又是一道新题</p>
+<p>不愧是ylb</p>
+<p>反汇编有现成工具</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">103a8</span>:       fea<span class="hljs-number">42623</span>                sw      x<span class="hljs-number">10</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">103ac</span>:       feb<span class="hljs-number">42423</span>                sw      x<span class="hljs-number">11</span>,-<span class="hljs-number">24</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">103b0</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">103b4</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">103b6</span>:       <span class="hljs-number">6789</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">2</span><br><span class="hljs-attribute">103b8</span>:       <span class="hljs-number">99078793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,-<span class="hljs-number">1648</span> # <span class="hljs-number">0</span>x<span class="hljs-number">1990</span><br><span class="hljs-attribute">103bc</span>:       <span class="hljs-number">28</span>f<span class="hljs-number">71363</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">103c0</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">103c4</span>:       <span class="hljs-number">0791</span>                    c.addi  x<span class="hljs-number">15</span>,<span class="hljs-number">4</span><br><span class="hljs-attribute">103c6</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">103c8</span>:       <span class="hljs-number">6789</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">2</span><br><span class="hljs-attribute">103ca</span>:       <span class="hljs-number">99</span>f<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,-<span class="hljs-number">1633</span> # <span class="hljs-number">0</span>x<span class="hljs-number">199</span>f<br><span class="hljs-attribute">103ce</span>:       <span class="hljs-number">26</span>f<span class="hljs-number">71</span>a<span class="hljs-number">63</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">103d2</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">103d6</span>:       <span class="hljs-number">07</span>a<span class="hljs-number">1</span>                    c.addi  x<span class="hljs-number">15</span>,<span class="hljs-number">8</span><br><span class="hljs-attribute">103d8</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">103da</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">103dc</span>:       <span class="hljs-number">87078793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,-<span class="hljs-number">1936</span> # <span class="hljs-number">0</span>x<span class="hljs-number">870</span><br><span class="hljs-attribute">103e0</span>:       <span class="hljs-number">26</span>f<span class="hljs-number">71163</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">103e4</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">103e8</span>:       <span class="hljs-number">07</span>b<span class="hljs-number">1</span>                    c.addi  x<span class="hljs-number">15</span>,<span class="hljs-number">12</span><br><span class="hljs-attribute">103ea</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">103ec</span>:       <span class="hljs-number">1</span>e<span class="hljs-number">400793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">0</span>,<span class="hljs-number">484</span><br><span class="hljs-attribute">103f0</span>:       <span class="hljs-number">24</span>f<span class="hljs-number">71963</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">103f4</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">103f8</span>:       <span class="hljs-number">07</span>c<span class="hljs-number">1</span>                    c.addi  x<span class="hljs-number">15</span>,<span class="hljs-number">16</span><br><span class="hljs-attribute">103fa</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">103fc</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">103fe</span>:       eab<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,-<span class="hljs-number">341</span> # <span class="hljs-number">0</span>xeab<br><span class="hljs-attribute">10402</span>:       <span class="hljs-number">24</span>f<span class="hljs-number">71063</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">10406</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">1040a</span>:       <span class="hljs-number">07</span>d<span class="hljs-number">1</span>                    c.addi  x<span class="hljs-number">15</span>,<span class="hljs-number">20</span><br><span class="hljs-attribute">1040c</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">1040e</span>:       <span class="hljs-number">1</span>e<span class="hljs-number">400793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">0</span>,<span class="hljs-number">484</span><br><span class="hljs-attribute">10412</span>:       <span class="hljs-number">22</span>f<span class="hljs-number">71863</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">10416</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">1041a</span>:       <span class="hljs-number">07</span>e<span class="hljs-number">1</span>                    c.addi  x<span class="hljs-number">15</span>,<span class="hljs-number">24</span><br><span class="hljs-attribute">1041c</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">1041e</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">10420</span>:       <span class="hljs-number">88178793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,-<span class="hljs-number">1919</span> # <span class="hljs-number">0</span>x<span class="hljs-number">881</span><br><span class="hljs-attribute">10424</span>:       <span class="hljs-number">20</span>f<span class="hljs-number">71</span>f<span class="hljs-number">63</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">10428</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">1042c</span>:       <span class="hljs-number">07</span>f<span class="hljs-number">1</span>                    c.addi  x<span class="hljs-number">15</span>,<span class="hljs-number">28</span><br><span class="hljs-attribute">1042e</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">10430</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">10432</span>:       <span class="hljs-number">88178793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,-<span class="hljs-number">1919</span> # <span class="hljs-number">0</span>x<span class="hljs-number">881</span><br><span class="hljs-attribute">10436</span>:       <span class="hljs-number">20</span>f<span class="hljs-number">71663</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">1043a</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">1043e</span>:       <span class="hljs-number">02078793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">32</span><br><span class="hljs-attribute">10442</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">10444</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">10446</span>:       <span class="hljs-number">68</span>e<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">1678</span> # <span class="hljs-number">0</span>x<span class="hljs-number">168</span>e<br><span class="hljs-attribute">1044a</span>:       <span class="hljs-number">1</span>ef<span class="hljs-number">71</span>c<span class="hljs-number">63</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">1044e</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">10452</span>:       <span class="hljs-number">02478793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">36</span><br><span class="hljs-attribute">10456</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">10458</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">1045a</span>:       eac<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,-<span class="hljs-number">340</span> # <span class="hljs-number">0</span>xeac<br><span class="hljs-attribute">1045e</span>:       <span class="hljs-number">1</span>ef<span class="hljs-number">71263</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">10462</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">10466</span>:       <span class="hljs-number">02878793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">40</span><br><span class="hljs-attribute">1046a</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">1046c</span>:       <span class="hljs-number">6789</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">2</span><br><span class="hljs-attribute">1046e</span>:       <span class="hljs-number">98078793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,-<span class="hljs-number">1664</span> # <span class="hljs-number">0</span>x<span class="hljs-number">1980</span><br><span class="hljs-attribute">10472</span>:       <span class="hljs-number">1</span>cf<span class="hljs-number">71863</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">10476</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">1047a</span>:       <span class="hljs-number">02</span>c<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">44</span><br><span class="hljs-attribute">1047e</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">10480</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">10482</span>:       <span class="hljs-number">3</span>be<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">958</span> # <span class="hljs-number">0</span>x<span class="hljs-number">13</span>be<br><span class="hljs-attribute">10486</span>:       <span class="hljs-number">1</span>af<span class="hljs-number">71</span>e<span class="hljs-number">63</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">1048a</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">1048e</span>:       <span class="hljs-number">03078793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">48</span><br><span class="hljs-attribute">10492</span>:       <span class="hljs-number">439</span>c                    c.lw    x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">10494</span>:       <span class="hljs-number">1</span>a<span class="hljs-number">079763</span>                bne     x<span class="hljs-number">15</span>,x<span class="hljs-number">0</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">10498</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">1049c</span>:       <span class="hljs-number">03478793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">52</span><br><span class="hljs-attribute">104a0</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">104a2</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">104a4</span>:       <span class="hljs-number">3</span>cb<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">971</span> # <span class="hljs-number">0</span>x<span class="hljs-number">13</span>cb<br><span class="hljs-attribute">104a8</span>:       <span class="hljs-number">18</span>f<span class="hljs-number">71</span>d<span class="hljs-number">63</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">104ac</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">104b0</span>:       <span class="hljs-number">03878793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">56</span><br><span class="hljs-attribute">104b4</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">104b6</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">104b8</span>:       eac<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,-<span class="hljs-number">340</span> # <span class="hljs-number">0</span>xeac<br><span class="hljs-attribute">104bc</span>:       <span class="hljs-number">18</span>f<span class="hljs-number">71363</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">104c0</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">104c4</span>:       <span class="hljs-number">03</span>c<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">60</span><br><span class="hljs-attribute">104c8</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">104ca</span>:       <span class="hljs-number">3</span>f<span class="hljs-number">000793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">0</span>,<span class="hljs-number">1008</span><br><span class="hljs-attribute">104ce</span>:       <span class="hljs-number">16</span>f<span class="hljs-number">71</span>a<span class="hljs-number">63</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">104d2</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">104d6</span>:       <span class="hljs-number">04078793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">64</span><br><span class="hljs-attribute">104da</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">104dc</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">104de</span>:       c<span class="hljs-number">6078793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,-<span class="hljs-number">928</span> # <span class="hljs-number">0</span>xc<span class="hljs-number">60</span><br><span class="hljs-attribute">104e2</span>:       <span class="hljs-number">16</span>f<span class="hljs-number">71063</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">104e6</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">104ea</span>:       <span class="hljs-number">04478793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">68</span><br><span class="hljs-attribute">104ee</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">104f0</span>:       <span class="hljs-number">12000793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">0</span>,<span class="hljs-number">288</span><br><span class="hljs-attribute">104f4</span>:       <span class="hljs-number">14</span>f<span class="hljs-number">71763</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">104f8</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">104fc</span>:       <span class="hljs-number">04878793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">72</span><br><span class="hljs-attribute">10500</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">10502</span>:       <span class="hljs-number">1</span>e<span class="hljs-number">300793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">0</span>,<span class="hljs-number">483</span><br><span class="hljs-attribute">10506</span>:       <span class="hljs-number">12</span>f<span class="hljs-number">71</span>e<span class="hljs-number">63</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">1050a</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">1050e</span>:       <span class="hljs-number">04</span>c<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">76</span><br><span class="hljs-attribute">10512</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">10514</span>:       <span class="hljs-number">3</span>f<span class="hljs-number">000793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">0</span>,<span class="hljs-number">1008</span><br><span class="hljs-attribute">10518</span>:       <span class="hljs-number">12</span>f<span class="hljs-number">71563</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">1051c</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">10520</span>:       <span class="hljs-number">05078793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">80</span><br><span class="hljs-attribute">10524</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">10526</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">10528</span>:       <span class="hljs-number">3</span>cb<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">971</span> # <span class="hljs-number">0</span>x<span class="hljs-number">13</span>cb<br><span class="hljs-attribute">1052c</span>:       <span class="hljs-number">10</span>f<span class="hljs-number">71</span>b<span class="hljs-number">63</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">10530</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">10534</span>:       <span class="hljs-number">05478793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">84</span><br><span class="hljs-attribute">10538</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">1053a</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">1053c</span>:       c<span class="hljs-number">6078793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,-<span class="hljs-number">928</span> # <span class="hljs-number">0</span>xc<span class="hljs-number">60</span><br><span class="hljs-attribute">10540</span>:       <span class="hljs-number">10</span>f<span class="hljs-number">71163</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">10544</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">10548</span>:       <span class="hljs-number">05878793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">88</span><br><span class="hljs-attribute">1054c</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">1054e</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">10550</span>:       eac<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,-<span class="hljs-number">340</span> # <span class="hljs-number">0</span>xeac<br><span class="hljs-attribute">10554</span>:       <span class="hljs-number">0</span>ef<span class="hljs-number">71763</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">10558</span>:       fe<span class="hljs-number">842703</span>                lw      x<span class="hljs-number">14</span>,-<span class="hljs-number">24</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">1055c</span>:       <span class="hljs-number">02200793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">0</span>,<span class="hljs-number">34</span><br><span class="hljs-attribute">10560</span>:       <span class="hljs-number">0</span>ef<span class="hljs-number">71163</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">10564</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">10568</span>:       <span class="hljs-number">05</span>c<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">92</span><br><span class="hljs-attribute">1056c</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">1056e</span>:       <span class="hljs-number">2</span>d<span class="hljs-number">500793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">0</span>,<span class="hljs-number">725</span><br><span class="hljs-attribute">10572</span>:       <span class="hljs-number">0</span>cf<span class="hljs-number">71863</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">10576</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">1057a</span>:       <span class="hljs-number">06078793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">96</span><br><span class="hljs-attribute">1057e</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">10580</span>:       <span class="hljs-number">54700793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">0</span>,<span class="hljs-number">1351</span><br><span class="hljs-attribute">10584</span>:       <span class="hljs-number">0</span>af<span class="hljs-number">71</span>f<span class="hljs-number">63</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">10588</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">1058c</span>:       <span class="hljs-number">06478793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">100</span><br><span class="hljs-attribute">10590</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">10592</span>:       <span class="hljs-number">2</span>d<span class="hljs-number">500793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">0</span>,<span class="hljs-number">725</span><br><span class="hljs-attribute">10596</span>:       <span class="hljs-number">0</span>af<span class="hljs-number">71663</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">1059a</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">1059e</span>:       <span class="hljs-number">06878793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">104</span><br><span class="hljs-attribute">105a2</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">105a4</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">105a6</span>:       a<span class="hljs-number">5078793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,-<span class="hljs-number">1456</span> # <span class="hljs-number">0</span>xa<span class="hljs-number">50</span><br><span class="hljs-attribute">105aa</span>:       <span class="hljs-number">08</span>f<span class="hljs-number">71</span>c<span class="hljs-number">63</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">105ae</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">105b2</span>:       <span class="hljs-number">06</span>c<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">108</span><br><span class="hljs-attribute">105b6</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">105b8</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">105ba</span>:       eac<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,-<span class="hljs-number">340</span> # <span class="hljs-number">0</span>xeac<br><span class="hljs-attribute">105be</span>:       <span class="hljs-number">08</span>f<span class="hljs-number">71263</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">105c2</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">105c6</span>:       <span class="hljs-number">07078793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">112</span><br><span class="hljs-attribute">105ca</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">105cc</span>:       <span class="hljs-number">12200793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">0</span>,<span class="hljs-number">290</span><br><span class="hljs-attribute">105d0</span>:       <span class="hljs-number">06</span>f<span class="hljs-number">71963</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">105d4</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">105d8</span>:       <span class="hljs-number">07478793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">116</span><br><span class="hljs-attribute">105dc</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">105de</span>:       <span class="hljs-number">6789</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">2</span><br><span class="hljs-attribute">105e0</span>:       <span class="hljs-number">99</span>f<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,-<span class="hljs-number">1633</span> # <span class="hljs-number">0</span>x<span class="hljs-number">199</span>f<br><span class="hljs-attribute">105e4</span>:       <span class="hljs-number">04</span>f<span class="hljs-number">71</span>f<span class="hljs-number">63</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">105e8</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">105ec</span>:       <span class="hljs-number">07878793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">120</span><br><span class="hljs-attribute">105f0</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">105f2</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">105f4</span>:       <span class="hljs-number">12978793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">297</span> # <span class="hljs-number">0</span>x<span class="hljs-number">1129</span><br><span class="hljs-attribute">105f8</span>:       <span class="hljs-number">04</span>f<span class="hljs-number">71563</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">105fc</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">10600</span>:       <span class="hljs-number">07</span>c<span class="hljs-number">78793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">124</span><br><span class="hljs-attribute">10604</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">10606</span>:       <span class="hljs-number">1</span>e<span class="hljs-number">000793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">0</span>,<span class="hljs-number">480</span><br><span class="hljs-attribute">1060a</span>:       <span class="hljs-number">02</span>f<span class="hljs-number">71</span>c<span class="hljs-number">63</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">1060e</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">10612</span>:       <span class="hljs-number">08078793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">128</span><br><span class="hljs-attribute">10616</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">10618</span>:       <span class="hljs-number">6</span>c<span class="hljs-number">000793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">0</span>,<span class="hljs-number">1728</span><br><span class="hljs-attribute">1061c</span>:       <span class="hljs-number">02</span>f<span class="hljs-number">71363</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br><span class="hljs-attribute">10620</span>:       fec<span class="hljs-number">42783</span>                lw      x<span class="hljs-number">15</span>,-<span class="hljs-number">20</span>(x<span class="hljs-number">8</span>)<br><span class="hljs-attribute">10624</span>:       <span class="hljs-number">08478793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">132</span><br><span class="hljs-attribute">10628</span>:       <span class="hljs-number">4398</span>                    c.lw    x<span class="hljs-number">14</span>,<span class="hljs-number">0</span>(x<span class="hljs-number">15</span>)<br><span class="hljs-attribute">1062a</span>:       <span class="hljs-number">6785</span>                    c.lui   x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">1</span><br><span class="hljs-attribute">1062c</span>:       <span class="hljs-number">87878793</span>                addi    x<span class="hljs-number">15</span>,x<span class="hljs-number">15</span>,-<span class="hljs-number">1928</span> # <span class="hljs-number">0</span>x<span class="hljs-number">878</span><br><span class="hljs-attribute">10630</span>:       <span class="hljs-number">00</span>f<span class="hljs-number">71963</span>                bne     x<span class="hljs-number">14</span>,x<span class="hljs-number">15</span>,<span class="hljs-number">0</span>x<span class="hljs-number">10642</span><br></code></pre></td></tr></table></figure>
+<p>截取部分反汇编代码，搜索关键字符串地址就能定位到比较处</p>
+<h1 id="re-rs4"><a href="#re-rs4" class="headerlink" title="re_rs4"></a>re_rs4</h1><p>tea</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> index[] = &#123; <span class="hljs-number">0</span>,<span class="hljs-number">3</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">2</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">3</span>,<span class="hljs-number">2</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">0</span>,<span class="hljs-number">3</span>,<span class="hljs-number">3</span>,<span class="hljs-number">0</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">3</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">3</span>,<span class="hljs-number">2</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">2</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">3</span>,<span class="hljs-number">2</span> &#125;;<br>FILE* c = fopen(<span class="hljs-string">&quot;C:\\Users\\pisanbao\\Dropbox\\My PC (DESKTOP-TIPJDRO)\\Desktop\\temp.jpg&quot;</span>, <span class="hljs-string">&quot;ab+&quot;</span>);<br><span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> aaa = <span class="hljs-number">0</span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">decode</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> flag[], DWORD* filebuffer)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> a = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">int</span> i;<br>	<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> v19 = *(DWORD *)filebuffer, v20 = *(DWORD *)(filebuffer+<span class="hljs-number">1</span>);<span class="hljs-comment">//jpg开头前8字节，👴猜这jpg必是标准jpg</span><br>	<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">0x20</span>; i++)<br>	&#123;<br>		a -= <span class="hljs-number">1640531527</span>;<br>	&#125;<br>	<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">0x20</span>; i++)<br>	&#123;<br>		v20 -= (((v19 &gt;&gt; <span class="hljs-number">5</span>) ^ (<span class="hljs-number">16</span> * v19)) + v19) ^ (flag[index[<span class="hljs-number">63</span><span class="hljs-number">-2</span>*i]] + a);<br>		a += <span class="hljs-number">1640531527</span>;<br>		v19 -= ((((<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)v20 &gt;&gt; <span class="hljs-number">5</span>) ^ (<span class="hljs-number">16</span> * v20)) + v20) ^ (flag[index[<span class="hljs-number">63</span><span class="hljs-number">-2</span>*i<span class="hljs-number">-1</span>]] + a);<br>	&#125;<br>	fwrite(&amp;v19, <span class="hljs-number">4</span>, <span class="hljs-number">1</span>, c);<br>	fwrite(&amp;v20, <span class="hljs-number">4</span>, <span class="hljs-number">1</span>, c);<br>	<span class="hljs-comment">/*</span><br><span class="hljs-comment">	if (v19 == 0xE0FFD8FF &amp;&amp; v20 == 0x464A1000)</span><br><span class="hljs-comment">	&#123;</span><br><span class="hljs-comment">		printf(&quot;ylb_sb\n&quot;);</span><br><span class="hljs-comment">		printf(&quot;%s&quot;, flag);</span><br><span class="hljs-comment">	&#125;*/</span><br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> table[] = <span class="hljs-string">&quot;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#123;&#125;-_[]`@&quot;</span>;<br>	<span class="hljs-keyword">int</span> i,j,k,l;<br>	<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> data[<span class="hljs-number">3</span>];<br>	<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span> flag[<span class="hljs-number">5</span>] = <span class="hljs-string">&quot;xbvu&quot;</span>;<br>	FILE* a;<br>	<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> srcaddr[] = <span class="hljs-string">&quot;C:\\Users\\pisanbao\\Dropbox\\My PC (DESKTOP-TIPJDRO)\\Desktop\\output.jpg&quot;</span>;<br>	a = fopen(srcaddr, <span class="hljs-string">&quot;rb&quot;</span>);<br>	fseek(a, <span class="hljs-number">0</span>, SEEK_END);<br>	<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">long</span> <span class="hljs-keyword">long</span> filesize = ftell(a);<br>	fseek(a, <span class="hljs-number">0</span>, SEEK_SET);<br>	DWORD* filebuffer = (DWORD*)<span class="hljs-built_in">calloc</span>(<span class="hljs-number">1</span>, filesize);<br>	fread(filebuffer, filesize, <span class="hljs-number">1</span>, a);<br>	<span class="hljs-keyword">int</span> temp = filesize / <span class="hljs-number">8</span>;<br>	<span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; temp; i++)<br>	&#123;<br>		decode(flag, (DWORD*)(filebuffer+<span class="hljs-number">2</span>*i));<br>	&#125;<br>	<span class="hljs-comment">/*decode(flag);*/</span><br>	<span class="hljs-comment">/*</span><br><span class="hljs-comment">	for (i = 0; i &lt; 70; i++)</span><br><span class="hljs-comment">	&#123;</span><br><span class="hljs-comment">		for (j = 0; j &lt; 70; j++)</span><br><span class="hljs-comment">		&#123;</span><br><span class="hljs-comment">			for (k = 0; k &lt; 70; k++)</span><br><span class="hljs-comment">			&#123;</span><br><span class="hljs-comment">				for (l = 0; l &lt; 70; l++)</span><br><span class="hljs-comment">				&#123;</span><br><span class="hljs-comment">					flag[0] = table[i];</span><br><span class="hljs-comment">					flag[1] = table[j];</span><br><span class="hljs-comment">					flag[2] = table[k];</span><br><span class="hljs-comment">					flag[3] = table[l];</span><br><span class="hljs-comment">					decode(flag);</span><br><span class="hljs-comment">				&#125;</span><br><span class="hljs-comment">			&#125;</span><br><span class="hljs-comment">		&#125;</span><br><span class="hljs-comment">	&#125;*/</span><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>爆破出key”xbvu”;<br>然后解密</p>
+<p>出题人貌似写的有问题，tea的key录入16字节</p>
+<p>但是函数返回一字节，说白了就是16字节分4组，每组4字节加密，本来应该是这样的但是出题人写的函数返回值是1字节就是16字节输入只要每4个开头哪一个字节被用到了</p>
+<p>所以只需要爆破4字节然后写解密即可</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/re/">#re</a>
+      
+        <a href="/tags/ctf/">#ctf</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2020国赛总决赛re</div>
+      <div>http://www.psbazx.com/2020/10/03/2020国赛总决赛re/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>October 2, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/10/04/%E5%85%B3%E4%BA%8Ec/" title="关于c++">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">关于c++</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/09/17/sctf-2020-writeup/" title="sctf 2020 writeup">
+                        <span class="hidden-mobile">sctf 2020 writeup</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

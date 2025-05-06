@@ -1,0 +1,714 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="router相关的一些基础知识学习与理解。uhttpd源码分析+openwrt启动流程学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="router学习笔记">
+<meta property="og:url" content="http://www.psbazx.com/2024/01/22/router%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="router相关的一些基础知识学习与理解。uhttpd源码分析+openwrt启动流程学习">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-01-22T11:01:39.000Z">
+<meta property="article:modified_time" content="2024-07-22T03:03:20.806Z">
+<meta property="article:author" content="皮三宝">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>router学习笔记 - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="router学习笔记"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-22 11:01" pubdate>
+          January 22, 2024 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          89 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">router学习笔记</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>router相关的一些基础知识学习与理解。uhttpd源码分析+openwrt启动流程学习</p>
+<a id="more"></a>
+
+<h1 id="router"><a href="#router" class="headerlink" title="router"></a>router</h1><p>基础知识学习与理解</p>
+<h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><p>串口调试工具 hyperterminal，需要配合杜邦线和usb转ttl转接板。注意如果提前连接好杜邦线再插入usb口可能会获取不到信息，这时要先插入usb口然后开启路由器等待一段时间后将杜邦线插入到ttl转usb转接板上，接法是GND-GND、RXD-TXD、TXD-RXD。</p>
+<h2 id="Bootloader"><a href="#Bootloader" class="headerlink" title="Bootloader"></a>Bootloader</h2><p>Bootloader 是系统上电或复位后最先执行的程序。它的任务是初始化硬件并加载操作系统内核到 RAM 中并运行它。如RAM初始化、内核镜像调用、内核解密、文件系统解密等。</p>
+<p>常见的 bootloader 有：</p>
+<p><code>GRUB</code>:GNU GRand Unified Bootloader 是 Linux、UNIX 和其他操作系统的常见 bootloader。它提供了一个菜单，允许用户选择不同的操作系统或内核版本。</p>
+<p><code>LILO</code>:Linux Loader，是早期的 Linux bootloader，现已被 GRUB 替代。</p>
+<p><code>U-Boot</code>:通用 bootloader，主要用于嵌入式设备。</p>
+<p><code>Fastboot</code>:Android 设备上的 bootloader。</p>
+<p><code>RedBoot:</code>另一种嵌入式设备 bootloader。</p>
+<p><code>Syslinux/Isolinux:</code>用于启动 live CD 或其他轻量级媒体的 bootloader。</p>
+<p><code>EFI/UEFI</code>:现代计算机上的 bootloader 接口，用于替代传统的 BIOS。</p>
+<p>通常，bootloader 存储在设备的只读内存 (ROM) 或其他不可修改的存储中，以确保它在设备启动时始终可用。但也有一些 bootloader 是可以更新的，这样能够为设备提供新功能或修复错误。</p>
+<h2 id="uhttpd源码分析"><a href="#uhttpd源码分析" class="headerlink" title="uhttpd源码分析"></a>uhttpd源码分析</h2><p>先从main函数开始，如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-keyword">int</span> argc, <span class="hljs-keyword">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">alias</span> *<span class="hljs-title">alias</span>;</span><br>	<span class="hljs-keyword">bool</span> nofork = <span class="hljs-literal">false</span>;<br>	<span class="hljs-keyword">char</span> *port;<br>	<span class="hljs-keyword">int</span> opt, ch;<br>	<span class="hljs-keyword">int</span> cur_fd;<br>	<span class="hljs-keyword">int</span> bound = <span class="hljs-number">0</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> HAVE_TLS</span><br>	<span class="hljs-keyword">int</span> n_tls = <span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *tls_key = <span class="hljs-literal">NULL</span>, *tls_crt = <span class="hljs-literal">NULL</span>, *tls_ciphers = <span class="hljs-literal">NULL</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> HAVE_LUA</span><br>	<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *lua_prefix = <span class="hljs-literal">NULL</span>, *lua_handler = <span class="hljs-literal">NULL</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> HAVE_UCODE</span><br>	<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *ucode_prefix = <span class="hljs-literal">NULL</span>, *ucode_handler = <span class="hljs-literal">NULL</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
+<p>根据条件初始化一些变量</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c++">BUILD_BUG_ON(<span class="hljs-keyword">sizeof</span>(uh_buf) &lt; PATH_MAX);<span class="hljs-comment">//检查缓冲区大小</span><br><br>uh_dispatch_add(&amp;cgi_dispatch);<br>init_defaults_pre();<br>signal(SIGPIPE, SIG_IGN);<br></code></pre></td></tr></table></figure>
+<p>uh_dispatch_add函数负责吧cgi添加到链表中</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">struct</span> dispatch_handler cgi_dispatch = &#123;<br>	.script = <span class="hljs-literal">true</span>,<br>	.check_path = check_cgi_path,<br>	.handle_request = cgi_handle_request,<br>&#125;;<br>void uh<span class="hljs-constructor">_dispatch_add(<span class="hljs-params">struct</span> <span class="hljs-params">dispatch_handler</span> <span class="hljs-operator">*</span><span class="hljs-params">d</span>)</span><br>&#123;<br>	<span class="hljs-built_in">list</span><span class="hljs-constructor">_add_tail(&amp;<span class="hljs-params">d</span>-&gt;<span class="hljs-params">list</span>, &amp;<span class="hljs-params">dispatch_handlers</span>)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>.script = true</code>：这可能意味着该处理器是用来处理脚本请求的。</li>
+<li><code>.check_path = check_cgi_path</code>：一个函数指针，可能用于检查请求路径是否为有效的CGI路径。</li>
+<li><code>.handle_request = cgi_handle_request</code>：一个函数指针，用于处理CGI请求。</li>
+</ul>
+<p>init_defaults_pre函数负责初始化配置的默认值</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">static void init<span class="hljs-constructor">_defaults_pre(<span class="hljs-params">void</span>)</span><br>&#123;<br>	conf.script_timeout = <span class="hljs-number">60</span>;<br>	conf.network_timeout = <span class="hljs-number">30</span>;<br>	conf.http_keepalive = <span class="hljs-number">20</span>;<br>	conf.max_script_requests = <span class="hljs-number">3</span>;<br>	conf.max_connections = <span class="hljs-number">100</span>;<br>	conf.realm = <span class="hljs-string">&quot;Protected Area&quot;</span>;<br>	conf.cgi_prefix = <span class="hljs-string">&quot;/cgi-bin&quot;</span>;<br>	conf.cgi_path = <span class="hljs-string">&quot;/sbin:/usr/sbin:/bin:/usr/bin&quot;</span>;<br>	<span class="hljs-constructor">INIT_LIST_HEAD(&amp;<span class="hljs-params">conf</span>.<span class="hljs-params">cgi_alias</span>)</span>;<br>	<span class="hljs-constructor">INIT_LIST_HEAD(&amp;<span class="hljs-params">conf</span>.<span class="hljs-params">lua_prefix</span>)</span>;<br>#<span class="hljs-keyword">if</span> HAVE_UCODE<br>	<span class="hljs-constructor">INIT_LIST_HEAD(&amp;<span class="hljs-params">conf</span>.<span class="hljs-params">ucode_prefix</span>)</span>;<br>#endif<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>signal(SIGPIPE, SIG_IGN);用来忽略信号，防止客户端突然断开导致uhttpd进程退出</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs arcade"><span class="hljs-string">`signal(SIGPIPE, SIG_IGN);`</span> 是一个常见的编程技巧，用于忽略 <span class="hljs-string">`SIGPIPE`</span> 信号。在网络编程中，当试图写入一个已经关闭的套接字或管道时，进程会收到一个 <span class="hljs-string">`SIGPIPE`</span> 信号。默认情况下，这个信号会导致进程终止。<br><br>在服务器应用程序中，客户端突然断开连接是一个常见的情况。如果没有处理 <span class="hljs-string">`SIGPIPE`</span> 信号，那么每当这种情况发生时，服务器进程都可能会意外终止，这显然是不可接受的。<br><br>通过使用 <span class="hljs-string">`signal(SIGPIPE, SIG_IGN);`</span>，进程告诉操作系统它希望忽略 <span class="hljs-string">`SIGPIPE`</span> 信号。这意味着即使尝试写入已关闭的套接字，进程也不会因为收到 <span class="hljs-string">`SIGPIPE`</span> 信号而终止。相反，写入操作会返回一个错误，通常是 <span class="hljs-string">`EPIPE`</span>，这样程序可以适当地处理这种情况，而不是意外终止。<br></code></pre></td></tr></table></figure>
+<p>在后面就是一个很大的switch case负责解析命令行参数</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs lisp">while ((<span class="hljs-name">ch</span> = getopt(<span class="hljs-name">argc</span>, argv, <span class="hljs-string">&quot;A:ab:C:c:Dd:E:e:fh:H:I:i:K:k:L:l:m:N:n:O:o:P:p:qRr:Ss:T:t:U:u:Xx:y:&quot;</span>)) != <span class="hljs-number">-1</span>)<br></code></pre></td></tr></table></figure>
+<p>具体对每个参数的解释和编译配置相关，假如某些配置没有编译那么就会报错，如TLS的选项没有的话就会打印如下错误信息</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;uhttpd: TLS support not compiled, &quot;</span><br>			                <span class="hljs-string">&quot;ignoring -%c\n&quot;</span>, ch);<br></code></pre></td></tr></table></figure>
+<p>参数的解释与使用可以看源码的usage函数。</p>
+<p>switch case完后会执行如下函数</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">uh_config_parse</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">const</span> <span class="hljs-keyword">char</span> *path = conf.file;<br>	FILE *c;<br>	<span class="hljs-keyword">char</span> line[<span class="hljs-number">512</span>];<br>	<span class="hljs-keyword">char</span> *col1;<br>	<span class="hljs-keyword">char</span> *col2;<br>	<span class="hljs-keyword">char</span> *eol;<br><br>	<span class="hljs-keyword">if</span> (!path)<br>		path = <span class="hljs-string">&quot;/etc/httpd.conf&quot;</span>;<br><br>	c = fopen(path, <span class="hljs-string">&quot;r&quot;</span>);<br>	<span class="hljs-keyword">if</span> (!c)<br>		<span class="hljs-keyword">return</span>;<br><br>	<span class="hljs-built_in">memset</span>(line, <span class="hljs-number">0</span>, <span class="hljs-keyword">sizeof</span>(line));<br><br>	<span class="hljs-keyword">while</span> (fgets(line, <span class="hljs-keyword">sizeof</span>(line) - <span class="hljs-number">1</span>, c)) &#123;<br>		<span class="hljs-keyword">if</span> ((line[<span class="hljs-number">0</span>] == <span class="hljs-string">&#x27;/&#x27;</span>) &amp;&amp; (<span class="hljs-built_in">strchr</span>(line, <span class="hljs-string">&#x27;:&#x27;</span>) != <span class="hljs-literal">NULL</span>)) &#123;<br>			<span class="hljs-keyword">if</span> (!(col1 = <span class="hljs-built_in">strchr</span>(line, <span class="hljs-string">&#x27;:&#x27;</span>)) || (*col1++ = <span class="hljs-number">0</span>) ||<br>				!(col2 = <span class="hljs-built_in">strchr</span>(col1, <span class="hljs-string">&#x27;:&#x27;</span>)) || (*col2++ = <span class="hljs-number">0</span>) ||<br>				!(eol = <span class="hljs-built_in">strchr</span>(col2, <span class="hljs-string">&#x27;\n&#x27;</span>)) || (*eol++  = <span class="hljs-number">0</span>))<br>				<span class="hljs-keyword">continue</span>;<br><br>			uh_auth_add(line, col1, col2);<br>		&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strncmp</span>(line, <span class="hljs-string">&quot;I:&quot;</span>, <span class="hljs-number">2</span>)) &#123;<br>			<span class="hljs-keyword">if</span> (!(col1 = <span class="hljs-built_in">strchr</span>(line, <span class="hljs-string">&#x27;:&#x27;</span>)) || (*col1++ = <span class="hljs-number">0</span>) ||<br>				!(eol = <span class="hljs-built_in">strchr</span>(col1, <span class="hljs-string">&#x27;\n&#x27;</span>)) || (*eol++  = <span class="hljs-number">0</span>))<br>				<span class="hljs-keyword">continue</span>;<br><br>			uh_index_add(strdup(col1));<br>		&#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!<span class="hljs-built_in">strncmp</span>(line, <span class="hljs-string">&quot;E404:&quot;</span>, <span class="hljs-number">5</span>)) &#123;<br>			<span class="hljs-keyword">if</span> (!(col1 = <span class="hljs-built_in">strchr</span>(line, <span class="hljs-string">&#x27;:&#x27;</span>)) || (*col1++ = <span class="hljs-number">0</span>) ||<br>				!(eol = <span class="hljs-built_in">strchr</span>(col1, <span class="hljs-string">&#x27;\n&#x27;</span>)) || (*eol++  = <span class="hljs-number">0</span>))<br>				<span class="hljs-keyword">continue</span>;<br><br>			conf.error_handler = strdup(col1);<br>		&#125;<br>		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((line[<span class="hljs-number">0</span>] == <span class="hljs-string">&#x27;*&#x27;</span>) &amp;&amp; (<span class="hljs-built_in">strchr</span>(line, <span class="hljs-string">&#x27;:&#x27;</span>) != <span class="hljs-literal">NULL</span>)) &#123;<br>			<span class="hljs-keyword">if</span> (!(col1 = <span class="hljs-built_in">strchr</span>(line, <span class="hljs-string">&#x27;*&#x27;</span>)) || (*col1++ = <span class="hljs-number">0</span>) ||<br>				!(col2 = <span class="hljs-built_in">strchr</span>(col1, <span class="hljs-string">&#x27;:&#x27;</span>)) || (*col2++ = <span class="hljs-number">0</span>) ||<br>				!(eol = <span class="hljs-built_in">strchr</span>(col2, <span class="hljs-string">&#x27;\n&#x27;</span>)) || (*eol++  = <span class="hljs-number">0</span>))<br>				<span class="hljs-keyword">continue</span>;<br><br>			uh_interpreter_add(col1, col2);<br>		&#125;<br>	&#125;<br><br>	fclose(c);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>参数-c可以指定config文件，如果没有指定的话就会使用默认的<code>/etc/httpd.conf</code></p>
+<p>然后就是解析config文件分为四种</p>
+<ol>
+<li><strong>以 <code>/</code> 开头，且包含 <code>:</code> 的行</strong>：<br>这种类型的行被认为是定义了HTTP Basic Auth的行。每一行的格式应为<code>/path:username:password</code>，其中<code>/path</code>是需要保护的路径，<code>username</code>是用户名，<code>password</code>是密码。这些信息会被提取出来，并通过调用<code>uh_auth_add(line, col1, col2)</code>函数添加到验证信息列表中。</li>
+<li><strong>以 <code>I:</code> 开头的行</strong>：<br>这种类型的行用来定义默认的索引文件。索引文件的名称紧随<code>I:</code>之后。该名称会被提取出来，通过<code>uh_index_add(strdup(col1))</code>函数添加到索引文件列表中。</li>
+<li><strong>以 <code>E404:</code> 开头的行</strong>：<br>这种类型的行用来定义HTTP 404错误的处理程序。错误处理程序的路径紧随<code>E404:</code>之后。该路径会被提取出来，保存到<code>conf.error_handler</code>变量中。</li>
+<li><strong>以 <code>\*</code> 开头，且包含 <code>:</code> 的行</strong>：<br>这种类型的行用来定义解释器。每一行的格式应为<code>*.ext:/path/to/interpreter</code>，其中<code>*.ext</code>是需要被解释的文件扩展名，<code>/path/to/interpreter</code>是用来解释这类文件的解释器的路径。这些信息会被提取出来，并通过调用<code>uh_interpreter_add(col1, col2)</code>函数添加到解释器列表中。</li>
+</ol>
+<p>接着依旧是根据编译选项的几个分支处理</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> HAVE_TLS</span><br>	<span class="hljs-keyword">if</span> (n_tls) &#123;<br>		<span class="hljs-keyword">if</span> (!tls_crt || !tls_key) &#123;<br>			<span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Please specify a certificate and &quot;</span><br>					<span class="hljs-string">&quot;a key file to enable SSL support\n&quot;</span>);<br>			<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>		&#125;<br><br>		<span class="hljs-keyword">if</span> (uh_tls_init(tls_key, tls_crt, tls_ciphers))<br>		    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>	&#125;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> HAVE_LUA</span><br>	<span class="hljs-keyword">if</span> (lua_handler || lua_prefix) &#123;<br>		<span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Need handler and prefix to enable Lua support\n&quot;</span>);<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>	&#125;<br><br>	<span class="hljs-keyword">if</span> (!list_empty(&amp;conf.lua_prefix) &amp;&amp; uh_plugin_init(<span class="hljs-string">&quot;uhttpd_lua.so&quot;</span>))<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> HAVE_UCODE</span><br>	<span class="hljs-keyword">if</span> (ucode_handler || ucode_prefix) &#123;<br>		<span class="hljs-built_in">fprintf</span>(<span class="hljs-built_in">stderr</span>, <span class="hljs-string">&quot;Need handler and prefix to enable ucode support\n&quot;</span>);<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>	&#125;<br><br>	<span class="hljs-keyword">if</span> (!list_empty(&amp;conf.ucode_prefix) &amp;&amp; uh_plugin_init(<span class="hljs-string">&quot;uhttpd_ucode.so&quot;</span>))<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> HAVE_UBUS</span><br>	<span class="hljs-keyword">if</span> (conf.ubus_prefix &amp;&amp; uh_plugin_init(<span class="hljs-string">&quot;uhttpd_ubus.so&quot;</span>))<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
+<p>主要是负责初始化工作。</p>
+<p>下面是根据参数来判断是否fork使得uhttpd成为守护进程,从而可以在后台无干扰的运行，其中<code>cur_fd = open(&quot;/dev/null&quot;, O_WRONLY);</code>这一行使其无需与任何终端交互。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-comment">/* fork (if not disabled) */</span><br><span class="hljs-keyword">if</span> (!nofork) &#123;<br>	<span class="hljs-keyword">switch</span> (fork()) &#123;<br>	<span class="hljs-keyword">case</span> <span class="hljs-number">-1</span>:<br>		perror(<span class="hljs-string">&quot;fork()&quot;</span>);<br>		<span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);<br><br>	<span class="hljs-keyword">case</span> <span class="hljs-number">0</span>:<br>		<span class="hljs-comment">/* daemon setup */</span><br>		<span class="hljs-keyword">if</span> (chdir(<span class="hljs-string">&quot;/&quot;</span>))<br>			perror(<span class="hljs-string">&quot;chdir()&quot;</span>);<br><br>		cur_fd = open(<span class="hljs-string">&quot;/dev/null&quot;</span>, O_WRONLY);<br>		<span class="hljs-keyword">if</span> (cur_fd &gt; <span class="hljs-number">0</span>) &#123;<br>			dup2(cur_fd, <span class="hljs-number">0</span>);<br>			dup2(cur_fd, <span class="hljs-number">1</span>);<br>			dup2(cur_fd, <span class="hljs-number">2</span>);<br>		&#125;<br><br>		<span class="hljs-keyword">break</span>;<br><br>	<span class="hljs-keyword">default</span>:<br>		<span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>至于守护进程解释如下</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs markdown">守护进程（Daemon Process）是运行在Unix和类Unix系统（如Linux）后台的特殊进程。与普通进程不同，它不与任何终端相关联。以下是守护进程的一些关键特点：<br><br><span class="hljs-bullet">1.</span> <span class="hljs-strong">**后台运行**</span>：守护进程在后台运行，不需要与前台交互。<br><br><span class="hljs-bullet">2.</span> <span class="hljs-strong">**没有终端**</span>：守护进程没有控制终端，因此它不会收到用户输入。<br><br><span class="hljs-bullet">3.</span> <span class="hljs-strong">**生命周期**</span>：通常，守护进程的生命周期从系统启动开始，一直到系统关闭。<br><br><span class="hljs-bullet">4.</span> <span class="hljs-strong">**常见的守护进程**</span>：很多系统级的服务，如web服务器、数据库服务器等，都是作为守护进程运行的。<br><br><span class="hljs-bullet">5.</span> <span class="hljs-strong">**创建守护进程**</span>：通常，守护进程是通过以下步骤创建的：<br><span class="hljs-bullet">   -</span> 调用<span class="hljs-code">`fork()`</span>并使父进程退出，这样子进程成为孤儿进程，并被init进程（进程ID为1）接管。<br><span class="hljs-bullet">   -</span> 更改文件模式掩码（umask），确保守护进程有适当的文件权限。<br><span class="hljs-bullet">   -</span> 更改工作目录到根目录，以确保守护进程不会阻止任何文件系统被卸载。<br><span class="hljs-bullet">   -</span> 关闭所有打开的文件描述符，这样守护进程不会持有不需要的资源。<br><span class="hljs-bullet">   -</span> 打开<span class="hljs-code">`/dev/null`</span>，并将标准输入、输出和错误重定向到它，这样守护进程不会在任何终端上显示输出或接收输入。<br><span class="hljs-bullet">   -</span> 调用<span class="hljs-code">`setsid()`</span>以创建新的会话，并使守护进程成为会话领导。<br><br><span class="hljs-bullet">6.</span> <span class="hljs-strong">**使用场景**</span>：守护进程通常用于提供各种网络服务（例如HTTP、SSH、FTP）或执行特定任务，如日志轮换、备份和系统监控。<br><br><span class="hljs-bullet">7.</span> <span class="hljs-strong">**结束与管理**</span>：守护进程可以由系统管理员使用命令（如<span class="hljs-code">`kill`</span>）终止，或通过系统工具（如<span class="hljs-code">`systemd`</span>、<span class="hljs-code">`init`</span>、<span class="hljs-code">`upstart`</span>等）进行管理和监控。<br></code></pre></td></tr></table></figure>
+<p>最后就是</p>
+<p><code>return run_server();</code></p>
+<p>到此main函数结束。</p>
+<p>服务启动函数定义在main函数如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">run_server</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>	uloop_init();            <span class="hljs-comment">// 初始化事件循环库</span><br>	uh_setup_listeners();    <span class="hljs-comment">// 设置HTTP服务器的监听器</span><br>	uh_plugin_post_init();   <span class="hljs-comment">// 初始化插件后的处理</span><br>	uloop_run();             <span class="hljs-comment">// 运行事件循环，等待客户端连接和处理</span><br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>下面分析其功能</p>
+<ol>
+<li><p><strong>uloop_init</strong>:</p>
+<p>这个函数用于初始化uloop库。在开始使用任何uloop功能之前，你首先需要调用此函数。它为后续的事件处理做好准备。</p>
+</li>
+<li><p><strong>uloop_run</strong>:</p>
+<p>这个函数启动了事件循环。当你设置了一些事件监听器或计时器并准备好处理这些事件时，你可以调用这个函数。事件循环将持续运行，直到没有更多的事件要处理，或者直到调用<code>uloop_end</code>。</p>
+</li>
+</ol>
+<p><strong>主要功能</strong>：</p>
+<p><code>uloop</code>的主要目的是允许你的程序异步地响应各种事件，如：</p>
+<ul>
+<li><strong>文件描述符上的可读/可写事件</strong>：例如，当有新的TCP连接到达监听套接字时，或当一个文件变得可读时。</li>
+<li><strong>计时器</strong>：允许你在某个时间点后执行某个操作。</li>
+<li><strong>信号</strong>：允许你捕获和响应系统信号。</li>
+</ul>
+<p>简单来说，<code>uloop</code>允许你编写一个能够同时处理多个操作并响应外部事件的程序，而无需使用多线程或多进程。</p>
+<p>使用<code>uloop</code>的一般流程是：</p>
+<ol>
+<li><p>使用<code>uloop_init</code>初始化。</p>
+</li>
+<li><p>设置你想要监听的事件。</p>
+</li>
+<li><p>调用<code>uloop_run</code>来启动事件循环。</p>
+</li>
+<li><p>在事件循环中，你的回调函数将被触发并处理相关的事件。</p>
+</li>
+<li><p>当完成所有操作或需要退出程序时，可以调用<code>uloop_end</code>来结束事件循环。</p>
+</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">uh_setup_listeners</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">listener</span> *<span class="hljs-title">l</span>;</span><br>	<span class="hljs-keyword">int</span> yes = <span class="hljs-number">1</span>;<br><br>	list_for_each_entry(l, &amp;listeners, <span class="hljs-built_in">list</span>) &#123;<br>		<span class="hljs-keyword">int</span> sock = l-&gt;fd.fd;<br><br>		<span class="hljs-comment">/* TCP keep-alive */</span><br>		<span class="hljs-keyword">if</span> (conf.tcp_keepalive &gt; <span class="hljs-number">0</span>) &#123;<br><span class="hljs-meta">#<span class="hljs-meta-keyword">ifdef</span> linux</span><br>			<span class="hljs-keyword">int</span> tcp_ka_idl, tcp_ka_int, tcp_ka_cnt, tcp_fstopn;<br><br>			tcp_ka_idl = <span class="hljs-number">1</span>;<br>			tcp_ka_cnt = <span class="hljs-number">3</span>;<br>			tcp_ka_int = conf.tcp_keepalive;<br>			tcp_fstopn = <span class="hljs-number">5</span>;<br><br>			setsockopt(sock, SOL_TCP, TCP_KEEPIDLE,  &amp;tcp_ka_idl, <span class="hljs-keyword">sizeof</span>(tcp_ka_idl));<span class="hljs-comment">//TCP_KEEPIDLE: 这定义了当连接上最后一次数据传输之后，多久开始发送keep-alive探针。</span><br>			setsockopt(sock, SOL_TCP, TCP_KEEPINTVL, &amp;tcp_ka_int, <span class="hljs-keyword">sizeof</span>(tcp_ka_int));<span class="hljs-comment">//TCP_KEEPINTVL: 在探针之间等待的时间。</span><br>			setsockopt(sock, SOL_TCP, TCP_KEEPCNT,   &amp;tcp_ka_cnt, <span class="hljs-keyword">sizeof</span>(tcp_ka_cnt));<span class="hljs-comment">//TCP_KEEPCNT: 在认为连接已死之前，需要发送的未被确认的探针的数量。</span><br>			setsockopt(sock, SOL_TCP, TCP_FASTOPEN,  &amp;tcp_fstopn, <span class="hljs-keyword">sizeof</span>(tcp_fstopn));<span class="hljs-comment">//TCP_FASTOPEN: 它允许数据在初始的SYN（TCP连接的开始）中被发送，这可以加速开放新的连接。</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">endif</span></span><br><br>			setsockopt(sock, SOL_SOCKET, SO_KEEPALIVE, &amp;yes, <span class="hljs-keyword">sizeof</span>(yes));<br>		&#125;<br><br>		l-&gt;fd.cb = listener_cb;<br>		uloop_fd_add(&amp;l-&gt;fd, ULOOP_READ);<span class="hljs-comment">//将监听器的文件描述符（socket）添加到事件循环中，并设置为读模式。</span><br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p> 函数的主要步骤如下：</p>
+<ol>
+<li><p>遍历每一个监听器,服务可能多端口监听。</p>
+</li>
+<li><p>如果配置中指定了TCP keep-alive的时间，那么设置相关的socket选项。这是用来检测并丢弃死掉的连接，确保资源不会被无效的客户端长时间占用。</p>
+</li>
+<li><p>在Linux系统上，可以设置更详细的TCP keep-alive参数，如keep-alive闲置时间、未确认的探针数等。</p>
+</li>
+<li><p>为每个监听器设置回调函数<code>listener_cb</code>，该函数会在有新的连接请求时被调用。</p>
+</li>
+<li><p>将监听器添加到事件循环中，并设置为监听读事件。这意味着每当有新的连接请求时，<code>listener_cb</code>函数将被调用。</p>
+</li>
+</ol>
+<p>简单来说功能是为了初始化所有的监听器为其设置回调函数。</p>
+<p>回调函数功能如下</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">listener_cb</span><span class="hljs-params">(struct uloop_fd *fd, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> events)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">listener</span> *<span class="hljs-title">l</span> =</span> container_of(fd, struct listener, fd);<br><br>	<span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>) &#123;<br>		<span class="hljs-keyword">if</span> (!uh_accept_client(fd-&gt;fd, l-&gt;tls))<br>			<span class="hljs-keyword">break</span>;<br>	&#125;<br><br>	<span class="hljs-keyword">if</span> (conf.max_connections &amp;&amp; n_clients &gt;= conf.max_connections)<br>		uh_block_listener(l);<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">uh_block_listener</span><span class="hljs-params">(struct listener *l)</span></span><br><span class="hljs-function"></span>&#123;<br>	uloop_fd_delete(&amp;l-&gt;fd);<br>	n_blocked++;<br>	l-&gt;blocked = <span class="hljs-literal">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>不断接受客户端链接，超出最大链接数量则阻塞。阻塞函数为uh_block_listener会为其设置对应的标志位，并增加对应的引用计数。</p>
+<p>uh_accept_client函数定义在<code>client.c</code>中</p>
+<p>这个函数会尝试接受一个新的客户端的链接</p>
+<ul>
+<li>先声明和初始化一些局部变量。</li>
+<li>使用<code>accept</code>函数尝试从给定的文件描述符<code>fd</code>接受一个新的客户端连接。<ul>
+<li>如果<code>accept</code>失败，则返回<code>false</code>。</li>
+</ul>
+</li>
+<li><code>set_addr</code>函数用于保存客户端和服务器的地址信息。</li>
+<li>根据是否是TLS连接，为新连接分配一个流并设置适当的回调。</li>
+<li><code>ustream_fd_init</code>用于初始化新连接的ustream。</li>
+<li><code>uh_poll_connection</code>函数调用来轮询连接。</li>
+<li><code>list_add_tail</code>将新客户端添加到客户端列表中。</li>
+<li>增加<code>n_clients</code>的计数器。</li>
+</ul>
+<p>uh_plugin_post_init函数主要是初始化所注册的插件</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">uh_plugin_post_init</span><span class="hljs-params">(<span class="hljs-keyword">void</span>)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">uhttpd_plugin</span> *<span class="hljs-title">p</span>;</span><br><br>	list_for_each_entry(p, &amp;plugins, <span class="hljs-built_in">list</span>) <span class="hljs-comment">// 遍历所有已注册的插件</span><br>		<span class="hljs-keyword">if</span> (p-&gt;post_init)                  <span class="hljs-comment">// 检查插件是否有post_init方法</span><br>			p-&gt;post_init();                <span class="hljs-comment">// 调用该插件的post_init方法</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>以上是基本的启动流程代码，还有很多其他的部分如cgi处理，总的来说这类web服务器功能就是接受客户端的请求并做出响应，可以自行处理也可以交给后端的一些其他接口来处理如cgi lua php等</p>
+<h2 id="openwrt启动流程"><a href="#openwrt启动流程" class="headerlink" title="openwrt启动流程"></a>openwrt启动流程</h2><p><code>vmlinux--&gt;/etc/preinit--&gt;/sbin/init--&gt;/etc/inittab--&gt;/etc/rc.d/*</code></p>
+<p>内核在执行完kernel_init后会执行/etc/preinit脚本，该脚本主要功能负责初始化，特别是文件系统。preinit的工作之一就是将rom和overlay的文件系统合并。其次就是一些环境变量的设置，硬件方面的检测和设置等。</p>
+<p>preinit执行完后会执行/sbin/init，该程序会负责初始化系统并管理所有其他的进程，通过解析/etc/inittab文件来实现，文件如下</p>
+<figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs asciidoc"><span class="hljs-meta">::sysinit:/etc/init.d/rcS</span> S boot<br><span class="hljs-meta">::shutdown:/etc/init.d/rcS</span> K shutdown<br>ttyS0::askfirst:/usr/libexec/login.sh<br>hvc0::askfirst:/usr/libexec/login.sh<br>tty1::askfirst:/usr/libexec/login.sh<br></code></pre></td></tr></table></figure>
+<p>前俩行分别指系统初始化和关机时要启动的脚本他们分别会执行/etc/rc.d/下所有S或K开头的脚本，按照优先级依次执行。rc.d中存放的都是快捷方式链接到了init.d目录下。</p>
+<p>想要持续化可以考虑修改rc.d和init.d目录下的文件，创建对应的文件也可以。前提是有overlay特性，注意不能修改preinit，因为preinit使用的还是rom中的，运行完后会把overlay和rom合并。</p>
+<p>具体可见参考资料<a target="_blank" rel="noopener" href="https://oldwiki.archive.openwrt.org/doc/techref/preinit_mount">openwrt启动流程</a></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>router学习笔记</div>
+      <div>http://www.psbazx.com/2024/01/22/router学习笔记/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>January 22, 2024</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/03/22/AFL-forkserver%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB/" title="AFL forkserver源码阅读">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">AFL forkserver源码阅读</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/12/22/%E7%BA%A4%E7%A8%8B%E5%AD%A6%E4%B9%A0/" title="纤程学习">
+                        <span class="hidden-mobile">纤程学习</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

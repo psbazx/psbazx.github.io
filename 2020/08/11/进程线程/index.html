@@ -1,0 +1,757 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="基础基础~~~">
+<meta property="og:type" content="article">
+<meta property="og:title" content="进程线程">
+<meta property="og:url" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="基础基础~~~">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200720101950692.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200720102133521.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200720150207163.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200720150244169.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200720150327358.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200720150400202.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200720150412684.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200720150437551.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200721100730610.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200721100919135.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200721103855314.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200721104412142.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200721110137217.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200721110401655.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200722105812335.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200722105938429.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200722110025824.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200722110118078.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200722110212411.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200729102000046.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200729105325211.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200729102025644.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200729103533151.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200729104020382.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200729104756803.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200729111828055.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200729111927533.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200729111947770.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200729112134138.png">
+<meta property="article:published_time" content="2020-08-10T17:30:47.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:18.688Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="ctf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2020/08/11/%E8%BF%9B%E7%A8%8B%E7%BA%BF%E7%A8%8B/image-20200720101950692.png">
+  
+  
+  
+  <title>进程线程 - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="进程线程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-08-10 17:30" pubdate>
+          August 10, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          11k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          90 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">进程线程</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>基础基础~~~</p>
+<a id="more"></a>
+
+<h1 id="进程线程"><a href="#进程线程" class="headerlink" title="进程线程"></a>进程线程</h1><h2 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h2><p>测试环境:Winxp</p>
+<p>关于进程，最初始的概念就是提供了程序所能访问的空间，如x86下进程就是4gb虚拟内存空间，进程唯一提供有用的东西就是cr3寄存器，每当进程创建在0环就有一个结构体EPROCESS</p>
+<p><img src="image-20200720101950692.png" srcset="/img/loading.gif" lazyload alt="image-20200720101950692"></p>
+<p><img src="image-20200720102133521.png" srcset="/img/loading.gif" lazyload alt="image-20200720102133521"></p>
+<p>其中第一个成员为KPROCESS</p>
+<p>+0x000 Header           : _DISPATCHER_HEADER //表示为可等待对象（WaitForSingleObject）</p>
+<p>+0x018 DirectoryTableBase : [2] 0x2ff04000 //为页目录表基址</p>
+<p>+0x038 KernelTime       : 6<br>+0x03c UserTime         : 1            //进程在用户态和内核态所花费的时间</p>
+<p>+0x05c Affinity         : 1 //规定只能在那几个cpu上跑  转换成二进制即可</p>
+<p>+0x062 BasePriority     : 8 ‘’ //基础优先级</p>
+<p>+0x070 CreateTime       : _LARGE_INTEGER 0x01d65e3b`60784231<br>+0x078 ExitTime         : _LARGE_INTEGER 0x0                                        //进程创建和退出的时间</p>
+<p>+0x084 UniqueProcessId  : 0x0000075c Void                                    //PID</p>
+<p>+0x088 ActiveProcessLinks : _LIST_ENTRY [ 0x80562358 - 0x89b7e818 ]    //双向链表 连接的所有活动的进程</p>
+<p>//这边可以通过遍历这个双向链表来得到所有活动中的进程，如 dt _eprocess 0x80562358 -88</p>
+<p>//也可以通过断链来实现隐藏，当然只能不让某些api找到</p>
+<p>+0x11c VadRoot          : 0x89543e80 Void            //标志了0-2G中哪写内存被使用了</p>
+<p>+0x0bc DebugPort        : (null)         //调试相关</p>
+<p>+0x0c4 ObjectTable      : 0xe185e178 _HANDLE_TABLE            //句柄表</p>
+<p>+0x174 ImageFileName    : [16]  “notepad.exe”                    //进程镜像文件名 最多16字节</p>
+<p>+0x1a0 ActiveThreads    : 1                            //活动线程的数量</p>
+<p>+0x1b0 Peb              : 0x7ffde000 _PEB            //进程环境块</p>
+<h3 id="进程隐藏"><a href="#进程隐藏" class="headerlink" title="进程隐藏"></a>进程隐藏</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;ntddk.h&gt;</span></span><br><br><span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">WIN10</span></span><br><span class="hljs-class">&#123;</span><br>	g_uNextProcess = <span class="hljs-number">0x2f0</span>,<br>	g_uPrevProcess = <span class="hljs-number">0x2f8</span>,<br>	g_uImageFileName = <span class="hljs-number">0x450</span><br>&#125;;<br><br>PLIST_ENTRY g_pListEntryTemp = <span class="hljs-literal">NULL</span>;<br>PLIST_ENTRY g_pHeadEntry = <span class="hljs-literal">NULL</span>;<br><br><span class="hljs-function">VOID <span class="hljs-title">MyDriverUnload</span><span class="hljs-params">(PDRIVER_OBJECT pDriverObject)</span></span><br><span class="hljs-function"></span>&#123;<br>	DbgPrint(<span class="hljs-string">&quot;unload;&quot;</span>);<br>	<span class="hljs-keyword">if</span>(g_pListEntryTemp != <span class="hljs-literal">NULL</span>)<br>	&#123;<br>		InsertHeadList(g_pHeadEntry, g_pListEntryTemp);<br>	&#125;<br>&#125;<br><br><span class="hljs-function">VOID <span class="hljs-title">HideProcessor</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	PEPROCESS pCurrrentProcess = <span class="hljs-literal">NULL</span>;<br>	PEPROCESS pPreviousProcess = <span class="hljs-literal">NULL</span>;<br><br>	pCurrrentProcess = PsGetCurrentProcess();<br>	pPreviousProcess = (PEPROCESS)(*((PULONG_PTR)((ULONG_PTR)pCurrrentProcess + g_uPrevProcess)) - g_uNextProcess);<br><br>	<span class="hljs-keyword">while</span> (pCurrrentProcess != pPreviousProcess)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (<span class="hljs-built_in">strcmp</span>(((PCHAR)((ULONG_PTR)pCurrrentProcess + g_uImageFileName)), <span class="hljs-string">&quot;temp.exe&quot;</span>) == <span class="hljs-number">0</span>)<br>		&#123;<br>			g_pListEntryTemp = (PLIST_ENTRY)(((ULONG_PTR)pCurrrentProcess + g_uNextProcess));<br>			RemoveEntryList(g_pListEntryTemp);<br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br>		pCurrrentProcess = (PEPROCESS)(*((PULONG_PTR)((ULONG_PTR)pCurrrentProcess + g_uNextProcess)) - g_uNextProcess);<br>	&#125;<br>&#125;<br><br><span class="hljs-function">NTSTATUS <span class="hljs-title">DriverEntry</span><span class="hljs-params">(PDRIVER_OBJECT pDriverObject, PUNICODE_STRING pStrRegPath)</span></span><br><span class="hljs-function"></span>&#123;<br>	g_pHeadEntry = (PLIST_ENTRY)((ULONG_PTR)PsGetCurrentProcess() + g_uNextProcess);<br>	DbgPrint(<span class="hljs-string">&quot;start&quot;</span>);<br>	__try<br>	&#123;<br>		HideProcessor();<br>	&#125;<br>	__except (EXCEPTION_EXECUTE_HANDLER)<br>	&#123;<br>		DbgPrint(<span class="hljs-string">&quot;something wrong!&quot;</span>);<br>	&#125;<br>	pDriverObject-&gt;DriverUnload = MyDriverUnload;<br>	<span class="hljs-keyword">return</span> STATUS_SUCCESS;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+<p><img src="image-20200720150207163.png" srcset="/img/loading.gif" lazyload alt="image-20200720150207163"></p>
+<p>查看id 7352，加载驱动隐藏进程</p>
+<p><img src="image-20200720150244169.png" srcset="/img/loading.gif" lazyload alt="image-20200720150244169"></p>
+<p>可以发现ida已经无法找到进程，但是火绒剑还是可以，看来是没有使用api</p>
+<p><img src="image-20200720150327358.png" srcset="/img/loading.gif" lazyload alt="image-20200720150327358"></p>
+<p>同样的任务管理器也无法找到进程</p>
+<p>unload恢复一波</p>
+<p><img src="image-20200720150400202.png" srcset="/img/loading.gif" lazyload alt="image-20200720150400202"></p>
+<p><img src="image-20200720150412684.png" srcset="/img/loading.gif" lazyload alt="image-20200720150412684"></p>
+<p><img src="image-20200720150437551.png" srcset="/img/loading.gif" lazyload alt="image-20200720150437551"></p>
+<p>可以发先ida与任务管理器都成功查找到了进程</p>
+<h2 id="线程"><a href="#线程" class="headerlink" title="线程"></a>线程</h2><p>与进程相对应得是线程得ethread</p>
+<p><img src="image-20200721100730610.png" srcset="/img/loading.gif" lazyload alt="image-20200721100730610"></p>
+<p>具体查看方法是kprocess得0x50处，可以发现一个双向链表链接了进程内的所有线程</p>
+<p>因为我打开的是记事本所以俩个一样只有一个线程</p>
+<p><img src="image-20200721100919135.png" srcset="/img/loading.gif" lazyload alt="image-20200721100919135"></p>
+<p>对应的在0x190处还能看到一个副本</p>
+<p>分析一波具体结构，首先从kthread开始看起</p>
+<p>+0x000 Header           : _DISPATCHER_HEADER //和eprocess一模一样，是用来表示是否可等待</p>
+<p>+0x010 MutantListHead   : _LIST_ENTRY [ 0x5ae36ce0 - 0xeb2f81a ]<br>+0x018 InitialStack     : 0x8994da98 Void<br>+0x01c StackLimit       : 0x8994da98 Void    //与线程切换相关</p>
+<p>+0x020 Teb              : (null)         //线程环境块，在三环时就是fs:[0]，在0环时fs指向的KPCR</p>
+<p>+0x02c DebugActive      : 0xe8 ‘’    //如果值为-1 则表示不能使用调试寄存器</p>
+<p>+0x034 ApcState         : _KAPC_STATE</p>
+<p>+0x0e8 ApcQueueLock     : 0</p>
+<p>+0x138 ApcStatePointer  : [2] (null) </p>
+<p>+0x14c SavedApcState    : _KAPC_STATE        //这边是与APC相关的应用</p>
+<p>+0x02d State            : 0x98 ‘’            //线程运行状态</p>
+<p>+0x06c BasePriority     : 0 ‘’        //基础优先值</p>
+<p>+0x070 WaitBlock        : [4] _KWAIT_BLOCK            //表示等待哪个对象中</p>
+<p>+0x0e0 ServiceTable     : 0x8994db30 Void            //指向了系统服务表的基地址</p>
+<p>+0x134 TrapFrame        : 0xe380d1f0 _KTRAP_FRAME        //保存现场环境</p>
+<p>+0x140 PreviousMode     : 0 ‘’        //表示先前模式是0环还是3环</p>
+<p>+0x1ec Cid              : _CLIENT_ID            //表示进程和线程id</p>
+<p>+0x220 ThreadsProcess   : 0x89a86240 _EPROCESS        //指向自己所属的进程</p>
+<p>+0x22c ThreadListEntry  : _LIST_ENTRY [ 0x0 - 0x0 ]        //所有线程得位置</p>
+<h2 id="KPCR"><a href="#KPCR" class="headerlink" title="KPCR"></a>KPCR</h2><p><img src="image-20200721103855314.png" srcset="/img/loading.gif" lazyload alt="image-20200721103855314"></p>
+<p>+0x000 ExceptionList    : Ptr32 _EXCEPTION_REGISTRATION_RECORD    //异常处理链表<br>+0x004 StackBase        : Ptr32 Void<br>+0x008 StackLimit       : Ptr32 Void    //当前线程内核栈的基地址和大小</p>
+<p>+0x018 Self             : Ptr32 _NT_TIB    //指向自己</p>
+<p>+0x01c SelfPcr          : Ptr32 _KPCR    //同上</p>
+<p>+0x020 Prcb             : Ptr32 _KPRCB        //指向扩展结构体</p>
+<p>+0x038 IDT              : Ptr32 _KIDTENTRY    //指向IDT表基地址<br>+0x03c GDT              : Ptr32 _KGDTENTRY//GDT表基地址<br>+0x040 TSS              : Ptr32 _KTSS        //指向TSS任务段</p>
+<p>+0x051 Number           : UChar        //CPU编号</p>
+<p>+0x120 PrcbData         : _KPRCB        //指向扩展结构体</p>
+<p><img src="image-20200721104412142.png" srcset="/img/loading.gif" lazyload alt="image-20200721104412142"></p>
+<p>查看_KPRCB结构体</p>
+<p>+0x004 CurrentThread    : Ptr32 _KTHREAD        //当前线程<br>+0x008 NextThread       : Ptr32 _KTHREAD        //即将切换线程<br>+0x00c IdleThread       : Ptr32 _KTHREAD        //空闲线程</p>
+<h2 id="等待链表-调度链表"><a href="#等待链表-调度链表" class="headerlink" title="等待链表-调度链表"></a>等待链表-调度链表</h2><p><img src="image-20200721110137217.png" srcset="/img/loading.gif" lazyload alt="image-20200721110137217"></p>
+<p>主要是kthread +0x60处    //等待链表是当线程调用了Sleep() 或者 WaitForSingleObject()等函数时，就挂到这个链表</p>
+<p>调度链表有32个圈，就是优先级:0 - 31  0最低  31最高  默认优先级一般是8</p>
+<p>改变优先级就是从一个圈里面卸下来挂到另外一个圈上</p>
+<p>这32个圈是正在调度中的线程：包括正在运行的和准备运行的</p>
+<p>比如：只有一个CPU但有10个线程在运行，那么某一时刻，正在运行的线程在KPCR中，其他9个在这32个圈中。</p>
+<p><img src="image-20200721110401655.png" srcset="/img/loading.gif" lazyload alt="image-20200721110401655"></p>
+<p>查看一波调度链表</p>
+<p>XP只有一个33个圈，也就是说上面这个数组只有一个，多核也只有一个.</p>
+<p>Win7也是一样的只有一个圈，如果是64位的，那就有64个圈.</p>
+<p>服务器版本：KiWaitListHead整个系统只有一个，但KiDispatcherReadyListHead这个数组有几个CPU就有几组</p>
+<h2 id="模拟线程切换"><a href="#模拟线程切换" class="headerlink" title="模拟线程切换"></a>模拟线程切换</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><br><span class="hljs-comment">//最大支持的线程数</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> MAXGMTHREAD 100</span><br><br><span class="hljs-comment">//线程信息的结构</span><br><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span></span><br><span class="hljs-class">&#123;</span><br>	<span class="hljs-keyword">char</span>* name;							<span class="hljs-comment">//线程名 相当于线程ID</span><br>	<span class="hljs-keyword">int</span> Flags;							<span class="hljs-comment">//线程状态</span><br>	<span class="hljs-keyword">int</span> SleepMillsecondDot;				<span class="hljs-comment">//休眠时间</span><br><br>	<span class="hljs-keyword">void</span>* initialStack;					<span class="hljs-comment">//线程堆栈起始位置</span><br>	<span class="hljs-keyword">void</span>* StackLimit;					<span class="hljs-comment">//线程堆栈界限</span><br>	<span class="hljs-keyword">void</span>* KernelStack;					<span class="hljs-comment">//线程堆栈当前位置，也就是ESP</span><br><br>	<span class="hljs-keyword">void</span>* lpParameter;					<span class="hljs-comment">//线程函数的参数</span><br>	<span class="hljs-keyword">void</span>(*func)(<span class="hljs-keyword">void</span>* lpParameter);		<span class="hljs-comment">//线程函数</span><br>&#125;GMThread_t;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">GMThreadStartup</span><span class="hljs-params">(GMThread_t* GMThreadp)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">IdleGMThread</span><span class="hljs-params">(<span class="hljs-keyword">void</span>* lpParameter)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PushStack</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>** Stackpp, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> v)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">initGMThread</span><span class="hljs-params">(GMThread_t* GMThreadp, <span class="hljs-keyword">char</span>* name, <span class="hljs-keyword">void</span>(*func)(<span class="hljs-keyword">void</span>* lpParameter), <span class="hljs-keyword">void</span>* lpParameter)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">RegisterGMThread</span><span class="hljs-params">(<span class="hljs-keyword">char</span>* name, <span class="hljs-keyword">void</span>(*func)(<span class="hljs-keyword">void</span>* lpParameter), <span class="hljs-keyword">void</span>* lpParameter)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">SwitchContext</span><span class="hljs-params">(GMThread_t* SrcGMThreadp, GMThread_t* DstGMThreadp)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Scheduling</span><span class="hljs-params">()</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">GMSleep</span><span class="hljs-params">(<span class="hljs-keyword">int</span> MilliSeconds)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Thread1</span><span class="hljs-params">(<span class="hljs-keyword">void</span>*)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Thread2</span><span class="hljs-params">(<span class="hljs-keyword">void</span>*)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Thread3</span><span class="hljs-params">(<span class="hljs-keyword">void</span>*)</span></span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Thread4</span><span class="hljs-params">(<span class="hljs-keyword">void</span>*)</span></span>;<br><span class="hljs-comment">//定义线程栈的大小</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> GMTHREADSTACKSIZE 0x80000</span><br><br><span class="hljs-comment">//当前线程的索引</span><br><span class="hljs-keyword">int</span> CurrentThreadIndex = <span class="hljs-number">0</span>;<br><br><span class="hljs-comment">//线程的列表</span><br>GMThread_t GMThreadList[MAXGMTHREAD] = &#123; <span class="hljs-literal">NULL</span>, <span class="hljs-number">0</span> &#125;;<br><br><span class="hljs-comment">//线程状态的标志</span><br><span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">FLAGS</span></span><br><span class="hljs-class">&#123;</span><br>	GMTHREAD_CREATE = <span class="hljs-number">0x1</span>,<br>	GMTHREAD_READY = <span class="hljs-number">0x2</span>,<br>	GMTHREAD_SLEEP = <span class="hljs-number">0x4</span>,<br>	GMTHREAD_EXIT = <span class="hljs-number">0x8</span>,<br>&#125;;<br><br><br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	RegisterGMThread((<span class="hljs-keyword">char</span>*)<span class="hljs-string">&quot;Thread1&quot;</span>, Thread1, <span class="hljs-literal">NULL</span>);<br>	RegisterGMThread((<span class="hljs-keyword">char</span>*)<span class="hljs-string">&quot;Thread2&quot;</span>, Thread2, <span class="hljs-literal">NULL</span>);<br>	RegisterGMThread((<span class="hljs-keyword">char</span>*)<span class="hljs-string">&quot;Thread3&quot;</span>, Thread3, <span class="hljs-literal">NULL</span>);<br>	RegisterGMThread((<span class="hljs-keyword">char</span>*)<span class="hljs-string">&quot;Thread4&quot;</span>, Thread4, <span class="hljs-literal">NULL</span>);<br><br>	<span class="hljs-keyword">for</span> (;;)<br>	&#123;<br>		Sleep(<span class="hljs-number">20</span>);<br>		Scheduling();<br>	&#125;<br><br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><br><span class="hljs-comment">//启动线程的函数</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">GMThreadStartup</span><span class="hljs-params">(GMThread_t* GMThreadp)</span></span><br><span class="hljs-function"></span>&#123;<br>	GMThreadp-&gt;func(GMThreadp-&gt;lpParameter);<br>	GMThreadp-&gt;Flags = GMTHREAD_EXIT;<br>	Scheduling();<br><br>	<span class="hljs-keyword">return</span>;<br>&#125;<br><br><span class="hljs-comment">//空闲线程的函数</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">IdleGMThread</span><span class="hljs-params">(<span class="hljs-keyword">void</span>* lpParameter)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;IdleGMThread---------------\n&quot;</span>);<br>	Scheduling();<br>	<span class="hljs-keyword">return</span>;<br>&#125;<br><br><span class="hljs-comment">//向栈中压入一个uint值</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">PushStack</span><span class="hljs-params">(<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>** Stackpp, <span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span> v)</span></span><br><span class="hljs-function"></span>&#123;<br>	*Stackpp -= <span class="hljs-number">1</span>;<span class="hljs-comment">//esp - 4</span><br>	**Stackpp = v;<span class="hljs-comment">//</span><br><br>	<span class="hljs-keyword">return</span>;<br>&#125;<br><br><span class="hljs-comment">//初始化线程的信息</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">initGMThread</span><span class="hljs-params">(GMThread_t* GMThreadp, <span class="hljs-keyword">char</span>* name, <span class="hljs-keyword">void</span>(*func)(<span class="hljs-keyword">void</span>* lpParameter), <span class="hljs-keyword">void</span>* lpParameter)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>* StackPages;<br>	<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>* StackDWordParam;<br><br>	<span class="hljs-comment">//结构初始化赋值</span><br>	GMThreadp-&gt;Flags = GMTHREAD_CREATE;<br>	GMThreadp-&gt;name = name;<br>	GMThreadp-&gt;func = func;<br>	GMThreadp-&gt;lpParameter = lpParameter;<br><br>	<span class="hljs-comment">//申请空间</span><br>	StackPages = (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">char</span>*)VirtualAlloc(<span class="hljs-literal">NULL</span>, GMTHREADSTACKSIZE, MEM_COMMIT, PAGE_READWRITE);<br>	<span class="hljs-comment">//初始化</span><br>	ZeroMemory(StackPages, GMTHREADSTACKSIZE);<br>	<span class="hljs-comment">//初始化地址地址</span><br>	GMThreadp-&gt;initialStack = StackPages + GMTHREADSTACKSIZE;<br>	<span class="hljs-comment">//堆栈限制</span><br>	GMThreadp-&gt;StackLimit = StackPages;<br>	<span class="hljs-comment">//堆栈地址</span><br>	StackDWordParam = (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>*)GMThreadp-&gt;initialStack;<br><br>	<span class="hljs-comment">//入栈</span><br>	PushStack(&amp;StackDWordParam, (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)GMThreadp);		<span class="hljs-comment">//通过这个指针来找到线程函数，线程参数</span><br>	PushStack(&amp;StackDWordParam, (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)<span class="hljs-number">9</span>);				<span class="hljs-comment">//平衡堆栈的(不用管)</span><br>	PushStack(&amp;StackDWordParam, (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)GMThreadStartup);	<span class="hljs-comment">//线程入口函数 这个函数负责调用线程函数</span><br>	PushStack(&amp;StackDWordParam, (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)<span class="hljs-number">5</span>);				<span class="hljs-comment">//push ebp</span><br>	PushStack(&amp;StackDWordParam, (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)<span class="hljs-number">7</span>);				<span class="hljs-comment">//push edi</span><br>	PushStack(&amp;StackDWordParam, (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)<span class="hljs-number">6</span>);				<span class="hljs-comment">//push esi</span><br>	PushStack(&amp;StackDWordParam, (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)<span class="hljs-number">3</span>);				<span class="hljs-comment">//push ebx</span><br>	PushStack(&amp;StackDWordParam, (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)<span class="hljs-number">2</span>);				<span class="hljs-comment">//push ecx</span><br>	PushStack(&amp;StackDWordParam, (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)<span class="hljs-number">1</span>);				<span class="hljs-comment">//push edx</span><br>	PushStack(&amp;StackDWordParam, (<span class="hljs-keyword">unsigned</span> <span class="hljs-keyword">int</span>)<span class="hljs-number">0</span>);				<span class="hljs-comment">//push eax</span><br><br>	<span class="hljs-comment">//当前线程的栈顶</span><br>	GMThreadp-&gt;KernelStack = StackDWordParam;<br><br>	<span class="hljs-comment">//当前线程状态</span><br>	GMThreadp-&gt;Flags = GMTHREAD_READY;<br><br>	<span class="hljs-keyword">return</span>;<br>&#125;<br><br><span class="hljs-comment">//将一个函数注册为单独线程执行</span><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">RegisterGMThread</span><span class="hljs-params">(<span class="hljs-keyword">char</span>* name, <span class="hljs-keyword">void</span>(*func)(<span class="hljs-keyword">void</span>* lpParameter), <span class="hljs-keyword">void</span>* lpParameter)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">int</span> i;<br>	<span class="hljs-keyword">for</span> (i = <span class="hljs-number">1</span>; GMThreadList[i].name; i++)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (<span class="hljs-number">0</span> == _stricmp(GMThreadList[i].name, name))<br>		&#123;<br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br>	&#125;<br>	initGMThread(&amp;GMThreadList[i], name, func, lpParameter);<br><br>	<span class="hljs-keyword">return</span> (i &amp; <span class="hljs-number">0x55AA0000</span>);<br>&#125;<br><br><span class="hljs-comment">//切换线程	1：当前线程结构体指针 2：要切换的线程结构体指针</span><br>__declspec(naked) <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">SwitchContext</span><span class="hljs-params">(GMThread_t* SrcGMThreadp, GMThread_t* DstGMThreadp)</span></span><br><span class="hljs-function"></span>&#123;<br>	__asm<br>	&#123;<br>		<span class="hljs-comment">//提升堆栈</span><br>		push ebp<br>		mov ebp, esp<br><br>		<span class="hljs-comment">//保存当前线程寄存器</span><br>		push edi<br>		push esi<br>		push ebx<br>		push ecx<br>		push edx<br>		push eax<br><br>		mov esi, SrcGMThreadp<br>		mov edi, DstGMThreadp<br><br>		mov[esi + GMThread_t.KernelStack], esp<br><br>		<span class="hljs-comment">//经典线程切换，另外一个线程复活</span><br>		mov esp, [edi + GMThread_t.KernelStack]<br><br>		pop eax<br>		pop edx<br>		pop ecx<br>		pop ebx<br>		pop esi<br>		pop edi<br><br>		pop ebp<br>		ret	<span class="hljs-comment">//把startup(线程函数入口)弹到eip 执行的就是线程函数了</span><br>	&#125;<br>&#125;<br><br><span class="hljs-comment">//这个函数会让出cpu，从队列里重新选择一个线程执行</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Scheduling</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">int</span> TickCount = GetTickCount();<br><br>	GMThread_t* SrcGMThreadp = &amp;GMThreadList[CurrentThreadIndex];<br>	GMThread_t* DstGMThreadp = &amp;GMThreadList[<span class="hljs-number">0</span>];<br><br><br>	<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; GMThreadList[i].name; i++)<br>	&#123;<br>		<span class="hljs-keyword">if</span> (GMThreadList[i].Flags &amp; GMTHREAD_SLEEP)<br>		&#123;<br>			<span class="hljs-keyword">if</span> (TickCount &gt; GMThreadList[i].SleepMillsecondDot)<br>			&#123;<br>				GMThreadList[i].Flags = GMTHREAD_READY;<br>			&#125;<br>		&#125;<br>		<span class="hljs-keyword">if</span> (GMThreadList[i].Flags &amp; GMTHREAD_READY)<br>		&#123;<br>			DstGMThreadp = &amp;GMThreadList[i];<br>			<span class="hljs-keyword">break</span>;<br>		&#125;<br>	&#125;<br><br>	CurrentThreadIndex = DstGMThreadp - GMThreadList;<br><br>	SwitchContext(SrcGMThreadp, DstGMThreadp);<br><br>	<span class="hljs-keyword">return</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">GMSleep</span><span class="hljs-params">(<span class="hljs-keyword">int</span> MilliSeconds)</span></span><br><span class="hljs-function"></span>&#123;<br>	GMThread_t* GMThreadp;<br>	GMThreadp = &amp;GMThreadList[CurrentThreadIndex];<br><br>	<span class="hljs-keyword">if</span> (GMThreadp-&gt;Flags != <span class="hljs-number">0</span>)<br>	&#123;<br>		GMThreadp-&gt;Flags = GMTHREAD_SLEEP;<br>		GMThreadp-&gt;SleepMillsecondDot = GetTickCount() + MilliSeconds;<br>	&#125;<br><br>	Scheduling();<br>	<span class="hljs-keyword">return</span>;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Thread1</span><span class="hljs-params">(<span class="hljs-keyword">void</span>*)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Thread1\n&quot;</span>);<br>		GMSleep(<span class="hljs-number">500</span>);<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Thread2</span><span class="hljs-params">(<span class="hljs-keyword">void</span>*)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Thread2\n&quot;</span>);<br>		GMSleep(<span class="hljs-number">200</span>);<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Thread3</span><span class="hljs-params">(<span class="hljs-keyword">void</span>*)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Thread3\n&quot;</span>);<br>		GMSleep(<span class="hljs-number">10</span>);<br>	&#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">Thread4</span><span class="hljs-params">(<span class="hljs-keyword">void</span>*)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">while</span> (<span class="hljs-number">1</span>)<br>	&#123;<br>		<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;Thread4\n&quot;</span>);<br>		GMSleep(<span class="hljs-number">1000</span>);<br>	&#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>代码是于海东老师的，直接拿过来编译即可使用，主要是逆向的过程</p>
+<p><img src="image-20200722105812335.png" srcset="/img/loading.gif" lazyload alt="image-20200722105812335"></p>
+<p>前面函数单纯负责注册线程，真正切换线程在Scheduling函数中</p>
+<p><img src="image-20200722105938429.png" srcset="/img/loading.gif" lazyload alt="image-20200722105938429"></p>
+<p>判断状态，然后当前线程主动call SwitchContext来让出cpu</p>
+<p>具体切换过程就在SwitchContext中</p>
+<p><img src="image-20200722110025824.png" srcset="/img/loading.gif" lazyload alt="image-20200722110025824"></p>
+<p>保存现场环境，然后堆栈切换后恢复环境</p>
+<p><img src="image-20200722110118078.png" srcset="/img/loading.gif" lazyload alt="image-20200722110118078"></p>
+<p>返回时会回到GMThreadStartup，这边call了线程处理函数</p>
+<p>函数call完后设置一波状态然后继续判断</p>
+<p><img src="image-20200722110212411.png" srcset="/img/loading.gif" lazyload alt="image-20200722110212411"></p>
+<h2 id="KiSwapContext"><a href="#KiSwapContext" class="headerlink" title="KiSwapContext"></a>KiSwapContext</h2><p>来逆向一波内核函数，总体和上面模拟线程切换差不多</p>
+<p><img src="image-20200729102000046.png" srcset="/img/loading.gif" lazyload alt="image-20200729102000046"></p>
+<p>来看看swapcontext</p>
+<p><img src="image-20200729105325211.png" srcset="/img/loading.gif" lazyload alt="image-20200729105325211"></p>
+<p>总结一波线程切换知识</p>
+<p>1.api调用//绝大部分api调用时都会判断是否要线程切换</p>
+<p>2.时钟中断</p>
+<p>3.异常</p>
+<p><img src="image-20200729102025644.png" srcset="/img/loading.gif" lazyload alt="image-20200729102025644"></p>
+<p>这边还能看到tss的esp0</p>
+<p><img src="image-20200729103533151.png" srcset="/img/loading.gif" lazyload alt="image-20200729103533151"></p>
+<p>具体如上图，eax是InitialStack</p>
+<p>-0x210 -0x10后保存在tss中</p>
+<p>这是因为内核堆栈结构所导致，0x210存放浮点寄存器值，然后紧跟着trap frame</p>
+<p>可以看之前的笔记，trapframe一开始4个4字节是给虚拟8086用的所以是0x10</p>
+<p>这就是为啥tss中esp0永远是当前线程的esp0</p>
+<p>后面还往tss中存放cr3</p>
+<p><img src="image-20200729104020382.png" srcset="/img/loading.gif" lazyload alt="image-20200729104020382"></p>
+<p>edi是kprocess</p>
+<p>+18就是cr3了放到tss中然后切换cr3</p>
+<p>继续往下看</p>
+<p><img src="image-20200729104756803.png" srcset="/img/loading.gif" lazyload alt="image-20200729104756803"></p>
+<p>可以看到这个TEB相关</p>
+<p>这也解释了为什么不管是什么线程fs都一样，他会把当前线程peb放到gdt表中，具体可以看之前段描述符结构，发现正好是吧地址填满了base addr</p>
+<p>现在回去看一波线程优先级</p>
+<p><img src="image-20200729111828055.png" srcset="/img/loading.gif" lazyload alt="image-20200729111828055"></p>
+<p>KiFindReadyThread后比较返回值是否为空，KiFindReadyThread其实就是遍历32个链表来根据优先级查找</p>
+<p>如果链表为空那么开始跑idlethread</p>
+<p>查看跳转处</p>
+<p><img src="image-20200729111927533.png" srcset="/img/loading.gif" lazyload alt="image-20200729111927533"></p>
+<p>取出idlethread放到eax中然后跳转</p>
+<p><img src="image-20200729111947770.png" srcset="/img/loading.gif" lazyload alt="image-20200729111947770"></p>
+<p>这边_KiIdleSummary是个dword每个位用来表示每个优先级的链表是否为空</p>
+<p>windbg查看一波链表</p>
+<p><img src="image-20200729112134138.png" srcset="/img/loading.gif" lazyload alt="image-20200729112134138"></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/re/">#re</a>
+      
+        <a href="/tags/ctf/">#ctf</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>进程线程</div>
+      <div>http://www.psbazx.com/2020/08/11/进程线程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>August 10, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/08/11/API%E4%BB%8E3%E5%88%B00%E7%9A%84%E5%AD%A6%E4%B9%A0/" title="API从3到0的学习">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">API从3到0的学习</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/06/11/windows%E9%A9%B1%E5%8A%A8/" title="windows驱动">
+                        <span class="hidden-mobile">windows驱动</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

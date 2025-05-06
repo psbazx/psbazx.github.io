@@ -1,0 +1,634 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="前阵子看到的一篇slides，感觉挺有意思，记录下学习过程。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="纤程学习">
+<meta property="og:url" content="http://www.psbazx.com/2023/12/22/%E7%BA%A4%E7%A8%8B%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="前阵子看到的一篇slides，感觉挺有意思，记录下学习过程。">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2023/12/22/%E7%BA%A4%E7%A8%8B%E5%AD%A6%E4%B9%A0/image-20230921135228998.png">
+<meta property="og:image" content="http://www.psbazx.com/2023/12/22/%E7%BA%A4%E7%A8%8B%E5%AD%A6%E4%B9%A0/image-20230921191949390.png">
+<meta property="og:image" content="http://www.psbazx.com/2023/12/22/%E7%BA%A4%E7%A8%8B%E5%AD%A6%E4%B9%A0/image-20230921192427787.png">
+<meta property="og:image" content="http://www.psbazx.com/2023/12/22/%E7%BA%A4%E7%A8%8B%E5%AD%A6%E4%B9%A0/image-20230922112028288.png">
+<meta property="article:published_time" content="2023-12-22T10:17:12.000Z">
+<meta property="article:modified_time" content="2024-07-22T02:22:35.658Z">
+<meta property="article:author" content="皮三宝">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2023/12/22/%E7%BA%A4%E7%A8%8B%E5%AD%A6%E4%B9%A0/image-20230921135228998.png">
+  
+  
+  
+  <title>纤程学习 - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="纤程学习"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-12-22 10:17" pubdate>
+          December 22, 2023 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.1k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          18 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">纤程学习</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>前阵子看到的一篇slides，感觉挺有意思，记录下学习过程。</p>
+<a id="more"></a>
+
+<h1 id="From-Dead-Data-to-Digestion"><a href="#From-Dead-Data-to-Digestion" class="headerlink" title="From Dead Data to Digestion"></a>From Dead Data to Digestion</h1><h2 id="Fibers"><a href="#Fibers" class="headerlink" title="Fibers"></a>Fibers</h2><p>轻量级纤程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plain">线程<br>每个进程强制，至少一个线程<br>内核切换<br><br>纤程<br>每个线程可选择，一个线程同时只能有一个纤程运行<br>用户态切换由应用程序决定<br></code></pre></td></tr></table></figure>
+<p>每个纤程用户态存在一个fiber objects用来描述纤程</p>
+<figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs fortran">Components:<br>• Fiber Objects– including Fiber <span class="hljs-keyword">Data</span><br>• Fiber <span class="hljs-keyword">Local</span> Storage (FLS):<br>	• <span class="hljs-built_in">Index</span><br>	• Slots<br>• Fiber Callback functions<br></code></pre></td></tr></table></figure>
+<p><img src="image-20230921135228998.png" srcset="/img/loading.gif" lazyload alt="image-20230921135228998"></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver"><span class="hljs-number">1.</span> Thread converts itself <span class="hljs-built_in">to</span> <span class="hljs-keyword">a</span> fiber – ConvertThreadToFiber().<br><span class="hljs-number">2.</span> Create <span class="hljs-keyword">a</span> <span class="hljs-keyword">second</span> fiber– CreateFiber().<br><span class="hljs-number">3.</span> (Optional) Allocate FLS – FlsAlloc().<br><span class="hljs-number">4.</span> Switch <span class="hljs-built_in">to</span> <span class="hljs-keyword">the</span> newly created fiber – SwitchToFiber().<br><span class="hljs-number">5.</span> When finished, <span class="hljs-built_in">convert</span> <span class="hljs-keyword">a</span> fiber back <span class="hljs-built_in">to</span> <span class="hljs-keyword">a</span> thread – ConvertFiberToThread().<br></code></pre></td></tr></table></figure>
+<p>针对恶意代码的执行有俩种方式</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sql">• Executing shellcode <span class="hljs-keyword">in</span> a <span class="hljs-keyword">local</span> process <span class="hljs-keyword">using</span> fibers:<br><span class="hljs-number">1.</span> <span class="hljs-keyword">Convert</span> a Thread <span class="hljs-keyword">to</span> a Fiber.<br><span class="hljs-number">2.</span> <span class="hljs-keyword">Allocate</span> memory <span class="hljs-operator">&amp;</span> <span class="hljs-keyword">copy</span> <span class="hljs-keyword">over</span> shellcode.<br><span class="hljs-number">3.</span> <span class="hljs-keyword">Create</span> a <span class="hljs-keyword">new</span> fiber, supply the shellcode address.<br><span class="hljs-number">4.</span> Schedule the newly created fiber.<br>• Fiber <span class="hljs-keyword">Local</span> Storage <span class="hljs-keyword">and</span> callback functions:<br><span class="hljs-number">1.</span> <span class="hljs-keyword">Convert</span> a Thread <span class="hljs-keyword">to</span> a Fiber.<br><span class="hljs-number">2.</span> <span class="hljs-keyword">Allocate</span> FLS index, suppling an evil callback<br>function.<br><span class="hljs-number">3.</span> (Optional) <span class="hljs-keyword">Set</span> a FLS slot <span class="hljs-keyword">value</span> <span class="hljs-keyword">to</span> use <span class="hljs-keyword">as</span> a callback<br>parameter.<br><span class="hljs-number">4.</span> <span class="hljs-keyword">Free</span> the FLS index <span class="hljs-operator">/</span> <span class="hljs-keyword">Delete</span> fiber<br></code></pre></td></tr></table></figure>
+<p>一种是直接分配内存后让其执行，shellcode作为参数传递，另一种是通过设置FLS回调函数来实现。</p>
+<h2 id="优势-amp-劣势"><a href="#优势-amp-劣势" class="headerlink" title="优势&amp;劣势"></a>优势&amp;劣势</h2><p>目前内核针对用户态的监控还没有纤程的只有线程，如PsSetCreateThreadNotifyRoutine。所以可以通过纤程来进行注入。</p>
+<p>但是纤程不像线程有成熟的api可以调用比如createremotethread且有关的文档很少，基本没有讲过其internal的，也没有一些开源的工具。</p>
+<h2 id="fiber原理与实现"><a href="#fiber原理与实现" class="headerlink" title="fiber原理与实现"></a>fiber原理与实现</h2><p>后续作者讲解了纤程的本质与实现。</p>
+<p>用户态存在api IsThreadAFiber来判断当前线程是否为纤程</p>
+<p>主要是通过判断teb的SameTebFlags标志位来实现。</p>
+<p>这个api没有远程的实现，想要远程实现可以通过<code>CreateToolhelp32Snapshot(TH32CS_SNAPTHREAD, 0) </code>首先获取所有的线程id然后<code>OpenThread() + NtQueryInformationThread()</code>获取teb的基址后续就是<code>ReadProcessMemory()</code>读取标志位来判断是否为纤程</p>
+<p>接着是纤程的data位于<code>TEB.NT_TIB.FiberData</code></p>
+<p>这部分是由函数<code>ConvertThreadToFiber</code>来实现</p>
+<p><img src="image-20230921191949390.png" srcset="/img/loading.gif" lazyload alt="image-20230921191949390"></p>
+<p>知道了fiber object如何构造我们也可以自己来实现了。</p>
+<p>关于检测这块，作者提到了遍历heap来实现，因为fiber的object固定大小为0x530</p>
+<p><img src="image-20230921192427787.png" srcset="/img/loading.gif" lazyload alt="image-20230921192427787"></p>
+<p>获取到结构体后可以根据结构体的内容获取到双向链表，目标线程的所有纤程结构体</p>
+<p>还能用于判断纤程是否为挂起</p>
+<p>至此我们可以获取到与线程相关的所有纤程结构体</p>
+<p>接着我们可以进一步获取fls里的所有内容通过分析<code>RtlFlsGetValue</code></p>
+<p>然后就能进一步分析获取所有的FLS回调函数。</p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>考虑到纯用户态实现+没有内核回调函数，是否可以通过人工实现远程纤程注入？</p>
+<p>检测方法可以通过看有没有改写teb来实现</p>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>1.强行设置纤程</p>
+<p>teb+0x17ee处存在flag标志位</p>
+<p><code>teb-&gt;SameTebFlags |= 4u</code>即可</p>
+<p>2.回调函数设置</p>
+<p>结构体位于<code>ntdll.dll+184E50</code></p>
+<p><code>struct _RTLP_FLS_CONTEXT RtlpFlsContext</code></p>
+<p>其中偏移处+8是GLOBAL_FLS_DATA</p>
+<p><img src="image-20230922112028288.png" srcset="/img/loading.gif" lazyload alt="image-20230922112028288"></p>
+<p>设置对应的number和回调函数即可</p>
+<p>FlsSetValue函数主要是为其添加参数，参数位于</p>
+<p>fiberdata=teb+0x20</p>
+<p>flsdata=fiberdata+0x510</p>
+<p>flsdata处存储了其对应的参数,这个必须要设置不然不会执行。</p>
+<h1 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h1><p>blackhat USA 2023(From Dead Data to Digestion Extracting Windows Fibers for your digital forensics diet)</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>纤程学习</div>
+      <div>http://www.psbazx.com/2023/12/22/纤程学习/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>December 22, 2023</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2024/01/22/router%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="router学习笔记">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">router学习笔记</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/07/22/CE%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5%E6%A8%A1%E6%9D%BF-%E8%87%AA%E7%94%A8/" title="CE代码注入模板(自用)">
+                        <span class="hidden-mobile">CE代码注入模板(自用)</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

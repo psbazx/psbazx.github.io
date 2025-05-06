@@ -1,0 +1,611 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="闲来无事吧week3的wp写一下week3总体来说难度没有week2大？？？&#x2F;&#x2F; 除了那道helloweb，第一次遇见没写出来&#x2F;&#x2F;而且反编译后有上万行的代码实在是看不下去了。。。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HGAME 2019 week3">
+<meta property="og:url" content="http://www.psbazx.com/2019/02/22/HGAME-2019-week3/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="闲来无事吧week3的wp写一下week3总体来说难度没有week2大？？？&#x2F;&#x2F; 除了那道helloweb，第一次遇见没写出来&#x2F;&#x2F;而且反编译后有上万行的代码实在是看不下去了。。。">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2019/02/22/HGAME-2019-week3/1.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/02/22/HGAME-2019-week3/2.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/02/22/HGAME-2019-week3/3.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/02/22/HGAME-2019-week3/4.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/02/22/HGAME-2019-week3/5.png">
+<meta property="article:published_time" content="2019-02-22T13:48:25.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:17.608Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="ctf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2019/02/22/HGAME-2019-week3/1.png">
+  
+  
+  
+  <title>HGAME 2019 week3 - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="HGAME 2019 week3"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-02-22 13:48" pubdate>
+          February 22, 2019 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          14k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          118 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HGAME 2019 week3</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>闲来无事吧week3的wp写一下<br>week3总体来说难度没有week2大？？？<br>// 除了那道helloweb，第一次遇见没写出来<br>//而且反编译后有上万行的代码实在是看不下去了。。。</p>
+<a id="more"></a>
+<h2 id="Math-简单"><a href="#Math-简单" class="headerlink" title="Math 简单"></a>Math 简单</h2><p>很明显用z3去写啊<br>放进ida里复制一下关键函数代码就行<br>那个。。。因为原来题目链接挂了，这边我直接上代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs asm"># -*- coding: UTF-8 -*-<br>from z3 import *<br>s &#x3D; Solver()<br>v34 &#x3D; [BitVec(&#39;u%d&#39;%i,8) for i in range(32)]<br><br>s.add(v34[0]&#x3D;&#x3D;ord(&#39;h&#39;))<br>s.add(v34[1]&#x3D;&#x3D;ord(&#39;g&#39;))<br>s.add(v34[2]&#x3D;&#x3D;ord(&#39;a&#39;))<br>s.add(v34[3]&#x3D;&#x3D;ord(&#39;m&#39;))<br>s.add(v34[4]&#x3D;&#x3D;ord(&#39;e&#39;))<br>s.add(v34[5]&#x3D;&#x3D;ord(&#39;&#123;&#39;))<br>s.add(v34[31]&#x3D;&#x3D;ord(&#39;&#125;&#39;))<br><br><br><br>s.add(82 * v34[16] + 58 * v34[25] + 76 * v34[21] + 31 * v34[9] + 87 * v34[28] + 54 * v34[2] + 74 * v34[5] + 99 * v34[26]+ 94 * v34[3] + 84 * v34[19] + 32 * v34[15] + 90 * v34[27] + 16 * v34[14] + 19 * v34[8] + 33 * v34[20] + 35 * v34[31] + 65 * v34[29] + 47 * v34[12] + 3 * v34[1] + 57 * v34[7] + 5 * v34[17] + 70 * v34[13] + 28 * v34[24] + 79 * v34[11] + 63 * v34[23] + 66 * v34[30] + 28 * v34[10] + v34[4] + 81 * v34[6] + 61 * v34[18] + 31 * v34[22] + 71 * v34[0] &#x3D;&#x3D; 145397)<br>s.add(55 * v34[6] + 38 * v34[9] + 39 * v34[18] + 73 * v34[24] + 86 * v34[13] + 18 * v34[11] + 40 * v34[21] + 40 * v34[26] + 54 * v34[14] + 81 * v34[10] + 71 * v34[27] + 20 * v34[8] + 16 * v34[28] + 65 * v34[30] + 87 * v34[3] + 14 * v34[16] + v34[5] + 41 * v34[0] + 58 * v34[15] + 73 * v34[2] + 46 * v34[23] + 7 * v34[19] + 89 * v34[17] + 65 * v34[25] + 43 * v34[7] + 6 * v34[20] + 60 * v34[12] + 40 * v34[31] + 57 * v34[29] + 40 * v34[4] + 30 * v34[1] + 63 * v34[22] &#x3D;&#x3D; 127517)<br>s.add(28 * v34[6] + 17 * v34[21] + 18 * v34[3] + 53 * v34[10] + 82 * v34[14] + 70 * v34[5] + 84 * v34[2] + 57 * v34[19] + 92 * v34[27] + 57 * v34[11] + 77 * v34[4] + 49 * v34[8] + 62 * v34[29] + 97 * v34[22] + 47 * v34[1] + 30 * v34[16] + 45 * v34[30] + 94 * v34[28] + 6 * v34[9] + 83 * v34[20] + 18 * v34[23] + 97 * v34[15] + 11 * v34[12] + 35 * v34[7] + 81 * v34[26] + 67 * v34[13] + 11 * v34[31] + 84 * v34[24] + 63 * v34[25] + 61 * v34[18] &#x3D;&#x3D; 141411)<br>s.add(86 * v34[23] + 52 * v34[1] + 14 * v34[24] + 46 * v34[6] + 56 * v34[7] + 13 * v34[2] + 82 * v34[11] + 49 * v34[30] + 97 * v34[18] + 50 * v34[14] + 83 * v34[27] + 38 * v34[13] + 49 * v34[29] + 9 * v34[4] + 91 * v34[20] + 33 * v34[25] + 4 * v34[22] + 5 * v34[17] + 61 * v34[15] + 65 * v34[3] + 68 * v34[28] + 6 * v34[16] + (v34[8] &lt;&lt; 6) + 56 * v34[9] + 67 * v34[10] + 5 * v34[5] + v34[21] + 10 * v34[19] + 83 * v34[12] + 37 * v34[26] + 85 * v34[0] &#x3D;&#x3D; 117383)<br>s.add(53 * v34[3] + 91 * v34[2] + 57 * v34[25] + 66 * v34[20] + 9 * v34[28] + 63 * v34[5] + 20 * v34[4] + 96 * v34[8] + 39 * v34[11] + 91 * v34[1] + 40 * v34[9] + 85 * v34[14] + 62 * v34[16] + 95 * v34[19] + 34 * v34[22] + 67 * v34[31] + 51 * v34[27] + 45 * v34[26] + 92 * v34[15] + 91 * v34[21] + 85 * v34[13] + 12 * v34[7] + 26 * v34[23] + 56 * v34[30] + 82 * v34[18] + 72 * v34[17] + 54 * v34[6] + 17 * v34[12] + 84 * v34[29] + 17 * v34[0] + 8 * v34[24] + 63 * v34[10] &#x3D;&#x3D; 156152)<br>s.add(55 * v34[23] + 88 * v34[9] + 48 * v34[4] + 83 * v34[13] + 66 * v34[7] + 60 * v34[30] + 57 * v34[6] + 85 * v34[17] + 71 * v34[28] + 98 * v34[24] + 83 * v34[10] + 12 * v34[1] + 72 * v34[31] + 12 * v34[22] + 80 * v34[20] + 15 * v34[19] + 81 * v34[21] + 87 * v34[0] + 37 * v34[16] + 4 * v34[15] + 41 * v34[3] + 84 * v34[26] + 56 * v34[25] + 84 * v34[14] + 41 * v34[27] + 98 * v34[18] + 18 * v34[2] + 95 * v34[11] + 33 * v34[29] + 66 * v34[8] &#x3D;&#x3D; 148963)<br>s.add(43 * v34[16] + 47 * v34[0] + 53 * v34[24] + 75 * v34[11] + 57 * v34[21] + 63 * v34[12] + 4 * v34[14] + 59 * v34[31] + 15 * v34[23] + 12 * v34[25] + 58 * v34[5] + 40 * v34[4] + 26 * v34[30] + 8 * v34[15] + 25 * v34[6] + 97 * v34[10] + 12 * v34[28] + 74 * v34[26] + 65 * v34[8] + 93 * v34[27] + 18 * v34[22] + 84 * v34[2] + 7 * v34[1] + 22 * v34[18] + 9 * v34[17] + 89 * v34[19] + 72 * v34[13] + 47 * v34[20] + 7 * v34[29] + 8 * v34[9] + 24 * v34[7] + 75 * v34[3] &#x3D;&#x3D; 121517)<br>s.add(77 * v34[30] + 89 * v34[31] + 55 * v34[7] + 86 * v34[17] + 74 * v34[0] + 72 * v34[4] + 27 * v34[20] + 88 * v34[9] + (v34[21] &lt;&lt; 6) + 52 * v34[15] + 4 * v34[19] + 8 * v34[1] + 16 * v34[13] + 54 * v34[25] + 8 * v34[29] + 52 * v34[23] + 14 * v34[10] + 88 * v34[18] + 33 * v34[8] + 99 * v34[27] + 65 * v34[14] + 66 * v34[5] + 36 * v34[6] + 58 * v34[16] + 63 * v34[22] + 93 * v34[3] + 96 * v34[11] + 26 * v34[26] + 65 * v34[12] + 42 * v34[28] + 14 * v34[2] + 57 * v34[24] &#x3D;&#x3D; 151446)<br>s.add(53 * v34[24] + 95 * v34[27] + 51 * v34[7] + 42 * v34[4] + 78 * v34[8] + 45 * v34[25] + 63 * v34[30] + 85 * v34[26] + 30 * v34[29] + 83 * v34[14] + 62 * v34[31] + 71 * v34[22] + 45 * v34[17] + (v34[6] &lt;&lt; 6) + 87 * v34[23] + 49 * v34[28] + 14 * v34[0] + 4 * v34[21] + 63 * v34[5] + 53 * v34[13] + 19 * v34[19] + 44 * v34[16] + 5 * v34[3] + 74 * v34[15] + 19 * v34[18] + 89 * v34[11] + 11 * v34[20] + 34 * v34[12] + 14 * v34[1] + 87 * v34[10] + 63 * v34[9] + 70 * v34[2] &#x3D;&#x3D; 142830)<br>s.add(69 * v34[0] + 67 * v34[9] + 57 * v34[15] + 77 * v34[10] + 67 * v34[26] + 94 * v34[11] + 13 * v34[29] + 11 * v34[22] + 41 * v34[5] + 38 * v34[13] + 90 * v34[31] + 68 * v34[7] + 56 * v34[14] + 4 * v34[23] + 66 * v34[28] + 28 * v34[1] + 6 * v34[12] + 91 * v34[16] + 59 * v34[3] + 81 * v34[17] + 44 * v34[2] + 33 * v34[24] + 34 * v34[19] + 17 * v34[18] + 77 * v34[25] + 25 * v34[8] + 8 * v34[6] + 10 * v34[30] + 66 * v34[20] + 41 * v34[27] + 29 * v34[21] &#x3D;&#x3D; 122585)<br>s.add(31 * v34[9] + 17 * v34[4] + 6 * v34[28] + 23 * v34[25] + 32 * v34[3] + 72 * v34[15] + 41 * v34[26] + 33 * v34[30] + 82 * v34[13] + 20 * v34[0] + 7 * v34[12] + 25 * v34[29] + 39 * v34[21] + 57 * v34[14] + 14 * v34[16] + 24 * v34[24] + 37 * v34[22] + 71 * v34[10] + 65 * v34[23] + 46 * v34[8] + 40 * v34[19] + 77 * v34[27] + 80 * v34[18] + 88 * v34[6] + 20 * v34[31] + 83 * v34[11] + 73 * v34[1] + 8 * v34[5] + 15 * v34[20] + 70 * v34[7] + 24 * v34[17] + 16 * v34[2] &#x3D;&#x3D; 105293)<br>s.add(25 * v34[21] + 79 * v34[3] + 41 * v34[24] + 45 * v34[30] + 82 * v34[20] + 86 * v34[19] + 99 * v34[9] + 96 * v34[22] + 85 * v34[28] + 70 * v34[5] + 77 * v34[23] + 80 * v34[11] + 40 * v34[31] + 66 * v34[12] + 12 * v34[2] + 77 * v34[15] + 72 * v34[4] + 42 * v34[26] + 81 * v34[27] + 90 * v34[13] + 37 * v34[16] + 29 * v34[17] + 20 * v34[29] + 85 * v34[6] + 6 * v34[7] + 2 * v34[0] + 72 * v34[1] + 75 * v34[14] + 40 * v34[25] + 29 * v34[8] + 25 * v34[10] &#x3D;&#x3D; 151962)<br>s.add(83 * v34[11] + 75 * v34[1] + 42 * v34[31] + 95 * v34[30] + 58 * v34[8] + 47 * v34[13] + 65 * v34[15] + 24 * v34[17] + 97 * v34[10] + 24 * v34[21] + 28 * v34[0] + 77 * v34[5] + 97 * v34[6] + 24 * v34[26] + 32 * v34[12] + 5 * v34[25] + 55 * v34[28] + 9 * v34[23] + 85 * v34[4] + 6 * v34[9] + 61 * v34[19] + 12 * v34[3] + 76 * v34[7] + 36 * v34[27] + 77 * v34[24] + 24 * v34[29] + 67 * v34[14] + 19 * v34[16] + 47 * v34[20] + 13 * v34[22] &#x3D;&#x3D; 125609)<br>s.add(30 * v34[25] + 41 * v34[28] + 65 * v34[10] + v34[1] + 88 * v34[3] + 90 * v34[0] + 4 * v34[23] + 46 * v34[7] + 54 * v34[16] + 16 * v34[6] + 89 * v34[22] + 76 * v34[27] + 38 * v34[17] + 3 * v34[5] + 70 * v34[14] + 3 * v34[24] + 24 * v34[13] + 54 * v34[2] + 20 * v34[8] + 83 * v34[12] + 21 * v34[15] + 77 * v34[18] + 31 * v34[19] + 59 * v34[21] + 33 * v34[20] + 84 * v34[11] + 19 * v34[29] + 38 * v34[26] + 63 * v34[31] + 16 * v34[30] + 15 * v34[4] + 39 * v34[9] &#x3D;&#x3D; 123069)<br>s.add(6 * v34[9] + 19 * v34[19] + 27 * v34[18] + 48 * v34[4] + 13 * v34[20] + 44 * v34[10] + 70 * v34[12] + 44 * v34[17] + 22 * v34[23] + 55 * v34[14] + 73 * v34[26] + 55 * v34[8] + 58 * v34[11] + 31 * v34[30] + 78 * v34[29] + 19 * v34[25] + 52 * v34[31] + 27 * v34[21] + 38 * v34[27] + 40 * v34[28] + 35 * v34[1] + 48 * v34[22] + 71 * v34[15] + 24 * v34[6] + 89 * v34[16] + 37 * v34[3] + 78 * v34[2] + 3 * v34[5] + 52 * v34[24] + 40 * v34[7] &#x3D;&#x3D; 113842)<br>s.add(95 * v34[8] + 92 * v34[18] + 84 * v34[31] + 31 * v34[12] + 35 * v34[10] + 54 * v34[20] + 26 * v34[29] + 29 * v34[3] + 2 * v34[23] + 46 * v34[0] + 30 * v34[26] + 56 * v34[27] + 100 * v34[11] + 43 * v34[1] + 15 * v34[4] + 79 * v34[17] + 12 * v34[5] + 38 * v34[9] + 3 * v34[30] + 16 * v34[21] + 19 * v34[13] + 67 * v34[19] + 37 * v34[28] + v34[7] + 73 * v34[16] + 85 * v34[6] + 17 * v34[14] + 90 * v34[22] + 15 * v34[2] + 43 * v34[25] + 96 * v34[24] &#x3D;&#x3D; 119824)<br>s.add(36 * v34[22] + 69 * v34[28] + 77 * v34[6] + 92 * v34[20] + 43 * v34[23] + 16 * v34[19] + 92 * v34[5] + 49 * v34[26] + 44 * v34[2] + 26 * v34[29] + (v34[25] &lt;&lt; 6) + 45 * v34[24] + 99 * v34[11] + 43 * v34[4] + 75 * v34[21] + 53 * v34[31] + 18 * v34[18] + 11 * v34[13] + 52 * v34[0] + 16 * v34[8] + 9 * v34[7] + 77 * v34[16] + 33 * v34[10] + 86 * v34[1] + 33 * v34[3] + 29 * v34[9] + 6 * v34[12] + 91 * v34[14] + 36 * v34[15] + 94 * v34[27] + 13 * v34[30] + 89 * v34[17] &#x3D;&#x3D; 135873)<br>s.add(16 * v34[7] + v34[15] + 82 * v34[9] + 60 * v34[29] + 68 * v34[2] + 83 * v34[10] + 47 * v34[5] + 85 * v34[13] + 22 * v34[8] + 92 * v34[27] + 75 * v34[28] + 43 * v34[3] + 29 * v34[22] + 92 * v34[0] + 54 * v34[16] + 17 * v34[30] + 78 * v34[18] + 7 * v34[23] + 69 * v34[21] + 63 * v34[31] + 71 * v34[4] + 10 * v34[6] + 66 * v34[14] + 25 * v34[26] + 32 * v34[1] + 48 * v34[19] + 86 * v34[11] + 20 * v34[25] + 78 * v34[20] + 25 * v34[17] + 76 * v34[12] + 13 * v34[24] &#x3D;&#x3D; 142509)<br>s.add(88 * v34[22] + 23 * v34[13] + 18 * v34[14] + 77 * v34[9] + 56 * v34[30] + 79 * v34[2] + 71 * v34[29] + 95 * v34[28] + 87 * v34[24] + 62 * v34[16] + 85 * v34[26] + 43 * v34[20] + 67 * v34[15] + 97 * v34[8] + 80 * v34[0] + 23 * v34[3] + 95 * v34[25] + 82 * v34[21] + 66 * v34[31] + 5 * v34[4] + 66 * v34[27] + 25 * v34[12] + 4 * v34[5] + 12 * v34[7] + 85 * v34[1] + 10 * v34[6] + 45 * v34[11] + 28 * v34[18] + 26 * v34[19] + 48 * v34[23] + 45 * v34[17] &#x3D;&#x3D; 148888)<br>s.add(25 * v34[8] + 81 * v34[30] + 21 * v34[6] + 72 * v34[11] + 48 * v34[18] + 2 * v34[19] + 42 * v34[10] + 22 * v34[24] + 99 * v34[2] + 78 * v34[22] + 83 * v34[12] + 60 * v34[9] + 59 * v34[13] + 15 * v34[5] + 25 * v34[20] + 43 * v34[15] + 56 * v34[28] + 33 * v34[25] + 71 * v34[23] + 31 * v34[0] + 95 * v34[3] + 73 * v34[17] + 86 * v34[14] + 15 * v34[21] + 61 * v34[7] + 12 * v34[29] + 95 * v34[26] + 13 * v34[1] + 100 * v34[16] + 11 * v34[4] + 79 * v34[27] &#x3D;&#x3D; 138023)<br>s.add(37 * v34[28] + 62 * v34[25] + 42 * v34[18] + 53 * v34[27] + 52 * v34[29] + 70 * v34[22] + 35 * v34[30] + 50 * v34[16] + 59 * v34[8] + 75 * v34[10] + 55 * v34[20] + 23 * v34[0] + 52 * v34[17] + 47 * v34[3] + 91 * v34[13] + 46 * v34[7] + 42 * v34[14] + 79 * v34[26] + 87 * v34[21] + 30 * v34[6] + 26 * v34[1] + 57 * v34[31] + 33 * v34[12] + 51 * v34[9] + 56 * v34[24] + 59 * v34[11] + 36 * v34[23] + 88 * v34[4] + 28 * v34[2] + 44 * v34[15] + 19 * v34[19] + 74 * v34[5] &#x3D;&#x3D; 142299)<br>s.add(80 * v34[21] + 43 * v34[31] + 67 * v34[16] + 55 * v34[13] + 95 * v34[24] + 46 * v34[28] + 93 * v34[5] + 75 * v34[20] + 14 * v34[25] + 24 * v34[26] + 50 * v34[29] + 70 * v34[15] + 63 * v34[30] + 77 * v34[23] + 96 * v34[19] + 66 * v34[11] + 72 * v34[27] + 94 * v34[4] + 63 * v34[22] + 69 * v34[3] + 73 * v34[1] + 60 * v34[7] + 9 * v34[2] + 39 * v34[17] + 25 * v34[0] + 49 * v34[14] + 48 * v34[8] + 86 * v34[9] + 72 * v34[10] + 23 * v34[18] + 21 * v34[6] &#x3D;&#x3D; 155777)<br>s.add(25 * v34[24] + 11 * v34[22] + 27 * v34[11] + 40 * v34[8] + 53 * v34[15] + 40 * v34[18] + 56 * v34[3] + 2 * v34[2] + 32 * v34[4] + 90 * v34[1] + 54 * v34[16] + 20 * v34[9] + 86 * v34[17] + 82 * v34[31] + 43 * v34[25] + 43 * v34[13] + 86 * v34[21] + 17 * v34[0] + (v34[14] &lt;&lt; 6) + 6 * v34[30] + 86 * v34[5] + 15 * v34[7] + 46 * v34[12] + 21 * v34[26] + 90 * v34[20] + 19 * v34[6] + 93 * v34[23] + 31 * v34[27] + 62 * v34[29] + 21 * v34[19] + 42 * v34[10] &#x3D;&#x3D; 117687)<br>s.add(89 * v34[21] + 100 * v34[13] + v34[27] + 66 * v34[18] + 40 * v34[17] + 17 * v34[0] + 27 * v34[19] + 26 * v34[31] + 57 * v34[24] + 35 * v34[3] + 80 * v34[1] + 67 * v34[5] + 85 * v34[6] + 7 * v34[15] + 93 * v34[8] + 3 * v34[22] + 77 * v34[12] + 12 * v34[28] + 4 * v34[2] + 27 * v34[9] + 53 * v34[25] + 37 * v34[30] + 43 * v34[23] + 33 * v34[4] + 39 * v34[26] + 7 * v34[7] + 75 * v34[10] + 15 * v34[14] + 45 * v34[20] + 36 * v34[29] + 78 * v34[11] + 31 * v34[16] &#x3D;&#x3D; 117383)<br>s.add(73 * v34[20] + 16 * v34[26] + 100 * v34[5] + 71 * v34[28] + 71 * v34[16] + 4 * v34[1] + 77 * v34[31] + 83 * v34[2] + 11 * v34[30] + 53 * v34[19] + 85 * v34[12] + 67 * v34[13] + 39 * v34[8] + 45 * v34[24] + 84 * v34[22] + 99 * v34[14] + 38 * v34[3] + 29 * v34[4] + 90 * v34[9] + 61 * v34[18] + 40 * v34[7] + (v34[17] &lt;&lt; 6) + 9 * v34[25] + 86 * v34[29] + 80 * v34[21] + 4 * v34[15] + 96 * v34[23] + 99 * v34[10] + 40 * v34[27] + 4 * v34[0] + 56 * v34[11] &#x3D;&#x3D; 155741)<br>s.add((v34[12] &lt;&lt; 6) + 76 * v34[0] + 5 * v34[11] + 87 * v34[2] + 86 * v34[24] + 76 * v34[14] + 38 * v34[23] + 85 * v34[3] + 71 * v34[22] + 42 * v34[29] + 85 * v34[30] + 14 * v34[10] + 17 * v34[13] + 42 * v34[25] + 11 * v34[19] + 44 * v34[15] + 21 * v34[4] + 60 * v34[16] + 28 * v34[6] + 46 * v34[20] + 25 * v34[9] + 77 * v34[31] + 21 * v34[8] + 85 * v34[7] + 36 * v34[1] + 91 * v34[27] + 21 * v34[28] + 38 * v34[17] + 3 * v34[26] + 61 * v34[21] + 15 * v34[5] + 32 * v34[18] &#x3D;&#x3D; 132804)<br>s.add(95 * v34[30] + 75 * v34[28] + 3 * v34[10] + 36 * v34[1] + 60 * v34[3] + 84 * v34[11] + 19 * v34[26] + 76 * v34[27] + 86 * v34[16] + 92 * v34[8] + 96 * v34[14] + 60 * v34[21] + 23 * v34[4] + 60 * v34[12] + 50 * v34[23] + 78 * v34[22] + 45 * v34[9] + 42 * v34[18] + 10 * v34[2] + 60 * v34[20] + 24 * v34[24] + 77 * v34[7] + 41 * v34[6] + 29 * v34[13] + 33 * v34[5] + 2 * v34[15] + 33 * v34[29] + 39 * v34[31] + 41 * v34[25] + 100 * v34[19] + 9 * v34[17] + 79 * v34[0] &#x3D;&#x3D; 145568)<br>s.add(68 * v34[5] + 98 * v34[27] + 98 * v34[16] + 10 * v34[19] + 25 * v34[26] + 98 * v34[24] + 15 * v34[6] + 50 * v34[18] + 88 * v34[20] + 74 * v34[11] + 83 * v34[1] + 86 * v34[21] + 52 * v34[7] + 39 * v34[10] + 40 * v34[13] + 82 * v34[28] + 37 * v34[3] + 45 * v34[0] + 18 * v34[25] + 2 * v34[29] + 6 * v34[12] + 78 * v34[31] + 37 * v34[2] + 57 * v34[23] + 3 * v34[4] + 59 * v34[8] + 73 * v34[15] + v34[22] + 18 * v34[9] + 35 * v34[14] + 20 * v34[17] + 54 * v34[30] &#x3D;&#x3D; 130175)<br>s.add(60 * v34[10] + 50 * v34[12] + 30 * v34[29] + 90 * v34[19] + 68 * v34[23] + 60 * v34[18] + 93 * v34[20] + 100 * v34[11] + 98 * v34[14] + 32 * v34[3] + 15 * v34[21] + 79 * v34[0] + 6 * v34[24] + 62 * v34[26] + 96 * v34[6] + 68 * v34[22] + 9 * v34[7] + 88 * v34[5] + 18 * v34[27] + 70 * v34[9] + 96 * v34[25] + 89 * v34[4] + 14 * v34[31] + 83 * v34[17] + 19 * v34[15] + 44 * v34[1] + 96 * v34[8] + 87 * v34[16] + 48 * v34[2] + 95 * v34[13] + 73 * v34[28] + 92 * v34[30] &#x3D;&#x3D; 171986)<br>s.add(53 * v34[30] + 87 * v34[25] + 23 * v34[29] + 80 * v34[20] + 86 * v34[9] + 20 * v34[7] + 29 * v34[16] + 31 * v34[14] + 83 * v34[26] + 11 * v34[4] + 29 * v34[19] + 82 * v34[13] + 84 * v34[10] + 70 * v34[1] + 52 * v34[12] + 40 * v34[6] + 91 * v34[8] + 6 * v34[17] + 77 * v34[28] + 56 * v34[5] + 86 * v34[23] + 63 * v34[31] + 26 * v34[27] + 19 * v34[22] + 50 * v34[3] + 15 * v34[15] + 67 * v34[2] + 37 * v34[24] + 84 * v34[18] + 81 * v34[21] + 93 * v34[0] &#x3D;&#x3D; 151676)<br>s.add(29 * v34[3] + 93 * v34[5] + 67 * v34[21] + 12 * v34[11] + 82 * v34[24] + 100 * v34[8] + 29 * v34[26] + 97 * v34[12] + 32 * v34[6] + 26 * v34[27] + 46 * v34[19] + 8 * (v34[25] + 9 * v34[0] + 2 * v34[17]) + 63 * v34[10] + 39 * v34[29] + 81 * v34[15] + 51 * v34[13] + 31 * v34[30] + 49 * v34[4] + 3 * v34[22] + 26 * v34[28] + 15 * v34[20] + 89 * v34[2] + 5 * v34[31] + 47 * v34[18] + 19 * v34[23] + 98 * v34[9] + 15 * v34[16] + 49 * v34[1] &#x3D;&#x3D; 128223)<br>s.add(13 * v34[14] + 73 * v34[19] + 99 * v34[7] + 76 * v34[12] + 84 * v34[25] + 91 * v34[10] + 67 * v34[22] + 77 * v34[15] + 23 * v34[26] + 38 * v34[4] + 3 * v34[31] + 76 * v34[13] + 50 * v34[0] + 74 * v34[11] + 45 * v34[28] + 58 * v34[29] + 39 * v34[5] + 95 * v34[9] + 26 * v34[16] + 23 * v34[8] + 28 * v34[24] + 89 * v34[1] + 88 * v34[18] + 3 * v34[3] + 59 * v34[20] + 80 * v34[23] + 49 * v34[17] + 56 * v34[21] + 32 * v34[27] + 24 * v34[2] + 77 * v34[30] + 18 * v34[6] &#x3D;&#x3D; 138403)<br><br>flag &#x3D; &#39;&#39;<br>print s.check()<br>print s.model()<br>if s.check() &#x3D;&#x3D; sat:<br>    print s.model()<br>    result &#x3D; s.model()<br>    for i in range(32):<br>        flag +&#x3D; chr(result[v34[i]].as_long().real)<br>    print flag<br><br></code></pre></td></tr></table></figure>
+<p>跑一下就行</p>
+<h2 id="Say-Muggle-Code-a-k-a-SMC"><a href="#Say-Muggle-Code-a-k-a-SMC" class="headerlink" title="Say-Muggle-Code a.k.a. SMC"></a>Say-Muggle-Code a.k.a. SMC</h2><p>自我感觉这题比上周的smc简单 //手动滑稽<br>拖进ida，因为是c艹，看起来有点难受<br><img src="1.png" srcset="/img/loading.gif" lazyload alt="smc1"><br>所以只能调试了<br>发现前面一大段程序主要是确定输入的数目是否为39<br>还有就是使用hgame{}开头结尾<br>真正的check在下面<br><img src="2.png" srcset="/img/loading.gif" lazyload alt="smc2"><br>点击check1查看，check1是比较简单的<br><img src="3.png" srcset="/img/loading.gif" lazyload alt="smc3"><br>直接解出来前半部分</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs asm">a &#x3D; [0xDE, 0xD1, 0xD8, 0x8C, 0x8F, 0xD9, 0xDF, 0xDE, 0xDF, 0x8C,<br>  0xD8, 0xDA, 0x8C, 0xDC, 0xDD, 0xD8]<br>flag &#x3D; &#39;&#39;<br>for i in range(len(a)):<br>    flag +&#x3D; chr(a[i]^0xe9)<br>print flag          #781ef0676e13e541<br></code></pre></td></tr></table></figure>
+<p>然后就是check2了，也就是本题的难点<br><img src="4.png" srcset="/img/loading.gif" lazyload alt="smc4"><br>可以看到encrypt是一段数据，看汇编发现程序call了encrypt函数<br>那就很容易想到这边的代码段被加密过，调试发现是机器码与数值异或<br>运行时再进行解密，所以静态分析失败<br>只能调试了<br>跟进encrypt函数<br><img src="5.png" srcset="/img/loading.gif" lazyload alt="smc5"><br>这是一个魔改过的TEA<br>不难   //但确实折腾了我好久，c语言的有些运算很奇葩<br>//和17届x1c面试题目差不多，但肯定没那个难<br>复制下伪代码就行<br>代码如下<br>头文件ida.h啥的自己加好了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs asm">_DWORD *__fastcall encrypt(__int64 a1, _DWORD *a2);<br>int main()<br>&#123;<br>    int i;<br>    char a[]&#x3D;&#123;0xDB, 0xAA, 0x8E, 0x1E, 0x3A, 0xC6, 0xA9, 0x11, 0xF0, 0xA4,<br>  0xB8, 0x71, 0x03, 0x71, 0x55, 0x3E&#125;;<br>  char a2[]&#x3D;&#123;0x37, 0x0F, 0x09, 0x54, 0x03, 0x56, 0x06, 0x01, 0x01, 0x53,<br>  0x54, 0x02, 0x56, 0x50, 0x01, 0x05&#125;;<br>  encrypt((__int64)a, (_DWORD *)a2);<br>  for(i&#x3D;0;i&lt;16;i++)<br>  &#123;<br>      printf(&quot;%c&quot;,a[i]);            &#x2F;&#x2F;63930b609a7da803<br>  &#125;<br>    return 0;<br>&#125;<br>_DWORD *__fastcall encrypt(__int64 a1, _DWORD *a2)<br>&#123;<br>  _DWORD *result; &#x2F;&#x2F; rax<br>  int v3; &#x2F;&#x2F; [rsp+10h] [rbp-10h]<br>  signed int i; &#x2F;&#x2F; [rsp+14h] [rbp-Ch]<br>  signed int j; &#x2F;&#x2F; [rsp+18h] [rbp-8h]<br><br>  v3 &#x3D; 0;<br>  for ( i &#x3D; 0; i &lt;&#x3D; 31; ++i )<br>    v3 -&#x3D; 1640531527;<br>  for ( i &#x3D; 0; i &lt;&#x3D; 31; ++i )<br>  &#123;<br>    result &#x3D; (_DWORD *)2654435769LL;<br>    for ( j &#x3D; 0; j &lt;&#x3D; 3; j +&#x3D; 2 )<br>    &#123;<br>        result &#x3D; (_DWORD *)(4 * (j + 1LL) + a1);<br>      *result -&#x3D; (*(_DWORD *)(4LL * j + a1) + v3) ^ (16 * *(_DWORD *)(4LL * j + a1) + a2[2]) ^ ((*(_DWORD *)(4LL * j + a1) &gt;&gt; 5)<br>                                                                                              + a2[3]);<br>      *(_DWORD *)(a1 + 4LL * j) &#x3D; *(_DWORD *)(4LL * j + a1)<br>                                - ((*(_DWORD *)(4 * (j + 1LL) + a1) + v3) ^ (16 * *(_DWORD *)(4 * (j + 1LL) + a1) + *a2) ^ ((*(_DWORD *)(4 * (j + 1LL) + a1) &gt;&gt; 5) + a2[1]));<br>    &#125;<br>  v3 +&#x3D; 1640531527;<br>  &#125;<br>  return result;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>hgame{781ef0676e13e54163930b609a7da803}<br>题目出的挺好的，加深了对smc的理解<br>还有一些加密算法也能复习一下</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/re/">#re</a>
+      
+        <a href="/tags/ctf/">#ctf</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>HGAME 2019 week3</div>
+      <div>http://www.psbazx.com/2019/02/22/HGAME-2019-week3/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>February 22, 2019</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/02/26/TAMUctf/" title="TAMUctf">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">TAMUctf</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/02/20/hello-world/" title="皮三宝のCTF之旅">
+                        <span class="hidden-mobile">皮三宝のCTF之旅</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

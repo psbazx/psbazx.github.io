@@ -1,0 +1,647 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="原来对异常的理解就是seh，FS:[0] 借此机会来好好的学习下">
+<meta property="og:type" content="article">
+<meta property="og:title" content="异常处理机制">
+<meta property="og:url" content="http://www.psbazx.com/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="原来对异常的理解就是seh，FS:[0] 借此机会来好好的学习下">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/image-20200813174520978.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/image-20200814214113613.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/image-20200814214329255.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/image-20200814215131298.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/image-20200816132126545.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/image-20200816132242032.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/image-20200816193822433.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/image-20200816193924188.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/image-20200816194630333.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/image-20200816194859195.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/image-20200816194957384.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/image-20200816195127156.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/image-20200816195411363.png">
+<meta property="article:published_time" content="2020-08-13T15:56:02.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:18.436Z">
+<meta property="article:author" content="皮三宝">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2020/08/13/%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86%E6%9C%BA%E5%88%B6/image-20200813174520978.png">
+  
+  
+  
+  <title>异常处理机制 - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="异常处理机制"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-08-13 15:56" pubdate>
+          August 13, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.9k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          25 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">异常处理机制</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>原来对异常的理解就是seh，FS:[0]</p>
+<p>借此机会来好好的学习下</p>
+<a id="more"></a>
+
+<h1 id="什么是异常"><a href="#什么是异常" class="headerlink" title="什么是异常"></a>什么是异常</h1><p>首先异常分为俩种，CPU产生的异常(除0，缺页)和软件模拟产生的异常</p>
+<h2 id="CPU产生异常"><a href="#CPU产生异常" class="headerlink" title="CPU产生异常"></a>CPU产生异常</h2><p>首先CPU检测到异常-&gt;查IDT表-&gt;CommonDispatchException-&gt;KiDispatchException</p>
+<p>CommonDispatchException构造了异常结构体如下，参数是异常类型和发生地址</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c">type <span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">EXCEPTION_RECORD</span>		</span><br><span class="hljs-class">&#123;</span>								<br>	DWORD ExceptionCode;				<span class="hljs-comment">//异常代码</span><br>	DWORD ExceptionFlags;				<span class="hljs-comment">//异常状态，CPU还是软件</span><br>	<span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">EXCEPTION_RECORD</span>* <span class="hljs-title">ExceptionRecord</span>;</span>	<span class="hljs-comment">//下一个异常</span><br>	PVOID ExceptionAddress;				<span class="hljs-comment">//异常发生地址</span><br>	DWORD NumberParameters;			<span class="hljs-comment">//附加参数个数</span><br>	ULONG_PTR ExceptionInformation <br>	[EXCEPTION_MAXIMUM_PARAMETERS];		<span class="hljs-comment">//附加参数指针	</span><br>&#125;  <br><br></code></pre></td></tr></table></figure>
+<p>KiDispatchException分发异常，找到对应处理函数去处理</p>
+<h2 id="软件模拟产生异常"><a href="#软件模拟产生异常" class="headerlink" title="软件模拟产生异常"></a>软件模拟产生异常</h2><p>一般情况下软件模拟产生异常会调用RaiseException函数来自Kernel32.dll</p>
+<p>该函数调用ntdll.dll里的RtlRaiseException函数，然后继续往下调用NtRaiseException和KiRaiseException,最后调用KiDispatchException</p>
+<p><img src="image-20200813174520978.png" srcset="/img/loading.gif" lazyload alt="image-20200813174520978"></p>
+<p>整体如上图所示</p>
+<h1 id="内核层异常处理流程"><a href="#内核层异常处理流程" class="headerlink" title="内核层异常处理流程"></a>内核层异常处理流程</h1><p>首先不管是用户态异常还是内核异常，都要通过KiDispatchException函数来进行分发，所以我们主要分析该函数</p>
+<p><img src="image-20200814214113613.png" srcset="/img/loading.gif" lazyload alt="image-20200814214113613"></p>
+<p>异常和APC很像，可以看到这边开始备份了，但是我们先分析内核如何处理所以没啥用</p>
+<p><img src="image-20200814214329255.png" srcset="/img/loading.gif" lazyload alt="image-20200814214329255"></p>
+<p>首先判断先前模式 0是内核层1是用户层，仅接着判断是否是第一次调用，然后再看是否有内核调试器，没有或者内核调试器不处理就调用RtlDispatchException，返回false的话再次判断是否有内核调试器 有则调用，没有直接蓝屏</p>
+<p>下面看看RtlDispatchException,这个就是我们”熟悉”的异常处理了</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">EXCEPTION_REGISTRATION_RECORD</span> &#123;</span><br>        <span class="hljs-class"><span class="hljs-keyword">struct</span> _<span class="hljs-title">EXCEPTION_REGISTRATION_RECORD</span> *<span class="hljs-title">Next</span>;</span><br>        PEXCEPTION_ROUTINE Handler;<br>    &#125; EXCEPTION_REGISTRATION_RECORD;<br></code></pre></td></tr></table></figure>
+<p>遍历异常链表，没错就是FS:[0]那的，调用异常处理函数，如果被处理了函数返回值为1，如果该异常处理函数不能处理则调用下一个，直到next指针为0xffffffff，如果没有函数能够处理该异常则返回0.</p>
+<p><img src="image-20200814215131298.png" srcset="/img/loading.gif" lazyload alt="image-20200814215131298"></p>
+<p>注意这边fs并不是指向PEB，这边是内核处理，fs是kpcr，只是kpcr和peb第一个成员一样都是tib。</p>
+<h1 id="用户层异常处理流程"><a href="#用户层异常处理流程" class="headerlink" title="用户层异常处理流程"></a>用户层异常处理流程</h1><p><img src="image-20200816132126545.png" srcset="/img/loading.gif" lazyload alt="image-20200816132126545"></p>
+<p>和内核层一样先判断是否第一次调用，然后判断内核调试器是否存在，如果没有，把异常信息发送给三环调试器，如果三环调试器没有处理或者不存在，那么就开始返回三环恢复环境</p>
+<p><img src="image-20200816132242032.png" srcset="/img/loading.gif" lazyload alt="image-20200816132242032"></p>
+<p>返回到ntdll中的KiUserExceptionDispatcher，可以看到这边修改了eip</p>
+<h1 id="VEH"><a href="#VEH" class="headerlink" title="VEH"></a>VEH</h1><p>向量化异常处理</p>
+<p>关于这个得分析下_KiUserExceptionDispatcher@8</p>
+<p><img src="image-20200816193822433.png" srcset="/img/loading.gif" lazyload alt="image-20200816193822433"></p>
+<p>调用_RtlDispatchException@8处理异常，如果处理成功则_ZwContinue@8进0环回到原来的地方</p>
+<p>否则_ZwRaiseException@12分发第二轮异常</p>
+<p>来看看_RtlDispatchException@8</p>
+<p><img src="image-20200816193924188.png" srcset="/img/loading.gif" lazyload alt="image-20200816193924188"></p>
+<p>_RtlCallVectoredExceptionHandlers@8就是查找VEH链表，如果有的话就调用</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-meta-keyword">define</span> _CRT_SECURE_NO_DEPRECATE</span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdio.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;windows.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;tlhelp32.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-meta-keyword">include</span> <span class="hljs-meta-string">&lt;stdlib.h&gt;</span></span><br><br><span class="hljs-function"><span class="hljs-keyword">typedef</span> <span class="hljs-title">PVOID</span><span class="hljs-params">(NTAPI* FnAddVectoredExceptionHandler)</span><span class="hljs-params">(ULONG, _EXCEPTION_POINTERS*)</span></span>;<br>FnAddVectoredExceptionHandler MyAddVectoredExceptionHandler;<br><br><span class="hljs-function">LONG NTAPI <span class="hljs-title">VectExcepHandler</span><span class="hljs-params">(PEXCEPTION_POINTERS pExcepInfo)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">if</span> (pExcepInfo-&gt;ExceptionRecord-&gt;ExceptionCode == <span class="hljs-number">0xC0000094</span>)<span class="hljs-comment">//除0异常</span><br>	&#123;<br>		<span class="hljs-comment">//将除数修改为2</span><br>		pExcepInfo-&gt;ContextRecord-&gt;Ecx = <span class="hljs-number">2</span>;<br>		<span class="hljs-comment">//或者修改发生异常的代码的Eip    idiv ecx长度2字节 从下一行开始执行</span><br>		<span class="hljs-comment">//pExcepInfo-&gt;ContextRecord-&gt;Eip = pExcepInfo-&gt;ContextRecord-&gt;Eip + 2;</span><br>		<span class="hljs-keyword">return</span> EXCEPTION_CONTINUE_EXECUTION;<span class="hljs-comment">//已处理</span><br>	&#125;<br>	<span class="hljs-keyword">return</span> EXCEPTION_CONTINUE_SEARCH;<span class="hljs-comment">//未处理</span><br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	HMODULE hModule = GetModuleHandle(<span class="hljs-string">L&quot;Kernel32.dll&quot;</span>);<br>	MyAddVectoredExceptionHandler = (FnAddVectoredExceptionHandler)::GetProcAddress(hModule, <span class="hljs-string">&quot;AddVectoredExceptionHandler&quot;</span>);<br>	<span class="hljs-comment">//参数1表示插入VEH链的头部, 0插入到VEH链的尾部</span><br>	MyAddVectoredExceptionHandler(<span class="hljs-number">0</span>, (_EXCEPTION_POINTERS*)&amp;VectExcepHandler);<br>	<span class="hljs-comment">//构造除0异常</span><br>	<span class="hljs-keyword">int</span> val = <span class="hljs-number">0</span>;<br>	_asm<br>	&#123;<br>		<span class="hljs-keyword">xor</span> edx, edx<br>		<span class="hljs-keyword">xor</span> ecx, ecx<br>		mov eax, <span class="hljs-number">100</span><br>		idiv ecx		<br>		mov val, eax	<span class="hljs-comment">//结果在eax</span><br>	&#125;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;val = %d\n&quot;</span>, val);<br>	getchar();<br>&#125;<br><br></code></pre></td></tr></table></figure>
+<p>可见上面示例代码，除零异常处理</p>
+<p><img src="image-20200816194630333.png" srcset="/img/loading.gif" lazyload alt="image-20200816194630333"></p>
+<p>修改了ecx为2后发现是50</p>
+<h1 id="SEH"><a href="#SEH" class="headerlink" title="SEH"></a>SEH</h1><p>SEH就是平时所熟知得结构化异常处理了，CTF中很常见</p>
+<p>首先是处理VEH没有的话则SEH，见_RtlpGetStackLimits@8</p>
+<p><img src="image-20200816194859195.png" srcset="/img/loading.gif" lazyload alt="image-20200816194859195"></p>
+<p>检测SEH结构是否在堆栈中</p>
+<p>继续看_RtlpGetRegistrationHead@0</p>
+<p><img src="image-20200816194957384.png" srcset="/img/loading.gif" lazyload alt="image-20200816194957384"></p>
+<p>把异常处理链表头取出</p>
+<p><img src="image-20200816195127156.png" srcset="/img/loading.gif" lazyload alt="image-20200816195127156"></p>
+<p><img src="image-20200816195411363.png" srcset="/img/loading.gif" lazyload alt="image-20200816195411363"></p>
+<p>检测是否有效后执行SEH</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>异常处理机制</div>
+      <div>http://www.psbazx.com/2020/08/13/异常处理机制/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>August 13, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/08/22/%E7%BB%99%E5%A4%A7%E4%BA%8C%E7%94%BB%E4%B8%8A%E4%B8%80%E4%B8%AA%E5%AE%8C%E7%BE%8E%E7%9A%84%E5%8F%A5%E5%8F%B7/" title="给大二画上一个完美的句号">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">给大二画上一个完美的句号</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2020/08/11/APC/" title="APC">
+                        <span class="hidden-mobile">APC</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

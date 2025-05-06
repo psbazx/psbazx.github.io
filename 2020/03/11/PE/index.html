@@ -1,0 +1,895 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="详细的记录一波pe有关知识，便于以后复习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PE">
+<meta property="og:url" content="http://www.psbazx.com/2020/03/11/PE/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="详细的记录一波pe有关知识，便于以后复习">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2020/03/11/PE/1.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/03/11/PE/2.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/03/11/PE/3.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/03/11/PE/4.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/03/11/PE/5.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/03/11/PE/6.png">
+<meta property="og:image" content="http://www.psbazx.com/2020/03/11/PE/7.jpg">
+<meta property="article:published_time" content="2020-03-10T16:39:55.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:17.670Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="re">
+<meta property="article:tag" content="ctf">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2020/03/11/PE/1.png">
+  
+  
+  
+  <title>PE - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="PE"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2020-03-10 16:39" pubdate>
+          March 10, 2020 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          68 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">PE</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>详细的记录一波pe有关知识，便于以后复习</p>
+<a id="more"></a>
+
+<h1 id="DOS头"><a href="#DOS头" class="headerlink" title="DOS头"></a>DOS头</h1><p>typedef struct _IMAGE_DOS_HEADER {    // DOS .EXE header</p>
+<p>  WORD  e_magic;           // Magic number</p>
+<p>  WORD  e_cblp;            // Bytes on last page of file</p>
+<p>  WORD  e_cp;             // Pages in file</p>
+<p>  WORD  e_crlc;            // Relocations</p>
+<p>  WORD  e_cparhdr;          // Size of header in paragraphs</p>
+<p>  WORD  e_minalloc;          // Minimum extra paragraphs needed</p>
+<p>  WORD  e_maxalloc;          // Maximum extra paragraphs needed</p>
+<p>  WORD  e_ss;             // Initial (relative) SS value</p>
+<p>  WORD  e_sp;             // Initial SP value</p>
+<p>  WORD  e_csum;            // Checksum</p>
+<p>  WORD  e_ip;             // Initial IP value</p>
+<p>  WORD  e_cs;             // Initial (relative) CS value</p>
+<p>  WORD  e_lfarlc;           // File address of relocation table</p>
+<p>  WORD  e_ovno;            // Overlay number</p>
+<p>  WORD  e_res[4];           // Reserved words</p>
+<p>  WORD  e_oemid;           // OEM identifier (for e_oeminfo)</p>
+<p>  WORD  e_oeminfo;          // OEM information; e_oemid specific</p>
+<p>  WORD  e_res2[10];          // Reserved words</p>
+<p>  LONG  e_lfanew;           // File address of new exe header</p>
+<p> } IMAGE_DOS_HEADER, *PIMAGE_DOS_HEADER;</p>
+<p>Dos头如上，比较重要的就是俩个一个是magic num MZ还有一个是e_lfanew为nt头开始的偏移</p>
+<p>e_lfanew往下到pe开始处既是dos存根用来兼容dos的，在dos上运行时打出那一句话，因为基本不会用到通常会塞点邪恶的东西在这之间</p>
+<h1 id="Nt头"><a href="#Nt头" class="headerlink" title="Nt头"></a>Nt头</h1><p>typedef struct _IMAGE_NT_HEADERS {</p>
+<p>  DWORD Signature;</p>
+<p>  IMAGE_FILE_HEADER FileHeader;</p>
+<p>  IMAGE_OPTIONAL_HEADER32 OptionalHeader;</p>
+<p>} IMAGE_NT_HEADERS32, *PIMAGE_NT_HEADERS32;</p>
+<p>开头的签名就是PE</p>
+<p>紧跟着俩结构体分别是文件头和可选文件头</p>
+<p>typedef struct _IMAGE_FILE_HEADER {</p>
+<p>  WORD   Machine;  #机器码，表示的是运行平台</p>
+<p>  WORD   NumberOfSections; #节数目</p>
+<p>  DWORD  TimeDateStamp;   #时间戳</p>
+<p>  DWORD  PointerToSymbolTable;</p>
+<p>  DWORD  NumberOfSymbols;     #符号表数量</p>
+<p>  WORD   SizeOfOptionalHeader;   #可选文件头大小</p>
+<p>  WORD   Characteristics;     #文件属性，转成二进制每个位代表了每个属性，具体自行百度</p>
+<p>} IMAGE_FILE_HEADER, *PIMAGE_FILE_HEADER;</p>
+<p>typedef struct _IMAGE_OPTIONAL_HEADER {</p>
+<p>  WORD   Magic;</p>
+<p>  BYTE   MajorLinkerVersion;</p>
+<p>  BYTE   MinorLinkerVersion;</p>
+<p>  DWORD  SizeOfCode;</p>
+<p>  DWORD  SizeOfInitializedData;</p>
+<p>  DWORD  SizeOfUninitializedData;</p>
+<p>  DWORD  AddressOfEntryPoint;        #重点，入口处</p>
+<p>  DWORD  BaseOfCode;</p>
+<p>  DWORD  BaseOfData;</p>
+<p>  DWORD  ImageBase;            #基地址，内存镜像</p>
+<p>  DWORD  SectionAlignment;      #内存对齐</p>
+<p>  DWORD  FileAlignment;         #文件对齐</p>
+<p>  WORD   MajorOperatingSystemVersion;</p>
+<p>  WORD   MinorOperatingSystemVersion;</p>
+<p>  WORD   MajorImageVersion;</p>
+<p>  WORD   MinorImageVersion;</p>
+<p>  WORD   MajorSubsystemVersion;</p>
+<p>  WORD   MinorSubsystemVersion;</p>
+<p>  DWORD  Win32VersionValue;</p>
+<p>  DWORD  SizeOfImage;           #内存中整个pe文件映射尺寸</p>
+<p>  DWORD  SizeOfHeaders;         #头+节表按照文件对其后的大小</p>
+<p>  DWORD  CheckSum;            #校验值</p>
+<p>  WORD   Subsystem;</p>
+<p>  WORD   DllCharacteristics;</p>
+<p>  DWORD  SizeOfStackReserve;</p>
+<p>  DWORD  SizeOfStackCommit;</p>
+<p>  DWORD  SizeOfHeapReserve;</p>
+<p>  DWORD  SizeOfHeapCommit;</p>
+<p>  DWORD  LoaderFlags;</p>
+<p>  DWORD  NumberOfRvaAndSizes;      #目录项数目</p>
+<p>  IMAGE_DATA_DIRECTORY DataDirectory[IMAGE_NUMBEROF_DIRECTORY_ENTRIES];</p>
+<p>} IMAGE_OPTIONAL_HEADER32, *PIMAGE_OPTIONAL_HEADER32;</p>
+<h1 id="节表"><a href="#节表" class="headerlink" title="节表"></a>节表</h1><p>IMAGE_SECTION_HEADER STRUCT</p>
+<p>BYTE Name[IMAGE_SIZEOF_SHORT_NAME]; // 8个字节的节区名称</p>
+<p>union Misc</p>
+<p> DWORD PhysicalAddress;    </p>
+<p> DWORD VirtualSize;      //节区的尺寸</p>
+<p>ends</p>
+<p>DWORD VirtualAddress;     // 节区的 RVA 地址</p>
+<p>DWORD SizeOfRawData;      // 在文件中对齐后的尺寸</p>
+<p>DWORD PointerToRawData;    // 在文件中的偏移量</p>
+<p>DWORD PointerToRelocations;   // 在OBJ文件中使用，重定位的偏移</p>
+<p>DWORD PointerToLinenumbers;  // 行号表的偏移（供调试使用地）</p>
+<p>WORD NumberOfRelocations;   // 在OBJ文件中使用，重定位项数目</p>
+<p>WORD NumberOfLinenumbers;  // 行号表中行号的数目</p>
+<p>DWORD Characteristics;    // 节属性如可读，可写，可执行等</p>
+<p>IMAGE_SECTION_HEADER ENDS</p>
+<p>前面的name存放节名称如.text .data</p>
+<p>下面来说一下pe文件的执行过程</p>
+<p>\1.   Filebuffer:吧文件读入内存</p>
+<p>\2.   申请4Gb虚拟内存</p>
+<p>\3.   Imagebuffer:内存对齐后映射</p>
+<p>\4.   重定位后改ip指向entry</p>
+<p>\5.   页错误后加载到物理内存</p>
+<p>\6.   开始执行</p>
+<p>有个小坑就是VirtualSize，是否不大于SizeOfRawDatal？</p>
+<p>因为SizeOfRawData是节区在文件中对齐后的大小，而VirtualSize只是节区的大小，所以想当然的就有结论VirtualSize&lt;=SizeOfRawDatal</p>
+<p>然而事实并非如此。。。一个典型的例子就是bss段数据，未初始化的全局变量在文件中并不会给他分配大小，但当加载入内存时会给其分配，而VirtualSize表示的就是在内存中的大小</p>
+<h1 id="代码注入实战"><a href="#代码注入实战" class="headerlink" title="代码注入实战"></a>代码注入实战</h1><p>简单的代码注入</p>
+<p>在.text末尾多余处加入自己的代码</p>
+<p>我这边以cgctf第一道re为例子</p>
+<p><img src="1.png" srcset="/img/loading.gif" lazyload alt="1"></p>
+<p>Rodata处加上你的字符串</p>
+<p>然后再text末尾加上机器码</p>
+<p><img src="2.png" srcset="/img/loading.gif" lazyload alt="2"></p>
+<p>改ep为你的代码偏移处然后执行，最后jmp跳回oep</p>
+<p>算是复习一波pe文件结构</p>
+<p>当然处理方式还有好多，直接在text节后增加的话代码量有限，可以通过新增节的方式，比如吧dos存根抹去，nt头转移到dos存根那，改dos头最后一个，就可以给新增节留出空间，32位一个节40字节，还需要40字节用0填充这样比较稳定。</p>
+<p>或者用更稳的方法直接扩大节，扩大最后一个节并修改属性，也可以合并节然后有新的空间给自定节用。</p>
+<p>接下去主要复习一波表</p>
+<p>在可选头最后有个结构体数组，大小16，就是16个表，其中有一个是备用的。</p>
+<p>#define IMAGE_DIRECTORY_ENTRY_EXPORT     0  // Export Directory</p>
+<p>#define IMAGE_DIRECTORY_ENTRY_IMPORT     1  // Import Directory</p>
+<p>#define IMAGE_DIRECTORY_ENTRY_RESOURCE    2  // Resource Directory</p>
+<p>#define IMAGE_DIRECTORY_ENTRY_EXCEPTION    3  // Exception Directory</p>
+<p>#define IMAGE_DIRECTORY_ENTRY_SECURITY    4  // Security Directory</p>
+<p>#define IMAGE_DIRECTORY_ENTRY_BASERELOC    5  // Base Relocation Table</p>
+<p>#define IMAGE_DIRECTORY_ENTRY_DEBUG      6  // Debug Directory</p>
+<p>//   IMAGE_DIRECTORY_ENTRY_COPYRIGHT    7  // (X86 usage)</p>
+<p>#define IMAGE_DIRECTORY_ENTRY_ARCHITECTURE  7  // Architecture Specific Data</p>
+<p>#define IMAGE_DIRECTORY_ENTRY_GLOBALPTR    8  // RVA of GP</p>
+<p>#define IMAGE_DIRECTORY_ENTRY_TLS       9  // TLS Directory</p>
+<p>#define IMAGE_DIRECTORY_ENTRY_LOAD_CONFIG  10  // Load Configuration Directory</p>
+<p>#define IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT  11  // Bound Import Directory in headers</p>
+<p>#define IMAGE_DIRECTORY_ENTRY_IAT      12  // Import Address Table</p>
+<p>#define IMAGE_DIRECTORY_ENTRY_DELAY_IMPORT  13  // Delay Load Import Descriptors</p>
+<p>#define IMAGE_DIRECTORY_ENTRY_COM_DESCRIPTOR 14  // COM Runtime descriptor</p>
+<p>如上图</p>
+<p>每个结构体占8字节俩个dw</p>
+<p>typedef struct _IMAGE_DATA_DIRECTORY {</p>
+<p>  DWORD  VirtualAddress;            虚拟地址</p>
+<p>  DWORD  Size;                 大小</p>
+<p>} IMAGE_DATA_DIRECTORY, *PIMAGE_DATA_DIRECTORY;</p>
+<p>如上</p>
+<p>Va指向了内存对齐后的改表地址</p>
+<h1 id="导出表"><a href="#导出表" class="headerlink" title="导出表"></a>导出表</h1><p>typedef struct _IMAGE_EXPORT_DIRECTORY {</p>
+<p>  DWORD  Characteristics;</p>
+<p>  DWORD  TimeDateStamp;           //时间戳</p>
+<p>  WORD  MajorVersion;</p>
+<p>  WORD  MinorVersion;</p>
+<p>  DWORD  Name;                    //模块名</p>
+<p>  DWORD  Base;                     //序号基数</p>
+<p>  DWORD  NumberOfFunctions;       //导出函数数目(不一定准确)</p>
+<p>  DWORD  NumberOfNames;         //导出函数名字数目</p>
+<p>  DWORD  AddressOfFunctions;   // 函数地址表</p>
+<p>  DWORD  AddressOfNames;     // 函数名称表数量由NumberOfNames决定</p>
+<p>  DWORD  AddressOfNameOrdinals; // 函数序号表数量由NumberOfNames决定</p>
+<p>} IMAGE_EXPORT_DIRECTORY, *PIMAGE_EXPORT_DIRECTORY;</p>
+<p><img src="3.png" srcset="/img/loading.gif" lazyload alt="3"></p>
+<p>导出表结构如上</p>
+<p>前面几个不需要多管，主要看下面的，name是指模块名比如xxx.dll,base是指序号基数后面会用到，NumberOfFunctions是不一定准确的，她是用最大序号减最小序号+1来求得(这边序号不是指AddressOfNameOrdinals序号，是指导出函数的序号</p>
+<p>这边俩个表一个函数地址表还有一个函数名称表，函数地址表取决于导出函数数目，而函数名称表取决于导出名字数目，这边有个很神奇的东西，因为函数可以通过符号导出，比如说你编程往往函数名称就和他实现的功能一样，而你不想让别人知道你这个函数的功能就可以通过符号导出，这样的话就不会再函数名字表里出现了，但是在函数地址表里还会有，那么就会有个问题，是不是函数地址表总是比函数名字表来的大呢？</p>
+<p>这是不一定的，举个例子你有俩个函数名字都指向了一个地址是完全可以实现的，这样就有可能名称表比地址表来得大。</p>
+<h2 id="函数名导出寻找"><a href="#函数名导出寻找" class="headerlink" title="函数名导出寻找"></a>函数名导出寻找</h2><p>比如知道函数名为aaa</p>
+<p>先会从AddressOfNames遍历寻找到对应地址下标</p>
+<p>再去AddressOfNameOrdinals寻找对应下标的值</p>
+<p>以其为下标在AddressOfFunctions寻找就是该函数地址  </p>
+<h2 id="序号导出寻找"><a href="#序号导出寻找" class="headerlink" title="序号导出寻找"></a>序号导出寻找</h2><p>首先要有个概念就是AddressOfNameOrdinals里的不是函数序号</p>
+<p>要加上base才是序号</p>
+<p>那根据序号寻找就很轻松了，吧函数序号减去base为下标去AddressOfFunctions取出地址就是该函数地址</p>
+<h2 id="逆推"><a href="#逆推" class="headerlink" title="逆推"></a>逆推</h2><p>首先从函数地址开始AddressOfFunctions</p>
+<p>遍历地址是否为0，不为0取出下标，去AddressOfNameOrdinals遍历寻找</p>
+<p>如果找到值等于下标的，取出该值下标去AddressOfNames找到对应地址，取地址获取函数名</p>
+<p>当然如果没有找到，直接吧该下标加上base就为函数的导出序号</p>
+<h1 id="重定位表"><a href="#重定位表" class="headerlink" title="重定位表"></a>重定位表</h1><p>重定位表的作用很明显，一般在dll里用的比较多</p>
+<p>以南邮ctf第一题签到题为例</p>
+<p><img src="4.png" srcset="/img/loading.gif" lazyload alt="4"></p>
+<p>重点关注机器码</p>
+<p>Flag寻址的时候是绝对寻址而call printf函数时用的时相对寻址</p>
+<p>后面机器码加上下一行指令地址即为函数地址</p>
+<p>Flag寻址是更具pe的imagebase去算的，但是如果出现一个情况，特别是在dll里出现比较多，就是俩个dll映射基地址都是0x10000000,这样就会产生重叠，所以必须有1个dll映射到其他地址，一般都是下一个0x10000，这是模块对齐的大小，但不一定啊和内存对齐一样。</p>
+<p>这就是重定位表需要的原因，来进行重定位</p>
+<table>
+<thead>
+<tr>
+<th>typedef struct _IMAGE_BASE_RELOCATION {</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DWORD  VirtualAddress;</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>DWORD  SizeOfBlock;</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>} IMAGE_BASE_RELOCATION;</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>typedef IMAGE_BASE_RELOCATION ，* PIMAGE_BASE_RELOCATION;</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p>结构如上</p>
+<p>SizeOfBlock是指当前block大小</p>
+<p>每个block大小就是一个内存页0x1000为单位</p>
+<p>该页上有多少需要重定位的地方</p>
+<p><img src="5.png" srcset="/img/loading.gif" lazyload alt="5"></p>
+<p>通过判断最后一个结构的VirtualAddress与SizeOfBlock都为0来判断是否结束</p>
+<p>内存页中的页大小是0x1000，也就是2的12次方就可以表示一个页内所有的偏移地址，具体项的宽度是16字节 高四位代表类型：值位3 代表的是需要修改的数据 值位0代表的是用于数据对齐的数据，可以不用修改，也就是说只需要关注高四位的值为三的就可以了</p>
+<p>Block下面的高四位是个标志位后面是地址</p>
+<p>Virtualaddress + 低十二位就是需要修改的地址</p>
+<h1 id="导入表"><a href="#导入表" class="headerlink" title="导入表"></a>导入表</h1><p>导入表涉及到iat表和int表</p>
+<p>具体看时间戳</p>
+<p>typedef struct _IMAGE_IMPORT_DESCRIPTOR {</p>
+<p>  union {</p>
+<p>​    DWORD  Characteristics;      // 0 for terminating null import descriptor</p>
+<p>​    DWORD  OriginalFirstThunk;     // RVA to original unbound IAT (PIMAGE_THUNK_DATA)</p>
+<p>  } DUMMYUNIONNAME;</p>
+<p>  DWORD  TimeDateStamp;         // 0 if not bound,</p>
+<p>​                      // -1 if bound, and real date\time stamp</p>
+<p>​                      //   in IMAGE_DIRECTORY_ENTRY_BOUND_IMPORT (new BIND)</p>
+<p>​                      // O.W. date/time stamp of DLL bound to (Old BIND)</p>
+<p>  DWORD  ForwarderChain;         // -1 if no forwarders</p>
+<p>  DWORD  Name;</p>
+<p>  DWORD  FirstThunk;           // RVA to IAT (if bound this IAT has actual addresses)</p>
+<p>} IMAGE_IMPORT_DESCRIPTOR;</p>
+<p>typedef IMAGE_IMPORT_DESCRIPTOR UNALIGNED *PIMAGE_IMPORT_DESCRIPTOR;</p>
+<p>Name为导入库的名称rva，第一项指向了int表</p>
+<p>typedef struct _IMAGE_THUNK_DATA32 {</p>
+<p>  union {</p>
+<p>​    DWORD ForwarderString;   // PBYTE </p>
+<p>​    DWORD Function;       // PDWORD</p>
+<p>​    DWORD Ordinal;</p>
+<p>​    DWORD AddressOfData;    //RVA 指向_IMAGE_IMPORT_BY_NAME </p>
+<p>  } u1;</p>
+<p>} IMAGE_THUNK_DATA32;</p>
+<p>typedef IMAGE_THUNK_DATA32 * PIMAGE_THUNK_DATA32;</p>
+<p>Int表的值如果最高位为0，就是name的rva</p>
+<p>否则去除最高位剩下的就是导入序号</p>
+<p>typedef struct _IMAGE_IMPORT_BY_NAME {</p>
+<p>  WORD  Hint;    //可能为0，编译器决定，如果不为0，是函数在导出表中的索引</p>
+<p>  BYTE  Name[1];  //函数名称，以0结尾，由于不知道到底多长，所以干脆只给出第一个字符，找到0结束</p>
+<p>} IMAGE_IMPORT_BY_NAME, *PIMAGE_IMPORT_BY_NAME;</p>
+<p>名称第一个是hint</p>
+<p>然后是函数名</p>
+<p>再看看iat表</p>
+<p>当导入表时间戳为0时iat和int值都一样</p>
+<p>为-1是iat是函数的真实地址，但很少有，因为当dll映射地址改变的时候需要重定位，一般notepad就是这样，好处就是打开快，不需要再根据int表去吧地址写入iat</p>
+<p>//最后一个结构全0表示绑定导入表结束</p>
+<p>typedef struct _IMAGE_BOUND_IMPORT_DESCRIPTOR {</p>
+<p>  DWORD  TimeDateStamp;   //表示绑定的时间戳，如果和PE头中的TimeDateStamp不同则可能被修改过</p>
+<p>  WORD  OffsetModuleName;  //dll名称地址</p>
+<p>  WORD  NumberOfModuleForwarderRefs;  //依赖dll个数</p>
+<p>// Array of zero or more IMAGE_BOUND_FORWARDER_REF follows</p>
+<p>} IMAGE_BOUND_IMPORT_DESCRIPTOR, *PIMAGE_BOUND_IMPORT_DESCRIPTOR;</p>
+<p>下面看看绑定导入表</p>
+<p>时间戳是pe时间戳，如果与绑定的时间戳不一样说明被更新了需要重定位</p>
+<p>NumberOfModuleForwarderRefs表示下面紧接着跟了多少个如下结构</p>
+<p>typedef struct _IMAGE_BOUND_FORWARDER_REF {</p>
+<p>  DWORD  TimeDateStamp; //时间戳，同样的作用检查更新情况</p>
+<p>  WORD  OffsetModuleName;  //dll名称地址</p>
+<p>  WORD  Reserved;  //保留</p>
+<p>} IMAGE_BOUND_FORWARDER_REF, *PIMAGE_BOUND_FORWARDER_REF;</p>
+<p>OffsetModuleName加上绑定导入表首地址才是name的rva</p>
+<p><img src="6.png" srcset="/img/loading.gif" lazyload alt="6"></p>
+<p>自己编程写了下，可惜不小心被删除了。。。只剩下俩张截图</p>
+<p><img src="7.jpg" srcset="/img/loading.gif" lazyload alt="7"></p>
+<p>这个是导出表写法截图</p>
+<p>到这pe算是告一段落了</p>
+<p>顺带复习了波程序员的自我修养</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/re/">#re</a>
+      
+        <a href="/tags/ctf/">#ctf</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>PE</div>
+      <div>http://www.psbazx.com/2020/03/11/PE/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>March 10, 2020</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2020/04/11/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%85%A5%E9%97%A8%E7%9F%A5%E8%AF%86/" title="多线程入门知识">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">多线程入门知识</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/09/05/%E5%A4%A7%E4%BA%8C%E4%B8%8A%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" title="大二上学习笔记">
+                        <span class="hidden-mobile">大二上学习笔记</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

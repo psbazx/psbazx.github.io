@@ -1,0 +1,613 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-Hans" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/pisanbao.jpg">
+  <link rel="icon" href="/img/pisanbao.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="皮三宝">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="在上期视频结尾记得作者说什么以后保证每期视频时间在15分钟以内可把我高兴坏了然后看到这期视频长达近1小时。。。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iot rootkit 学习(week 1-2)">
+<meta property="og:url" content="http://www.psbazx.com/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/index.html">
+<meta property="og:site_name" content="皮三宝のBlog">
+<meta property="og:description" content="在上期视频结尾记得作者说什么以后保证每期视频时间在15分钟以内可把我高兴坏了然后看到这期视频长达近1小时。。。">
+<meta property="og:locale">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/1.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/2.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/3.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/4.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/5.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/6.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/7.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/8.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/9.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/10.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/11.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/12.png">
+<meta property="og:image" content="http://www.psbazx.com/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/13.png">
+<meta property="article:published_time" content="2019-03-04T19:27:36.000Z">
+<meta property="article:modified_time" content="2024-07-22T01:48:17.935Z">
+<meta property="article:author" content="皮三宝">
+<meta property="article:tag" content="iot">
+<meta property="article:tag" content="rootkit">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://www.psbazx.com/2019/03/05/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-2/1.png">
+  
+  
+  
+  <title>iot rootkit 学习(week 1-2) - 皮三宝のBlog</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"www.psbazx.com","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 5.3.0"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>pisanbao</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                主页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              &nbsp;<i class="iconfont icon-search"></i>&nbsp;
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/1.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="iot rootkit 学习(week 1-2)"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2019-03-04 19:27" pubdate>
+          March 4, 2019 pm
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.3k wörter
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          12 minuten
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">iot rootkit 学习(week 1-2)</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>在上期视频结尾记得作者说什么<br>以后保证每期视频时间在15分钟以内<br>可把我高兴坏了<br>然后看到这期视频长达近1小时。。。</p>
+<a id="more"></a>
+<h1 id="理论"><a href="#理论" class="headerlink" title="理论"></a>理论</h1><p><img src="1.png" srcset="/img/loading.gif" lazyload alt="1"><br>启动BBB后出现的<br>首先是U-Boot(这边主要是来验证上节课说的理论)<br><img src="2.png" srcset="/img/loading.gif" lazyload alt="2"><br>这边可以看到U-Boot在寻找uEnv.txt凭此来定位Linux内核<br><img src="3.png" srcset="/img/loading.gif" lazyload alt="3"><br>可以看到uEnv.txt加载后找到了内核和设备树的位置<br>然后开始引导内核<br>接着就是文件系统<br>然后可以看到登录<br>账号密码全部告诉你了<br><img src="4.png" srcset="/img/loading.gif" lazyload alt="4"></p>
+<h2 id="Booting-BBB-from-external-SD-card"><a href="#Booting-BBB-from-external-SD-card" class="headerlink" title="Booting BBB from external SD card"></a>Booting BBB from external SD card</h2><p><img src="5.png" srcset="/img/loading.gif" lazyload alt="5"><br>这边就不翻译了，要先把sd卡插入BBB<br><img src="6.png" srcset="/img/loading.gif" lazyload alt="6"><br>这边的话是只在SD卡中放MLO<br>从上节课所学到的可以知道，当SOC Booting开始后，ROM先找到MLO把他放进soc的内部RAM中<br>然后MLO去找U-Boot，这部分因为只有MLO，所以寻找肯定会失败。<br>接着作者开始实验了<br><img src="7.png" srcset="/img/loading.gif" lazyload alt="7"><br>首先是对SD卡进行划分文件系统<br>然后对划分部分开始进行一些设置<br>下面就是吧MLO拷进FAT32部分<br>//MLO在视频附赠的文件当中<br>接下去就是按着作者步骤来走呗<br><img src="8.png" srcset="/img/loading.gif" lazyload alt="8"><br>结果呢也不出所料，失败了，毕竟只有MLO<br>这边有重启操作，是因为WDT<br>WDT的时间好像是3分钟<br>//具体看上一篇blog<br>做完这个实验后，作者又把U-Boot拷进了SD卡<br>然后重复操作<br>//其实这个视频大部分时间就是为了通过实践让你更好理解Booting Process<br>好了<br>重复操作部分不记录了，来看看结果<br><img src="9.png" srcset="/img/loading.gif" lazyload alt="9"><br>这次就成功找到U-Boot了<br>找到后MLO把控制权给U-Boot<br>OK<br>U-Boot开始运行，上节课也讲过，U-Boot是要寻找uEnv.txt来定位内核还有设备树<br>肯定是没找到啦//根本就没放进去<br>然后就是失败，开始寻找其他待处理的设备<br>到这你以为实验结束了？？？<br>太天真了<br>作者接下去又要重复操作，把uEnv.txt放入SD卡<br>然后可以猜想这个视频接下去会是什么样。。。<br>这边来说一下什么是uEnv.txt<br>uEnv.txt里面包含了U-Boot所需要的环境啥的<br>然后U-Boot利用这些来改变自己的配置并决定要引导什么东西和怎么引导<br><img src="10.png" srcset="/img/loading.gif" lazyload alt="10"><br>上图是那个txt文件里的东西<br>//这边没听懂<br>//就不解释了<br>//但是作者会在下个视频细谈这个文件<br>ok<br>继续讲实验<br><img src="11.png" srcset="/img/loading.gif" lazyload alt="11"><br>这次就成功加载那个txt了<br>可以看到作者自己的广告<br>有空去研究下把这广告删了改成自己的<br>//当我打完这行字的时候作者说自己在当年也喜欢干这种蠢事<br>//手动滑稽.png<br>再看下面也可以发现File not found<br>毕竟没有放啥内核和设备树在SD卡里面。。。<br>//估计下一个实验就是放这些<br>//然后重复操作<br>//无限循环<br>所以就失败了<br>和上一次一样<br>开始寻找还有没有什么其他的设备<br>好了，现在在把Linux  kernel还有device tree啥的放进sd卡内<br>再次启动<br><img src="12.png" srcset="/img/loading.gif" lazyload alt="12"><br>可以看到内核还有设备树都被拷贝和加载了<br>U-Boot把控制权给与内核，内核开始运行代码<br>主要就是初始化一堆东西，初始化完后就开始运行根文件系统<br>即root file system<br>然后失败了<br>毕竟在第三个划分区中啥也没放。。。<br>这边提了一下所谓的root file system就是我们用的目录<br>太棒了，总算到最后一个实验了<br>也就是把Root Filesystem放进SD卡里<br>完整的跑一次<br>然后<br>成功<br><img src="13.png" srcset="/img/loading.gif" lazyload alt="13"><br>结束了<br>50多分钟视频<br>说实话，这一期比较简单<br>//要是上一期稍微认真理解的话<br>大部分都是通过实验来演示Boot Process</p>
+<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/iot/">#iot</a>
+      
+        <a href="/tags/rootkit/">#rootkit</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>iot rootkit 学习(week 1-2)</div>
+      <div>http://www.psbazx.com/2019/03/05/iot-rootkit-学习-week-1-2/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>Beitragsautor</div>
+          <div>皮三宝</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>Veröffentlicht am</div>
+          <div>March 4, 2019</div>
+        </div>
+      
+      
+      <div class="license-meta-item">
+        <div>Urheberrechtshinweis</div>
+        <div>
+          
+            
+            
+              <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+              <span class="hint--top hint--rounded" aria-label="BY - Attribution">
+                <i class="iconfont icon-by"></i>
+              </span>
+              </a>
+            
+          
+        </div>
+      </div>
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2019/03/06/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1-3/" title="iot rootkit 学习(week 1-3)">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">iot rootkit 学习(week 1-3)</span>
+                        <span class="visible-mobile">Vorheriger</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2019/03/03/iot-rootkit-%E5%AD%A6%E4%B9%A0-week-1/" title="iot rootkit 学习(week 1-1)">
+                        <span class="hidden-mobile">iot rootkit 学习(week 1-1)</span>
+                        <span class="visible-mobile">Nächster</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;Inhaltsverzeichnis</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">Suchen</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">Stichwort</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      headingSelector : CONFIG.toc.headingSelector || 'h1,h2,h3,h4,h5,h6',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      collapseDepth   : CONFIG.toc.collapseDepth || 0,
+      scrollSmooth    : true,
+      headingsOffset  : -boardTop
+    });
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">Blog funktioniert am besten mit aktiviertem JavaScript</div>
+  </noscript>
+</body>
+</html>
